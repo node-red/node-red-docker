@@ -12,10 +12,10 @@ To run this directly in docker at it's simplest just run
 Let's dissect that command...
 
         docker run      - run this container... and build locally if necessary first.
-        -it             - attach a ternminal session so we can see what is going on
+        -it             - attach a terminal session so we can see what is going on
         -p 1880:1880    - connect local port 1880 to the exposed internal port 1880
         --name mynodered - give this machine a friendly local name
-        theceejay/nreddock - the image to base it on.
+        theceejay/nreddock - the image to base it on - currently Node-RED v0.10.6
 
 
 Running that command should give a terminal window with a running instance of Node-RED
@@ -26,17 +26,17 @@ Running that command should give a terminal window with a running instance of No
         8 Apr 12:13:44 - [info] Node.js  version: v0.10.38
         .... etc
 
-You can then browse to `https://{host-ip}:1880` to get the familiar Node-RED desktop.
+You can then browse to `http://{host-ip}:1880` to get the familiar Node-RED desktop.
 
 The advantage of doing this is that by giving it a name we can manipulate it
-more easily in a minute, and by fixing the host port we know we are on familiar ground.
+more easily, and by fixing the host port we know we are on familiar ground.
 (Of course this does mean we can only run one instance at a time... but one step at a time folks...)
 
-If we are happy with what we see we can stop the command window - `Ctrl-C` and then run
+If we are happy with what we see we can stop the command window - `Ctrl-c` and then run
 
         $ docker ps -a
         CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS                       PORTS               NAMES
-        b03e408d3905        theceejay/nreddock:latest   "npm start"         12 seconds ago      Exited (130) 7 seconds ago                       mynodered
+        b03e408d3905        theceejay/nreddock:latest   "npm start"         12 seconds ago      Exited (130) 7 seconds ago                       mynodered   .
 
 Notice the machine is now stopped ("exited") - and if your browser window is still open it
 should report "lost connection to server".
@@ -74,7 +74,13 @@ command you wish - e.g.
 
 Refreshing the browser page should now reveal the newly added node in the palette.
 
+###Updating
 
+tbd
+
+###Adding Volumes
+
+tbd
 
 ###Minimun
 
@@ -91,4 +97,61 @@ docker id number and be running on a random port... to find out run
     $
 
 You can now point a browser to the host machine on the tcp port reported back, so in the example
-above browse to  `https://{host ip}:49154`
+above browse to  `http://{host ip}:49154`
+
+###Roll your own
+
+the simplest way to build your own custom image is to clone this project and edit
+the Dockerfile and package.json.
+
+####package.json
+
+The package.json is a metafile that downloads and installs the required version
+of Node-RED and any other npms you wish to install at build time.
+
+The main sections to modify are
+
+    "dependencies": {
+        "node-red": "0.10.6",           <-- set the version of Node-RED here
+        "node-red-node-rbe": "*"        <-- add any extra npm packages here
+    },
+
+This is where you can pre-define any extra nodes you want installed every time
+by default, and then
+
+    "scripts"      : {
+        "start": "node node_modules/node-red/red.js -u ./ flow.json"
+    },
+
+This is the command that starts Node-RED when the container is run. The `-u ./`
+parameter points to `/usr/src/app/` in the container which is where we also
+install Node-RED... see below.
+
+####Dockerfile
+
+The existing Dockerfile is very simple
+
+        FROM node:0.10-onbuild
+        VOLUME /usr/src/app/.node-red
+        EXPOSE 1880
+
+What this does is use the "on-build" version of node.js v0.10.* - this then reads
+the co-located package.json file (see above) - and installs whatever is defined there...
+
+It then exposes the *.node-red* directory to the be mounted externally so we can
+save flows and other npms installed after the build.
+
+Finally it exposes the default Node-RED port 1880 to be available externally.
+
+**Note** : This also copies any files in the same directory as the Dockerfile
+to the /usr/src/app directory in the container... this means you can also add
+other flows files or node_modules or pre-configured libraries - or indeed
+overwrite the `node_modules/node-red/settings.js` file if you wish.
+
+To build your image then run
+
+        $ docker build -t nodered .
+
+and run with
+
+        $ docker run -it -p 1880:1880 --name mynodered nodered
