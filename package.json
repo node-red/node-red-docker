@@ -19,6 +19,8 @@
         "node-red": "0.10.6",
         "node-red-node-rbe": "*",
         "node-red-node-msgpack": "*",
+        "node-red-node-base64": "*",
+        "node-red-node-suncalc": "*",
         "node-red-node-random": "*"
     },
     "engines": {

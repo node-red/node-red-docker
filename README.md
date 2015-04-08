@@ -74,21 +74,19 @@ command you wish - e.g.
 
 Refreshing the browser page should now reveal the newly added node in the palette.
 
+###Adding Volumes
+
+tbd
+
 ###Updating
 
 Updating the base container image is as simple as
 
         $ docker pull theceejay/nreddock
-
-then stop and restart your instance
-
         $ docker stop mynodered
+        $ docker commit mynodered theceejay/nreddock
         $ docker start mynodered
 
-
-###Adding Volumes
-
-tbd
 
 ###Minimun
 
