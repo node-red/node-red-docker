@@ -53,8 +53,8 @@ to stop it.
 
 **Note** : this Dockerfile is configured to store the flows.json file and any
 extra nodes you install "outside" of the container. Specifically we export the
-**.node-red** directory. We do this so that you may rebuild the underlying
-container without losing all your customisations.
+`/root/.node-red` directory. We do this so that you may rebuild the underlying
+container without losing all of your customisations.
 
 ###Customising
 
@@ -120,38 +120,36 @@ This is where you can pre-define any extra nodes you want installed every time
 by default, and then
 
     "scripts"      : {
-        "start": "node node_modules/node-red/red.js -u ./ flow.json"
+        "start": "node node_modules/node-red/red.js flow.json"
     },
 
-This is the command that starts Node-RED when the container is run. The `-u ./`
-parameter points to `/usr/src/app/` in the container which is where we also
-install Node-RED... see below.
+This is the command that starts Node-RED when the container is run.
 
 ####Dockerfile
 
 The existing Dockerfile is very simple
 
         FROM node:0.10-onbuild
-        VOLUME /usr/src/app/.node-red
+        VOLUME /root/.node-red
         EXPOSE 1880
 
 What this does is use the "on-build" version of node.js v0.10.* - this then reads
 the co-located package.json file (see above) - and installs whatever is defined there...
 
-It then exposes the *.node-red* directory to the be mounted externally so we can
+It then exposes the `/root/.node-red` directory to the be mounted externally so we can
 save flows and other npms installed after the build.
 
 Finally it exposes the default Node-RED port 1880 to be available externally.
 
 **Note** : This also copies any files in the same directory as the Dockerfile
 to the /usr/src/app directory in the container... this means you can also add
-other flows files or node_modules or pre-configured libraries - or indeed
+other node_modules or pre-configured libraries - or indeed
 overwrite the `node_modules/node-red/settings.js` file if you wish.
 
 To build your image then run
 
-        $ docker build -t nodered .
+        $ docker build -t customnodered .
 
 and run with
 
-        $ docker run -it -p 1880:1880 --name mynodered nodered
+        $ docker run -it -p 1880:1880 --name yournodered customnodered
