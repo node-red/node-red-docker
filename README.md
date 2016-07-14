@@ -52,10 +52,9 @@ and stop it again when required
 
         $ docker stop mynodered
 
-**Note** : this Dockerfile is configured to store the flows.json file and any
-extra nodes you install "outside" of the container. Specifically we export the
-`/root/.node-red` directory. We do this so that you may rebuild the underlying
-container without permanently losing all of your customisations.
+_**Note** : this Dockerfile is configured to store the flows.json file and any
+extra nodes you install "outside" of the container. We do this so that you may rebuild the underlying
+container without permanently losing all of your customisations._
 
 ##Container Layout 
 
@@ -78,7 +77,7 @@ Build these images with the following command...
 
 The package.json is a metafile that downloads and installs the required version
 of Node-RED and any other npms you wish to install at build time. During the
-Docker build process, the dependencies are installed under /usr/src/node-red.
+Docker build process, the dependencies are installed under `/usr/src/node-red`.
 
 The main sections to modify are
 
@@ -99,13 +98,13 @@ This is the command that starts Node-RED when the container is run.
 
 ###startup
 
-Node-RED is started using NPM start from this /usr/src/node-red, with the --userDir
-parameter pointing to the /data directory on the container. The /data directory
+Node-RED is started using NPM start from this `/usr/src/node-red`, with the `--userDir`
+parameter pointing to the `/data` directory on the container. The `/data` directory
 is exported as a Docker volume to make it simple to save user configuration
 outside the container. See below for more details on this...
 
-The flows configuration file is set using an environment parameter (FLOWS),
-which defaults to 'flows.json'. This can be changed at runtime using the
+The flows configuration file is set using an environment parameter (**FLOWS**),
+which defaults to *'flows.json'*. This can be changed at runtime using the
 following command-line flag.
 
         $ docker run -it -p 1880:1880 -e FLOWS=my_flows.json theceejay/nreddock
@@ -152,11 +151,11 @@ running npm install locally.
         $ docker stop mynodered
         $ docker start mynodered
 
-**Note** : Modules with a native dependencies will be compiled on the host
+_**Note** : Modules with a native dependencies will be compiled on the host
 machine's architecture. These modules will not work inside the Node-RED
 container unless the architecture matches the container's base image. For native
 modules, it is recommended to install using a local shell or update the
-project's package.json and re-build.
+project's package.json and re-build._
 
 ###Custom Image
 
@@ -188,8 +187,8 @@ If you create another image you can "migrate" the data from this directory to
 the a new one that will be created when the new image starts running. There is
 no "easy" way to keep track of these directories except manually.
 
-**Note** : the new machine will not automatically pick up the old flow and
-customisations.
+_**Note** : the new machine will not automatically pick up the old flow and
+customisations._
 
 The way to fix this is to use a named data volume... to do this you can either
 mount them to a named directory on the host machine, or to a named data container.
