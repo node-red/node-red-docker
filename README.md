@@ -59,10 +59,11 @@ container without permanently losing all of your customisations.
 
 ##Container Layout 
 
-This project contains Dockerfiles to build two separate Node-RED images. 
+This project contains Dockerfiles to build different Node-RED images. 
 
-- **standard/Dockerfile** Node-RED image using official Node.JS v4 base image.
-- **small/Dockerfile** Node-RED image using Alpine Linux base image.
+- **standard** Node-RED image using official Node.JS v4 base image.
+- **small** Node-RED image using Alpine Linux base image.
+- **rpi** Node-RED image using RPi-compatible base image.
 
 Using Alpine Linux reduces the built image size (~100MB vs ~700MB) but removes
 standard dependencies that are required for native module compilation. If you
@@ -71,14 +72,34 @@ the small image with the missing packages.
 
 Build these images with the following command...
 
-        $ docker build -t mynodered:standard -f standard/Dockerfile .
-        $ docker build -t mynodered:small -f small/Dockerfile .
+        $ docker build -t mynodered:<tag> -f <dir>/Dockerfile .
 
-The project's package.json file contains Node-RED as a dependency, along with
-other nodes to include in the default install. During the Docker build
-process, the dependencies are installed under /usr/src/node-red.
+###package.json
 
-Node-RED is started using NPM start from this directory, with the --userDir
+The package.json is a metafile that downloads and installs the required version
+of Node-RED and any other npms you wish to install at build time. During the
+Docker build process, the dependencies are installed under /usr/src/node-red.
+
+The main sections to modify are
+
+    "dependencies": {
+        "node-red": "0.14.x",           <-- set the version of Node-RED here
+        "node-red-node-rbe": "*"        <-- add any extra npm packages here
+    },
+
+This is where you can pre-define any extra nodes you want installed every time
+by default, and then
+
+    "scripts"      : {
+        "start": "node-red -v $FLOWS"
+    },
+
+This is the command that starts Node-RED when the container is run.
+
+
+###startup
+
+Node-RED is started using NPM start from this /usr/src/node-red, with the --userDir
 parameter pointing to the /data directory on the container. The /data directory
 is exported as a Docker volume to make it simple to save user configuration
 outside the container. See below for more details on this...
@@ -130,7 +151,6 @@ running npm install locally.
         node-red-node-smooth@0.0.3 node_modules/node-red-node-smooth
         $ docker stop mynodered
         $ docker start mynodered
-
 
 **Note** : Modules with a native dependencies will be compiled on the host
 machine's architecture. These modules will not work inside the Node-RED
@@ -200,32 +220,6 @@ docker id number and be running on a random port... to find out run
 
 You can now point a browser to the host machine on the tcp port reported back, so in the example
 above browse to  `http://{host ip}:49154`
-
-##Roll your own
-
-the simplest way to build your own custom image is to clone this project and edit
-the Dockerfile and package.json.
-
-####package.json
-
-The package.json is a metafile that downloads and installs the required version
-of Node-RED and any other npms you wish to install at build time.
-
-The main sections to modify are
-
-    "dependencies": {
-        "node-red": "0.10.6",           <-- set the version of Node-RED here
-        "node-red-node-rbe": "*"        <-- add any extra npm packages here
-    },
-
-This is where you can pre-define any extra nodes you want installed every time
-by default, and then
-
-    "scripts"      : {
-        "start": "node-red -v flow.json"
-    },
-
-This is the command that starts Node-RED when the container is run.
 
 ##Linking Containers
 
