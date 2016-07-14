@@ -10,7 +10,7 @@
     },
     "main"         : "node_modules/node-red/red/red.js",
     "scripts"      : {
-        "start": "node node_modules/node-red/red.js -v flow.json"
+        "start": "node-red -v flow.json"
     },
     "contributors": [
         {"name": "Dave Conway-Jones"}

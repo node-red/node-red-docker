@@ -57,16 +57,47 @@ extra nodes you install "outside" of the container. Specifically we export the
 `/root/.node-red` directory. We do this so that you may rebuild the underlying
 container without permanently losing all of your customisations.
 
+##Container Layout 
+
+This project contains Dockerfiles to build two separate Node-RED images. 
+
+- **standard/Dockerfile** Node-RED image using official Node.JS v4 base image.
+- **small/Dockerfile** Node-RED image using Alpine Linux base image.
+
+Using Alpine Linux reduces the built image size (~100MB vs ~700MB) but removes
+standard dependencies that are required for native module compilation. If you
+want to add modules with native dependencies, use the standard image or extend
+the small image with the missing packages.
+
+Build these images with the following command...
+
+        $ docker build -t mynodered:standard -f standard/Dockerfile .
+        $ docker build -t mynodered:small -f small/Dockerfile .
+
+The project's package.json file contains Node-RED as a dependency, along with
+other nodes to include in the default install. During the Docker build
+process, the dependencies are installed under /usr/src/node-red.
+
+Node-RED is started using NPM start from this directory, with the --userDir
+parameter pointing to the /data directory on the container. The /data directory
+is exported as a Docker volume to make it simple to save user configuration
+outside the container. See below for more details on this...
+
 ##Customising
 
-To install extra Node-RED modules via npm you can either use the Node-RED command-line tool
-externally on your host machine - pointed at the running container... or
+To install extra Node-RED modules via npm you can either use the Node-RED
+command-line tool externally on your host machine, pointed at the running
+container, run npm install manually, using a shell on the container or locally
+into the mounted volume, or build a new image.
+
+### Container Shell
 
         $ docker exec -it mynodered /bin/bash
 
 Will give a command line inside the container - where you can then run the npm install
 command you wish - e.g.
 
+        $ cd /data 
         $ npm install node-red-node-smooth
         node-red-node-smooth@0.0.3 node_modules/node-red-node-smooth
         $ exit
@@ -75,13 +106,57 @@ command you wish - e.g.
 
 Refreshing the browser page should now reveal the newly added node in the palette.
 
+### Local Volume
+
+Running a Node-RED container with a host directory mounted as the data volume,
+you can manually run `npm install` within your host directory. Files created in
+the host directory will automatically appear in the container's file system.
+
+        $ docker run -it -p 1880:1880 -v ~/.node-red:/data --name mynodered theceejay/nreddock
+
+This command mounts the host's node-red directory, containing the user's
+configuration and installed nodes, as the user configuration directory inside
+the container. Adding extra nodes to the container can be accomplished by
+running npm install locally.
+
+        $ cd ~/.node-red
+        $ npm install node-red-node-smooth
+        node-red-node-smooth@0.0.3 node_modules/node-red-node-smooth
+        $ docker stop mynodered
+        $ docker start mynodered
+
+
+**Note** : Modules with a native dependencies will be compiled on the host
+machine's architecture. These modules will not work inside the Node-RED
+container unless the architecture matches the container's base image. For native
+modules, it is recommended to install using a local shell or update the
+project's package.json and re-build.
+
+###Custom Image
+
+Creating a new Docker image, using the public Node-RED images as the base image,
+allows you to install extra nodes during the build process.
+
+This Dockerfile builds a custom Node-RED image with the flightaware module
+installed from NPM.
+
+```
+FROM jamesthomas/node-red
+RUN npm install node-red-contrib-flightaware
+```
+
+Alternatively, you can modify the package.json in this repository and re-build
+the images from scratch. This will also allow you to modify the version of
+Node-RED that is installed. See below for more details...
+
 ##Adding Volumes
 
-As previously mentioned by default we export the /root/.node-red directory.
-Without any extra command parameters this usuually gets mounted somewhere like
-`/var/lib/docker/vfs/dir/` where it will appear as a directory with a long
-hexadecimal name. If you delete either the running machine or the underlying image
-container this directory should remain preserving your data.
+As previously mentioned by default we export the /data directory, with is used
+to store user data for the Node-RED instance. Without any extra command
+parameters this usuually gets mounted somewhere like `/var/lib/docker/vfs/dir/`
+where it will appear as a directory with a long hexadecimal name. If you delete
+either the running machine or the underlying image container this directory
+should remain preserving your data.
 
 If you create another image you can "migrate" the data from this directory to
 the a new one that will be created when the new image starts running. There is
@@ -95,24 +170,6 @@ mount them to a named directory on the host machine, or to a named data containe
 
 The former is simpler, but less transportable - the latter the "more Docker way".
 
-####Local volume
-
-    docker run -it -p 1880:1880 -v ~/mydata:/root/.node-red --name mynodered theceejay/nreddock
-
-Will mount that same `root/.node-red` to the `~/mydata` directory on the host.
-What this means is that if you delete and recreate an image or machine then by
-adding the volume in this way will re-use the existing data - hopefully allowing
-smoother upgrades and migrations.
-
-####Data container
-
-tbd
-
-
-    docker run --name mydata --entrypoint /bin/echo mynodered Data-only container for Node-RED
-    docker run -d --name mynodered --volumes-from mydata theceejay/nreddock
-
-
 ##Updating
 
 Updating the base container image is as simple as
@@ -120,7 +177,6 @@ Updating the base container image is as simple as
         $ docker pull theceejay/nreddock
         $ docker stop mynodered
         $ docker start mynodered
-
 
 ##Running headless
 
@@ -160,39 +216,10 @@ This is where you can pre-define any extra nodes you want installed every time
 by default, and then
 
     "scripts"      : {
-        "start": "node node_modules/node-red/red.js flow.json"
+        "start": "node-red -v flow.json"
     },
 
 This is the command that starts Node-RED when the container is run.
-
-####Dockerfile
-
-The existing Dockerfile is very simple
-
-        FROM node:0.10-onbuild
-        VOLUME /root/.node-red
-        EXPOSE 1880
-
-What this does is use the "on-build" version of node.js v0.10.* - this then reads
-the co-located package.json file (see above) - and installs whatever is defined there...
-
-It then exposes the `/root/.node-red` directory to the be mounted externally so we can
-save flows and other npms installed after the build.
-
-Finally it exposes the default Node-RED port 1880 to be available externally.
-
-**Note** : This also copies any files in the same directory as the Dockerfile
-to the /usr/src/app directory in the container... this means you can also add
-other node_modules or pre-configured libraries - or indeed
-overwrite the `node_modules/node-red/settings.js` file if you wish.
-
-To build your image then run
-
-        $ docker build -t customnodered .
-
-and run with
-
-        $ docker run -it -p 1880:1880 --name yournodered customnodered
 
 ##Linking Containers
 
@@ -218,25 +245,3 @@ Then a simple flow like below should work - using the alias *broker* we just set
 
 This way the internal broker is not exposed outside of the docker host - of course
 you may add `-p 1883:1883`  etc to the broker run command if you want to see it...
-
-##Minimum Viable Container
-
-(needs Node-RED v0.10.8 to be released :-)
-
-This example Dockerfile uses a non-offical minimal node.js runtime. It ends
-up making an 80MB runtime for Node-RED (as opposed to the typical 800MB of
-the official ones above.
-
-The main impact is that GYP is missing so any node-modules that need compiling
-on install will fail... The core of Node-RED is OK.
-
-        FROM mhart/alpine-node:0.10
-        RUN npm install node-red
-        VOLUME /root/.node-red
-        EXPOSE 1880
-        CMD cd ~/.node-red && node /node_modules/node-red/red.js flow.json
-
-As per above it can be built and run with
-
-        $ docker build -t minnodered .
-        $ docker run -it -p 1880:1880 --name myminred minnodered
