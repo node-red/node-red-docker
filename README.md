@@ -83,6 +83,12 @@ parameter pointing to the /data directory on the container. The /data directory
 is exported as a Docker volume to make it simple to save user configuration
 outside the container. See below for more details on this...
 
+The flows configuration file is set using an environment parameter (FLOWS),
+which defaults to 'flows.json'. This can be changed at runtime using the
+following command-line flag.
+
+        $ docker run -it -p 1880:1880 -e FLOWS=my_flows.json theceejay/nreddock
+
 ##Customising
 
 To install extra Node-RED modules via npm you can either use the Node-RED
