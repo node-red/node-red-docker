@@ -58,11 +58,11 @@ container without permanently losing all of your customisations._
 
 ##Container Layout 
 
-This project contains Dockerfiles to build different Node-RED images. 
+This repository contains branches to build different Node-RED Docker images. 
 
-- **standard** Node-RED image using official Node.JS v4 base image.
-- **small** Node-RED image using Alpine Linux base image.
-- **rpi** Node-RED image using RPi-compatible base image.
+- **master** - uses [official Node.JS v4 base image](https://hub.docker.com/_/node/).
+- **small** uses [Alpine Linux base image](https://hub.docker.com/r/mhart/alpine-node/).
+- **rpi** uses [RPi-compatible base image](https://hub.docker.com/r/hypriot/rpi-node/).
 
 Using Alpine Linux reduces the built image size (~100MB vs ~700MB) but removes
 standard dependencies that are required for native module compilation. If you
@@ -71,7 +71,8 @@ the small image with the missing packages.
 
 Build these images with the following command...
 
-        $ docker build -t mynodered:<tag> -f <dir>/Dockerfile .
+        $ git checkout <master|small|rpi>
+        $ docker build -t mynodered:<tag> .
 
 ###package.json
 
