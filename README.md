@@ -5,12 +5,12 @@ Some basic familiarity with Docker and the
 [Docker Command Line](https://docs.docker.com/reference/commandline/cli/)
 is assumed.
 
-This project also provides the build for the (*to be renamed*) "thedceejay/nreddock"
-container on [DockerHub](https://registry.hub.docker.com/u/theceejay/nreddock/).
+This project also provides the build for the (*to be renamed*) "nodered/node-red-docker"
+container on [DockerHub](https://hub.docker.com/r/nodered/node-red-docker/).
 
 To run this directly in docker at it's simplest just run
 
-        docker run -it -p 1880:1880 --name mynodered theceejay/nreddock
+        docker run -it -p 1880:1880 --name mynodered nodered/node-red-docker
 
 Let's dissect that command...
 
@@ -18,7 +18,7 @@ Let's dissect that command...
         -it             - attach a terminal session so we can see what is going on
         -p 1880:1880    - connect local port 1880 to the exposed internal port 1880
         --name mynodered - give this machine a friendly local name
-        theceejay/nreddock - the image to base it on - currently Node-RED v0.10.6
+        nodered/node-red-docker - the image to base it on - currently Node-RED v0.10.6
 
 
 Running that command should give a terminal window with a running instance of Node-RED
@@ -39,7 +39,7 @@ If we are happy with what we see we can stop the command window - `Ctrl-c` and t
 
         $ docker ps -a
         CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS                       PORTS               NAMES
-        b03e408d3905        theceejay/nreddock:latest   "npm start"         12 seconds ago      Exited (130) 7 seconds ago                       mynodered   .
+        b03e408d3905        nodered/node-red-docker:latest   "npm start"         12 seconds ago      Exited (130) 7 seconds ago                       mynodered   .
 
 Notice the machine is now stopped ("exited") - and if your browser window is still open it
 should report "lost connection to server".
@@ -108,7 +108,7 @@ The flows configuration file is set using an environment parameter (**FLOWS**),
 which defaults to *'flows.json'*. This can be changed at runtime using the
 following command-line flag.
 
-        $ docker run -it -p 1880:1880 -e FLOWS=my_flows.json theceejay/nreddock
+        $ docker run -it -p 1880:1880 -e FLOWS=my_flows.json nodered/node-red-docker
 
 ##Customising
 
@@ -139,7 +139,7 @@ Running a Node-RED container with a host directory mounted as the data volume,
 you can manually run `npm install` within your host directory. Files created in
 the host directory will automatically appear in the container's file system.
 
-        $ docker run -it -p 1880:1880 -v ~/.node-red:/data --name mynodered theceejay/nreddock
+        $ docker run -it -p 1880:1880 -v ~/.node-red:/data --name mynodered nodered/node-red-docker
 
 This command mounts the host's node-red directory, containing the user's
 configuration and installed nodes, as the user configuration directory inside
@@ -167,7 +167,7 @@ This Dockerfile builds a custom Node-RED image with the flightaware module
 installed from NPM.
 
 ```
-FROM jamesthomas/node-red
+FROM nodered/node-red-docker
 RUN npm install node-red-contrib-flightaware
 ```
 
@@ -200,7 +200,7 @@ The former is simpler, but less transportable - the latter the "more Docker way"
 
 Updating the base container image is as simple as
 
-        $ docker pull theceejay/nreddock
+        $ docker pull nodered/node-red-docker
         $ docker stop mynodered
         $ docker start mynodered
 
@@ -208,14 +208,14 @@ Updating the base container image is as simple as
 
 The barest minimum we need to just run Node-RED is
 
-    $ docker run -d -p 1880 theceejay/nreddock
+    $ docker run -d -p 1880 nodered/node-red-docker
 
 This will create a local running instance of a machine - that will have some
 docker id number and be running on a random port... to find out run
 
     $ docker ps -a
     CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS                     PORTS                     NAMES
-    4bbeb39dc8dc        theceejay/nreddock:latest   "npm start"         4 seconds ago       Up 4 seconds               0.0.0.0:49154->1880/tcp   furious_yalow
+    4bbeb39dc8dc        nodered/node-red-docker:latest   "npm start"         4 seconds ago       Up 4 seconds               0.0.0.0:49154->1880/tcp   furious_yalow
     $
 
 You can now point a browser to the host machine on the tcp port reported back, so in the example
@@ -227,13 +227,13 @@ You can link containers "internally" within the docker runtime by using the --li
 
 For example I have a simple MQTT broker container available as
 
-        docker run -it --name mybroker theceejay/nrbroker
+        docker run -it --name mybroker nodered/node-red-docker
 
 (no need to expose the port 1883 globally unless you want to... as we do magic below)
 
 Then run nodered docker - but this time with a link parameter (name:alias)
 
-        docker run -it -p 1880:1880 --name mynodered --link mybroker:broker theceejay/nreddock
+        docker run -it -p 1880:1880 --name mynodered --link mybroker:broker nodered/node-red-docker
 
 the magic here being the `--link` that inserts a entry into the node-red instance
 hosts file called *broker* that links to the mybroker instance....  but we do
