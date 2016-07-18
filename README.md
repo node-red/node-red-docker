@@ -5,7 +5,7 @@ Some basic familiarity with Docker and the
 [Docker Command Line](https://docs.docker.com/reference/commandline/cli/)
 is assumed.
 
-This project also provides the build for the (*to be renamed*) "nodered/node-red-docker"
+This project also provides the build for the `nodered/node-red-docker`
 container on [DockerHub](https://hub.docker.com/r/nodered/node-red-docker/).
 
 To run this directly in docker at it's simplest just run
@@ -18,15 +18,15 @@ Let's dissect that command...
         -it             - attach a terminal session so we can see what is going on
         -p 1880:1880    - connect local port 1880 to the exposed internal port 1880
         --name mynodered - give this machine a friendly local name
-        nodered/node-red-docker - the image to base it on - currently Node-RED v0.10.6
+        nodered/node-red-docker - the image to base it on - currently Node-RED v0.14.4
 
 
 Running that command should give a terminal window with a running instance of Node-RED
 
         Welcome to Node-RED
         ===================
-        8 Apr 12:13:44 - [info] Node-RED version: v0.10.6
-        8 Apr 12:13:44 - [info] Node.js  version: v0.10.38
+        8 Apr 12:13:44 - [info] Node-RED version: v0.14.4
+        8 Apr 12:13:44 - [info] Node.js  version: v4.4.7
         .... etc
 
 You can then browse to `http://{host-ip}:1880` to get the familiar Node-RED desktop.
@@ -56,9 +56,9 @@ _**Note** : this Dockerfile is configured to store the flows.json file and any
 extra nodes you install "outside" of the container. We do this so that you may rebuild the underlying
 container without permanently losing all of your customisations._
 
-##Container Layout 
+## Container Layout
 
-This repository contains branches to build different Node-RED Docker images. 
+This repository contains branches to build different Node-RED Docker images.
 
 - **master** - uses [official Node.JS v4 base image](https://hub.docker.com/_/node/).
 - **small** uses [Alpine Linux base image](https://hub.docker.com/r/mhart/alpine-node/).
@@ -74,7 +74,7 @@ Build these images with the following command...
         $ git checkout <master|small|rpi>
         $ docker build -t mynodered:<tag> .
 
-###package.json
+### package.json
 
 The package.json is a metafile that downloads and installs the required version
 of Node-RED and any other npms you wish to install at build time. During the
@@ -97,7 +97,7 @@ by default, and then
 This is the command that starts Node-RED when the container is run.
 
 
-###startup
+### startup
 
 Node-RED is started using NPM start from this `/usr/src/node-red`, with the `--userDir`
 parameter pointing to the `/data` directory on the container. The `/data` directory
@@ -110,7 +110,7 @@ following command-line flag.
 
         $ docker run -it -p 1880:1880 -e FLOWS=my_flows.json nodered/node-red-docker
 
-##Customising
+## Customising
 
 To install extra Node-RED modules via npm you can either use the Node-RED
 command-line tool externally on your host machine, pointed at the running
@@ -124,7 +124,7 @@ into the mounted volume, or build a new image.
 Will give a command line inside the container - where you can then run the npm install
 command you wish - e.g.
 
-        $ cd /data 
+        $ cd /data
         $ npm install node-red-node-smooth
         node-red-node-smooth@0.0.3 node_modules/node-red-node-smooth
         $ exit
@@ -158,7 +158,7 @@ container unless the architecture matches the container's base image. For native
 modules, it is recommended to install using a local shell or update the
 project's package.json and re-build._
 
-###Custom Image
+### Custom Image
 
 Creating a new Docker image, using the public Node-RED images as the base image,
 allows you to install extra nodes during the build process.
@@ -175,7 +175,7 @@ Alternatively, you can modify the package.json in this repository and re-build
 the images from scratch. This will also allow you to modify the version of
 Node-RED that is installed. See below for more details...
 
-##Adding Volumes
+## Adding Volumes
 
 As previously mentioned by default we export the /data directory, with is used
 to store user data for the Node-RED instance. Without any extra command
@@ -196,7 +196,7 @@ mount them to a named directory on the host machine, or to a named data containe
 
 The former is simpler, but less transportable - the latter the "more Docker way".
 
-##Updating
+## Updating
 
 Updating the base container image is as simple as
 
@@ -204,7 +204,7 @@ Updating the base container image is as simple as
         $ docker stop mynodered
         $ docker start mynodered
 
-##Running headless
+## Running headless
 
 The barest minimum we need to just run Node-RED is
 
@@ -221,7 +221,7 @@ docker id number and be running on a random port... to find out run
 You can now point a browser to the host machine on the tcp port reported back, so in the example
 above browse to  `http://{host ip}:49154`
 
-##Linking Containers
+## Linking Containers
 
 You can link containers "internally" within the docker runtime by using the --link option.
 
