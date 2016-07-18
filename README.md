@@ -35,16 +35,13 @@ The advantage of doing this is that by giving it a name we can manipulate it
 more easily, and by fixing the host port we know we are on familiar ground.
 (Of course this does mean we can only run one instance at a time... but one step at a time folks...)
 
-If we are happy with what we see we can stop the command window - `Ctrl-c` and then run
+If we are happy with what we see we can detach the terminal with `Ctrl-p``Ctrl-q` - the container will keep running in the background.
 
-        $ docker ps -a
-        CONTAINER ID        IMAGE                       COMMAND             CREATED             STATUS                       PORTS               NAMES
-        b03e408d3905        nodered/node-red-docker:latest   "npm start"         12 seconds ago      Exited (130) 7 seconds ago                       mynodered   .
+To reattach to the terminal (to see logging) run:
 
-Notice the machine is now stopped ("exited") - and if your browser window is still open it
-should report "lost connection to server".
-
-You can now restart it
+        $ docker attach mynodered
+        
+If you need to restart the container (e.g. after a reboot or restart of the Docker daemon)
 
         $ docker start mynodered
 
