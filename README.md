@@ -57,8 +57,8 @@ container without permanently losing all of your customisations._
 
 This repository contains branches to build different Node-RED Docker images.
 
-- **master** - uses [official Node.JS v4 base image](https://hub.docker.com/_/node/).
-- **small** uses [Alpine Linux base image](https://hub.docker.com/r/mhart/alpine-node/).
+- **latest** - uses [official Node.JS v4 base image](https://hub.docker.com/_/node/).
+- **tiny** uses [Alpine Linux base image](https://hub.docker.com/r/mhart/alpine-node/).
 - **rpi** uses [RPi-compatible base image](https://hub.docker.com/r/hypriot/rpi-node/).
 
 Using Alpine Linux reduces the built image size (~100MB vs ~700MB) but removes
