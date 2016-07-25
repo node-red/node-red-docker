@@ -11,6 +11,9 @@ before_install:
   - docker tag nodered/node-red-docker:slim nodered/node-red-docker:$VERSION-slim
   - docker tag nodered/node-red-docker:rpi nodered/node-red-docker:$VERSION-rpi
 
+script:
+  - echo
+
 after_success:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
   - docker push nodered/node-red-docker
