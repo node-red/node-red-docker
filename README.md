@@ -105,6 +105,12 @@ following command-line flag.
 
         $ docker run -it -p 1880:1880 -e FLOWS=my_flows.json nodered/node-red-docker
 
+Node.js runtime arguments can be passed to the container using an environment
+parameter (**NODE_OPTIONS**). For example, to fix the heap size used by
+the Node.js garbage collector you would use the following command.
+
+        $ docker run -it -p 1880:1880 -e NODE_OPTIONS="--max_old_space_size=128" nodered/node-red-docker
+
 ## Customising
 
 To install extra Node-RED modules via npm you can either use the Node-RED

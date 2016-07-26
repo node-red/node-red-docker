@@ -10,7 +10,7 @@
     },
     "main": "node_modules/node-red/red/red.js",
     "scripts": {
-        "start": "node-red -v $FLOWS"
+        "start": "node $NODE_OPTIONS node_modules/node-red/red.js -v $FLOWS"
     },
     "contributors": [
         {
