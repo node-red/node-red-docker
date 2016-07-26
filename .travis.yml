@@ -4,11 +4,11 @@ services:
   - docker
 
 before_install:
-  - docker build -f latest/Dockerfile -t nodered/node-red-docker .
-  - docker build -f slim/Dockerfile -t nodered/node-red-docker:slim .
+#  - docker build -f latest/Dockerfile -t nodered/node-red-docker .
+#  - docker build -f slim/Dockerfile -t nodered/node-red-docker:slim .
   - docker build -f rpi/Dockerfile -t nodered/node-red-docker:rpi .
-  - docker tag nodered/node-red-docker nodered/node-red-docker:$VERSION
-  - docker tag nodered/node-red-docker:slim nodered/node-red-docker:$VERSION-slim
+#  - docker tag nodered/node-red-docker nodered/node-red-docker:$VERSION
+#  - docker tag nodered/node-red-docker:slim nodered/node-red-docker:$VERSION-slim
   - docker tag nodered/node-red-docker:rpi nodered/node-red-docker:$VERSION-rpi
 
 script:
