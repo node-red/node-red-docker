@@ -12,7 +12,10 @@ before_install:
   - docker tag nodered/node-red-docker:slim nodered/node-red-docker:$VERSION-slim
 
 script:
-  - echo
+  - docker run -d nodered/node-red-docker:latest
+  - docker ps | grep latest
+  - docker run -d nodered/node-red-docker:slim
+  - docker ps | grep slim
 
 after_success:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
