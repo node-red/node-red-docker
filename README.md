@@ -18,14 +18,14 @@ Let's dissect that command...
         -it             - attach a terminal session so we can see what is going on
         -p 1880:1880    - connect local port 1880 to the exposed internal port 1880
         --name mynodered - give this machine a friendly local name
-        nodered/node-red-docker - the image to base it on - currently Node-RED v0.14.4
+        nodered/node-red-docker - the image to base it on - currently Node-RED v0.14.5
 
 
 Running that command should give a terminal window with a running instance of Node-RED
 
         Welcome to Node-RED
         ===================
-        8 Apr 12:13:44 - [info] Node-RED version: v0.14.4
+        8 Apr 12:13:44 - [info] Node-RED version: v0.14.5
         8 Apr 12:13:44 - [info] Node.js  version: v4.4.7
         .... etc
 
@@ -55,21 +55,20 @@ container without permanently losing all of your customisations._
 
 ## Container Layout
 
-This repository contains branches to build different Node-RED Docker images.
+This repository contains Dockerfiles to build different Node-RED Docker images.
 
 - **latest** - uses [official Node.JS v4 base image](https://hub.docker.com/_/node/).
-- **tiny** uses [Alpine Linux base image](https://hub.docker.com/r/mhart/alpine-node/).
+- **slim** uses [Alpine Linux base image](https://hub.docker.com/r/mhart/alpine-node/).
 - **rpi** uses [RPi-compatible base image](https://hub.docker.com/r/hypriot/rpi-node/).
 
 Using Alpine Linux reduces the built image size (~100MB vs ~700MB) but removes
 standard dependencies that are required for native module compilation. If you
 want to add modules with native dependencies, use the standard image or extend
-the small image with the missing packages.
+the slim image with the missing packages.
 
 Build these images with the following command...
 
-        $ git checkout <master|small|rpi>
-        $ docker build -t mynodered:<tag> .
+        $ docker build -f <version>/Dockerfile -t mynodered:<version> .
 
 ### package.json
 
@@ -92,7 +91,6 @@ by default, and then
     },
 
 This is the command that starts Node-RED when the container is run.
-
 
 ### startup
 
