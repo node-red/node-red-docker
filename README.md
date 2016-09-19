@@ -125,7 +125,7 @@ system, extra nodes can be installed without leaving the host system.
         $ node-red-admin install node-red-node-openwhisk
 
 This tool assumes Node-RED is available at the following address
-```http://localhost:1880```. 
+`http://localhost:1880`. 
 
 Refreshing the browser page should now reveal the newly added node in the palette.
 
