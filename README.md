@@ -95,9 +95,7 @@ This is the command that starts Node-RED when the container is run.
 ### startup
 
 Node-RED is started using NPM start from this `/usr/src/node-red`, with the `--userDir`
-parameter pointing to the `/data` directory on the container. The `/data` directory
-is exported as a Docker volume to make it simple to save user configuration
-outside the container. See below for more details on this...
+parameter pointing to the `/data` directory on the container. 
 
 The flows configuration file is set using an environment parameter (**FLOWS**),
 which defaults to *'flows.json'*. This can be changed at runtime using the
@@ -111,12 +109,25 @@ the Node.js garbage collector you would use the following command.
 
         $ docker run -it -p 1880:1880 -e NODE_OPTIONS="--max_old_space_size=128" nodered/node-red-docker
 
-## Customising
+## Adding Nodes
 
-To install extra Node-RED modules via npm you can either use the Node-RED
-command-line tool externally on your host machine, pointed at the running
-container, run npm install manually, using a shell on the container or locally
-into the mounted volume, or build a new image.
+Installing extra Node-RED nodes into an instance running with Docker can be
+achieved by manually installing those nodes into the container, using the cli or
+running npm commands within a container shell, or mounting a host directory with
+those nodes as a data volume. 
+
+### Node-RED Admin Tool 
+
+Using the administration tool, with port forwarding on the container to the host
+system, extra nodes can be installed without leaving the host system. 
+
+        $ npm install -g node-red-admin
+        $ node-red-admin install node-red-node-openwhisk
+
+This tool assumes Node-RED is available at the following address
+```http://localhost:1880```. 
+
+Refreshing the browser page should now reveal the newly added node in the palette.
 
 ### Container Shell
 
@@ -134,7 +145,7 @@ command you wish - e.g.
 
 Refreshing the browser page should now reveal the newly added node in the palette.
 
-### Local Volume
+### Host Directory As Volume
 
 Running a Node-RED container with a host directory mounted as the data volume,
 you can manually run `npm install` within your host directory. Files created in
@@ -159,7 +170,7 @@ container unless the architecture matches the container's base image. For native
 modules, it is recommended to install using a local shell or update the
 project's package.json and re-build._
 
-### Custom Image
+### Building Custom Image
 
 Creating a new Docker image, using the public Node-RED images as the base image,
 allows you to install extra nodes during the build process.
@@ -176,26 +187,55 @@ Alternatively, you can modify the package.json in this repository and re-build
 the images from scratch. This will also allow you to modify the version of
 Node-RED that is installed. See below for more details...
 
-## Adding Volumes
+## Managing User Data
 
-As previously mentioned by default we export the /data directory, with is used
-to store user data for the Node-RED instance. Without any extra command
-parameters this usuually gets mounted somewhere like `/var/lib/docker/vfs/dir/`
-where it will appear as a directory with a long hexadecimal name. If you delete
-either the running machine or the underlying image container this directory
-should remain preserving your data.
+Once you have customised the Node-RED instance running with Docker, we need to
+ensure these modifications are not lost if the container is destroyed. Managing
+this user data can be handed by persisting container state into a new image or
+using named data volumes to handle move this data outside the container.
 
-If you create another image you can "migrate" the data from this directory to
-the a new one that will be created when the new image starts running. There is
-no "easy" way to keep track of these directories except manually.
+### Saving Changes As Custom Image
 
-_**Note** : the new machine will not automatically pick up the old flow and
-customisations._
+Modifications to files within the live container, e.g. manually adding nodes or
+creating flows, do not exist outside the lifetime of the container. If that
+container instance is destroyed, these changes will be lost.
 
-The way to fix this is to use a named data volume... to do this you can either
-mount them to a named directory on the host machine, or to a named data container.
+Docker allows you to the current state of a container to a new image. This
+means you can persist your changes as a new image that can be shared on other
+systems.
 
-The former is simpler, but less transportable - the latter the "more Docker way".
+        $ docker commit mynodered custom-node-red-docker
+
+If we destroy the ```mynodered``` container, the instance can be recovered by
+spawning a new container using the ```custom-node-red-docker``` image.
+
+### Using Named Data Volumes
+
+Docker supports using [data volumes](https://docs.docker.com/engine/tutorials/dockervolumes/) to store
+persistent or shared data outside the container. Files and directories within data
+volumes exist outside of the lifecycle of containers, i.e. the files still exist
+after removing the container.
+
+Node-RED uses the `/data` directory to store user configuration data.
+
+Mounting a data volume inside the container at this directory path means user
+configuration data can be saved outside of the container and even shared between
+container instances.
+
+Let's create a new named data volume to persist our user data and run a new
+container using this volume. 
+
+        $ docker volume create --name node_red_user_data
+        $ docker volume ls
+        DRIVER              VOLUME NAME
+        local               node_red_user_data
+        $ docker run -it -p 1880:1880 -v node_red_user_data:/data --name mynodered nodered/node-red-docker
+
+Using Node-RED to create and deploy some sample flows, we can now destroy the
+container and start a new instance without losing our user data.
+
+        $ docker rm mynodered
+        $ docker run -it -p 1880:1880 -v node_red_user_data:/data --name mynodered nodered/node-red-docker
 
 ## Updating
 
