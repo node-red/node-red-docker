@@ -151,11 +151,16 @@ Running a Node-RED container with a host directory mounted as the data volume,
 you can manually run `npm install` within your host directory. Files created in
 the host directory will automatically appear in the container's file system.
 
-        $ docker run -it -p 1880:1880 -v ~/.node-red:/data --name mynodered nodered/node-red-docker
-
 This command mounts the host's node-red directory, containing the user's
 configuration and installed nodes, as the user configuration directory inside
-the container. Adding extra nodes to the container can be accomplished by
+the container. 
+
+        $ docker run -it -p 1880:1880 -v ~/.node-red:/data --name mynodered nodered/node-red-docker
+
+_**Having file permissions issues after mounting a host directory?**_
+_Docker maps the internal container uuid to 1000 on the host system. If you are running as a user with a different uuid, e.g. the second user added on a system, the container user account won't be able to read files on the host system. Fix this by using the `--run $USER` flag. See [here for more details](https://github.com/node-red/node-red-docker/issues/9)._
+
+Adding extra nodes to the container can be accomplished by
 running npm install locally.
 
         $ cd ~/.node-red
