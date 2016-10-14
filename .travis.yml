@@ -22,4 +22,4 @@ after_success:
   - docker push nodered/node-red-docker
 
 env:
-  - VERSION=0.15.0
+  - VERSION=0.15.1
