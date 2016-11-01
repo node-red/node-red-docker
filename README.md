@@ -291,3 +291,32 @@ Then a simple flow like below should work - using the alias *broker* we just set
 
 This way the internal broker is not exposed outside of the docker host - of course
 you may add `-p 1883:1883`  etc to the broker run command if you want to see it...
+
+
+## Issues
+
+Here is a list of common issues users have reported with possible solutions.
+
+### User Permission Errors
+
+If you are seeing *permission denied* errors opening files or accessing host devices, try running the container as the root user. 
+
+```
+docker run -it -p 1880:1880 --name mynodered --user=root nodered/node-red-docker
+```
+
+References: 
+
+https://github.com/node-red/node-red-docker/issues/15
+
+https://github.com/node-red/node-red-docker/issues/8
+
+### Accessing Host Devices
+
+If you want to access a device from the host inside the container, e.g. serial port, use the following command-line flag to pass access through. 
+
+```
+docker run -it -p 1880:1880 --name mynodered --device=/dev/ttyACM0 nodered/node-red-docker
+```
+References:
+https://github.com/node-red/node-red-docker/issues/15
