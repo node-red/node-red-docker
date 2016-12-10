@@ -320,3 +320,14 @@ docker run -it -p 1880:1880 --name mynodered --device=/dev/ttyACM0 nodered/node-
 ```
 References:
 https://github.com/node-red/node-red-docker/issues/15
+
+### Setting Timezone
+
+If you want to modify the default timezone, use the TZ environment variable with the [relevant timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+
+```
+docker run -it -p 1880:1880 --name mynodered -e TZ="Europe/London" nodered/node-red-docker
+```
+
+References:
+https://groups.google.com/forum/#!topic/node-red/ieo5IVFAo2o
