@@ -1,4 +1,4 @@
-FROM hypriot/rpi-node:4
+FROM hypriot/rpi-node:6
 
 # Home directory for Node-RED application source code.
 RUN mkdir -p /usr/src/node-red
