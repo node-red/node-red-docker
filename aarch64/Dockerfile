@@ -1,4 +1,4 @@
-FROM aarch64/node:4.6-slim
+FROM aarch64/node:6.10.0-slim
 
 # Experimental ARMv8 support for Node-RED
 
