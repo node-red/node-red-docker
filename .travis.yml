@@ -7,17 +7,20 @@ services:
 
 before_install:
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
-  - docker build -f rpi/Dockerfile -t nodered/node-red-docker:rpi .
   - docker build -f latest/Dockerfile -t nodered/node-red-docker .
   - docker build -f slim/Dockerfile -t nodered/node-red-docker:slim .
+  - docker build -f rpi/Dockerfile -t nodered/node-red-docker:rpi .
   - docker tag nodered/node-red-docker nodered/node-red-docker:$VERSION
   - docker tag nodered/node-red-docker:slim nodered/node-red-docker:$VERSION-slim
+  - docker tag nodered/node-red-docker:rpi nodered/node-red-docker:$VERSION-rpi
 
 script:
   - docker run -d nodered/node-red-docker:latest
   - docker ps | grep latest
   - docker run -d nodered/node-red-docker:slim
   - docker ps | grep slim
+  - docker run -d nodered/node-red-docker:rpi
+  - docker ps | grep rpi
 
 after_success:
   - docker login -e "$DOCKER_EMAIL" -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
