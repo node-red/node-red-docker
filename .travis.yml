@@ -6,7 +6,7 @@ services:
   - docker
 
 before_install:
-  - VERSION=`grep -Eo "\"node-red\": \"(\d+.\d+.\d+)" package.json | cut -d\" -f4`
+  - export VERSION=`grep -Eo "\"node-red\": \"(\d+.\d+.\d+)" package.json | cut -d\" -f4`
   - echo $VERSION
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   - docker build -f latest/Dockerfile -t nodered/node-red-docker .
