@@ -1,5 +1,7 @@
 # Node-RED-Docker
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/node-red/node-red-docker.svg)](https://greenkeeper.io/)
+
 This project describes some of the many ways Node-RED can be run under Docker.
 Some basic familiarity with Docker and the
 [Docker Command Line](https://docs.docker.com/reference/commandline/cli/)
