@@ -6,7 +6,7 @@ services:
   - docker
 
 before_install:
-  - export VERSION=`grep -Eo "\"node-red\": \"(\d+.\d+.\d+)" package.json | cut -d\" -f4`
+  - source version.sh
   - echo $VERSION
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   - docker build -f latest/Dockerfile -t nodered/node-red-docker .
@@ -27,6 +27,3 @@ script:
 after_success:
   - docker login -e "$DOCKER_EMAIL" -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker push nodered/node-red-docker
-
-env:
-  - VERSION=0.17.0
