@@ -6,6 +6,8 @@ services:
   - docker
 
 before_install:
+  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
+  - docker build -f rpi/Dockerfile -t nodered/node-red-docker:rpi .
   - docker build -f latest/Dockerfile -t nodered/node-red-docker .
   - docker build -f slim/Dockerfile -t nodered/node-red-docker:slim .
   - docker tag nodered/node-red-docker nodered/node-red-docker:$VERSION
