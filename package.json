@@ -1,6 +1,6 @@
 {
     "name": "node-red-docker",
-    "version": "0.16.2",
+    "version": "0.17.0",
     "description": "A visual tool for wiring the Internet of Things",
     "homepage": "http://nodered.org",
     "license": "Apache 2.0",
@@ -24,7 +24,7 @@
         }
     ],
     "dependencies": {
-        "node-red": "0.16.2",
+        "node-red": "0.17.0",
         "node-red-node-msgpack": "*",
         "node-red-node-base64": "*",
         "node-red-node-suncalc": "*",
