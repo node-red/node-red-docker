@@ -25,5 +25,7 @@ script:
   - docker ps | grep rpi
 
 after_success:
-  - docker login -e "$DOCKER_EMAIL" -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-  - docker push nodered/node-red-docker
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -e "$DOCKER_EMAIL" -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+    docker push nodered/node-red-docker;
+    fi
