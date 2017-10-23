@@ -9,9 +9,9 @@ before_install:
   - source version.sh
   - echo $VERSION
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
-  - docker build -f latest/Dockerfile -t nodered/node-red-docker .
-  - docker build -f slim/Dockerfile -t nodered/node-red-docker:slim .
-  - docker build -f rpi/Dockerfile -t nodered/node-red-docker:rpi .
+  - docker build --no-cache -f latest/Dockerfile -t nodered/node-red-docker .
+  - docker build --no-cache -f slim/Dockerfile -t nodered/node-red-docker:slim .
+  - docker build --no-cache -f rpi/Dockerfile -t nodered/node-red-docker:rpi .
   - docker tag nodered/node-red-docker nodered/node-red-docker:$VERSION
   - docker tag nodered/node-red-docker:slim nodered/node-red-docker:$VERSION-slim
   - docker tag nodered/node-red-docker:rpi nodered/node-red-docker:$VERSION-rpi
