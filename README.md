@@ -14,7 +14,7 @@ To run this directly in docker at it's simplest just run
 
         docker run -it -p 1880:1880 --name mynodered nodered/node-red-docker
 
-Let's dissect that command...
+Let's dissect that command....
 
         docker run      - run this container... and build locally if necessary first.
         -it             - attach a terminal session so we can see what is going on
