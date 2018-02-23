@@ -55,11 +55,11 @@ _**Note** : this Dockerfile is configured to store the flows.json file and any
 extra nodes you install "outside" of the container. We do this so that you may rebuild the underlying
 container without permanently losing all of your customisations._
 
-## Container Layout
+## Images
 
-This repository contains Dockerfiles to build different Node-RED Docker images.
+The following images are built for each Node-RED release, using a Node.js v6 base image.
 
-- **latest** - uses [official Node.JS v4 base image](https://hub.docker.com/_/node/).
+- **latest** - uses [official Node.JS v6 base image](https://hub.docker.com/_/node/).
 - **slim** uses [Alpine Linux base image](https://hub.docker.com/r/mhart/alpine-node/).
 - **rpi** uses [RPi-compatible base image](https://hub.docker.com/r/hypriot/rpi-node/).
 
@@ -67,6 +67,19 @@ Using Alpine Linux reduces the built image size (~100MB vs ~700MB) but removes
 standard dependencies that are required for native module compilation. If you
 want to add modules with native dependencies, use the standard image or extend
 the slim image with the missing packages.
+
+Additional images using a newer Node.js v8 base image are now available with the following tags.
+
+- **latest-v8** 
+- **slim-v8**
+- **rpi-v8**
+
+Node-RED releases are also tagged with a version label, allowing you to fix on a specific version: `latest:X.Y.Z`, 
+`slim:X.Y.Z`, `rpi:X.Y.Z`.
+
+## Project Layout
+
+This repository contains Dockerfiles to build the Node-RED Docker images listed above.
 
 Build these images with the following command...
 
