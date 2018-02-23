@@ -1,4 +1,5 @@
-FROM node:6-alpine
+ARG NODE_VERSION=6
+FROM node:${NODE_VERSION}-alpine
 
 # Home directory for Node-RED application source code.
 RUN mkdir -p /usr/src/node-red

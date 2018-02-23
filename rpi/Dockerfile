@@ -1,4 +1,5 @@
-FROM hypriot/rpi-node:6
+ARG NODE_VERSION=6
+FROM hypriot/rpi-node:${NODE_VERSION}
 
 # add support for gpio library
 RUN apt-get update
