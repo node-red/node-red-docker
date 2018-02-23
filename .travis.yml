@@ -40,4 +40,6 @@ after_success:
   - if [ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == "false" ]; then
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
     docker push nodered/node-red-docker;
+    docker push nodered/node-red-docker-v6;
+    docker push nodered/node-red-docker-v8;
     fi
