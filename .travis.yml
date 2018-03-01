@@ -10,36 +10,40 @@ before_install:
   - echo $VERSION
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   - docker build -f latest/Dockerfile -t nodered/node-red-docker .
-  - docker build -f latest/Dockerfile -t nodered/node-red-docker-v8 --build-arg NODE_VERSION=8 .
+  - docker build -f latest/Dockerfile -t nodered/node-red-docker:v8 --build-arg NODE_VERSION=8 .
   - docker build -f slim/Dockerfile -t nodered/node-red-docker:slim .
-  - docker build -f slim/Dockerfile -t nodered/node-red-docker-v8:slim --build-arg NODE_VERSION=8 .
+  - docker build -f slim/Dockerfile -t nodered/node-red-docker:slim-v8 --build-arg NODE_VERSION=8 .
   - docker build -f rpi/Dockerfile -t nodered/node-red-docker:rpi .
-  - docker build -f rpi/Dockerfile -t nodered/node-red-docker-v8:rpi --build-arg NODE_VERSION=8 .
+  - docker build -f rpi/Dockerfile -t nodered/node-red-docker:rpi-v8 --build-arg NODE_VERSION=8 .
   - docker tag nodered/node-red-docker nodered/node-red-docker:$VERSION
-  - docker tag nodered/node-red-docker nodered/node-red-docker-v6
-  - docker tag nodered/node-red-docker nodered/node-red-docker-v6:$VERSION
-  - docker tag nodered/node-red-docker-v8 nodered/node-red-docker-v8:$VERSION
+  - docker tag nodered/node-red-docker nodered/node-red-docker:v6
+  - docker tag nodered/node-red-docker nodered/node-red-docker:$VERSION-v6
+  - docker tag nodered/node-red-docker:v8 nodered/node-red-docker:$VERSION-v8
   - docker tag nodered/node-red-docker:slim nodered/node-red-docker:$VERSION-slim
-  - docker tag nodered/node-red-docker:slim nodered/node-red-docker-v6:slim
-  - docker tag nodered/node-red-docker:slim nodered/node-red-docker-v6:$VERSION-slim
-  - docker tag nodered/node-red-docker-v8:slim nodered/node-red-docker-v8:$VERSION-slim
+  - docker tag nodered/node-red-docker:slim nodered/node-red-docker:slim-v6
+  - docker tag nodered/node-red-docker:slim nodered/node-red-docker:$VERSION-slim-v6
+  - docker tag nodered/node-red-docker:slim-v8 nodered/node-red-docker:$VERSION-slim-v8
   - docker tag nodered/node-red-docker:rpi nodered/node-red-docker:$VERSION-rpi
-  - docker tag nodered/node-red-docker:rpi nodered/node-red-docker-v6:rpi
-  - docker tag nodered/node-red-docker:rpi nodered/node-red-docker-v6:$VERSION-rpi
-  - docker tag nodered/node-red-docker-v8:rpi nodered/node-red-docker-v8:$VERSION-rpi
+  - docker tag nodered/node-red-docker:rpi nodered/node-red-docker:rpi-v6
+  - docker tag nodered/node-red-docker:rpi nodered/node-red-docker:$VERSION-rpi-v6
+  - docker tag nodered/node-red-docker:rpi-v8 nodered/node-red-docker:$VERSION-rpi-v8
 
 script:
   - docker run -d nodered/node-red-docker:latest
   - docker ps | grep latest
+  - docker run -d nodered/node-red-docker:v8
+  - docker ps | grep v8
   - docker run -d nodered/node-red-docker:slim
   - docker ps | grep slim
+  - docker run -d nodered/node-red-docker:slim-v8
+  - docker ps | grep slim-v8
   - docker run -d nodered/node-red-docker:rpi
   - docker ps | grep rpi
+  - docker run -d nodered/node-red-docker:rpi-v8
+  - docker ps | grep rpi-v8
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == "false" ]; then
     docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
     docker push nodered/node-red-docker;
-    docker push nodered/node-red-docker-v6;
-    docker push nodered/node-red-docker-v8;
     fi
