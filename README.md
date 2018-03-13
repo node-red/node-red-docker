@@ -4,7 +4,7 @@
 
 This project describes some of the many ways Node-RED can be run under Docker.
 Some basic familiarity with Docker and the
-[Docker Command Line](https://docs.docker.com/reference/commandline/cli/)
+[Docker Command Line](https://docs.docker.com/engine/reference/commandline/cli/)
 is assumed.
 
 This project also provides the build for the `nodered/node-red-docker`
