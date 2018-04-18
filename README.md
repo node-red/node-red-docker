@@ -70,12 +70,14 @@ the slim image with the missing packages.
 
 Additional images using a newer Node.js v8 base image are now available with the following tags.
 
-- **latest-v8** 
+- **v8** 
 - **slim-v8**
 - **rpi-v8**
 
 Node-RED releases are also tagged with a version label, allowing you to fix on a specific version: `latest:X.Y.Z`, 
 `slim:X.Y.Z`, `rpi:X.Y.Z`.
+
+You can see a full list of the tagged releases [here](https://hub.docker.com/r/nodered/node-red-docker/tags/).
 
 ## Project Layout
 
