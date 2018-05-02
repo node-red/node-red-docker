@@ -1,17 +1,24 @@
-FROM amd64/node:8-slim
+FROM amd64/node:8-alpine
 
 LABEL maintainer="Raymond Mouthaan <raymondmmouthaan@gmail.com>"
 
-# Home directory for Node-RED application source code and
+# add support for gpio library
+#RUN apt-get update
+#RUN apt-get install python-rpi.gpio
+
+# Node-RED application directory and
 # User data directory: contains flows, config and nodes.
 RUN mkdir -p /usr/src/node-red && \
     mkdir /data
 
 WORKDIR /usr/src/node-red
 
-# Add node-red user so we aren't running as root.
-RUN useradd --home-dir /usr/src/node-red --no-create-home node-red && \
-    chown -R node-red:node-red /data && \
+# Add node-red user (uid=1001) and group (gid=1001), so we aren't running as root.
+RUN addgroup -g 1001 -S node-red && \
+    adduser -u 1001 -S node-red -G node-red
+
+# Change owner of Node-RED application directory and User data directory.
+RUN chown -R node-red:node-red /data && \
     chown -R node-red:node-red /usr/src/node-red
 
 USER node-red

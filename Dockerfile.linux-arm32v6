@@ -7,7 +7,7 @@ LABEL maintainer="Raymond Mouthaan <raymondmmouthaan@gmail.com>"
 #RUN apt-get update
 #RUN apt-get install python-rpi.gpio
 
-# Home directory for Node-RED application source code and
+# Node-RED application directory and
 # User data directory: contains flows, config and nodes.
 RUN mkdir -p /usr/src/node-red && \
     mkdir /data
@@ -17,8 +17,10 @@ WORKDIR /usr/src/node-red
 # Add node-red user (uid=1001) and group (gid=1001), so we aren't running as root.
 RUN addgroup -g 1001 -S node-red && \
     adduser -u 1001 -S node-red -G node-red
-RUN chown -R node-red:node-red /data
-RUN chown -R node-red:node-red /usr/src/node-red
+
+# Change owner of Node-RED application directory and User data directory.
+RUN chown -R node-red:node-red /data && \
+    chown -R node-red:node-red /usr/src/node-red
 
 USER node-red
 
