@@ -2,10 +2,6 @@ FROM amd64/node:8-slim
 
 LABEL maintainer="Raymond Mouthaan <raymondmmouthaan@gmail.com>"
 
-# add support for gpio library
-#RUN apt-get update
-#RUN apt-get install python-rpi.gpio
-
 # Home directory for Node-RED application source code and
 # User data directory: contains flows, config and nodes.
 RUN mkdir -p /usr/src/node-red && \

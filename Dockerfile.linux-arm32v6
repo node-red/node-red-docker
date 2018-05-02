@@ -1,4 +1,4 @@
-FROM arm32v6/node:8-slim
+FROM arm32v6/node:8-alpine
 COPY tmp/qemu-arm-static /usr/bin/qemu-arm-static
 
 LABEL maintainer="Raymond Mouthaan <raymondmmouthaan@gmail.com>"
