@@ -1,5 +1,6 @@
 # Node-RED-Docker
 
+
 [![Greenkeeper badge](https://badges.greenkeeper.io/node-red/node-red-docker.svg)](https://greenkeeper.io/)
 
 This project describes some of the many ways Node-RED can be run under Docker.
@@ -42,7 +43,7 @@ If we are happy with what we see we can detach the terminal with `Ctrl-p``Ctrl-q
 To reattach to the terminal (to see logging) run:
 
         $ docker attach mynodered
-        
+
 If you need to restart the container (e.g. after a reboot or restart of the Docker daemon)
 
         $ docker start mynodered
@@ -70,11 +71,11 @@ the slim image with the missing packages.
 
 Additional images using a newer Node.js v8 base image are now available with the following tags.
 
-- **v8** 
+- **v8**
 - **slim-v8**
 - **rpi-v8**
 
-Node-RED releases are also tagged with a version label, allowing you to fix on a specific version: `latest:X.Y.Z`, 
+Node-RED releases are also tagged with a version label, allowing you to fix on a specific version: `latest:X.Y.Z`,
 `slim:X.Y.Z`, `rpi:X.Y.Z`.
 
 You can see a full list of the tagged releases [here](https://hub.docker.com/r/nodered/node-red-docker/tags/).
@@ -112,7 +113,7 @@ This is the command that starts Node-RED when the container is run.
 ### startup
 
 Node-RED is started using NPM start from this `/usr/src/node-red`, with the `--userDir`
-parameter pointing to the `/data` directory on the container. 
+parameter pointing to the `/data` directory on the container.
 
 The flows configuration file is set using an environment parameter (**FLOWS**),
 which defaults to *'flows.json'*. This can be changed at runtime using the
@@ -131,18 +132,18 @@ the Node.js garbage collector you would use the following command.
 Installing extra Node-RED nodes into an instance running with Docker can be
 achieved by manually installing those nodes into the container, using the cli or
 running npm commands within a container shell, or mounting a host directory with
-those nodes as a data volume. 
+those nodes as a data volume.
 
-### Node-RED Admin Tool 
+### Node-RED Admin Tool
 
 Using the administration tool, with port forwarding on the container to the host
-system, extra nodes can be installed without leaving the host system. 
+system, extra nodes can be installed without leaving the host system.
 
         $ npm install -g node-red-admin
         $ node-red-admin install node-red-node-openwhisk
 
 This tool assumes Node-RED is available at the following address
-`http://localhost:1880`. 
+`http://localhost:1880`.
 
 Refreshing the browser page should now reveal the newly added node in the palette.
 
@@ -170,7 +171,7 @@ the host directory will automatically appear in the container's file system.
 
 This command mounts the host's node-red directory, containing the user's
 configuration and installed nodes, as the user configuration directory inside
-the container. 
+the container.
 
         $ docker run -it -p 1880:1880 -v ~/.node-red:/data --name mynodered nodered/node-red-docker
 
@@ -245,7 +246,7 @@ configuration data can be saved outside of the container and even shared between
 container instances.
 
 Let's create a new named data volume to persist our user data and run a new
-container using this volume. 
+container using this volume.
 
         $ docker volume create --name node_red_user_data
         $ docker volume ls
@@ -316,13 +317,13 @@ Here is a list of common issues users have reported with possible solutions.
 
 ### User Permission Errors
 
-If you are seeing *permission denied* errors opening files or accessing host devices, try running the container as the root user. 
+If you are seeing *permission denied* errors opening files or accessing host devices, try running the container as the root user.
 
 ```
 docker run -it -p 1880:1880 --name mynodered --user=root nodered/node-red-docker
 ```
 
-References: 
+References:
 
 https://github.com/node-red/node-red-docker/issues/15
 
@@ -330,7 +331,7 @@ https://github.com/node-red/node-red-docker/issues/8
 
 ### Accessing Host Devices
 
-If you want to access a device from the host inside the container, e.g. serial port, use the following command-line flag to pass access through. 
+If you want to access a device from the host inside the container, e.g. serial port, use the following command-line flag to pass access through.
 
 ```
 docker run -it -p 1880:1880 --name mynodered --device=/dev/ttyACM0 nodered/node-red-docker
