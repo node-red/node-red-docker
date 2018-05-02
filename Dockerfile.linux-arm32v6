@@ -14,9 +14,9 @@ RUN mkdir -p /usr/src/node-red && \
 
 WORKDIR /usr/src/node-red
 
-# Add node-red user (uid=1000) and group (gid=1000), so we aren't running as root.
-RUN addgroup -g 1000 -S node-red && \
-    adduser -u 1000 -S node-red -G node-red
+# Add node-red user (uid=1001) and group (gid=1001), so we aren't running as root.
+RUN addgroup -g 1001 -S node-red && \
+    adduser -u 1001 -S node-red -G node-red
 RUN chown -R node-red:node-red /data
 RUN chown -R node-red:node-red /usr/src/node-red
 
