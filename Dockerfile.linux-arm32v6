@@ -3,23 +3,17 @@ COPY tmp/qemu-arm-static /usr/bin/qemu-arm-static
 
 LABEL maintainer="Raymond Mouthaan <raymondmmouthaan@gmail.com>"
 
-# Node-RED application directory and
+# Add node-red user and group (uid=1001 and gid=1001), so we aren't running as root.
+RUN adduser --system --home /usr/src/node-red --uid 1001 --group node-red
+
 # User data directory: contains flows, config and nodes.
-RUN mkdir -p /usr/src/node-red && \
-    mkdir /data
-
-WORKDIR /usr/src/node-red
-
-# Add node-red user (uid=1001) and group (gid=1001), so we aren't running as root.
-RUN addgroup -g 1001 -S node-red && \
-    adduser -u 1001 -S node-red -G node-red
-
-# Change owner of Node-RED application directory and User data directory.
-RUN chown -R node-red:node-red /data && \
-    chown -R node-red:node-red /usr/src/node-red
+RUN mkdir /data && chown -R node-red:node-red /data
 
 # Run as node-red user
 USER node-red
+
+# Set work directory
+WORKDIR /usr/src/node-red
 
 # package.json contains Node-RED NPM module and node dependencies
 COPY package.json /usr/src/node-red/

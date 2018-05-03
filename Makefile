@@ -1,25 +1,25 @@
 IMAGE := raymondmm/node-red-test
-NODE_RED_VERSION := v0.18.4
-NODE_VERSION := v8-slim
+NODE_RED_VERSION := 0.18.4
+NODE_VERSION := v8
 
 test:
 	true
 
 build-image:
-	docker build --file Dockerfile.linux-amd64 --tag $(IMAGE):linux-amd64-latest .
+	docker build --file Dockerfile.linux-amd64 --tag $(IMAGE):latest-linux-amd64 .
 	docker build --file Dockerfile.linux-arm32v6 --tag $(IMAGE):linux-arm32v6-latest .
 	docker build --file Dockerfile.linux-arm32v7 --tag $(IMAGE):linux-arm32v7-latest .
 	docker build --file Dockerfile.linux-arm64v8 --tag $(IMAGE):linux-arm64v8-latest .
 
 tag-image:
-	docker tag $(IMAGE):linux-amd64-latest $(IMAGE):linux-amd64-$(NODE_RED_VERSION)
+	docker tag $(IMAGE):latest-linux-amd64 $(IMAGE):$(NODE_RED_VERSION)-$(NODE_VERSION)-linux-amd64
 	docker tag $(IMAGE):linux-arm32v6-latest $(IMAGE):linux-arm32v6-$(NODE_RED_VERSION)
 	docker tag $(IMAGE):linux-arm32v7-latest $(IMAGE):linux-arm32v7-$(NODE_RED_VERSION)
 	docker tag $(IMAGE):linux-arm64v8-latest $(IMAGE):linux-arm64v8-$(NODE_RED_VERSION)
 
 push-image:
-	docker push $(IMAGE):linux-amd64-latest
-	docker push $(IMAGE):linux-amd64-$(NODE_RED_VERSION)
+	docker push $(IMAGE):latest-linux-amd64
+	docker push $(IMAGE):$(NODE_RED_VERSION)-$(NODE_VERSION)-linux-amd64
 	docker push $(IMAGE):linux-arm32v6-latest
 	docker push $(IMAGE):linux-arm32v6-$(NODE_RED_VERSION)
 	docker push $(IMAGE):linux-arm32v7-latest
@@ -29,7 +29,7 @@ push-image:
 
 manifest-list-image:
 	docker manifest create "$(IMAGE):$(NODE_RED_VERSION)" \
-		"$(IMAGE):linux-amd64-$(NODE_RED_VERSION)" \
+		"$(IMAGE):$(NODE_RED_VERSION)-$(NODE_VERSION)-linux-amd64" \
 		"$(IMAGE):linux-arm32v6-$(NODE_RED_VERSION)" \
 		"$(IMAGE):linux-arm32v7-$(NODE_RED_VERSION)" \
 		"$(IMAGE):linux-arm64v8-$(NODE_RED_VERSION)"
@@ -39,7 +39,7 @@ manifest-list-image:
 	docker manifest push "$(IMAGE):$(NODE_RED_VERSION)"
 
 	docker manifest create "$(IMAGE):latest" \
-		"$(IMAGE):linux-amd64-latest" \
+		"$(IMAGE):latest-linux-amd64" \
 		"$(IMAGE):linux-arm32v6-latest" \
 		"$(IMAGE):linux-arm32v7-latest" \
 		"$(IMAGE):linux-arm64v8-latest"
