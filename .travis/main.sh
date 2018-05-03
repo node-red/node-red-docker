@@ -17,7 +17,6 @@ setup_dependencies() {
   "
 
   sudo apt update -y
-  sudo apt upgrade -y
   sudo apt install realpath python python-pip -y
   sudo apt install --only-upgrade docker-ce -y
   sudo pip install docker-compose || true
