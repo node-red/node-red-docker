@@ -13,7 +13,7 @@ WORKDIR /usr/src/node-red
 
 # Add node-red user (uid=1001) and group (gid=1001), so we aren't running as root.
 RUN addgroup --system -gid 1001 node-red && \
-    adduser --system --no-create-home -uid 1001 --ingroup node-red node-red
+    adduser --system --create-home /usr/src/node-red --no-create-home -uid 1001 --ingroup node-red node-red
 
 # Change owner of Node-RED application directory and User configuration directory.
 RUN chown -R node-red:node-red /data && \
