@@ -1,5 +1,4 @@
-IMAGE := raymondmm/node-red-test
-NODE_RED_VERSION := 0.18.4
+
 
 test:
 	true
