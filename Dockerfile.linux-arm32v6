@@ -22,6 +22,7 @@ RUN addgroup -g 1001 -S node-red && \
 RUN chown -R node-red:node-red /data && \
     chown -R node-red:node-red /usr/src/node-red
 
+# Run as node-red user
 USER node-red
 
 # package.json contains Node-RED NPM module and node dependencies
@@ -29,10 +30,13 @@ COPY package.json /usr/src/node-red/
 RUN npm install
 
 # User configuration directory volume
+VOLUME ["/data"]
+
+# Expose the listening port of node-red
 EXPOSE 1880
 
 # Environment variable holding file path for flows configuration
 ENV FLOWS=flows.json
 ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
 
-CMD ["npm", "start", "--", "--userDir", "/data"]
+ENTRYPOINT ["npm", "start", "--", "--userDir", "/data"]

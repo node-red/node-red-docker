@@ -1,5 +1,5 @@
-FROM arm32v6/node:8-alpine
-# There is no alpine for arm32v7, but arm32v6 is compatible, therefore node is based upon debian
+FROM arm32v7/node:8-slim
+# There is no alpine for arm32v7, therefore node is based upon debian slim
 COPY tmp/qemu-arm-static /usr/bin/qemu-arm-static
 
 LABEL maintainer="Raymond Mouthaan <raymondmmouthaan@gmail.com>"
@@ -13,12 +13,13 @@ WORKDIR /usr/src/node-red
 
 # Add node-red user (uid=1001) and group (gid=1001), so we aren't running as root.
 RUN addgroup -g 1001 -S node-red && \
-    adduser -u 1001 -S node-red -G node-red
+    adduser -u 1001 -r node-red -G node-red
 
-# Change owner of Node-RED application directory and User data directory.
+# Change owner of Node-RED application directory and User configuration directory.
 RUN chown -R node-red:node-red /data && \
     chown -R node-red:node-red /usr/src/node-red
 
+# Run as node-red user
 USER node-red
 
 # package.json contains Node-RED NPM module and node dependencies
@@ -26,10 +27,13 @@ COPY package.json /usr/src/node-red/
 RUN npm install
 
 # User configuration directory volume
+VOLUME ["/data"]
+
+# Expose the listening port of node-red
 EXPOSE 1880
 
 # Environment variable holding file path for flows configuration
 ENV FLOWS=flows.json
 ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
 
-CMD ["npm", "start", "--", "--userDir", "/data"]
+ENTRYPOINT ["npm", "start", "--", "--userDir", "/data"]
