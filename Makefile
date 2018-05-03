@@ -43,9 +43,9 @@ manifest-list-image:
 		"$(IMAGE):latest-linux-arm32v6" \
 		"$(IMAGE):latest-linux-arm32v7" \
 		"$(IMAGE):latest-linux-arm64v8"
-	docker manifest annotate "$(IMAGE):latest" "$(IMAGE):linux-arm32v6-latest" --os=linux --arch=arm --variant=v6
-	docker manifest annotate "$(IMAGE):latest" "$(IMAGE):linux-arm32v7-latest" --os=linux --arch=arm --variant=v7
-	docker manifest annotate "$(IMAGE):latest" "$(IMAGE):linux-arm64v8-latest" --os=linux --arch=arm64 --variant=v8
+	docker manifest annotate "$(IMAGE):latest" "$(IMAGE):latest-linux-arm32v6" --os=linux --arch=arm --variant=v6
+	docker manifest annotate "$(IMAGE):latest" "$(IMAGE):latest-linux-arm32v7" --os=linux --arch=arm --variant=v7
+	docker manifest annotate "$(IMAGE):latest" "$(IMAGE):latest-linux-arm64v8" --os=linux --arch=arm64 --variant=v8
 	docker manifest push "$(IMAGE):latest"
 
 .PHONY: image push-image test
