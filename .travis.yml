@@ -9,7 +9,8 @@ language:
   - 'bash'
 
 env:
-  - QEMU_VERSION=v2.11.1
+  global:
+    - QEMU_VERSION=v2.11.1
   matrix:
     - NODE_VERSION=v8
 
