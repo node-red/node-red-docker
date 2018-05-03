@@ -18,8 +18,9 @@ env:
     - NODE_VERSION=v8
 
 before_install:
-  # prepare the machine before any code installation scripts
+  # Prepare the machine before any code installation scripts
   - './.travis/main.sh'
+  
   # Prepare qemu
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   - mkdir tmp
@@ -38,9 +39,9 @@ script:
 
 after_success:
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-      echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin ;
-      make push-image ;
-      make manifest-list-image ;
+      echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin;
+      make push-image;
+      make manifest-list-image;
     fi
 
 # don't notify me when things fail
