@@ -10,6 +10,8 @@ language:
 
 env:
   - QEMU_VERSION=v2.11.1
+  matrix:
+    - NODE_VERSION=v8
 
 before_install:
   # prepare the machine before any code installation scripts
