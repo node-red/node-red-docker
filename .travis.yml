@@ -30,6 +30,7 @@ before_install:
     curl -L -o qemu-aarch64-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-aarch64-static.tar.gz &&
     tar xzf qemu-aarch64-static.tar.gz &&
     popd
+    
 script:
 #  - 'make test'
   - 'make build-image'
