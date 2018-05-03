@@ -1,10 +1,7 @@
-FROM amd64/node:8-alpine
+FROM amd64/node:8-slim
+COPY tmp/qemu-arm-static /usr/bin/qemu-arm-static
 
 LABEL maintainer="Raymond Mouthaan <raymondmmouthaan@gmail.com>"
-
-# add support for gpio library
-#RUN apt-get update
-#RUN apt-get install python-rpi.gpio
 
 # Node-RED application directory and
 # User data directory: contains flows, config and nodes.
@@ -14,10 +11,10 @@ RUN mkdir -p /usr/src/node-red && \
 WORKDIR /usr/src/node-red
 
 # Add node-red user (uid=1001) and group (gid=1001), so we aren't running as root.
-RUN addgroup -g 1001 -S node-red && \
-    adduser -u 1001 -S node-red -G node-red
+RUN addgroup --system -gid 1001 node-red && \
+    adduser --system --home /usr/src/node-red --no-create-home -uid 1001 --ingroup node-red node-red
 
-# Change owner of Node-RED application directory and User data directory.
+# Change owner of Node-RED application directory and User configuration directory.
 RUN chown -R node-red:node-red /data && \
     chown -R node-red:node-red /usr/src/node-red
 

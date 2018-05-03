@@ -1,5 +1,4 @@
 FROM arm32v7/node:8-slim
-# There is no alpine for arm32v7, therefore node is based upon debian slim
 COPY tmp/qemu-arm-static /usr/bin/qemu-arm-static
 
 LABEL maintainer="Raymond Mouthaan <raymondmmouthaan@gmail.com>"

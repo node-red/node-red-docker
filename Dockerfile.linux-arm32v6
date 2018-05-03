@@ -3,10 +3,6 @@ COPY tmp/qemu-arm-static /usr/bin/qemu-arm-static
 
 LABEL maintainer="Raymond Mouthaan <raymondmmouthaan@gmail.com>"
 
-# add support for gpio library
-#RUN apt-get update
-#RUN apt-get install python-rpi.gpio
-
 # Node-RED application directory and
 # User data directory: contains flows, config and nodes.
 RUN mkdir -p /usr/src/node-red && \
