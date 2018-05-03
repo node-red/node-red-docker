@@ -1,0 +1,41 @@
+FROM amd64/node:8-alpine
+
+LABEL maintainer="Raymond Mouthaan <raymondmmouthaan@gmail.com>"
+
+# add support for gpio library
+#RUN apt-get update
+#RUN apt-get install python-rpi.gpio
+
+# Node-RED application directory and
+# User data directory: contains flows, config and nodes.
+RUN mkdir -p /usr/src/node-red && \
+    mkdir /data
+
+WORKDIR /usr/src/node-red
+
+# Add node-red user (uid=1001) and group (gid=1001), so we aren't running as root.
+RUN addgroup -g 1001 -S node-red && \
+    adduser -u 1001 -S node-red -G node-red
+
+# Change owner of Node-RED application directory and User data directory.
+RUN chown -R node-red:node-red /data && \
+    chown -R node-red:node-red /usr/src/node-red
+
+# Run as node-red user
+USER node-red
+
+# package.json contains Node-RED NPM module and node dependencies
+COPY package.json /usr/src/node-red/
+RUN npm install
+
+# User configuration directory volume
+VOLUME ["/data"]
+
+# Expose the listening port of node-red
+EXPOSE 1880
+
+# Environment variable holding file path for flows configuration
+ENV FLOWS=flows.json
+ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
+
+ENTRYPOINT ["npm", "start", "--", "--userDir", "/data"]
