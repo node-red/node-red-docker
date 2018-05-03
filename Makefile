@@ -42,7 +42,7 @@ manifest-list-image:
 		"$(IMAGE):latest-linux-amd64" \
 		"$(IMAGE):latest-linux-arm32v6" \
 		"$(IMAGE):latest-linux-arm32v7" \
-		"$(IMAGE):latestlinux-arm64v8"
+		"$(IMAGE):latest-linux-arm64v8"
 	docker manifest annotate "$(IMAGE):latest" "$(IMAGE):linux-arm32v6-latest" --os=linux --arch=arm --variant=v6
 	docker manifest annotate "$(IMAGE):latest" "$(IMAGE):linux-arm32v7-latest" --os=linux --arch=arm --variant=v7
 	docker manifest annotate "$(IMAGE):latest" "$(IMAGE):linux-arm64v8-latest" --os=linux --arch=arm64 --variant=v8
