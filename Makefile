@@ -5,7 +5,7 @@ test:
 
 build-image:
 	docker build --file docker_node_$(NODE_VERSION)/Dockerfile.linux-amd64 --tag $(IMAGE):latest-linux-amd64 .
-  ifeq ($(NODE_VERSION), v8)
+	ifeq ($(NODE_VERSION), v8)
 		docker build --file docker_node_$(NODE_VERSION)/Dockerfile.linux-arm32v6 --tag $(IMAGE):latest-linux-arm32v6 .
 	endif
 	docker build --file docker_node_$(NODE_VERSION)/Dockerfile.linux-arm32v7 --tag $(IMAGE):latest-linux-arm32v7 .
@@ -56,7 +56,7 @@ manifest-list-image:
 	  	"$(IMAGE):latest-linux-arm32v6" \
 	  	"$(IMAGE):latest-linux-arm32v7" \
 	  	"$(IMAGE):latest-linux-arm64v8"
-		
+
 		docker manifest annotate "$(IMAGE):latest" "$(IMAGE):latest-linux-arm32v6" --os=linux --arch=arm --variant=v6
 		docker manifest annotate "$(IMAGE):latest" "$(IMAGE):latest-linux-arm32v7" --os=linux --arch=arm --variant=v7
 		docker manifest annotate "$(IMAGE):latest" "$(IMAGE):latest-linux-arm64v8" --os=linux --arch=arm64 --variant=v8
