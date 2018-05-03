@@ -3,8 +3,8 @@ COPY tmp/qemu-aarch64-static /usr/bin/qemu-aarch64-static
 
 LABEL maintainer="Raymond Mouthaan <raymondmmouthaan@gmail.com>"
 
-# Add node-red user (uid=1001) and group (gid=1001), so we aren't running as root.
-RUN adduser --system --home /usr/src/node-red --uid 1001 --group
+# Add node-red user and group (uid=1001 and gid=1001), so we aren't running as root.
+RUN adduser --system --home /usr/src/node-red --uid 1001 --group node-red
 
 # Run as node-red user
 USER node-red
