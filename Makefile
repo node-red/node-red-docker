@@ -2,9 +2,9 @@ test:
 	true
 
 build-image:
-  docker build --file docker_node_$(NODE_VERSION)/Dockerfile.linux-amd64 --tag $(IMAGE):latest-linux-amd64 .
+	docker build --file docker_node_$(NODE_VERSION)/Dockerfile.linux-amd64 --tag $(IMAGE):latest-linux-amd64 .
   ifeq ($(NODE_VERSION), v8)
-  	docker build --file docker_node_$(NODE_VERSION)/Dockerfile.linux-arm32v6 --tag $(IMAGE):latest-linux-arm32v6 .
+	docker build --file docker_node_$(NODE_VERSION)/Dockerfile.linux-arm32v6 --tag $(IMAGE):latest-linux-arm32v6 .
   endif
   docker build --file docker_node_$(NODE_VERSION)/Dockerfile.linux-arm32v7 --tag $(IMAGE):latest-linux-arm32v7 .
   docker build --file docker_node_$(NODE_VERSION)/Dockerfile.linux-arm64v8 --tag $(IMAGE):latest-linux-arm64v8 .
