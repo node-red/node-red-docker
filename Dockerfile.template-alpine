@@ -1,7 +1,5 @@
 ARG ARCH
-ENV ARCH=$ARCH
 ARG NODE_VERSION
-ENV NODE_VERSION=$NODE_VERSION
 ARG QEMU_FILE
 
 FROM $ARCH/node:$NODE_VERSION
@@ -10,6 +8,8 @@ COPY tmp/$QEMU_FILE /usr/bin/$QEMU_FILE
 LABEL maintainer="Raymond Mouthaan <raymondmmouthaan@gmail.com>"
 
 # Environment variable holding file path for flows configuration
+ENV ARCH=$ARCH
+ENV NODE_VERSION=$NODE_VERSION
 ENV FLOWS=flows.json
 ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
 
