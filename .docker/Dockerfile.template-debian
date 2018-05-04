@@ -16,7 +16,7 @@ ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
 # Install tools
 RUN apt-get update && apt-get install -y \
     git \
-    openssh-keygen \
+    openssh-client \
     nano \
     && rm -rf /var/lib/apt/lists/*
 
