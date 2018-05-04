@@ -9,18 +9,14 @@ language:
   - 'bash'
 
 env:
-  global:
-    - QEMU_VERSION=v2.11.1
-    - NODE_RED_VERSION=0.18.4
-    - IMAGE=raymondmm/node-red-test
-  matrix:
-    - NODE_VERSION=v6
-    - NODE_VERSION=v8
+  - QEMU_VERSION=v2.11.1
+  - NODE_RED_VERSION=0.18.4
+  - IMAGE=raymondmm/node-red-test
 
 before_install:
   # Prepare the machine before any code installation scripts
   - './.travis/main.sh'
-  
+
   # Prepare qemu
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   - mkdir tmp
@@ -31,17 +27,43 @@ before_install:
     curl -L -o qemu-aarch64-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-aarch64-static.tar.gz &&
     tar xzf qemu-aarch64-static.tar.gz &&
     popd
-    
+
 script:
-#  - 'make test'
-  - 'make build-image'
-  - 'make tag-image'
+  # Build all images
+  - docker build --build-arg ARCH=amd64 --build-arg NODE_VERSION=6-slim --file Dockerfile.template-debian --tag $IMAGE:latest-v6-linux-amd64 .
 
 after_success:
-  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+  - >
+    if [[ "$TRAVIS_BRANCH" == "master" ]]; then
       echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin;
-      make push-image;
-      make manifest-list-image;
+
+      # Tag all images
+      docker tag $IMAGE:latest-v6-linux-amd64 $IMAGE:$NODE_RED_VERSION-v6-linux-amd64
+
+      # Push all images
+      docker push $IMAGE:latest-v6-linux-amd64
+      docker push $IMAGE:$NODE_RED_VERSION-v6-linux-amd64
+
+      # Manifest Create
+      docker manifest create "$IMAGE:$NODE_RED_VERSION" \
+        "$IMAGE:$NODE_RED_VERSION-v6-linux-amd64"
+
+      # Manifest Annotate
+      # non-amd64
+
+      # Manifest Push
+      docker manifest push "$IMAGE:$NODE_RED_VERSION"
+
+
+
+      # Manifest Create Latest
+      docker manifest create "$IMAGE:latest
+
+      # Manifest Annotate Latest
+
+      # Manifest Push Latest
+      docker manifest push "$IMAGE:latest"
+
     fi
 
 # don't notify me when things fail
