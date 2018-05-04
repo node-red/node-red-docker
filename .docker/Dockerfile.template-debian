@@ -13,6 +13,13 @@ ENV NODE_VERSION=$NODE_VERSION
 ENV FLOWS=flows.json
 ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
 
+# Install tools
+RUN apt-get update && apt-get install -y \
+    git \
+    openssh-keygen \
+    nano \
+    && rm -rf /var/lib/apt/lists/*
+
 # Add node-red user and group (uid=1001 and gid=1001), so we aren't running as root.
 RUN adduser --system --home /usr/src/node-red --uid 1001 --group node-red
 
