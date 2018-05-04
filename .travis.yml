@@ -9,9 +9,10 @@ language:
   - 'bash'
 
 env:
-  - QEMU_VERSION=v2.11.1
-  - NODE_RED_VERSION=0.18.4
-  - IMAGE=raymondmm/node-red-test
+  global:
+      - QEMU_VERSION=v2.11.1
+      - NODE_RED_VERSION=0.18.4
+      - IMAGE=raymondmm/node-red-test
 
 before_install:
   # Prepare the machine before any code installation scripts
