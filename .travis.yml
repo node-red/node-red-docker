@@ -1,33 +1,34 @@
-# make use of vm's
 sudo: 'required'
 
-# have the docker service set up (we'll update it later)
 services:
-  - 'docker'
+    - 'docker'
 
 language:
-  - 'bash'
+    - 'bash'
 
 env:
   global:
-      - QEMU_VERSION=v2.11.1
       - NODE_RED_VERSION=0.18.4
-      - IMAGE=raymondmm/node-red-test
+      - IMAGE=raymondmm/node-red
+      - QEMU_VERSION=v2.11.1
 
 before_install:
-  - ./.docker/docker.sh prepare
+    - ./.docker/docker.sh prepare
+    - ./update.sh $NODE_RED_VERSION
 
 script:
-  - ./.docker/docker.sh build
+    - ./.docker/docker.sh build
 
 after_success:
-  - >
+    - >
     if [[ "$TRAVIS_BRANCH" == "master" ]]; then
       echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin;
 
       # Tag all images
       ./.docker/docker.sh tag
+      # Push all images
       ./.docker/docker.sh push
+      # Create and push manifest list
       ./.docker/docker.sh manifest-list
 
       docker logout
@@ -35,4 +36,4 @@ after_success:
 
 # don't notify me when things fail
 notifications:
-  email: false
+    email: false
