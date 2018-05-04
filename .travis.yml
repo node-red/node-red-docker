@@ -14,9 +14,9 @@ env:
 
 before_install:
   - ./.docker/docker.sh prepare
-  - ./update.sh $NODE_RED_VERSION
 
 script:
+  - ./update.sh $NODE_RED_VERSION
   - ./.docker/docker.sh build
 
 after_success:
