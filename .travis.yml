@@ -58,7 +58,7 @@ after_success:
 
 
       # Manifest Create Latest
-      docker manifest create "$IMAGE:latest
+      docker manifest create "$IMAGE:latest"
 
       # Manifest Annotate Latest
 
