@@ -24,7 +24,7 @@ after_success:
     if [[ "$TRAVIS_BRANCH" == "master" ]]; then
       # Docker Hub Login
       echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  
+
       # Tag all images
       ./.docker/docker.sh tag
 
