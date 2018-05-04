@@ -5,6 +5,11 @@ ENV NODE_VERSION=$NODE_VERSION
 ARG QEMU_ARCH
 ENV QEMU_ARCH=$QEMU_ARCH
 
+# Debug
+RUN echo arch: $ARCH
+RUN echo node_version: $NODE_VERSION
+RUN echo qemu_arch: $QEMU_ARCH
+
 FROM $ARCH/node:$NODE_VERSION
 COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 
