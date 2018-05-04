@@ -1,4 +1,4 @@
--v8v8# make use of vm's
+# make use of vm's
 sudo: 'required'
 
 # have the docker service set up (we'll update it later)
