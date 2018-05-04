@@ -2,16 +2,10 @@ ARG ARCH
 ENV ARCH=$ARCH
 ARG NODE_VERSION
 ENV NODE_VERSION=$NODE_VERSION
-ARG QEMU_ARCH
-ENV QEMU_ARCH=$QEMU_ARCH
-
-# Debug
-RUN echo arch: $ARCH
-RUN echo node_version: $NODE_VERSION
-RUN echo qemu_arch: $QEMU_ARCH
+ARG QEMU_FILE
 
 FROM $ARCH/node:$NODE_VERSION
-COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
+COPY tmp/$QEMU_FILE /usr/bin/$QEMU_FILE
 
 LABEL maintainer="Raymond Mouthaan <raymondmmouthaan@gmail.com>"
 
