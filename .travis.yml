@@ -15,10 +15,10 @@ env:
       - IMAGE=raymondmm/node-red-test
 
 before_install:
-  - ./docker_hub.sh prepare
+  - ./.docker/docker.sh prepare
 
 script:
-  - ./docker_hub.sh build
+  - ./.docker/docker.sh build
 
 after_success:
   - >
@@ -26,9 +26,9 @@ after_success:
       echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin;
 
       # Tag all images
-      ./.docker/docker_hub.sh tag
-      ./.docker/docker_hub.sh push
-      ./.docker/docker_hub.sh manifest-list
+      ./.docker/docker.sh tag
+      ./.docker/docker.sh push
+      ./.docker/docker.sh manifest-list
 
       docker logout
     fi
