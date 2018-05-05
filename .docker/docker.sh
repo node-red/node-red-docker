@@ -138,6 +138,10 @@ docker_manifest_list() {
     docker_manifest_list_node_v8
     docker_manifest_list_default
     docker_manifest_list_latest
+    docker_manifest_list_rpi_1
+    docker_manifest_list_rpi_1_latest
+    docker_manifest_list_rpi_23
+    docker_manifest_list_rpi_23_latest
 }
 
 docker_manifest_list_node_v6() {
@@ -205,6 +209,54 @@ docker_manifest_list_latest() {
 
     # Manifest Push LATEST
     docker manifest push $IMAGE:latest
+}
+
+docker_manifest_list_rpi_1() {
+    # Manifest Create rpi 1
+    docker manifest create $IMAGE:$NODE_RED_VERSION-v8-rpi1 \
+        $IMAGE:latest-v8-linux-arm32v6
+
+    # Manifest Annotate rpi 1
+    docker manifest annotate $IMAGE:$NODE_RED_VERSION-v8-rpi1 $IMAGE:latest-v8-linux-arm32v6 --os=linux --arch=arm --variant=v6
+
+    # Manifest Push rpi 1
+    docker manifest push $IMAGE:$NODE_RED_VERSION-v8-rpi1
+}
+
+docker_manifest_list_rpi_1_latest() {
+    # Manifest Create rpi 1
+    docker manifest create $IMAGE:latest-v8-rpi1 \
+        $IMAGE:latest-v8-linux-arm32v6
+
+    # Manifest Annotate rpi 1
+    docker manifest annotate $IMAGE:latest-v8-rpi1 $IMAGE:latest-v8-linux-arm32v6 --os=linux --arch=arm --variant=v6
+
+    # Manifest Push rpi 1
+    docker manifest push $IMAGE:latest-v8-rpi1
+}
+
+docker_manifest_list_rpi_2_3() {
+    # Manifest Create rpi 2 and 3
+    docker manifest create $IMAGE:$NODE_RED_VERSION-v8-rpi23 \
+        $IMAGE:latest-v8-linux-arm32v7
+
+    # Manifest Annotate rpi 2 and 3
+    docker manifest annotate $IMAGE:$NODE_RED_VERSION-v8-rpi23 $IMAGE:latest-v8-linux-arm32v7 --os=linux --arch=arm --variant=v7
+
+    # Manifest Push rpi 2 and 3
+    docker manifest push $IMAGE:$NODE_RED_VERSION-v8-rpi23
+}
+
+docker_manifest_list_rpi_2_3_latest() {
+    # Manifest Create rpi 2 and 3
+    docker manifest create $IMAGE:latest-v8-rpi23 \
+        $IMAGE:latest-v8-linux-arm32v7
+
+    # Manifest Annotate rpi 2 and 3
+    docker manifest annotate $IMAGE:latest-v8-rpi23 $IMAGE:latest-v8-linux-arm32v7 --os=linux --arch=arm --variant=v7
+
+    # Manifest Push rpi 2 and 3 latest
+    docker manifest push $IMAGE:latest-v8-rpi23
 }
 
 setup_dependencies() {
