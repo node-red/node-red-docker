@@ -41,16 +41,16 @@ docker_prepare() {
 docker_build() {
     echo "DOCKER BUILD: Build all docker images."
     # node v6 images
-    docker build --no-cache --build-arg ARCH=amd64   --build-arg NODE_VERSION=6-slim   --build-arg QEMU_ARCH=x86_64  --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v6-linux-amd64 .
-    # docker build --no-cache --build-arg ARCH=arm32v6 --build-arg NODE_VERSION=6-alpine --build-arg QEMU_ARCH=arm     --file ./.docker/Dockerfile.template-alpine --tag $IMAGE:latest-v6-linux-arm32v6 .
-    docker build --no-cache --build-arg ARCH=arm32v7 --build-arg NODE_VERSION=6-slim   --build-arg QEMU_ARCH=arm     --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v6-linux-arm32v7 .
-    docker build --no-cache  --build-arg ARCH=arm64v8 --build-arg NODE_VERSION=6-slim   --build-arg QEMU_ARCH=aarch64 --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v6-linux-arm64v8 .
+    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=amd64   --build-arg NODE_IMAGE_TAG=6-slim   --build-arg QEMU_ARCH=x86_64  --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v6-linux-amd64 .
+    # docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v6 --build-arg NODE_IMAGE_TAG=6-alpine --build-arg QEMU_ARCH=arm     --file ./.docker/Dockerfile.template-alpine --tag $IMAGE:latest-v6-linux-arm32v6 .
+    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v7 --build-arg NODE_IMAGE_TAG=6-slim   --build-arg QEMU_ARCH=arm     --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v6-linux-arm32v7 .
+    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm64v8 --build-arg NODE_IMAGE_TAG=6-slim   --build-arg QEMU_ARCH=aarch64 --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v6-linux-arm64v8 .
 
     # node v8 images
-    docker build --no-cache --build-arg ARCH=amd64   --build-arg NODE_VERSION=8-slim   --build-arg QEMU_ARCH=x86_64 --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v8-linux-amd64 .
-    docker build --no-cache --build-arg ARCH=arm32v6 --build-arg NODE_VERSION=8-alpine --build-arg QEMU_ARCH=arm    --file ./.docker/Dockerfile.template-alpine --tag $IMAGE:latest-v8-linux-arm32v6 .
-    docker build --no-cache --build-arg ARCH=arm32v7 --build-arg NODE_VERSION=8-slim   --build-arg QEMU_ARCH=arm    --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v8-linux-arm32v7 .
-    docker build --no-cache --build-arg ARCH=arm64v8 --build-arg NODE_VERSION=8-slim   --build-arg QEMU_ARCH=aarch64 --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v8-linux-arm64v8 .
+    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=amd64   --build-arg NODE_IMAGE_TAG=8-slim   --build-arg QEMU_ARCH=x86_64 --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v8-linux-amd64 .
+    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v6 --build-arg NODE_IMAGE_TAG=8-alpine --build-arg QEMU_ARCH=arm    --file ./.docker/Dockerfile.template-alpine --tag $IMAGE:latest-v8-linux-arm32v6 .
+    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v7 --build-arg NODE_IMAGE_TAG=8-slim   --build-arg QEMU_ARCH=arm    --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v8-linux-arm32v7 .
+    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm64v8 --build-arg NODE_IMAGE_TAG=8-slim   --build-arg QEMU_ARCH=aarch64 --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v8-linux-arm64v8 .
 }
 
 docker_tag() {

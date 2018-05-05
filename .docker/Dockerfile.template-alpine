@@ -1,18 +1,22 @@
 ARG ARCH
-ARG NODE_VERSION
+ARG NODE_IMAGE_TAG
 
-FROM $ARCH/node:$NODE_VERSION
+FROM $ARCH/node:$NODE_IMAGE_TAG
 LABEL maintainer="Raymond Mouthaan <raymondmmouthaan@gmail.com>"
 
 # Define ARGs again to make them available after FROM
 ARG ARCH
-ARG NODE_VERSION
+ARG NODE_IMAGE_TAG
 ARG QEMU_ARCH
+ARG NODE_RED_VERSION
+
 COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 
 # Copy ARCHs to ENVs to make them available at runtime
 ENV ARCH=$ARCH
-ENV NODE_VERSION=$NODE_VERSION
+ENV NODE_IMAGE_TAG=$NODE_IMAGE_TAG
+ENV NODE_RED_VERSION=$NODE_RED_VERSION
+
 # Env variables holding file path for flows configuration
 ENV FLOWS=flows.json
 ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
