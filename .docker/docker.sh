@@ -41,16 +41,16 @@ docker_prepare() {
 docker_build() {
     echo "DOCKER BUILD: Build all docker images."
     # node v6 images
-    docker build --build-arg ARCH=amd64   --build-arg NODE_VERSION=6-slim   --build-arg QEMU_FILE=qemu-x86_64-static  --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v6-linux-amd64 .
-    # docker build --build-arg ARCH=arm32v6 --build-arg NODE_VERSION=6-alpine --build-arg QEMU_FILE=qemu-arm-static     --file ./.docker/Dockerfile.template-alpine --tag $IMAGE:latest-v6-linux-arm32v6 .
-    docker build --build-arg ARCH=arm32v7 --build-arg NODE_VERSION=6-slim   --build-arg QEMU_FILE=qemu-arm-static     --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v6-linux-arm32v7 .
-    docker build --build-arg ARCH=arm64v8 --build-arg NODE_VERSION=6-slim   --build-arg QEMU_FILE=qemu-aarch64-static --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v6-linux-arm64v8 .
+    docker build --no-cache --build-arg ARCH=amd64   --build-arg NODE_VERSION=6-slim   --build-arg QEMU_ARCH=x86_64  --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v6-linux-amd64 .
+    # docker build --no-cache --build-arg ARCH=arm32v6 --build-arg NODE_VERSION=6-alpine --build-arg QEMU_ARCH=arm     --file ./.docker/Dockerfile.template-alpine --tag $IMAGE:latest-v6-linux-arm32v6 .
+    docker build --no-cache --build-arg ARCH=arm32v7 --build-arg NODE_VERSION=6-slim   --build-arg QEMU_ARCH=arm     --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v6-linux-arm32v7 .
+    docker build --no-cache  --build-arg ARCH=arm64v8 --build-arg NODE_VERSION=6-slim   --build-arg QEMU_ARCH=aarch64 --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v6-linux-arm64v8 .
 
     # node v8 images
-    docker build --build-arg ARCH=amd64   --build-arg NODE_VERSION=8-slim   --build-arg QEMU_FILE=qemu-x86_64-static  --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v8-linux-amd64 .
-    docker build --build-arg ARCH=arm32v6 --build-arg NODE_VERSION=8-alpine --build-arg QEMU_FILE=qemu-arm-static     --file ./.docker/Dockerfile.template-alpine --tag $IMAGE:latest-v8-linux-arm32v6 .
-    docker build --build-arg ARCH=arm32v7 --build-arg NODE_VERSION=8-slim   --build-arg QEMU_FILE=qemu-arm-static     --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v8-linux-arm32v7 .
-    docker build --build-arg ARCH=arm64v8 --build-arg NODE_VERSION=8-slim   --build-arg QEMU_FILE=qemu-aarch64-static --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v8-linux-arm64v8 .
+    docker build --no-cache --build-arg ARCH=amd64   --build-arg NODE_VERSION=8-slim   --build-arg QEMU_ARCH=x86_64 --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v8-linux-amd64 .
+    docker build --no-cache --build-arg ARCH=arm32v6 --build-arg NODE_VERSION=8-alpine --build-arg QEMU_ARCH=arm    --file ./.docker/Dockerfile.template-alpine --tag $IMAGE:latest-v8-linux-arm32v6 .
+    docker build --no-cache --build-arg ARCH=arm32v7 --build-arg NODE_VERSION=8-slim   --build-arg QEMU_ARCH=arm    --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v8-linux-arm32v7 .
+    docker build --no-cache --build-arg ARCH=arm64v8 --build-arg NODE_VERSION=8-slim   --build-arg QEMU_ARCH=arch64 --file ./.docker/Dockerfile.template-debian --tag $IMAGE:latest-v8-linux-arm64v8 .
 }
 
 docker_tag() {
@@ -133,10 +133,10 @@ docker_manifest-list() {
 
     # Manifest Create NODE_RED_VERSION
     docker manifest create $IMAGE:$NODE_RED_VERSION \
-    $IMAGE:$NODE_RED_VERSION-v8-linux-amd64 \
-    $IMAGE:$NODE_RED_VERSION-v8-linux-arm32v6 \
-    $IMAGE:$NODE_RED_VERSION-v8-linux-arm32v7 \
-    $IMAGE:$NODE_RED_VERSION-v8-linux-arm64v8
+      $IMAGE:$NODE_RED_VERSION-v8-linux-amd64 \
+      $IMAGE:$NODE_RED_VERSION-v8-linux-arm32v6 \
+      $IMAGE:$NODE_RED_VERSION-v8-linux-arm32v7 \
+      $IMAGE:$NODE_RED_VERSION-v8-linux-arm64v8
 
     # Manifest Annotate NODE_RED_VERSION
     docker manifest annotate $IMAGE:$NODE_RED_VERSION $IMAGE:$NODE_RED_VERSION-v8-linux-arm32v6 --os=linux --arch=arm --variant=v6
@@ -148,10 +148,10 @@ docker_manifest-list() {
 
     # Manifest Create LATEST
     docker manifest create $IMAGE:latest \
-    $IMAGE:latest-v8-linux-amd64 \
-    $IMAGE:latest-v8-linux-arm32v6 \
-    $IMAGE:latest-v8-linux-arm32v7 \
-    $IMAGE:latest-v8-linux-arm64v8
+      $IMAGE:latest-v8-linux-amd64 \
+      $IMAGE:latest-v8-linux-arm32v6 \
+      $IMAGE:latest-v8-linux-arm32v7 \
+      $IMAGE:latest-v8-linux-arm64v8
 
     # Manifest Annotate LATEST
     docker manifest annotate $IMAGE:latest $IMAGE:latest-v8-linux-arm32v6 --os=linux --arch=arm --variant=v6
