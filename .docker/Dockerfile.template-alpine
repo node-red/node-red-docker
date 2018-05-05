@@ -22,11 +22,10 @@ ENV FLOWS=flows.json
 ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
 
 # Install tools
-#RUN apk add --update \
-#    git \
-#    openssh-keygen \
-#    nano \
-#    && rm -rf /var/cache/apk/*
+RUN apk add --update \
+    git \
+    openssh-keygen \
+    && rm -rf /var/cache/apk/*
 
 # Create Node-red application directory
 RUN mkdir -p /usr/src/node-red
