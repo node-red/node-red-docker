@@ -210,8 +210,8 @@ docker_manifest_list() {
     docker_manifest_list_latest
     docker_manifest_list_rpi_1
     docker_manifest_list_rpi_1_latest
-    docker_manifest_list_rpi_23
-    docker_manifest_list_rpi_23_latest
+    docker_manifest_list_rpi_2_3
+    docker_manifest_list_rpi_2_3_latest
 }
 
 docker_manifest_list_node_v6() {
