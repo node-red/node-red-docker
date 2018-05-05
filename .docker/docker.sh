@@ -10,6 +10,9 @@ main() {
         "build")
             docker_build
             ;;
+        "test")
+            docker_test
+            ;;
         "tag")
             docker_tag
             ;;
@@ -43,20 +46,87 @@ docker_build() {
 
 docker_build_node_v6() {
     # Build node v6 based images
-    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=amd64   --build-arg NODE_IMAGE_TAG=6-slim   --build-arg QEMU_ARCH=x86_64  --file ./.docker/Dockerfile.template-debian --tag $IMAGE:new-v6-linux-amd64 .
+    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=amd64   --build-arg NODE_IMAGE_TAG=6-slim   --build-arg QEMU_ARCH=x86_64  --file ./.docker/Dockerfile.template-debian --tag $IMAGE:build-v6-linux-amd64 .
     # note: there is no node v6 based image available for arm32v6
-    # docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v6 --build-arg NODE_IMAGE_TAG=6-alpine --build-arg QEMU_ARCH=arm     --file ./.docker/Dockerfile.template-alpine --tag $IMAGE:new-v6-linux-arm32v6 .
-    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v7 --build-arg NODE_IMAGE_TAG=6-slim   --build-arg QEMU_ARCH=arm     --file ./.docker/Dockerfile.template-debian --tag $IMAGE:new-v6-linux-arm32v7 .
-    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm64v8 --build-arg NODE_IMAGE_TAG=6-slim   --build-arg QEMU_ARCH=aarch64 --file ./.docker/Dockerfile.template-debian --tag $IMAGE:new-v6-linux-arm64v8 .
+    # docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v6 --build-arg NODE_IMAGE_TAG=6-alpine --build-arg QEMU_ARCH=arm     --file ./.docker/Dockerfile.template-alpine --tag $IMAGE:build-v6-linux-arm32v6 .
+    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v7 --build-arg NODE_IMAGE_TAG=6-slim   --build-arg QEMU_ARCH=arm     --file ./.docker/Dockerfile.template-debian --tag $IMAGE:build-v6-linux-arm32v7 .
+    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm64v8 --build-arg NODE_IMAGE_TAG=6-slim   --build-arg QEMU_ARCH=aarch64 --file ./.docker/Dockerfile.template-debian --tag $IMAGE:build-v6-linux-arm64v8 .
 }
 
 docker_build_node_v8() {
     # Build node v8 based images
-    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=amd64   --build-arg NODE_IMAGE_TAG=8-slim   --build-arg QEMU_ARCH=x86_64 --file ./.docker/Dockerfile.template-debian --tag $IMAGE:new-v8-linux-amd64 .
-    # note: there is no node v8 slim based image available for arm32v6
-    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v6 --build-arg NODE_IMAGE_TAG=8-alpine --build-arg QEMU_ARCH=arm    --file ./.docker/Dockerfile.template-alpine --tag $IMAGE:new-v8-linux-arm32v6 .
-    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v7 --build-arg NODE_IMAGE_TAG=8-slim   --build-arg QEMU_ARCH=arm    --file ./.docker/Dockerfile.template-debian --tag $IMAGE:new-v8-linux-arm32v7 .
-    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm64v8 --build-arg NODE_IMAGE_TAG=8-slim   --build-arg QEMU_ARCH=aarch64 --file ./.docker/Dockerfile.template-debian --tag $IMAGE:new-v8-linux-arm64v8 .
+    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=amd64   --build-arg NODE_IMAGE_TAG=8-slim   --build-arg QEMU_ARCH=x86_64 --file ./.docker/Dockerfile.template-debian --tag $IMAGE:build-v8-linux-amd64 .
+    # note: there is no node v8 slim (debian) based image available for arm32v6, therefore alpine is used instead
+    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v6 --build-arg NODE_IMAGE_TAG=8-alpine --build-arg QEMU_ARCH=arm    --file ./.docker/Dockerfile.template-alpine --tag $IMAGE:build-v8-linux-arm32v6 .
+    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v7 --build-arg NODE_IMAGE_TAG=8-slim   --build-arg QEMU_ARCH=arm    --file ./.docker/Dockerfile.template-debian --tag $IMAGE:build-v8-linux-arm32v7 .
+    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm64v8 --build-arg NODE_IMAGE_TAG=8-slim   --build-arg QEMU_ARCH=aarch64 --file ./.docker/Dockerfile.template-debian --tag $IMAGE:build-v8-linux-arm64v8 .
+}
+
+docker_test() {
+    docker_test_node_v6
+    docker_test_node_v8
+}
+
+docker_test_node_v6() {
+    # Test all node v6 images
+    docker run -d --name test-v6-linux-amd64 $IMAGE:build-v6-linux-amd64
+    if [ $? -ne 0 ]; then
+        echo "ERROR: Docker container failed to start for v6-linux-amd64 build."
+        exit 1
+    fi
+    docker stop test-v6-linux-amd64 && docker rm test-v6-linux-amd64
+
+    # docker run -d --name test-v6-linux-arm32v6 $IMAGE:build-v6-linux-arm32v6
+    # if [ $? -ne 0 ]; then
+    #     echo "ERROR: Docker container failed to start for v6-linux-arm32v6 build."
+    #     exit 1
+    # fi
+    #docker stop test-v6-linux-arm32v6  && docker rm test-v6-linux-arm32v6
+
+    docker run -d --name test-v6-linux-arm32v7 $IMAGE:build-v6-linux-arm32v7
+    if [ $? -ne 0 ]; then
+        echo "ERROR: Docker container failed to start for v6-linux-arm32v7 build."
+        exit 1
+    fi
+    docker stop test-v6-linux-arm32v7 && docker rm test-v6-linux-arm32v7
+
+    docker run -d --name test-v6-linux-arm64v8 $IMAGE:build-v6-linux-arm64v8
+    if [ $? -ne 0 ]; then
+        echo "ERROR: Docker container failed to start for v6-linux-arm64v8 build."
+        exit 1
+    fi
+    docker stop test-v6-linux-arm64v8 && docker rm test-v6-linux-arm64v8
+}
+
+docker_test_node_v8() {
+    # Test all node v8 images
+    docker run -d --name=test-v8-linux-amd64 $IMAGE:build-v8-linux-amd64
+    if [ $? -ne 0 ]; then
+        echo "ERROR: Docker container failed to start for v8-linux-amd64 build."
+        exit 1
+    fi
+    docker stop test-v8-linux-amd64 && docker rm test-v8-linux-amd64
+
+    docker run -d --name=test-v8-linux-arm32v6 $IMAGE:build-v8-linux-arm32v6
+    if [ $? -ne 0 ]; then
+        echo "ERROR: Docker container failed to start for v8-linux-arm32v6 build."
+        exit 1
+    fi
+    docker stop test-v8-linux-arm32v6 && docker rm test-v8-linux-arm32v6
+
+    docker run -d --name=test-v8-linux-arm32v7 $IMAGE:build-v8-linux-arm32v7
+    if [ $? -ne 0 ]; then
+        echo "ERROR: Docker container failed to start for v8-linux-arm32v7 build."
+        exit 1
+    fi
+    docker stop test-v8-linux-arm32v7 && docker rm test-v8-linux-arm32v7
+
+    docker run -d --name=test-v8-linux-arm64v8 $IMAGE:build-v8-linux-arm64v8
+    if [ $? -ne 0 ]; then
+        echo "ERROR: Docker container failed to start for v8-linux-arm64v8 build."
+        exit 1
+    fi
+    docker stop test-v8-linux-arm64v8 && docker rm test-v8-linux-arm64v8
 }
 
 docker_tag() {
@@ -67,32 +137,32 @@ docker_tag() {
 
 docker_tag_node_v6() {
     # Tag node v6 based images
-    docker tag $IMAGE:new-v6-linux-amd64 $IMAGE:latest-v6-linux-amd64
-    docker tag $IMAGE:new-v6-linux-amd64 $IMAGE:$NODE_RED_VERSION-v6-linux-amd64
+    docker tag $IMAGE:build-v6-linux-amd64 $IMAGE:latest-v6-linux-amd64
+    docker tag $IMAGE:build-v6-linux-amd64 $IMAGE:$NODE_RED_VERSION-v6-linux-amd64
 
     #docker tag $IMAGE:latest-v6-linux-arm32v6 $IMAGE:latest-v6-linux-arm32v6
     #docker tag $IMAGE:latest-v6-linux-arm32v6 $IMAGE:$NODE_RED_VERSION-v6-linux-arm32v6
 
-    docker tag $IMAGE:new-v6-linux-arm32v7 $IMAGE:latest-v6-linux-arm32v7
-    docker tag $IMAGE:new-v6-linux-arm32v7 $IMAGE:$NODE_RED_VERSION-v6-linux-arm32v7
+    docker tag $IMAGE:build-v6-linux-arm32v7 $IMAGE:latest-v6-linux-arm32v7
+    docker tag $IMAGE:build-v6-linux-arm32v7 $IMAGE:$NODE_RED_VERSION-v6-linux-arm32v7
 
-    docker tag $IMAGE:new-v6-linux-arm64v8 $IMAGE:latest-v6-linux-arm64v8
-    docker tag $IMAGE:new-v6-linux-arm64v8 $IMAGE:$NODE_RED_VERSION-v6-linux-arm64v8
+    docker tag $IMAGE:build-v6-linux-arm64v8 $IMAGE:latest-v6-linux-arm64v8
+    docker tag $IMAGE:build-v6-linux-arm64v8 $IMAGE:$NODE_RED_VERSION-v6-linux-arm64v8
 }
 
 docker_tag_node_v8() {
     # Tag node v8 based images
-    docker tag $IMAGE:new-v8-linux-amd64 $IMAGE:latest-v8-linux-amd64
-    docker tag $IMAGE:new-v8-linux-amd64 $IMAGE:$NODE_RED_VERSION-v8-linux-amd64
+    docker tag $IMAGE:build-v8-linux-amd64 $IMAGE:latest-v8-linux-amd64
+    docker tag $IMAGE:build-v8-linux-amd64 $IMAGE:$NODE_RED_VERSION-v8-linux-amd64
 
-    docker tag $IMAGE:new-v8-linux-arm32v6 $IMAGE:latest-v8-linux-arm32v6
-    docker tag $IMAGE:new-v8-linux-arm32v6 $IMAGE:$NODE_RED_VERSION-v8-linux-arm32v6
+    docker tag $IMAGE:build-v8-linux-arm32v6 $IMAGE:latest-v8-linux-arm32v6
+    docker tag $IMAGE:build-v8-linux-arm32v6 $IMAGE:$NODE_RED_VERSION-v8-linux-arm32v6
 
-    docker tag $IMAGE:new-v8-linux-arm32v7 $IMAGE:latest-v8-linux-arm32v7
-    docker tag $IMAGE:new-v8-linux-arm32v7 $IMAGE:$NODE_RED_VERSION-v8-linux-arm32v7
+    docker tag $IMAGE:build-v8-linux-arm32v7 $IMAGE:latest-v8-linux-arm32v7
+    docker tag $IMAGE:build-v8-linux-arm32v7 $IMAGE:$NODE_RED_VERSION-v8-linux-arm32v7
 
-    docker tag $IMAGE:new-v8-linux-arm64v8 $IMAGE:latest-v8-linux-arm64v8
-    docker tag $IMAGE:new-v8-linux-arm64v8 $IMAGE:$NODE_RED_VERSION-v8-linux-arm64v8
+    docker tag $IMAGE:build-v8-linux-arm64v8 $IMAGE:latest-v8-linux-arm64v8
+    docker tag $IMAGE:build-v8-linux-arm64v8 $IMAGE:$NODE_RED_VERSION-v8-linux-arm64v8
 }
 
 docker_push() {

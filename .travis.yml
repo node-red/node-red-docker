@@ -18,11 +18,12 @@ before_install:
 script:
   - ./update.sh $NODE_RED_VERSION
   - ./.docker/docker.sh build
+  - ./.docker/docker.sh test
 
 after_success:
   - >
-    if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-      # Docker Hub Login
+    if [[ "$TRAVIS_BRANCH" == "master"  -a "$TRAVIS_PULL_REQUEST" == "false" ]]; then
+      # Docker Login
       echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
       # Tag all images
@@ -34,7 +35,7 @@ after_success:
       # Create and push manifest list
       ./.docker/docker.sh manifest-list
 
-      # Docker Hub Logout
+      # Docker Logout
       docker logout
     fi
 
