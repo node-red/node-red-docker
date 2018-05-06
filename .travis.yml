@@ -39,6 +39,6 @@ after_success:
       docker logout
     fi
 
-# don't notify me when things fail
+# notify me when things fail
 notifications:
-    email: false
+    email: true
