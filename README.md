@@ -27,10 +27,28 @@ Let's dissect that command...
 Running that command should give a terminal window with a running instance of Node-RED
 
         Welcome to Node-RED
+
         ===================
-        8 Apr 12:13:44 - [info] Node-RED version: v0.14.5
-        8 Apr 12:13:44 - [info] Node.js  version: v4.4.7
-        .... etc
+
+        6 May 00:36:30 - [info] Node-RED version: v0.18.4
+
+        6 May 00:36:30 - [info] Node.js  version: v8.11.1
+
+        6 May 00:36:30 - [info] Linux 4.14.37-v7+ arm LE
+
+        6 May 00:36:31 - [info] Loading palette nodes
+
+        6 May 00:36:42 - [warn] Cannot find Pi RPi.GPIO python library
+
+        6 May 00:37:30 - [info] Dashboard version 2.8.2 started at /ui
+
+        6 May 00:37:34 - [warn] ------------------------------------------------------
+
+        6 May 00:37:34 - [warn] [node-red/rpi-gpio] Warning : Cannot find Pi RPi.GPIO python library
+
+        6 May 00:37:34 - [warn] ------------------------------------------------------
+
+        [...]
 
 You can then browse to `http://{host-ip}:1880` to get the familiar Node-RED desktop.
 
