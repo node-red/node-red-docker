@@ -25,8 +25,8 @@ ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
 RUN if [ "$NODE_IMAGE_TAG" = "8-alpine" ]; then \
         apk add --update \
         git \
-        openssh-keygen \
-        && rm -rf /var/cache/apk/* \
+        openssh-keygen ; \
+        && rm -rf /var/cache/apk/* ;
     fi
 
 # Create Node-red application directory
