@@ -1,5 +1,4 @@
 # Node-RED-Docker
-
 [![Greenkeeper badge](https://badges.greenkeeper.io/node-red/node-red-docker.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/RaymondMouthaan/node-red-docker.svg?branch=master)](https://travis-ci.org/RaymondMouthaan/node-red-docker)
 [![DockerHub Pull](https://img.shields.io/docker/pulls/raymondmm/node-red.svg)](https://hub.docker.com/r/raymondmm/node-red/)
@@ -78,54 +77,56 @@ extra nodes you install "outside" of the container. We do this so that you may r
 container without permanently losing all of your customisations._
 
 ## Image Variations
-The Node-RED images have different variations and are supported by manifest lists.
+The Node-RED images have different variations and are supported by manifest lists (auto-detect architecture).
 
 The tag naming convention is `<node-red-version>-<node-version>-<architecture>`, where:
 - `<node-red-version>` is the Node-RED version.
 - `<node-version>` is the Node JS version, either v6 or v8, based on Alpine or Debian slim images.
 - `<architecture>` is the architecture of the Docker host system, either amd64, arm32v6, arm32v7, arm64.
 
-The Node-RED images are based on the official Node JS v8 or Node JS v6 images and are either based on Alpine Linux or Debian Linux (slim).
+The Node-RED images are based on the [official Node JS v8 and Node JS v6 images](https://hub.docker.com/_/node/), which are based on Alpine Linux or Debian Linux (slim).
 Using Alpine Linux or Debian Linux (slim) reduces the built image size (~100MB vs ~700MB), but removes
 standard dependencies that are required for native module compilation. If you
 want to add dependencies with native dependencies, extend the Node-RED image with the missing packages on running containers or build new images.
 
 ### Node.JS v8 based images
-The following images are built for each Node-RED release, using the [official Node.JS v8 base images](https://hub.docker.com/_/node/). These images have git and openssl tools pre-installed to support Node-red's Projects feature.
+The following images are built for each Node-RED release, using the [official Node.JS v8 base images](https://hub.docker.com/_/node/).
+These images have git and openssl tools pre-installed to support Node-red's Projects feature.
 
-| **Tag**                 |     **Base Image**    | **OS** | Purpose                  |
+| **Tag**                 |     **Base Image**    | **OS** |  **Description**         |
 |-------------------------|-----------------------|--------|--------------------------|
-| latest <td colspan=3>pulls Node-RED latest docker image with auto-detect of architecture |
-| 0.18.4 <td colspan=3>pulls Node-RED v0.18.4 (default: Node JS v8) docker image with auto-detect of architecture |
-| 0.18.4-8 <td colspan=3>pulls Node-RED v0.18.4, Node JS v8 docker image with auto-detect of architecture |
-| latest-8-alpine-amd64 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for amd64 |
+| latest <td colspan=3>pulls Node-RED latest docker image with auto-detect of architecture</td>
+| 0.18.4 <td colspan=3>pulls Node-RED v0.18.4 (default: Node JS v8) docker image with auto-detect of architecture</td>
+| 0.18.4-8 <td colspan=3>pulls Node-RED v0.18.4, Node JS v8 docker image with auto-detect of architecture</td>
+| latest-8-alpine-amd64 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for amd64</td>
 | 0.18.4-8-alpine-amd64   | amd64/node:8-alpine   | alpine | amd64 and x86_64 systems |
-| latest-8-debian-arm32v7 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for arm32v7 |
+| latest-8-debian-arm32v7 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for arm32v7</td>
 | 0.18.4-8-debian-arm32v7 | arm32v7/node:8-debian | debian | i.e. Raspberry PI 2 & 3  |
-| latest-8-alpine-arm32v6 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for arm32v6 |
+| latest-8-alpine-arm32v6 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for arm32v6</td>
 | 0.18.4-8-alpine-arm32v6 | arm32v6/node:8-alpine | alpine | i.e. Raspberry PI 1      |
-| latest-8-alpine-arm64v8 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for arm64v8 |
+| latest-8-alpine-arm64v8 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for arm64v8</td>
 | 0.18.4-8-alpine-arm64v8 | arm64v8/node:8-alpine | alpine | i.e. Pine64              |
 
 ### Node.JS v6 based images
-The following images are built for each Node-RED release, using the [official Node.JS v6 base images](https://hub.docker.com/_/node/). These images **do not** have git and openssl tools pre-installed to support Node-red's Projects feature.
+The following images are built for each Node-RED release, using the [official Node.JS v6 base images](https://hub.docker.com/_/node/).
+These images **do not** have git and openssl tools pre-installed to support Node-red's Projects feature.
 
-| **Tag**                 |     **Base Image**    | **OS** | Purpose                  |
+| **Tag**                 |     **Base Image**    | **OS** | **Description**          |
 |-------------------------|-----------------------|--------|--------------------------|
-| 0.18.4-6 <td colspan=3>uses Node-RED v0.18.4, Node JS v6 docker image auto-detect of architecture |
-| latest-6-alpine-amd64 <td colspan=3>pulls Node-RED lastest, Node JS v6 docker image for amd64 |
+| 0.18.4-6 <td colspan=3>uses Node-RED v0.18.4, Node JS v6 docker image auto-detect of architecture</td>
+| latest-6-alpine-amd64 <td colspan=3>pulls Node-RED lastest, Node JS v6 docker image for amd64</td>
 | 0.18.4-6-alpine-amd64   | amd64/node:6-alpine   | alpine | amd64 and x86_64 systems |
-| latest-6-debian-arm32v7 <td colspan=3>pulls Node-RED lastest, Node JS v6 docker image for arm32v7 |
+| latest-6-debian-arm32v7 <td colspan=3>pulls Node-RED lastest, Node JS v6 docker image for arm32v7</td>
 | 0.18.4-6-debian-arm32v7 | arm32v7/node:6-debian | debian | i.e. Raspberry PI 2 & 3  |
-| latest-6-debian-arm64v8 <td colspan=3>pulls Node-RED lastest, Node JS v6 docker image for arm64v8 |
+| latest-6-debian-arm64v8 <td colspan=3>pulls Node-RED lastest, Node JS v6 docker image for arm64v8</td>
 | 0.18.4-6-debian-arm64v8 | arm64v8/node:6-debian | debian | i.e. Pine64              |
 
 ### Raspberry PI images
-| **Tag**                 |     **Base Image**    | **OS** | Purpose                  |
+| **Tag**                 |     **Base Image**    | **OS** | **Description**          |
 |-------------------------|-----------------------|--------|--------------------------|
-| latest-8-rpi23 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for Raspberry PI 1 |
+| latest-8-rpi23 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for Raspberry PI 1</td>
 | 0.18.4-8-rpi23          | arm32v7/node:6-debian | debian | Raspberry PI 2 & 3       |
-| latest-8-rpi1 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for Raspberry PI 1 |
+| latest-8-rpi1 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for Raspberry PI 1</td>
 | 0.18.4-8-rpi1           | arm32v6/node:8-alpine | alpine | Raspberry PI 1           |
 
 ## Manifest List
@@ -138,16 +139,107 @@ docker run -it -p 1880:1880 --name mynodered nodered/node-red
 
 The same command can be used for running on an amd64 system, since docker discovers its running on a amd64 host and pulls the image with matching tag (0.18.4-8-alpine-amd64).
 
+This gives the advantaged that you don't need to know which architecture you are running on and makes docker run commands and docker compose files exchangeable.
+
 ## Raspberry PI
-Due to an open [issue](https://github.com/moby/moby/issues/34875) the above command pulls `0.18.4-8-alpine-arm32v6` for Raspberry PI 2 and 3. Since arm32v6 is compatible with arm32v7, this is not a problem. However if you to make use of arm32v7 then specify it's corresponding tag explicit like this:
+Due to an open [issue](https://github.com/moby/moby/issues/34875) the above command pulls `0.18.4-8-alpine-arm32v6` for Raspberry PI 2 and 3. Since arm32v6 is compatible with arm32v7, this is not a problem.
+However if you to make use of arm32v7 then specify it's corresponding tag explicit like this:
+
+```
+docker run -it -p 1880:1880 --name mynodered nodered/node-red:latest-8-rpi23
+```
+Or:
+```
+docker run -it -p 1880:1880 --name mynodered nodered/node-red:latest-8-debian-arm32v7
+```
+
+Or like this if you want a particular version of Node-RED:
 ```
 docker run -it -p 1880:1880 --name mynodered nodered/node-red:0.18.4-8-rpi23
 ```
+Or:
+```
+docker run -it -p 1880:1880 --name mynodered nodered/node-red:0.18.4-8-debian-arm32v7
+```
+
+All four of these commands pull the arm32v7 image.
 
 You can see a full list of the tagged releases [here](https://hub.docker.com/r/raymondmm/node-red-docker/tags/).
 
-## Project Layout
+### Host Directory As Volume (Persistent)
+To save your Node-RED user directory inside the container to a host directory outside the container, you can use the command below. But to allow access to this host directory, the node-red user (default uid=1001) inside the container must have the same uid as the owner of the host directory. To override the default uid and gid of the node-red user inside the the container you can use the option --user="<my_host_uid>:<my_host_gid>":
 
+```
+$ docker run -it --user="<my_host_uid>:<my_host_gid>" -p 1880:1880 -v <host_directory>:/data --name mynodered nodered/node-red
+```
+
+Use case ...
+- Suppose you are running on a Raspberry PI with a user named 'pi' and group 'pi'.
+```
+$ whoami
+```
+- With this user create a directory '~/.node-red'.
+```
+$ mkdir ~/.node-red
+```
+- Verify newly created directory with:
+```
+$ ls -al ~/.node-red
+```
+This shows that user pi is owner of this directory:
+```
+ls -al ~/.node-red
+total 8
+drwxr-xr-x 2 pi pi 4096 May  7 20:55 .
+drwxr-xr-x 8 pi pi 4096 May  7 20:42 ..
+```
+
+- Now we want to have access to this '~/.node-red' directory with the container so that Node-RED can save user data to it.
+As we know we need to override the default uid (1001) of the node-red user inside the container with the uid of the pi user.
+For that we need to know the uid of user pi:
+```
+$ id pi
+```
+- The uid and gid of user pi are:
+```
+uid=1000(pi) gid=1000(pi) [...]
+```
+
+- So the final command becomes:
+```
+$ docker run -it --user="1000:1000" -p 1880:1880 -v ~/.node-red:/data --name mynodered raymondmm/node-red
+```
+
+Running a Node-RED container with a host directory mounted as the data volume,
+you can manually run `npm install` within your host directory. Files created in
+the host directory will automatically appear in the container's file system.
+
+Adding extra nodes to the container can be accomplished by
+running npm install locally.
+
+        $ cd ~/.node-red
+        $ npm install node-red-node-smooth
+        node-red-node-smooth@0.0.3 node_modules/node-red-node-smooth
+        $ docker stop mynodered
+        $ docker start mynodered
+
+_**Note** : Modules with a native dependencies will be compiled on the host
+machine's architecture. These modules will not work inside the Node-RED
+container unless the architecture matches the container's base image. For native
+modules, it is recommended to install using a local shell or update the
+project's package.json and re-build._
+
+
+
+
+
+
+
+
+
+
+
+## Project Layout
 This repository contains Dockerfiles to build the Node-RED Docker images listed above.
 
 Build these images with the following command...
@@ -163,7 +255,7 @@ Docker build process, the dependencies are installed under `/usr/src/node-red`.
 The main sections to modify are
 
     "dependencies": {
-        "node-red": "0.14.x",           <-- set the version of Node-RED here
+        "node-red": "0.18.x",           <-- set the version of Node-RED here
         "node-red-node-rbe": "*"        <-- add any extra npm packages here
     },
 
@@ -229,35 +321,7 @@ command you wish - e.g.
 
 Refreshing the browser page should now reveal the newly added node in the palette.
 
-### Host Directory As Volume
 
-Running a Node-RED container with a host directory mounted as the data volume,
-you can manually run `npm install` within your host directory. Files created in
-the host directory will automatically appear in the container's file system.
-
-This command mounts the host's node-red directory, containing the user's
-configuration and installed nodes, as the user configuration directory inside
-the container.
-
-        $ docker run -it -p 1880:1880 -v ~/.node-red:/data --name mynodered nodered/node-red-docker
-
-_**Having file permissions issues after mounting a host directory?**_
-_Docker maps the internal container uuid to 1000 on the host system. If you are running as a user with a different uuid, e.g. the second user added on a system, the container user account won't be able to read files on the host system. Fix this by using the `--run $USER` flag. See [here for more details](https://github.com/node-red/node-red-docker/issues/9)._
-
-Adding extra nodes to the container can be accomplished by
-running npm install locally.
-
-        $ cd ~/.node-red
-        $ npm install node-red-node-smooth
-        node-red-node-smooth@0.0.3 node_modules/node-red-node-smooth
-        $ docker stop mynodered
-        $ docker start mynodered
-
-_**Note** : Modules with a native dependencies will be compiled on the host
-machine's architecture. These modules will not work inside the Node-RED
-container unless the architecture matches the container's base image. For native
-modules, it is recommended to install using a local shell or update the
-project's package.json and re-build._
 
 ### Building Custom Image
 
