@@ -80,6 +80,34 @@ extra nodes you install "outside" of the container. We do this so that you may r
 container without permanently losing all of your customisations._
 
 ## Images
+### Node.JS v8 based images
+The following images are built for each Node-RED release, using [official Node.JS v8 base image](https://hub.docker.com/_/node/).
+
+| **Tag**                 |     **Base Image**    | **OS** | Usage                    |
+|-------------------------|-----------------------|--------|--------------------------|
+| 0.18.4-8-alpine-amd64   | amd64/node:8-alpine   | alpine | amd64 and x86_64 systems |
+| 0.18.4-8-debian-arm32v7 | arm32v7/node:8-slim   | debian | i.e. Raspberry PI 2 & 3  |
+| 0.18.4-8-alpine-arm32v6 | arm32v6/node:8-alpine | alpine | i.e. Raspberry PI 1      |
+| 0.18.4-8-alpine-arm64v8 | arm64v8/node:8-alpine | alpine | i.e. Pine64              |
+
+
+The following images are built for each Node-RED release, using [official Node.JS v6 base image](https://hub.docker.com/_/node/).
+
+| **Tag**                 |     **Base Image**    | **OS** | Usage                    |
+|-------------------------|-----------------------|--------|--------------------------|
+| 0.18.4-6-alpine-amd64   |  amd64/node:6-alpine  | alpine | amd64 and x86_64 systems |
+| 0.18.4-6-debian-arm32v7 |  arm32v7/node:6-slim  | debian | i.e. Raspberry PI 2 & 3  |
+| 0.18.4-6-debian-arm64v8 | arm64v8/node:6-slim   | debian | i.e. Pine64              |
+
+Using Alpine Linux reduces the built image size (~100MB vs ~700MB) but removes
+standard dependencies that are required for native module compilation. If you
+want to add modules with native dependencies, use the standard image or extend
+the slim image with the missing packages.
+
+
+
+
+
 
 The following images are built for each Node-RED release, using a Node.js v6 base image.
 
