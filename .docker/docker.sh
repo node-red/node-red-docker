@@ -271,9 +271,9 @@ docker_manifest_list_node_v8() {
       $IMAGE:$NODE_RED_VERSION-8-alpine-arm64v8
 
     # Manifest Annotate v8
-    docker manifest annotate $IMAGE:$NODE_RED_VERSION-v8 $IMAGE:$NODE_RED_VERSION-8-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-    docker manifest annotate $IMAGE:$NODE_RED_VERSION-v8 $IMAGE:$NODE_RED_VERSION-8-debian-arm32v7 --os=linux --arch=arm --variant=v7
-    docker manifest annotate $IMAGE:$NODE_RED_VERSION-v8 $IMAGE:$NODE_RED_VERSION-8-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
+    docker manifest annotate $IMAGE:$NODE_RED_VERSION-8 $IMAGE:$NODE_RED_VERSION-8-alpine-arm32v6 --os=linux --arch=arm --variant=v6
+    docker manifest annotate $IMAGE:$NODE_RED_VERSION-8 $IMAGE:$NODE_RED_VERSION-8-debian-arm32v7 --os=linux --arch=arm --variant=v7
+    docker manifest annotate $IMAGE:$NODE_RED_VERSION-8 $IMAGE:$NODE_RED_VERSION-8-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
 
     # Manifest Push v8
     docker manifest push $IMAGE:$NODE_RED_VERSION-8
@@ -288,9 +288,9 @@ docker_manifest_list_default() {
     $IMAGE:$NODE_RED_VERSION-8-alpine-arm64v8
 
     # Manifest Annotate NODE_RED_VERSION
-    docker manifest annotate $IMAGE:$NODE_RED_VERSION-v8 $IMAGE:$NODE_RED_VERSION-8-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-    docker manifest annotate $IMAGE:$NODE_RED_VERSION-v8 $IMAGE:$NODE_RED_VERSION-8-debian-arm32v7 --os=linux --arch=arm --variant=v7
-    docker manifest annotate $IMAGE:$NODE_RED_VERSION-v8 $IMAGE:$NODE_RED_VERSION-8-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
+    docker manifest annotate $IMAGE:$NODE_RED_VERSION $IMAGE:$NODE_RED_VERSION-8-alpine-arm32v6 --os=linux --arch=arm --variant=v6
+    docker manifest annotate $IMAGE:$NODE_RED_VERSION $IMAGE:$NODE_RED_VERSION-8-debian-arm32v7 --os=linux --arch=arm --variant=v7
+    docker manifest annotate $IMAGE:$NODE_RED_VERSION $IMAGE:$NODE_RED_VERSION-8-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
 
     # Manifest Push NODE_RED_VERSION
     docker manifest push $IMAGE:$NODE_RED_VERSION
