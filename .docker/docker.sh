@@ -217,7 +217,7 @@ docker_manifest_list_rpi_1_latest() {
         $IMAGE:latest-8-alpine-arm32v6
 
     # Manifest Annotate rpi 1
-    docker manifest annotate $IMAGE:latest-8-rpi1 $IMAGE:latest-8-alpine-arm32v6--os=linux --arch=arm --variant=v6
+    docker manifest annotate $IMAGE:latest-8-rpi1 $IMAGE:latest-8-alpine-arm32v6 --os=linux --arch=arm --variant=v6
 
     # Manifest Push rpi 1
     docker manifest push $IMAGE:latest-8-rpi1
