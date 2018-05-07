@@ -4,10 +4,8 @@
 [![Build Status](https://travis-ci.org/RaymondMouthaan/node-red-docker.svg?branch=master)](https://travis-ci.org/RaymondMouthaan/node-red-docker)
 [![DockerHub Pull](https://img.shields.io/docker/pulls/raymondmm/node-red.svg)](https://hub.docker.com/r/raymondmm/node-red/)
 
-This project describes some of the many ways Node-RED can be run under Docker.
-Some basic familiarity with Docker and the
-[Docker Command Line](https://docs.docker.com/engine/reference/commandline/cli/)
-is assumed.
+This project describes some of the many ways Node-RED can be run under Docker and has support for multiple architectures (amd64, arm23v6, arm23v7 and arm64v8).
+Some basic familiarity with Docker and the [Docker Command Line](https://docs.docker.com/engine/reference/commandline/cli/) is assumed.
 
 _**Movement** : the DockerHub repository has been moved to a new location [nodered/node-red](https://hub.docker.com/r/raymondmm/node-red/).
 The old [nodered/node-red-docker](https://hub.docker.com/r/nodered/node-red-docker/) repository remains existing, but will no longer be maintained._
@@ -15,21 +13,21 @@ The old [nodered/node-red-docker](https://hub.docker.com/r/nodered/node-red-dock
 This project also provides the build for the `nodered/node-red`
 container on [DockerHub](https://hub.docker.com/r/raymondmm/node-red/).
 
-## Usage
-To run this directly in docker at it's simplest just run
+## Quick Start
+To run this directly in docker at it's simplest just run:
 
         docker run -it -p 1880:1880 --name mynodered nodered/node-red
 
-Let's dissect that command...
+Let's dissect that command:
 
-        docker run      - run this container... and build locally if necessary first.
-        -it             - attach a terminal session so we can see what is going on
-        -p 1880:1880    - connect local port 1880 to the exposed internal port 1880
-        --name mynodered - give this machine a friendly local name
+        docker run              - run this container... and build locally if necessary first.
+        -it                     - attach a terminal session so we can see what is going on
+        -p 1880:1880            - connect local port 1880 to the exposed internal port 1880
+        --name mynodered        - give this machine a friendly local name
         nodered/node-red-docker - the image to base it on - currently Node-RED v0.14.5
 
 
-Running that command should give a terminal window with a running instance of Node-RED
+Running that command should give a terminal window with a running instance of Node-RED.
 
         Welcome to Node-RED
 
@@ -67,11 +65,11 @@ To reattach to the terminal (to see logging) run:
 
         $ docker attach mynodered
 
-If you need to restart the container (e.g. after a reboot or restart of the Docker daemon)
+If you need to restart the container (e.g. after a reboot or restart of the Docker daemon):
 
         $ docker start mynodered
 
-and stop it again when required
+and stop it again when required:
 
         $ docker stop mynodered
 
@@ -79,57 +77,74 @@ _**Note** : this Dockerfile is configured to store the flows.json file and any
 extra nodes you install "outside" of the container. We do this so that you may rebuild the underlying
 container without permanently losing all of your customisations._
 
-## Images
-### Node.JS v8 based images
-The following images are built for each Node-RED release, using [official Node.JS v8 base image](https://hub.docker.com/_/node/).
+## Image Variations
+The Node-RED images have different variations and are supported by manifest lists.
 
-| **Tag**                 |     **Base Image**    | **OS** | Usage                    |
+The tag naming convention is `<node-red-version>-<node-version>-<architecture>`, where:
+- `<node-red-version>` is the Node-RED version.
+- `<node-version>` is the Node JS version, either v6 or v8, based on Alpine or Debian slim images.
+- `<architecture>` is the architecture of the Docker host system, either amd64, arm32v6, arm32v7, arm64.
+
+The Node-RED images are based on the official Node JS v8 or Node JS v6 images and are either based on Alpine Linux or Debian Linux (slim).
+Using Alpine Linux or Debian Linux (slim) reduces the built image size (~100MB vs ~700MB), but removes
+standard dependencies that are required for native module compilation. If you
+want to add dependencies with native dependencies, extend the Node-RED image with the missing packages on running containers or build new images.
+
+### Node.JS v8 based images
+The following images are built for each Node-RED release, using the [official Node.JS v8 base images](https://hub.docker.com/_/node/). These images have git and openssl tools pre-installed to support Node-red's Projects feature.
+
+| **Tag**                 |     **Base Image**    | **OS** | Purpose                  |
 |-------------------------|-----------------------|--------|--------------------------|
+| latest <td colspan=3>pulls Node-RED latest docker image with auto-detect of architecture |
+| 0.18.4 <td colspan=3>pulls Node-RED v0.18.4 (default: Node JS v8) docker image with auto-detect of architecture |
+| 0.18.4-8 <td colspan=3>pulls Node-RED v0.18.4, Node JS v8 docker image with auto-detect of architecture |
+| latest-8-alpine-amd64 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for amd64 |
 | 0.18.4-8-alpine-amd64   | amd64/node:8-alpine   | alpine | amd64 and x86_64 systems |
-| 0.18.4-8-debian-arm32v7 | arm32v7/node:8-slim   | debian | i.e. Raspberry PI 2 & 3  |
+| latest-8-debian-arm32v7 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for arm32v7 |
+| 0.18.4-8-debian-arm32v7 | arm32v7/node:8-debian | debian | i.e. Raspberry PI 2 & 3  |
+| latest-8-alpine-arm32v6 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for arm32v6 |
 | 0.18.4-8-alpine-arm32v6 | arm32v6/node:8-alpine | alpine | i.e. Raspberry PI 1      |
+| latest-8-alpine-arm64v8 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for arm64v8 |
 | 0.18.4-8-alpine-arm64v8 | arm64v8/node:8-alpine | alpine | i.e. Pine64              |
 
+### Node.JS v6 based images
+The following images are built for each Node-RED release, using the [official Node.JS v6 base images](https://hub.docker.com/_/node/). These images **do not** have git and openssl tools pre-installed to support Node-red's Projects feature.
 
-The following images are built for each Node-RED release, using [official Node.JS v6 base image](https://hub.docker.com/_/node/).
-
-| **Tag**                 |     **Base Image**    | **OS** | Usage                    |
+| **Tag**                 |     **Base Image**    | **OS** | Purpose                  |
 |-------------------------|-----------------------|--------|--------------------------|
-| 0.18.4-6-alpine-amd64   |  amd64/node:6-alpine  | alpine | amd64 and x86_64 systems |
-| 0.18.4-6-debian-arm32v7 |  arm32v7/node:6-slim  | debian | i.e. Raspberry PI 2 & 3  |
-| 0.18.4-6-debian-arm64v8 | arm64v8/node:6-slim   | debian | i.e. Pine64              |
+| 0.18.4-6 <td colspan=3>uses Node-RED v0.18.4, Node JS v6 docker image auto-detect of architecture |
+| latest-6-alpine-amd64 <td colspan=3>pulls Node-RED lastest, Node JS v6 docker image for amd64 |
+| 0.18.4-6-alpine-amd64   | amd64/node:6-alpine   | alpine | amd64 and x86_64 systems |
+| latest-6-debian-arm32v7 <td colspan=3>pulls Node-RED lastest, Node JS v6 docker image for arm32v7 |
+| 0.18.4-6-debian-arm32v7 | arm32v7/node:6-debian | debian | i.e. Raspberry PI 2 & 3  |
+| latest-6-debian-arm64v8 <td colspan=3>pulls Node-RED lastest, Node JS v6 docker image for arm64v8 |
+| 0.18.4-6-debian-arm64v8 | arm64v8/node:6-debian | debian | i.e. Pine64              |
 
-Using Alpine Linux reduces the built image size (~100MB vs ~700MB) but removes
-standard dependencies that are required for native module compilation. If you
-want to add modules with native dependencies, use the standard image or extend
-the slim image with the missing packages.
+### Raspberry PI images
+| **Tag**                 |     **Base Image**    | **OS** | Purpose                  |
+|-------------------------|-----------------------|--------|--------------------------|
+| latest-8-rpi23 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for Raspberry PI 1 |
+| 0.18.4-8-rpi23          | arm32v7/node:6-debian | debian | Raspberry PI 2 & 3       |
+| latest-8-rpi1 <td colspan=3>pulls Node-RED lastest, Node JS v8 docker image for Raspberry PI 1 |
+| 0.18.4-8-rpi1           | arm32v6/node:8-alpine | alpine | Raspberry PI 1           |
 
+## Manifest List
+With the support of Docker manifest list, there is no need to explicit add the tag for the architecture to use. When a docker run command or docker service command or docker stack command is executed, docker checks which architecture is required and verifies if it is available in the docker repository. When it does, docker pulls the matching image for it.
 
+As an example: suppose you are running on a Pine64, which has arm64 as architecture. Then just simple run the following command, to pull the image with the correct tag (0.18.4-8-alpine-arm64v8) and run the container.
+```
+docker run -it -p 1880:1880 --name mynodered nodered/node-red
+```
 
+The same command can be used for running on an amd64 system, since docker discovers its running on a amd64 host and pulls the image with matching tag (0.18.4-8-alpine-amd64).
 
+## Raspberry PI
+Due to an open [issue](https://github.com/moby/moby/issues/34875) the above command pulls `0.18.4-8-alpine-arm32v6` for Raspberry PI 2 and 3. Since arm32v6 is compatible with arm32v7, this is not a problem. However if you to make use of arm32v7 then specify it's corresponding tag explicit like this:
+```
+docker run -it -p 1880:1880 --name mynodered nodered/node-red:0.18.4-8-rpi23
+```
 
-
-The following images are built for each Node-RED release, using a Node.js v6 base image.
-
-- **latest** - uses [official Node.JS v6 base image](https://hub.docker.com/_/node/).
-- **slim** uses [Alpine Linux base image](https://hub.docker.com/r/mhart/alpine-node/).
-- **rpi** uses [RPi-compatible base image](https://hub.docker.com/r/hypriot/rpi-node/).
-
-Using Alpine Linux reduces the built image size (~100MB vs ~700MB) but removes
-standard dependencies that are required for native module compilation. If you
-want to add modules with native dependencies, use the standard image or extend
-the slim image with the missing packages.
-
-Additional images using a newer Node.js v8 base image are now available with the following tags.
-
-- **v8**
-- **slim-v8**
-- **rpi-v8**
-
-Node-RED releases are also tagged with a version label, allowing you to fix on a specific version: `latest:X.Y.Z`,
-`slim:X.Y.Z`, `rpi:X.Y.Z`.
-
-You can see a full list of the tagged releases [here](https://hub.docker.com/r/nodered/node-red-docker/tags/).
+You can see a full list of the tagged releases [here](https://hub.docker.com/r/raymondmm/node-red-docker/tags/).
 
 ## Project Layout
 
