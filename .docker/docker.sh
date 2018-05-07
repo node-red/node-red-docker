@@ -46,7 +46,7 @@ docker_build() {
 
 docker_build_node_v6() {
     # Build node v6 based images
-    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=amd64   --build-arg NODE_IMAGE_TAG=6-alpine   --build-arg QEMU_ARCH=x86_64  --file ./.docker/Dockerfile.debian-tmpl --tag $IMAGE:build-6-alpine-amd64 .
+    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=amd64   --build-arg NODE_IMAGE_TAG=6-alpine   --build-arg QEMU_ARCH=x86_64  --file ./.docker/Dockerfile.alpine-tmpl --tag $IMAGE:build-6-alpine-amd64 .
     # note: there is no node v6 based image available for arm32v6
     docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v7 --build-arg NODE_IMAGE_TAG=6-slim   --build-arg QEMU_ARCH=arm     --file ./.docker/Dockerfile.debian-tmpl --tag $IMAGE:build-6-debian-arm32v7 .
     docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm64v8 --build-arg NODE_IMAGE_TAG=6-slim   --build-arg QEMU_ARCH=aarch64 --file ./.docker/Dockerfile.debian-tmpl --tag $IMAGE:build-6-debian-arm64v8 .
