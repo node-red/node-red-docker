@@ -1,19 +1,24 @@
 # Node-RED-Docker
 
-
 [![Greenkeeper badge](https://badges.greenkeeper.io/node-red/node-red-docker.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.org/RaymondMouthaan/node-red-docker.svg?branch=master)](https://travis-ci.org/RaymondMouthaan/node-red-docker)
+[![DockerHub Pull](https://img.shields.io/docker/pulls/raymondmm/node-red.svg)](https://hub.docker.com/r/raymondmm/node-red/)
 
 This project describes some of the many ways Node-RED can be run under Docker.
 Some basic familiarity with Docker and the
 [Docker Command Line](https://docs.docker.com/engine/reference/commandline/cli/)
 is assumed.
 
-This project also provides the build for the `nodered/node-red-docker`
-container on [DockerHub](https://hub.docker.com/r/nodered/node-red-docker/).
+_**Movement** : the DockerHub repository has been moved to a new location [nodered/node-red](https://hub.docker.com/r/raymondmm/node-red/).
+The old [nodered/node-red-docker](https://hub.docker.com/r/nodered/node-red-docker/) repository remains existing, but will no longer be maintained._
 
+This project also provides the build for the `nodered/node-red`
+container on [DockerHub](https://hub.docker.com/r/raymondmm/node-red/).
+
+## Usage
 To run this directly in docker at it's simplest just run
 
-        docker run -it -p 1880:1880 --name mynodered nodered/node-red-docker
+        docker run -it -p 1880:1880 --name mynodered nodered/node-red
 
 Let's dissect that command...
 
