@@ -164,7 +164,7 @@ docker run -it -p 1880:1880 --name mynodered nodered/node-red:0.18.4-8-debian-ar
 
 All four of these commands pull the arm32v7 image.
 
-You can see a full list of the tagged releases [here](https://hub.docker.com/r/raymondmm/node-red-docker/tags/).
+You can see a full list of the tagged releases [here](https://hub.docker.com/r/raymondmm/node-red/tags/).
 
 ### Host Directory As Volume (Persistent)
 To save your Node-RED user directory inside the container to a host directory outside the container, you can use the command below. But to allow access to this host directory, the node-red user (default uid=1001) inside the container must have the same uid as the owner of the host directory. To override the default uid and gid of the node-red user inside the the container you can use the option --user="<my_host_uid>:<my_host_gid>":
