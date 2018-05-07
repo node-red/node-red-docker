@@ -2,7 +2,6 @@ ARG ARCH
 ARG NODE_IMAGE_TAG
 
 FROM $ARCH/node:$NODE_IMAGE_TAG
-LABEL maintainer="Raymond Mouthaan <raymondmmouthaan@gmail.com>"
 
 # Define ARGs again to make them available after FROM
 ARG ARCH
