@@ -8,6 +8,7 @@ language:
 
 env:
   global:
+    - VERSION=0.1
     - NODE_RED_VERSION=0.18.4
     - IMAGE=raymondmm/node-red
     - QEMU_VERSION=v2.11.1
