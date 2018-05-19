@@ -9,12 +9,6 @@ Some basic familiarity with Docker and the [Docker Command Line](https://docs.do
 This project also provides the build for the `nodered/node-red`
 container on [DockerHub](https://hub.docker.com/r/raymondmm/node-red/).
 
-## !!! Attention !!!
-The DockerHub repository has been moved to a new location [nodered/node-red](https://hub.docker.com/r/raymondmm/node-red/).
-The old [nodered/node-red-docker](https://hub.docker.com/r/nodered/node-red-docker/) repository remains existing, but will no longer be maintained._
-
-Moved to Node JS v8 as default. Previous Node-RED docker image releases had Node JS v6 as default, which has been changed to Node JS v8. The Node JS v6 images remain available.
-
 ## Quick Start
 To run this directly in docker at it's simplest just run:
 
