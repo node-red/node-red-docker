@@ -19,7 +19,7 @@ script:
   - ./update.sh $NODE_RED_VERSION
   - ./.docker/docker.sh build
   - ./.docker/docker.sh test
-
+ 
 after_success:
   - >
     if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
