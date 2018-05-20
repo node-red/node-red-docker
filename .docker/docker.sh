@@ -40,17 +40,17 @@ docker_prepare() {
 
 docker_build() {
     echo "DOCKER BUILD: Build all docker images."
-    docker_build_node_v6
+    # docker_build_node_v6
     docker_build_node_v8
 }
 
-docker_build_node_v6() {
-    # Build node v6 based images
-    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=amd64   --build-arg NODE_IMAGE_TAG=6-alpine   --build-arg QEMU_ARCH=x86_64  --file ./.docker/Dockerfile.alpine-tmpl --tag $IMAGE:build-6-alpine-amd64 .
-    # note: there is no node v6 based image available for arm32v6
-    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v7 --build-arg NODE_IMAGE_TAG=6-slim   --build-arg QEMU_ARCH=arm     --file ./.docker/Dockerfile.debian-tmpl --tag $IMAGE:build-6-debian-arm32v7 .
-    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm64v8 --build-arg NODE_IMAGE_TAG=6-slim   --build-arg QEMU_ARCH=aarch64 --file ./.docker/Dockerfile.debian-tmpl --tag $IMAGE:build-6-debian-arm64v8 .
-}
+# docker_build_node_v6() {
+#     # Build node v6 based images
+#     docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=amd64   --build-arg NODE_IMAGE_TAG=6-alpine   --build-arg QEMU_ARCH=x86_64  --file ./.docker/Dockerfile.alpine-tmpl --tag $IMAGE:build-6-alpine-amd64 .
+#     # note: there is no node v6 based image available for arm32v6
+#     docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v7 --build-arg NODE_IMAGE_TAG=6-slim   --build-arg QEMU_ARCH=arm     --file ./.docker/Dockerfile.debian-tmpl --tag $IMAGE:build-6-debian-arm32v7 .
+#     docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm64v8 --build-arg NODE_IMAGE_TAG=6-slim   --build-arg QEMU_ARCH=aarch64 --file ./.docker/Dockerfile.debian-tmpl --tag $IMAGE:build-6-debian-arm64v8 .
+# }
 
 docker_build_node_v8() {
     # Build node v8 based images
@@ -61,33 +61,33 @@ docker_build_node_v8() {
 }
 
 docker_test() {
-    docker_test_node_v6
+    # docker_test_node_v6
     docker_test_node_v8
 }
 
-docker_test_node_v6() {
-    # Test all node v6 images
-    docker run -d --name test-6-alpine-amd64 $IMAGE:build-6-alpine-amd64
-    if [ $? -ne 0 ]; then
-        echo "ERROR: Docker container failed to start for build-6-alpine-amd64."
-        exit 1
-    fi
-    docker stop test-6-alpine-amd64 && docker rm test-6-alpine-amd64
-
-    docker run -d --name test-6-debian-arm32v7 $IMAGE:build-6-debian-arm32v7
-    if [ $? -ne 0 ]; then
-        echo "ERROR: Docker container failed to start for build-6-debian-arm32v7."
-        exit 1
-    fi
-    docker stop test-6-debian-arm32v7 && docker rm test-6-debian-arm32v7
-
-    docker run -d --name test-6-debian-arm64v8 $IMAGE:build-6-debian-arm64v8
-    if [ $? -ne 0 ]; then
-        echo "ERROR: Docker container failed to start for build-6-debian-arm64v8."
-        exit 1
-    fi
-    docker stop test-6-debian-arm64v8 && docker rm test-6-debian-arm64v8
-}
+# docker_test_node_v6() {
+#     # Test all node v6 images
+#     docker run -d --name test-6-alpine-amd64 $IMAGE:build-6-alpine-amd64
+#     if [ $? -ne 0 ]; then
+#         echo "ERROR: Docker container failed to start for build-6-alpine-amd64."
+#         exit 1
+#     fi
+#     docker stop test-6-alpine-amd64 && docker rm test-6-alpine-amd64
+#
+#     docker run -d --name test-6-debian-arm32v7 $IMAGE:build-6-debian-arm32v7
+#     if [ $? -ne 0 ]; then
+#         echo "ERROR: Docker container failed to start for build-6-debian-arm32v7."
+#         exit 1
+#     fi
+#     docker stop test-6-debian-arm32v7 && docker rm test-6-debian-arm32v7
+#
+#     docker run -d --name test-6-debian-arm64v8 $IMAGE:build-6-debian-arm64v8
+#     if [ $? -ne 0 ]; then
+#         echo "ERROR: Docker container failed to start for build-6-debian-arm64v8."
+#         exit 1
+#     fi
+#     docker stop test-6-debian-arm64v8 && docker rm test-6-debian-arm64v8
+# }
 
 docker_test_node_v8() {
     # Test all node v8 images
@@ -122,21 +122,21 @@ docker_test_node_v8() {
 
 docker_tag() {
     echo "DOCKER TAG: Tag all docker images."
-    docker_tag_node_v6
+    # docker_tag_node_v6
     docker_tag_node_v8
 }
 
-docker_tag_node_v6() {
-    # Tag node v6 based images
-    docker tag $IMAGE:build-6-alpine-amd64 $IMAGE:latest-6-alpine-amd64
-    docker tag $IMAGE:build-6-alpine-amd64 $IMAGE:$NODE_RED_VERSION-6-alpine-amd64
-
-    docker tag $IMAGE:build-6-debian-arm32v7 $IMAGE:latest-6-debian-arm32v7
-    docker tag $IMAGE:build-6-debian-arm32v7 $IMAGE:$NODE_RED_VERSION-6-debian-arm32v7
-
-    docker tag $IMAGE:build-6-debian-arm64v8 $IMAGE:latest-6-debian-arm64v8
-    docker tag $IMAGE:build-6-debian-arm64v8 $IMAGE:$NODE_RED_VERSION-6-debian-arm64v8
-}
+# docker_tag_node_v6() {
+#     # Tag node v6 based images
+#     docker tag $IMAGE:build-6-alpine-amd64 $IMAGE:latest-6-alpine-amd64
+#     docker tag $IMAGE:build-6-alpine-amd64 $IMAGE:$NODE_RED_VERSION-6-alpine-amd64
+#
+#     docker tag $IMAGE:build-6-debian-arm32v7 $IMAGE:latest-6-debian-arm32v7
+#     docker tag $IMAGE:build-6-debian-arm32v7 $IMAGE:$NODE_RED_VERSION-6-debian-arm32v7
+#
+#     docker tag $IMAGE:build-6-debian-arm64v8 $IMAGE:latest-6-debian-arm64v8
+#     docker tag $IMAGE:build-6-debian-arm64v8 $IMAGE:$NODE_RED_VERSION-6-debian-arm64v8
+# }
 
 docker_tag_node_v8() {
     # Tag node v8 based images
@@ -155,21 +155,21 @@ docker_tag_node_v8() {
 
 docker_push() {
     echo "DOCKER PUSH: Push all docker images."
-    docker_push_node_v6
+    # docker_push_node_v6
     docker_push_node_v8
 }
 
-docker_push_node_v6() {
-    # Push node v6 based images
-    docker push $IMAGE:latest-6-alpine-amd64
-    docker push $IMAGE:$NODE_RED_VERSION-6-alpine-amd64
-
-    docker push $IMAGE:latest-6-debian-arm32v7
-    docker push $IMAGE:$NODE_RED_VERSION-6-debian-arm32v7
-
-    docker push $IMAGE:latest-6-debian-arm64v8
-    docker push $IMAGE:$NODE_RED_VERSION-6-debian-arm64v8
-}
+# docker_push_node_v6() {
+#     # Push node v6 based images
+#     docker push $IMAGE:latest-6-alpine-amd64
+#     docker push $IMAGE:$NODE_RED_VERSION-6-alpine-amd64
+#
+#     docker push $IMAGE:latest-6-debian-arm32v7
+#     docker push $IMAGE:$NODE_RED_VERSION-6-debian-arm32v7
+#
+#     docker push $IMAGE:latest-6-debian-arm64v8
+#     docker push $IMAGE:$NODE_RED_VERSION-6-debian-arm64v8
+# }
 
 docker_push_node_v8() {
     # Push node v8 based images
@@ -193,7 +193,7 @@ docker_manifest_list() {
     docker_manifest_list_rpi_1_latest
     docker_manifest_list_rpi_2_3
     docker_manifest_list_rpi_2_3_latest
-    docker_manifest_list_node_v6
+    # docker_manifest_list_node_v6
     docker_manifest_list_node_v8
     docker_manifest_list_default
     docker_manifest_list_latest
@@ -247,20 +247,20 @@ docker_manifest_list_rpi_2_3_latest() {
     docker manifest push $IMAGE:latest-8-rpi23
 }
 
-docker_manifest_list_node_v6() {
-    # Manifest Create v6
-    docker manifest create $IMAGE:$NODE_RED_VERSION-6 \
-      $IMAGE:$NODE_RED_VERSION-6-alpine-amd64 \
-      $IMAGE:$NODE_RED_VERSION-6-debian-arm32v7 \
-      $IMAGE:$NODE_RED_VERSION-6-debian-arm64v8
-
-    # Manifest Annotate v6
-    docker manifest annotate $IMAGE:$NODE_RED_VERSION-6 $IMAGE:$NODE_RED_VERSION-6-debian-arm32v7 --os=linux --arch=arm --variant=v7
-    docker manifest annotate $IMAGE:$NODE_RED_VERSION-6 $IMAGE:$NODE_RED_VERSION-6-debian-arm64v8 --os=linux --arch=arm64 --variant=v8
-
-    # Manifest Push v6
-    docker manifest push $IMAGE:$NODE_RED_VERSION-6
-}
+# docker_manifest_list_node_v6() {
+#     # Manifest Create v6
+#     docker manifest create $IMAGE:$NODE_RED_VERSION-6 \
+#       $IMAGE:$NODE_RED_VERSION-6-alpine-amd64 \
+#       $IMAGE:$NODE_RED_VERSION-6-debian-arm32v7 \
+#       $IMAGE:$NODE_RED_VERSION-6-debian-arm64v8
+#
+#     # Manifest Annotate v6
+#     docker manifest annotate $IMAGE:$NODE_RED_VERSION-6 $IMAGE:$NODE_RED_VERSION-6-debian-arm32v7 --os=linux --arch=arm --variant=v7
+#     docker manifest annotate $IMAGE:$NODE_RED_VERSION-6 $IMAGE:$NODE_RED_VERSION-6-debian-arm64v8 --os=linux --arch=arm64 --variant=v8
+#
+#     # Manifest Push v6
+#     docker manifest push $IMAGE:$NODE_RED_VERSION-6
+# }
 
 docker_manifest_list_node_v8() {
     # Manifest Create v8
