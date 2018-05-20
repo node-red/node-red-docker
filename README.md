@@ -1,4 +1,6 @@
 # Node-RED-Docker
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/RaymondMouthaan/node-red-docker.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/RaymondMouthaan/node-red-docker.svg?branch=master)](https://travis-ci.org/RaymondMouthaan/node-red-docker)
 [![DockerHub Pull](https://img.shields.io/docker/pulls/raymondmm/node-red.svg)](https://hub.docker.com/r/raymondmm/node-red/)
 
