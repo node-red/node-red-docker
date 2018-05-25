@@ -8,33 +8,30 @@ language:
 
 env:
   global:
-    - NODE_RED_VERSION=0.18.6
-    - IMAGE=raymondmm/node-red
-    - QEMU_VERSION=v2.11.1
+    - NODE_RED_VERSION=x.y.z
+    - TARGET=raymondmm/node-red
+    - QEMU_VERSION=v2.9.1-1
+    #- QEMU_VERSION=v2.11.1
 
 before_install:
   - ./.docker/docker.sh prepare
 
 script:
-  - ./update.sh $NODE_RED_VERSION
+  - . ./update_version.sh
   - ./.docker/docker.sh build
   - ./.docker/docker.sh test
- 
+
 after_success:
   - >
     if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
       # Docker Login
       echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-
       # Tag all images
       ./.docker/docker.sh tag
-
       # Push all images
       ./.docker/docker.sh push
-
       # Create and push manifest list
       ./.docker/docker.sh manifest-list
-
       # Docker Logout
       docker logout
     fi
