@@ -55,7 +55,7 @@ docker_build_node_v8() {
 docker_build_node_v10() {
     # Build node v10 based images
     docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=amd64   --build-arg NODE_IMAGE_TAG=10-alpine   --build-arg QEMU_ARCH=x86_64 --file ./.docker/Dockerfile.alpine-tmpl --tag $TARGET:build-10-alpine-amd64 .
-    docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v6 --build-arg NODE_IMAGE_TAG=10-alpine --build-arg QEMU_ARCH=arm    --file ./.docker/Dockerfile.alpine-tmpl --tag $TARGET:build-10-alpine-arm32v6 .
+    #docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v6 --build-arg NODE_IMAGE_TAG=10-alpine --build-arg QEMU_ARCH=arm    --file ./.docker/Dockerfile.alpine-tmpl --tag $TARGET:build-10-alpine-arm32v6 .
     docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm32v7 --build-arg NODE_IMAGE_TAG=10-slim   --build-arg QEMU_ARCH=arm    --file ./.docker/Dockerfile.debian-tmpl --tag $TARGET:build-10-debian-arm32v7 .
     docker build --no-cache --build-arg NODE_RED_VERSION=v$NODE_RED_VERSION --build-arg ARCH=arm64v8 --build-arg NODE_IMAGE_TAG=810-alpine  --build-arg QEMU_ARCH=aarch64 --file ./.docker/Dockerfile.alpine-tmpl --tag $TARGET:build-10-alpine-arm64v8 .
 }
@@ -105,12 +105,12 @@ docker_test_node_v10() {
     fi
     docker stop test-10-alpine-amd64 && docker rm test-10-alpine-amd64
 
-    docker run -d --name=test-10-alpine-arm32v6 $TARGET:build-10-alpine-arm32v6
-    if [ $? -ne 0 ]; then
-        echo "ERROR: Docker container failed to start for build-10-alpine-arm32v6."
-        exit 1
-    fi
-    docker stop test-10-alpine-arm32v6 && docker rm test-10-alpine-arm32v6
+    # docker run -d --name=test-10-alpine-arm32v6 $TARGET:build-10-alpine-arm32v6
+    # if [ $? -ne 0 ]; then
+    #     echo "ERROR: Docker container failed to start for build-10-alpine-arm32v6."
+    #     exit 1
+    # fi
+    # docker stop test-10-alpine-arm32v6 && docker rm test-10-alpine-arm32v6
 
     docker run -d --name=test-10-debian-arm32v7 $TARGET:build-10-debian-arm32v7
     if [ $? -ne 0 ]; then
@@ -153,8 +153,8 @@ docker_tag_node_v10() {
     docker tag $TARGET:build-10-alpine-amd64 $TARGET:latest-10-alpine-amd64
     docker tag $TARGET:build-10-alpine-amd64 $TARGET:$NODE_RED_VERSION-10-alpine-amd64
 
-    docker tag $TARGET:build-10-alpine-arm32v6 $TARGET:latest-10-alpine-arm32v6
-    docker tag $TARGET:build-10-alpine-arm32v6 $TARGET:$NODE_RED_VERSION-10-alpine-arm32v6
+    # docker tag $TARGET:build-10-alpine-arm32v6 $TARGET:latest-10-alpine-arm32v6
+    # docker tag $TARGET:build-10-alpine-arm32v6 $TARGET:$NODE_RED_VERSION-10-alpine-arm32v6
 
     docker tag $TARGET:build-10-debian-arm32v7 $TARGET:latest-10-debian-arm32v7
     docker tag $TARGET:build-10-debian-arm32v7 $TARGET:$NODE_RED_VERSION-10-debian-arm32v7
@@ -189,8 +189,8 @@ docker_push_node_v10() {
     docker push $TARGET:latest-10-alpine-amd64
     docker push $TARGET:$NODE_RED_VERSION-10-alpine-amd64
 
-    docker push $TARGET:latest-10-alpine-arm32v6
-    docker push $TARGET:$NODE_RED_VERSION-10-alpine-arm32v6
+    # docker push $TARGET:latest-10-alpine-arm32v6
+    # docker push $TARGET:$NODE_RED_VERSION-10-alpine-arm32v6
 
     docker push $TARGET:latest-10-debian-arm32v7
     docker push $TARGET:$NODE_RED_VERSION-10-debian-arm32v7
@@ -278,19 +278,19 @@ docker_manifest_list_node_v8() {
 }
 
 docker_manifest_list_node_v10() {
-    # Manifest Create v8
+    # Manifest Create v10
     docker manifest create $TARGET:$NODE_RED_VERSION-10 \
       $TARGET:$NODE_RED_VERSION-10-alpine-amd64 \
-      $TARGET:$NODE_RED_VERSION-10-alpine-arm32v6 \
+      # $TARGET:$NODE_RED_VERSION-10-alpine-arm32v6 \
       $TARGET:$NODE_RED_VERSION-10-debian-arm32v7 \
       $TARGET:$NODE_RED_VERSION-10-alpine-arm64v8
 
-    # Manifest Annotate v8
-    docker manifest annotate $TARGET:$NODE_RED_VERSION-10 $TARGET:$NODE_RED_VERSION-10-alpine-arm32v6 --os=linux --arch=arm --variant=v6
+    # Manifest Annotate v10
+    #docker manifest annotate $TARGET:$NODE_RED_VERSION-10 $TARGET:$NODE_RED_VERSION-10-alpine-arm32v6 --os=linux --arch=arm --variant=v6
     docker manifest annotate $TARGET:$NODE_RED_VERSION-10 $TARGET:$NODE_RED_VERSION-10-debian-arm32v7 --os=linux --arch=arm --variant=v7
     docker manifest annotate $TARGET:$NODE_RED_VERSION-10 $TARGET:$NODE_RED_VERSION-10-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
 
-    # Manifest Push v8
+    # Manifest Push v10
     docker manifest push $TARGET:$NODE_RED_VERSION-10
 }
 
