@@ -10,8 +10,7 @@ env:
   global:
     - NODE_RED_VERSION=x.y.z
     - TARGET=raymondmm/node-red
-    - QEMU_VERSION=v2.9.1-1
-    #- QEMU_VERSION=v2.11.1
+    - QEMU_VERSION=v3.0.0
 
 before_install:
   - ./.docker/docker.sh prepare
