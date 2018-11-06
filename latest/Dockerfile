@@ -20,6 +20,9 @@ USER node-red
 COPY package.json /usr/src/node-red/
 RUN npm install
 
+# Make user flows persistent
+VOLUME ["/data"]
+
 # User configuration directory volume
 EXPOSE 1880
 
