@@ -69,7 +69,7 @@ docker_test() {
 docker_tag() {
     echo "DOCKER TAG: Tag Docker image."
     echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}."
-    docker tag ${TARGET}:build-${NODE_VERSION}-${ARCH} ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}
+    docker tag ${TARGET}:build-${NODE_VERSION}-${OS}-${ARCH} ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}
 }
 
 docker_push() {
