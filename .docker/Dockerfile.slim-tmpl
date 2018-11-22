@@ -5,11 +5,27 @@ ARG OS
 FROM $BUILD_FROM:$NODE_VERSION-$OS
 
 # Define ARGs again to make them available after FROM
+ARG BUILD_DATE
+ARG BUILD_VERSION
+ARG BUILD_REF
 ARG NODE_RED_VERSION
 ARG NODE_VERSION
 ARG OS
 ARG ARCH
 ARG QEMU_ARCH
+
+# Basic build-time metadata as defined at http://label-schema.org
+LABEL org.label-schema.build-date=${BUILD_DATE} \
+    org.label-schema.docker.dockerfile=".docker/Dockerfile.alpine-tmpl" \
+    org.label-schema.license="GNU" \
+    org.label-schema.name="node-red" \
+    org.label-schema.version=${BUILD_VERSION} \
+    org.label-schema.description="Node-RED is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways." \
+    org.label-schema.url="https://nodered.org" \
+    org.label-schema.vcs-ref=${BUILD_REF} \
+    org.label-schema.vcs-type="Git" \
+    org.label-schema.vcs-url="https://github.com/RaymondMouthaan/node-red-docker" \
+    maintainer="Raymond M Mouthaan <raymondmmouthaan@gmail.com>"
 
 COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 

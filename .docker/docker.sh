@@ -50,7 +50,19 @@ docker_build() {
   echo "DOCKER BUILD: qemu arch - ${QEMU_ARCH}."
   echo "DOCKER BUILD: docker file - ${DOCKER_FILE}."
 
-  docker build --no-cache --build-arg BUILD_FROM=${BUILD_FROM} --build-arg NODE_VERSION=${NODE_VERSION} --build-arg OS=${OS} --build-arg NODE_RED_VERSION=v${NODE_RED_VERSION} --build-arg ARCH=${ARCH} --build-arg QEMU_ARCH=${QEMU_ARCH} --file ./.docker/${DOCKER_FILE} --tag ${TARGET}:build-${NODE_VERSION}-${OS}-${ARCH} .
+  docker build --no-cache \
+    --build-arg BUILD_REF=${TRAVIS_COMMIT} \
+    --build-arg BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ") \
+    --build-arg BUILD_VERSION=${BUILD_VERSION} \
+    --build-arg BUILD_FROM=${BUILD_FROM} \
+    --build-arg NODE_VERSION=${NODE_VERSION} \
+    --build-arg OS=${OS} \
+    --build-arg NODE_RED_VERSION=v${NODE_RED_VERSION} \
+    --build-arg ARCH=${ARCH} \
+    --build-arg QEMU_ARCH=${QEMU_ARCH} \
+    --file ./.docker/${DOCKER_FILE} \
+    --tag ${TARGET}:build-${NODE_VERSION}-${OS}-${ARCH} .
+    
 }
 
 docker_test() {
