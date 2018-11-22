@@ -20,18 +20,23 @@ ENV ARCH=$ARCH
 ENV FLOWS=flows.json
 ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
 
-# Install tools
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    git \
-    openssh-client \
-    && rm -rf /var/lib/apt/lists/*
+# Install tools, data dir, add user and set rights
+RUN set -ex \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+      git \
+      openssh-client \
+    && rm -rf /var/lib/apt/lists/* \
+    && adduser --system --home /usr/src/node-red --uid 1001 --group node-red \
+    && mkdir /data \
+    && chown -Rv node-red:node-red /data
 
 # Add node-red user and group (uid=1001 and gid=1001), so we aren't running as root.
-RUN adduser --system --home /usr/src/node-red --uid 1001 --group node-red
+#RUN adduser --system --home /usr/src/node-red --uid 1001 --group node-red
 
 # User data directory: contains flows, config and nodes.
-RUN mkdir /data && \
-    chown -Rv node-red:node-red /data
+#RUN mkdir /data && \
+#    chown -Rv node-red:node-red /data
 
 # Run as node-red user
 USER node-red
