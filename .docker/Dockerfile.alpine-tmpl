@@ -1,11 +1,13 @@
 ARG BUILD_FROM
-ARG NODE_TAG
+ARG NODE_VERSION
+ARG OS
 
-FROM $BUILD_FROM:$NODE_TAG
+FROM $BUILD_FROM:$NODE_VERSION-$OS
 
 # Define ARGs again to make them available after FROM
 ARG NODE_RED_VERSION
-ARG NODE_TAG
+ARG NODE_VERSION
+ARG OS
 ARG ARCH
 ARG QEMU_ARCH
 
@@ -13,7 +15,8 @@ COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 
 # Copy ARCHs to ENVs to make them available at runtime
 ENV NODE_RED_VERSION=$NODE_RED_VERSION
-ENV NODE_TAG=$NODE_TAG
+ENV NODE_VERSION=$NODE_VERSION
+ENV OS=$OS
 ENV ARCH=$ARCH
 
 # Env variables holding file path for flows configuration

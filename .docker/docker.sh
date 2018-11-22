@@ -43,38 +43,39 @@ docker_build() {
   echo "DOCKER BUILD: Build Docker image."
   echo "DOCKER BUILD: build version -> ${BUILD_VERSION}."
   echo "DOCKER BUILD: build from -> ${BUILD_FROM}."
-  echo "DOCKER BUILD: node tag -> ${NODE_TAG}."
+  echo "DOCKER BUILD: node version -> ${NODE_VERSION}."
+  echo "DOCKER BUILD: os -> ${OS}."
   echo "DOCKER BUILD: node-red version -> ${NODE_RED_VERSION}."
   echo "DOCKER BUILD: arch - ${ARCH}."
   echo "DOCKER BUILD: qemu arch - ${QEMU_ARCH}."
   echo "DOCKER BUILD: docker file - ${DOCKER_FILE}."
 
-  docker build --no-cache --build-arg BUILD_FROM=${BUILD_FROM} --build-arg NODE_TAG=${NODE_TAG} --build-arg NODE_RED_VERSION=v${NODE_RED_VERSION} --build-arg ARCH=${ARCH} --build-arg QEMU_ARCH=${QEMU_ARCH} --file ./.docker/${DOCKER_FILE} --tag ${TARGET}:build-${NODE_TAG}-${ARCH} .
+  docker build --no-cache --build-arg BUILD_FROM=${BUILD_FROM} --build-arg NODE_VERSION=${NODE_VERSION} --build-arg OS=${OS} --build-arg NODE_RED_VERSION=v${NODE_RED_VERSION} --build-arg ARCH=${ARCH} --build-arg QEMU_ARCH=${QEMU_ARCH} --file ./.docker/${DOCKER_FILE} --tag ${TARGET}:build-${NODE_VERSION}-${OS}-${ARCH} .
 }
 
 docker_test() {
   echo "DOCKER TEST: Test Docker image."
-  echo "DOCKER TEST: testing image -> ${TARGET}:build-${NODE_TAG}-${ARCH}."
+  echo "DOCKER TEST: testing image -> ${TARGET}:build-${NODE_VERSION}-${OS}-${ARCH}."
 
-  docker run -d --rm --name=test-${NODE_TAG}-${ARCH} ${TARGET}:build-${NODE_TAG}-${ARCH}
+  docker run -d --rm --name=test-${NODE_VERSION}-${ARCH} ${TARGET}:build-${NODE_VERSION}-${OS}-${ARCH}
   if [ $? -ne 0 ]; then
-     echo "DOCKER TEST: FAILED - Docker container test-${NODE_TAG}-${ARCH} failed to start."
+     echo "DOCKER TEST: FAILED - Docker container test-${NODE_VERSION}-${OS}-${ARCH} failed to start."
      exit 1
   else
-     echo "DOCKER TEST: PASSED - Docker container test-${NODE_TAG}-${ARCH} succeeded to start."
+     echo "DOCKER TEST: PASSED - Docker container test-${NODE_VERSION}-${OS}-${ARCH} succeeded to start."
   fi
 }
 
 docker_tag() {
     echo "DOCKER TAG: Tag Docker image."
-    echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_TAG}-${ARCH}."
-    docker tag ${TARGET}:build-${NODE_TAG}-${ARCH} ${TARGET}:${BUILD_VERSION}-${NODE_TAG}-${ARCH}
+    echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}."
+    docker tag ${TARGET}:build-${NODE_VERSION}-${ARCH} ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}
 }
 
 docker_push() {
   echo "DOCKER PUSH: Push Docker image."
-  echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${NODE_TAG}-${ARCH}."
-  docker push ${TARGET}:${BUILD_VERSION}-${NODE_TAG}-${ARCH}
+  echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}."
+  docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}
 }
 
 docker_manifest_list() {
@@ -89,15 +90,15 @@ docker_manifest_list_version() {
   # Manifest Create BUILD_VERSION
   echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}."
   docker manifest create ${TARGET}:${BUILD_VERSION} \
-      ${TARGET}:${BUILD_VERSION}-${NODE_TAG}-alpine-amd64 \
-      ${TARGET}:${BUILD_VERSION}-${NODE_TAG}-alpine-arm32v6 \
-      ${TARGET}:${BUILD_VERSION}-${NODE_TAG}-slim-arm32v7 \
-      ${TARGET}:${BUILD_VERSION}-${NODE_TAG}-alpine-arm64v8
+      ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-amd64 \
+      ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6 \
+      ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 \
+      ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8
 
   # Manifest Annotate BUILD_VERSION
-  docker manifest annotate ${TARGET}:${BUILD_VERSION} ${TARGET}:${BUILD_VERSION}-${NODE_TAG}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${BUILD_VERSION} ${TARGET}:${BUILD_VERSION}-${NODE_TAG}-slim-arm32v7 --os=linux --arch=arm --variant=v7
-  docker manifest annotate ${TARGET}:${BUILD_VERSION} ${TARGET}:${BUILD_VERSION}-${NODE_TAG}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
+  docker manifest annotate ${TARGET}:${BUILD_VERSION} ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:${BUILD_VERSION} ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${BUILD_VERSION} ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
 
   # Manifest Push BUILD_VERSION
   docker manifest push ${TARGET}:${BUILD_VERSION}
