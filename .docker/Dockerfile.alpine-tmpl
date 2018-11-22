@@ -20,15 +20,19 @@ ENV ARCH=$ARCH
 ENV FLOWS=flows.json
 ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
 
-# Create Node-red application directory
-RUN mkdir -p /usr/src/node-red
+# Install tools
+RUN set -ex \
+    && apk add --no-cache --virtual .run-deps \
+      git \
+      openssh-client
 
 # Add node-red user and group (uid=1001 and gid=1001), so we aren't running as root.
-RUN addgroup -g 1001 -S node-red && \
-    adduser -S -h /usr/src/node-red -u 1001 node-red -G node-red
+RUN mkdir -p /usr/src/node-red \
+    && addgroup -g 1001 -S node-red \
+    && adduser -S -h /usr/src/node-red -u 1001 node-red -G node-red
 
 # Set owner of Node-red application directory
-RUN chown -R node-red:node-red /usr/src/node-red
+RUN chown -Rv node-red:node-red /usr/src/node-red
 
 # User data directory: contains flows, config and nodes.
 RUN mkdir /data && \

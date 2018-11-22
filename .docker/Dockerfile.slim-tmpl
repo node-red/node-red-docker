@@ -1,20 +1,20 @@
-ARG ARCH
-ARG NODE_IMAGE_TAG
+ARG BUILD_FROM
+ARG NODE_TAG
 
-FROM $ARCH/node:$NODE_IMAGE_TAG
+FROM $BUILD_FROM:$NODE_TAG
 
 # Define ARGs again to make them available after FROM
-ARG ARCH
-ARG NODE_IMAGE_TAG
-ARG QEMU_ARCH
 ARG NODE_RED_VERSION
+ARG NODE_TAG
+ARG ARCH
+ARG QEMU_ARCH
 
 COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 
 # Copy ARCHs to ENVs to make them available at runtime
-ENV ARCH=$ARCH
-ENV NODE_IMAGE_TAG=$NODE_IMAGE_TAG
 ENV NODE_RED_VERSION=$NODE_RED_VERSION
+ENV NODE_TAG=$NODE_TAG
+ENV ARCH=$ARCH
 
 # Env variables holding file path for flows configuration
 ENV FLOWS=flows.json
@@ -30,7 +30,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN adduser --system --home /usr/src/node-red --uid 1001 --group node-red
 
 # User data directory: contains flows, config and nodes.
-RUN mkdir /data && chown -R node-red:node-red /data
+RUN mkdir /data && \
+    chown -Rv node-red:node-red /data
 
 # Run as node-red user
 USER node-red
