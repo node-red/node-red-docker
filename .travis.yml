@@ -46,7 +46,7 @@ script:
       echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 
       # Push Docker image
-      docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}
+      ./.docker/docker.sh push
 
       # Docker Logout
       docker logout

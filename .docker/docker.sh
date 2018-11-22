@@ -62,14 +62,14 @@ docker_build() {
     --build-arg QEMU_ARCH=${QEMU_ARCH} \
     --file ./.docker/${DOCKER_FILE} \
     --tag ${TARGET}:build-${NODE_VERSION}-${OS}-${ARCH} .
-    
+
 }
 
 docker_test() {
   echo "DOCKER TEST: Test Docker image."
   echo "DOCKER TEST: testing image -> ${TARGET}:build-${NODE_VERSION}-${OS}-${ARCH}."
 
-  docker run -d --rm --name=test-${NODE_VERSION}-${ARCH} ${TARGET}:build-${NODE_VERSION}-${OS}-${ARCH}
+  docker run -d --rm --name=test-${NODE_VERSION}-${OS}-${ARCH} ${TARGET}:build-${NODE_VERSION}-${OS}-${ARCH}
   if [ $? -ne 0 ]; then
      echo "DOCKER TEST: FAILED - Docker container test-${NODE_VERSION}-${OS}-${ARCH} failed to start."
      exit 1

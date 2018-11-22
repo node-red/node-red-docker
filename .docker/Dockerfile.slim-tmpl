@@ -16,7 +16,7 @@ ARG QEMU_ARCH
 
 # Basic build-time metadata as defined at http://label-schema.org
 LABEL org.label-schema.build-date=${BUILD_DATE} \
-    org.label-schema.docker.dockerfile=".docker/Dockerfile.alpine-tmpl" \
+    org.label-schema.docker.dockerfile=".docker/Dockerfile.slim-tmpl" \
     org.label-schema.license="GNU" \
     org.label-schema.name="node-red" \
     org.label-schema.version=${BUILD_VERSION} \
@@ -49,13 +49,6 @@ RUN set -ex \
     && adduser --system --home /usr/src/node-red --uid 1001 --group node-red \
     && mkdir /data \
     && chown -Rv node-red:node-red /data
-
-# Add node-red user and group (uid=1001 and gid=1001), so we aren't running as root.
-#RUN adduser --system --home /usr/src/node-red --uid 1001 --group node-red
-
-# User data directory: contains flows, config and nodes.
-#RUN mkdir /data && \
-#    chown -Rv node-red:node-red /data
 
 # Run as node-red user
 USER node-red
