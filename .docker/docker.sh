@@ -91,17 +91,22 @@ docker_push() {
 }
 
 docker_manifest_list() {
+  echo "DOCKER BUILD: target -> ${TARGET}."
+  echo "DOCKER BUILD: build version -> ${BUILD_VERSION}."
+  echo "DOCKER BUILD: node-red version -> ${NODE_RED_VERSION}."
+  echo "DOCKER BUILD: node version -> ${NODE_VERSION}."
+
   # Create and push manifest lists, displayed as FIFO
   echo "DOCKER MANIFEST: Create and Push docker manifest lists."
   docker_manifest_list_version
   # if build is not a beta then create and push manifest lastest
-    if [[ ${BUILD_VERSION} != *"beta"* ]]; then
-        echo "DOCKER MANIFEST: Create and Push docker manifest lists LATEST."
-        docker_manifest_list_latest
-	  else
-        echo "DOCKER MANIFEST: Create and Push docker manifest lists BETA."
-        docker_manifest_list_beta
-    fi
+  if [[ ${BUILD_VERSION} != *"beta"* ]]; then
+      echo "DOCKER MANIFEST: Create and Push docker manifest lists LATEST."
+      docker_manifest_list_latest
+  else
+      echo "DOCKER MANIFEST: Create and Push docker manifest lists BETA."
+      docker_manifest_list_beta
+  fi
   docker_manifest_list_version_os_arch
 }
 
@@ -201,43 +206,6 @@ docker_manifest_list_version_os_arch() {
   # Manifest Push alpine-arm64v8
   docker manifest push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8
 }
-
-#
-#
-# #------------
-# docker_manifest_list_node_v10() {
-#     # Manifest Create v10
-#     docker manifest create $TARGET:$NODE_RED_VERSION-10 \
-#       $TARGET:$NODE_RED_VERSION-10-alpine-amd64 \
-#       # $TARGET:$NODE_RED_VERSION-10-alpine-arm32v6 \
-#       $TARGET:$NODE_RED_VERSION-10-debian-arm32v7 \
-#       $TARGET:$NODE_RED_VERSION-10-alpine-arm64v8
-#
-#     # Manifest Annotate v10
-#     #docker manifest annotate $TARGET:$NODE_RED_VERSION-10 $TARGET:$NODE_RED_VERSION-10-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-#     docker manifest annotate $TARGET:$NODE_RED_VERSION-10 $TARGET:$NODE_RED_VERSION-10-debian-arm32v7 --os=linux --arch=arm --variant=v7
-#     docker manifest annotate $TARGET:$NODE_RED_VERSION-10 $TARGET:$NODE_RED_VERSION-10-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
-#
-#     # Manifest Push v10
-#     docker manifest push $TARGET:$NODE_RED_VERSION-10
-# }
-#
-# docker_manifest_list_latest() {
-#     # Manifest Create LATEST
-#     docker manifest create $TARGET:latest \
-#         $TARGET:latest-8-alpine-amd64 \
-#         $TARGET:latest-8-alpine-arm32v6 \
-#         $TARGET:latest-8-debian-arm32v7 \
-#         $TARGET:latest-8-alpine-arm64v8
-#
-#     # Manifest Annotate LATEST
-#     docker manifest annotate $TARGET:latest $TARGET:latest-8-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-#     docker manifest annotate $TARGET:latest $TARGET:latest-8-debian-arm32v7 --os=linux --arch=arm --variant=v7
-#     docker manifest annotate $TARGET:latest $TARGET:latest-8-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
-#
-#     # Manifest Push LATEST
-#     docker manifest push $TARGET:latest
-# }
 
 setup_dependencies() {
   echo "PREPARE: Setting up dependencies."

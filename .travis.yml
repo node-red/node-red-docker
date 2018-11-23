@@ -30,6 +30,9 @@ script:
   # Update NODE_RED_VERSION from package.json
   - . ./update_version.sh
 
+  # Update NODE_RED_VERSION from package.json
+  - . ./update_version.sh
+
   # Build Docker image
   - ./.docker/docker.sh build
 
