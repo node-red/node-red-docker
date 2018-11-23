@@ -45,10 +45,9 @@ RUN set -ex \
       git \
       openssh-client \
     && mkdir -p /usr/src/node-red /data \
-    && addgroup -g 1001 -S node-red \
-    && adduser -S -h /usr/src/node-red -u 1001 node-red -G node-red \
-    && chown -Rv node-red:node-red /usr/src/node-red \
-    && chown -R node-red:node-red /data
+    $$ adduser -h /usr/src/node-red -D -H node-red \
+    && chown -R node-red:node-red /data \
+    && chown -R node-red:node-red /usr/src/node-red
 
 # Run as node-red user
 USER node-red
