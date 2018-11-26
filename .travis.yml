@@ -30,9 +30,6 @@ script:
   # Update NODE_RED_VERSION from package.json
   - . ./update_version.sh
 
-  # Update NODE_RED_VERSION from package.json
-  - . ./update_version.sh
-
   # Build Docker image
   - ./.docker/docker.sh build
 
@@ -60,6 +57,9 @@ jobs:
         - stage: manifest
           if: tag =~ ^v
           script:
+              # Update NODE_RED_VERSION from package.json
+              - . ./update_version.sh
+
               # Create and push Docker manifest lists (TODO move to function)
               # Docker Login
               - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
