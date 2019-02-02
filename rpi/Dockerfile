@@ -1,9 +1,10 @@
-ARG NODE_VERSION=6
-FROM hypriot/rpi-node:${NODE_VERSION}
+ARG NODE_VERSION=8-slim
+FROM arm32v7/node:${NODE_VERSION}
 
 # add support for gpio library
 RUN apt-get update
-RUN apt-get install python-rpi.gpio
+RUN apt-get install -y python python-pip
+RUN python -m pip install RPi.GPIO
 
 # Home directory for Node-RED application source code.
 RUN mkdir -p /usr/src/node-red
