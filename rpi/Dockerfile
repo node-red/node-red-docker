@@ -1,7 +1,11 @@
 ARG NODE_VERSION=6
-FROM hypriot/rpi-node:${NODE_VERSION}
+FROM arm32v7/node:${NODE_VERSION}
+
+COPY qemu-arm-static /usr/bin
 
 # add support for gpio library
+RUN echo "deb http://archive.raspberrypi.org/debian/ stretch main" > /etc/apt/sources.list.d/raspberrypi.list
+RUN wget https://archive.raspberrypi.org/debian/raspberrypi.gpg.key -O - | apt-key add -
 RUN apt-get update
 RUN apt-get install python-rpi.gpio
 
