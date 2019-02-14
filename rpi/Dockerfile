@@ -1,10 +1,8 @@
-ARG NODE_VERSION=6
-FROM hypriot/rpi-node:${NODE_VERSION}
+FROM arm32v7/node:8.15.0-stretch-slim
 
-# add support for gpio library
 RUN apt-get update
-RUN apt-get install python-rpi.gpio
-
+RUN apt-get install -y python2.7 make g++
+RUN ln -s /usr/bin/python2.7 /usr/bin/python
 # Home directory for Node-RED application source code.
 RUN mkdir -p /usr/src/node-red
 
@@ -23,12 +21,3 @@ USER node-red
 # package.json contains Node-RED NPM module and node dependencies
 COPY package.json /usr/src/node-red/
 RUN npm install
-
-# User configuration directory volume
-EXPOSE 1880
-
-# Environment variable holding file path for flows configuration
-ENV FLOWS=flows.json
-ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
-
-CMD ["npm", "start", "--", "--userDir", "/data"]
