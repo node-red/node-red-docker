@@ -1,4 +1,4 @@
-ARG NODE_VERSION=6
+ARG NODE_VERSION=8
 FROM node:${NODE_VERSION}
 
 # Home directory for Node-RED application source code.
