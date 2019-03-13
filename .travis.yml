@@ -32,11 +32,11 @@ script:
   - docker run -d nodered/node-red-docker:latest
   - docker ps | grep latest
   - docker run -d nodered/node-red-docker:v10
-  - docker ps | grep v8
+  - docker ps | grep v10
   - docker run -d nodered/node-red-docker:slim
   - docker ps | grep slim
   - docker run -d nodered/node-red-docker:slim-v10
-  - docker ps | grep slim-v8
+  - docker ps | grep slim-v10
   - docker run -d nodered/node-red-docker:rpi
   - docker ps | grep rpi
   # - docker run -d nodered/node-red-docker:rpi-v10
