@@ -14,7 +14,7 @@ before_install:
   - docker build -f slim/Dockerfile -t nodered/node-red-docker:slim .
   - docker build -f slim/Dockerfile -t nodered/node-red-docker:slim-v10 --build-arg NODE_VERSION=10 .
   - docker build -f rpi/Dockerfile -t nodered/node-red-docker:rpi .
-  - docker build -f rpi/Dockerfile -t nodered/node-red-docker:rpi-v10 --build-arg NODE_VERSION=10 .
+  # - docker build -f rpi/Dockerfile -t nodered/node-red-docker:rpi-v10 --build-arg NODE_VERSION=10 .
   - docker tag nodered/node-red-docker nodered/node-red-docker:$VERSION
   - docker tag nodered/node-red-docker nodered/node-red-docker:v8
   - docker tag nodered/node-red-docker nodered/node-red-docker:$VERSION-v8
@@ -26,7 +26,7 @@ before_install:
   - docker tag nodered/node-red-docker:rpi nodered/node-red-docker:$VERSION-rpi
   - docker tag nodered/node-red-docker:rpi nodered/node-red-docker:rpi-v8
   - docker tag nodered/node-red-docker:rpi nodered/node-red-docker:$VERSION-rpi-v8
-  - docker tag nodered/node-red-docker:rpi-v10 nodered/node-red-docker:$VERSION-rpi-v10
+  # - docker tag nodered/node-red-docker:rpi-v10 nodered/node-red-docker:$VERSION-rpi-v10
 
 script:
   - docker run -d nodered/node-red-docker:latest
@@ -39,8 +39,8 @@ script:
   - docker ps | grep slim-v8
   - docker run -d nodered/node-red-docker:rpi
   - docker ps | grep rpi
-  - docker run -d nodered/node-red-docker:rpi-v10
-  - docker ps | grep rpi-v10
+  # - docker run -d nodered/node-red-docker:rpi-v10
+  # - docker ps | grep rpi-v10
 
 after_success:
   - if [ -n "$TRAVIS_TAG" ]; then
