@@ -24,13 +24,13 @@
         }
     ],
     "dependencies": {
-        "node-red": "0.20.1",
+        "node-red": "0.20.2",
         "node-red-node-msgpack": "*",
         "node-red-node-base64": "*",
         "node-red-node-suncalc": "*",
         "node-red-node-random": "*"
     },
     "engines": {
-        "node": "4.*.*"
+        "node": "8.*.*"
     }
 }
