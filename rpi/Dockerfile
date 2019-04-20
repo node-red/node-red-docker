@@ -1,5 +1,9 @@
-ARG NODE_VERSION=8
-FROM hypriot/rpi-node:${NODE_VERSION}
+ARG NODE_VERSION=10.15.3
+FROM arm32v7/node:${NODE_VERSION}
+
+# add sources for raspberry pi
+RUN printf "deb http://archive.raspberrypi.org/debian/ stretch main ui" > /etc/apt/sources.list.d/raspberrypi.list && \
+    curl --silent http://archive.raspberrypi.org/debian/raspberrypi.gpg.key | apt-key add -
 
 # add support for gpio library
 RUN apt-get update
