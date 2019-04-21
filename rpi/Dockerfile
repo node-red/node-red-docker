@@ -17,6 +17,9 @@ RUN mkdir /data
 
 WORKDIR /usr/src/node-red
 
+# delete node user that has UID 1000
+RUN userdel node
+
 # Add node-red user so we aren't running as root.
 RUN useradd --home-dir /usr/src/node-red --no-create-home node-red \
     && chown -R node-red:node-red /data \
