@@ -1,4 +1,4 @@
-ARG NODE_VERSION=10.15.3
+ARG NODE_VERSION=10
 FROM arm32v7/node:${NODE_VERSION}
 
 # add sources for raspberry pi
