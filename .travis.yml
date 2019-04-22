@@ -39,8 +39,8 @@ script:
   - docker ps | grep slim-v10
   - docker run -d nodered/node-red-docker:rpi
   - docker ps | grep rpi
-  # - docker run -d nodered/node-red-docker:rpi-v10
-  # - docker ps | grep rpi-v10
+  - docker run -d nodered/node-red-docker:rpi-v10
+  - docker ps | grep rpi-v10
 
 after_success:
   - if [ -n "$TRAVIS_TAG" ]; then
