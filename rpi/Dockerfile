@@ -1,5 +1,11 @@
 ARG NODE_VERSION=10
+
+# multi-stage build so we can grab qemu-arm-static
+FROM multiarch/debian-debootstrap:armhf-jessie as multiarch
+
 FROM arm32v7/node:${NODE_VERSION}
+
+COPY --from=multiarch /usr/bin/qemu-arm-static /usr/bin
 
 # add sources for raspberry pi
 RUN printf "deb http://archive.raspberrypi.org/debian/ stretch main ui" > /etc/apt/sources.list.d/raspberrypi.list && \
