@@ -1,6 +1,9 @@
 ARG NODE_VERSION=8
 FROM hypriot/rpi-node:${NODE_VERSION}
 
+# Add QEMU to enable multi-arch builds on travis
+COPY qemu-arm-static  /usr/bin/
+
 # add support for gpio library
 RUN apt-get update
 RUN apt-get install python-rpi.gpio
