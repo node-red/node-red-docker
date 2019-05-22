@@ -11,8 +11,6 @@ before_install:
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
   - curl -sLO https://github.com/multiarch/qemu-user-static/releases/download/v4.0.0/qemu-arm-static.tar.gz
   - tar -xzvf qemu-arm-static.tar.gz
-  - curl -sLO https://github.com/multiarch/qemu-user-static/releases/download/v4.0.0/qemu-aarch64-static.tar.gz
-  - tar -xzvf qemu-aarch64-static.tar.gz
   - docker build -f latest/Dockerfile -t nodered/node-red-docker .
   - docker build -f latest/Dockerfile -t nodered/node-red-docker:v10 --build-arg NODE_VERSION=10 .
   - docker build -f slim/Dockerfile -t nodered/node-red-docker:slim .
