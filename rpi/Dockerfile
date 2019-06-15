@@ -1,34 +1,48 @@
 ARG NODE_VERSION=8
-FROM hypriot/rpi-node:${NODE_VERSION}
+FROM arm32v7/node:${NODE_VERSION}-stretch-slim
 
-# add support for gpio library
-RUN apt-get update
-RUN apt-get install python-rpi.gpio
+# Install the base requirements
+RUN apt-get update \
+    && apt-get dist-upgrade -y \
+    && apt-get install -y python python-pip \
+    && pip install RPi.GPIO \
+    && npm install -g --unsafe-perm npm
 
-# Home directory for Node-RED application source code.
-RUN mkdir -p /usr/src/node-red
-
-# User data directory, contains flows, config and nodes.
-RUN mkdir /data
-
+# Set the Docker working directory for Node-RED
 WORKDIR /usr/src/node-red
 
 # Add node-red user so we aren't running as root.
-RUN useradd --home-dir /usr/src/node-red --no-create-home node-red \
-    && chown -R node-red:node-red /data \
-    && chown -R node-red:node-red /usr/src/node-red
-
-USER node-red
+RUN mkdir -p /data \
+    && mkdir -p /usr/src/node-red \
+    && useradd --home-dir /usr/src/node-red --no-create-home node-red
 
 # package.json contains Node-RED NPM module and node dependencies
 COPY package.json /usr/src/node-red/
-RUN npm install
 
-# User configuration directory volume
+# Install Node-RED
+RUN cd /usr/src/node-red/ \
+    && npm install \
+    && npm install -g --unsafe-perm node-red-admin
+
+# Clean-up
+RUN apt-get clean -y \
+    && apt-get autoclean -y \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set ownership permissions
+RUN chown -R node-red:node-red /data \
+    && chown -R node-red:node-red /usr/src/node-red
+
+# Node-RED default un-encrypted TCP port for HTTP
 EXPOSE 1880
+
+# Run Node-RED as user node-red (not as root)
+USER node-red
 
 # Environment variable holding file path for flows configuration
 ENV FLOWS=flows.json
 ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
 
+# Start Node-RED
 CMD ["npm", "start", "--", "--userDir", "/data"]
