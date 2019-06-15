@@ -61,7 +61,7 @@ The following images are built for each Node-RED release, using a Node.js v8 bas
 
 - **latest** - uses [official Node.JS v8 base image](https://hub.docker.com/_/node/).
 - **slim** uses [Alpine Linux base image](https://hub.docker.com/r/mhart/alpine-node/).
-- **rpi** uses [RPi-compatible base image](https://hub.docker.com/r/hypriot/rpi-node/).
+- **rpi** uses [Official arm32v7 Raspberry Pi base image](https://hub.docker.com/r/arm32v7/node).
 
 Using Alpine Linux reduces the built image size (~100MB vs ~700MB) but removes
 standard dependencies that are required for native module compilation. If you
