@@ -101,26 +101,21 @@ docker_push() {
 }
 
 docker_manifest_list() {
-  echo "DOCKER BUILD: target -> ${TARGET}."
-  echo "DOCKER BUILD: build version -> ${BUILD_VERSION}."
-  echo "DOCKER BUILD: node-red version -> ${NODE_RED_VERSION}."
-  echo "DOCKER BUILD: node version -> ${NODE_VERSION}."
-
   # Create and push manifest lists, displayed as FIFO
   echo "DOCKER MANIFEST: Create and Push docker manifest lists."
   docker_manifest_list_version
 
-  # Create manifest list testing, beta or latest
-  case ${BUILD_VERSION} in
-    *"testing"*)
-      echo "DOCKER MANIFEST: Create and Push docker manifest list TESTING."
-      docker_manifest_list_testing;;
-    *"beta"*)
-      echo "DOCKER MANIFEST: Create and Push docker manifest list BETA."
-      docker_manifest_list_beta;;
-    *)
-      echo "DOCKER MANIFEST: Create and Push docker manifest list LATEST."
-      docker_manifest_list_latest;;
+#  # Create manifest list testing, beta or latest
+#  case ${BUILD_VERSION} in
+#    *"testing"*)
+#      echo "DOCKER MANIFEST: Create and Push docker manifest list TESTING."
+#      docker_manifest_list_testing;;
+#    *"beta"*)
+#      echo "DOCKER MANIFEST: Create and Push docker manifest list BETA."
+#      docker_manifest_list_beta;;
+#    *)
+#      echo "DOCKER MANIFEST: Create and Push docker manifest list LATEST."
+#      docker_manifest_list_latest;;
   esac
 
   docker_manifest_list_version_os_arch
@@ -132,12 +127,12 @@ docker_manifest_list_version() {
   docker manifest create ${TARGET}:${BUILD_VERSION} \
       ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-amd64 \
       ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6 \
-      ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 \
+#      ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 \
       ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8
 
   # Manifest Annotate BUILD_VERSION
   docker manifest annotate ${TARGET}:${BUILD_VERSION} ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${BUILD_VERSION} ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 --os=linux --arch=arm --variant=v7
+#  docker manifest annotate ${TARGET}:${BUILD_VERSION} ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 --os=linux --arch=arm --variant=v7
   docker manifest annotate ${TARGET}:${BUILD_VERSION} ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
 
   # Manifest Push BUILD_VERSION
