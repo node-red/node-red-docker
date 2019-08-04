@@ -129,12 +129,10 @@ docker_manifest_list_version() {
   docker manifest create ${TARGET}:${BUILD_VERSION} \
       ${TARGET}:${BUILD_VERSION}-alpine-amd64 \
       ${TARGET}:${BUILD_VERSION}-alpine-arm32v6 \
-#      ${TARGET}:${BUILD_VERSION}-slim-arm32v7 \
       ${TARGET}:${BUILD_VERSION}-alpine-arm64v8
 
   # Manifest Annotate BUILD_VERSION
   docker manifest annotate ${TARGET}:${BUILD_VERSION} ${TARGET}:${BUILD_VERSION}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-#  docker manifest annotate ${TARGET}:${BUILD_VERSION} ${TARGET}:${BUILD_VERSION}-slim-arm32v7 --os=linux --arch=arm --variant=v7
   docker manifest annotate ${TARGET}:${BUILD_VERSION} ${TARGET}:${BUILD_VERSION}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
 
   # Manifest Push BUILD_VERSION
@@ -147,12 +145,10 @@ docker_manifest_list_version_python3() {
   docker manifest create ${TARGET}:${BUILD_VERSION}-python3 \
       ${TARGET}:${BUILD_VERSION}-alpine-amd64-python3 \
       ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python3 \
-#      ${TARGET}:${BUILD_VERSION}-slim-arm32v7-python3 \
       ${TARGET}:${BUILD_VERSION}-alpine-arm64v8-python3
 
   # Manifest Annotate BUILD_VERSION-python3
   docker manifest annotate ${TARGET}:${BUILD_VERSION}-python3 ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
-#  docker manifest annotate ${TARGET}:${BUILD_VERSION}-python3 ${TARGET}:${BUILD_VERSION}-slim-arm32v7-python3 --os=linux --arch=arm --variant=v7
   docker manifest annotate ${TARGET}:${BUILD_VERSION}-python3 ${TARGET}:${BUILD_VERSION}-alpine-arm64v8-python3 --os=linux --arch=arm64 --variant=v8
 
   # Manifest Push BUILD_VERSION-python3
@@ -165,12 +161,10 @@ docker_manifest_list_version_python2() {
   docker manifest create ${TARGET}:${BUILD_VERSION}-python2 \
       ${TARGET}:${BUILD_VERSION}-alpine-amd64-python2 \
       ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python2 \
-#      ${TARGET}:${BUILD_VERSION}-slim-arm32v7-python2 \
       ${TARGET}:${BUILD_VERSION}-alpine-arm64v8-python2
 
   # Manifest Annotate BUILD_VERSION-python2
   docker manifest annotate ${TARGET}:${BUILD_VERSION}-python2 ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
-#  docker manifest annotate ${TARGET}:${BUILD_VERSION}-python2 ${TARGET}:${BUILD_VERSION}-slim-arm32v7-python2 --os=linux --arch=arm --variant=v7
   docker manifest annotate ${TARGET}:${BUILD_VERSION}-python2 ${TARGET}:${BUILD_VERSION}-alpine-arm64v8-python2 --os=linux --arch=arm64 --variant=v8
 
   # Manifest Push BUILD_VERSION-python2
