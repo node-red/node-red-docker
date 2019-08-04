@@ -10,7 +10,7 @@ env:
   global:
     - NODE_RED_VERSION=x.y.z
     - TARGET=raymondmm/node-red
-    - QEMU_VERSION=v4.0.0-5
+    - QEMU_VERSION=v4.0.0
   matrix:
     # No Python Images
     - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=0
