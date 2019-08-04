@@ -1,12 +1,10 @@
-sudo: 'required'
+sudo: required
 
 dist: xenial
 
-services:
-  - 'docker'
+services: docker
 
-language:
-  - 'bash'
+language: bash
 
 env:
   global:
@@ -14,10 +12,11 @@ env:
     - TARGET=raymondmm/node-red
     - QEMU_VERSION=v4.0.0-5
   matrix:
-    - DOCKER_FILE=Dockerfile.alpine-tmpl BUILD_FROM=amd64/node NODE_VERSION=10 OS=alpine QEMU_ARCH=x86_64 ARCH=amd64
-    - DOCKER_FILE=Dockerfile.alpine-tmpl BUILD_FROM=arm32v6/node NODE_VERSION=10 OS=alpine QEMU_ARCH=arm ARCH=arm32v6
-    - DOCKER_FILE=Dockerfile.slim-tmpl BUILD_FROM=arm32v7/node NODE_VERSION=10 OS=slim QEMU_ARCH=arm ARCH=arm32v7
-    - DOCKER_FILE=Dockerfile.alpine-tmpl BUILD_FROM=arm64v8/node NODE_VERSION=10 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8
+    - DOCKER_FILE=Dockerfile.alpine BUILD_FROM=amd64/node:10-alpine   NODE_VERSION=10 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64
+    - DOCKER_FILE=Dockerfile.alpine BUILD_FROM=arm32v6/node:10-alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6
+    #- DOCKER_FILE=Dockerfile.alpine BUILD_FROM=arm32v7/node:10-alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=arm     ARCH=arm32v7
+    - DOCKER_FILE=Dockerfile.slim   BUILD_FROM=arm32v7/node:10-slim   NODE_VERSION=10 OS=slim   QEMU_ARCH=arm     ARCH=arm32v7
+    - DOCKER_FILE=Dockerfile.alpine BUILD_FROM=arm64v8/node:10-alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8
 
 before_install:
   - ./.docker/docker.sh prepare

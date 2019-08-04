@@ -41,53 +41,63 @@ docker_prepare() {
 docker_build() {
   # Build Docker image
   echo "DOCKER BUILD: Build Docker image."
-  echo "DOCKER BUILD: build version -> ${BUILD_VERSION}."
-  echo "DOCKER BUILD: build from -> ${BUILD_FROM}."
+  echo "DOCKER BUILD: arch - ${ARCH}."
   echo "DOCKER BUILD: node version -> ${NODE_VERSION}."
   echo "DOCKER BUILD: os -> ${OS}."
+  echo "DOCKER BUILD: build version -> ${BUILD_VERSION}."
   echo "DOCKER BUILD: node-red version -> ${NODE_RED_VERSION}."
-  echo "DOCKER BUILD: arch - ${ARCH}."
   echo "DOCKER BUILD: qemu arch - ${QEMU_ARCH}."
   echo "DOCKER BUILD: docker file - ${DOCKER_FILE}."
 
   docker build --no-cache \
-    --build-arg BUILD_REF=${TRAVIS_COMMIT} \
-    --build-arg BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ") \
-    --build-arg BUILD_VERSION=${BUILD_VERSION} \
-    --build-arg BUILD_FROM=${BUILD_FROM} \
+    --build-arg ARCH=${ARCH} \
     --build-arg NODE_VERSION=${NODE_VERSION} \
     --build-arg OS=${OS} \
+    --build-arg BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ") \
+    --build-arg BUILD_VERSION=${BUILD_VERSION} \
+    --build-arg BUILD_REF=${TRAVIS_COMMIT} \
     --build-arg NODE_RED_VERSION=v${NODE_RED_VERSION} \
-    --build-arg ARCH=${ARCH} \
     --build-arg QEMU_ARCH=${QEMU_ARCH} \
-    --file ./.docker/${DOCKER_FILE} \
+    --build-arg PYTHON_VERSION=${PYTHON_VERSION} \
+    --file ${DOCKER_FILE} \
     --tag ${TARGET}:build-${NODE_VERSION}-${OS}-${ARCH} .
-
 }
 
 docker_test() {
   echo "DOCKER TEST: Test Docker image."
-  echo "DOCKER TEST: testing image -> ${TARGET}:build-${NODE_VERSION}-${OS}-${ARCH}."
+  echo "DOCKER TEST: testing image -> ${TARGET}:build"
 
-  docker run -d --rm --name=test-${NODE_VERSION}-${OS}-${ARCH} ${TARGET}:build-${NODE_VERSION}-${OS}-${ARCH}
+  docker run -d --rm --name=testing ${TARGET}:build
   if [ $? -ne 0 ]; then
-     echo "DOCKER TEST: FAILED - Docker container test-${NODE_VERSION}-${OS}-${ARCH} failed to start."
+     echo "DOCKER TEST: FAILED - Docker container testing failed to start."
      exit 1
   else
-     echo "DOCKER TEST: PASSED - Docker container test-${NODE_VERSION}-${OS}-${ARCH} succeeded to start."
+     echo "DOCKER TEST: PASSED - Docker container testing succeeded to start."
   fi
 }
 
 docker_tag() {
     echo "DOCKER TAG: Tag Docker image."
-    echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}."
-    docker tag ${TARGET}:build-${NODE_VERSION}-${OS}-${ARCH} ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}
+    
+    if [ ${PYTHON_VERSION} == "0" ]; then
+      echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${OS}-${ARCH}."
+      docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${OS}-${ARCH}
+    else
+      echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}."
+      docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}
+    fi
 }
 
 docker_push() {
   echo "DOCKER PUSH: Push Docker image."
-  echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}."
-  docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}
+
+  if [ ${PYTHON_VERSION} == "0" ]; then
+      echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${OS}-${ARCH}."
+      docker push ${TARGET}:${BUILD_VERSION}-${OS}-${ARCH}
+  else
+      echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}."
+      docker push ${TARGET}:${BUILD_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}
+  fi
 }
 
 docker_manifest_list() {
