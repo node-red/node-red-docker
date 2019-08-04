@@ -60,7 +60,7 @@ docker_build() {
     --build-arg QEMU_ARCH=${QEMU_ARCH} \
     --build-arg PYTHON_VERSION=${PYTHON_VERSION} \
     --file ${DOCKER_FILE} \
-    --tag ${TARGET}:build-${NODE_VERSION}-${OS}-${ARCH} .
+    --tag ${TARGET}:build .
 }
 
 docker_test() {
