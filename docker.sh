@@ -116,7 +116,7 @@ docker_manifest_list() {
 #    *)
 #      echo "DOCKER MANIFEST: Create and Push docker manifest list LATEST."
 #      docker_manifest_list_latest;;
-  esac
+#  esac
 
   docker_manifest_list_version_os_arch
 }
