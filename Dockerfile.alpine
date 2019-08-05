@@ -25,24 +25,16 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
 ARG QEMU_ARCH=x86_64
 COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 
-# Install Python 2 & RPi.GPIO (Python 2.7 will reach the end of its life on January 1st, 2020!)
+# Install Python 2 & gpio library (Python 2.7 will reach the end of its life on January 1st, 2020!)
 ARG PYTHON_VERSION=0
 RUN set -ex \
-    && if [ ${PYTHON_VERSION} == "2" ]; then (echo "Installing Python 2 & RPi.GPIO" \
-        && apk add --no-cache python py-pip \
-        && apk add --no-cache --virtual build-dependencies gcc python-dev libc-dev \
-        && pip install --upgrade pip \
-        && pip install RPi.GPIO \
-        && apk del build-dependencies); fi
+    && if [ ${PYTHON_VERSION} == "2" ]; then (echo "Installing Python 2 & py-rpigpio" \
+        && apk add --no-cache python py-rpigpio); fi
 
 # Install Python 3 & RPi.GPIO
 RUN set -ex \
-    && if [ ${PYTHON_VERSION} == "3" ]; then (echo "Installing Python 3 & RPi.GPIO" \
-        && apk add --no-cache python3 \
-        && apk add --no-cache --virtual build-dependencies gcc python3-dev libc-dev \
-        && pip3 install --upgrade pip \
-        && pip3 install RPi.GPIO \
-        && apk del build-dependencies); fi
+    && if [ ${PYTHON_VERSION} == "3" ]; then (echo "Installing Python 3 & py-rpigpio" \
+        && apk add --no-cache python3 py-rpigpio); fi
 
 # Install tools, create node-red app and data dir, add user and set rights
 RUN set -ex \
@@ -52,15 +44,25 @@ RUN set -ex \
     && chown -R node-red:node-red /data \
     && chown -R node-red:node-red /usr/src/node-red
 
-# Run as node-red user
-USER node-red
-
 # Set work directory
 WORKDIR /usr/src/node-red
+
+# Run as node-red user
+USER node-red
 
 # package.json contains Node-RED NPM module and node dependencies
 COPY package.json /usr/src/node-red/
 RUN npm install
+
+# Fix broken symlink and replace Python 2.7 with 3.6 in 36-rpi-gpio.js
+USER root
+RUN set -ex \
+    && if [ ${PYTHON_VERSION} == "3" ]; then (echo "Fixing Python symlink and 36-rpi-gpio.js" \
+        && ln -s /usr/bin/python3 /usr/bin/python \
+        && sed -i 's/python2.7/python3.6/g' node_modules/\@node-red/nodes/core/hardware/36-rpi-gpio.js); fi
+
+# Return as node-red user
+USER node-red
 
 # Env variables
 ENV NODE_RED_VERSION=$NODE_RED_VERSION
