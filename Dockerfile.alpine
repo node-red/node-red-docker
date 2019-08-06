@@ -44,6 +44,8 @@ RUN set -ex && \
     if [ ${PYTHON_VERSION} == "3" ]; then \
         echo "Installing Python 3"; \
         apk add --no-cache python3; \
+        echo "Fixing Python 3 symlink"; \
+        ln -s /usr/bin/python3 /usr/bin/python; \
         if [ ${ARCH} == "arm32v6" ]; then \
             echo "Installing py-rpigpio"; \
             apk add py-rpigpio; \
@@ -68,16 +70,12 @@ USER node-red
 COPY package.json /usr/src/node-red/
 RUN npm install
 
-# Fix broken symlink and replace Python 2.7 with 3.6 in 36-rpi-gpio.js
+# Replace Python 2.7 with 3.6 in 36-rpi-gpio.js or remove Node-RED build-in rpi-gpio for non arm32v6
 USER root
 RUN set -ex && \
-    if [ ${PYTHON_VERSION} == "3" ]; then \
-        echo "Fixing Python 3 symlink"; \
-        ln -s /usr/bin/python3 /usr/bin/python; \
-        if [ ${ARCH} == "arm32v6" ]; then \
+    if [ ${PYTHON_VERSION} == "3" ] && [ ${ARCH} == "arm32v6" ]; then \
             echo "Fixing 36-rpi-gpio.js for Python 3.6"; \
             sed -i 's/python2.7/python3.6/g' node_modules/\@node-red/nodes/core/hardware/36-rpi-gpio.js; \
-        fi; \
     fi && \
     if [ ${ARCH} != "arm32v6" ]; then \
         echo "Removing Node-RED build-in rpi-gpio"; \
