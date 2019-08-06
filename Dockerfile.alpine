@@ -13,7 +13,7 @@ ARG ARCH
 LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.docker.dockerfile=".docker/Dockerfile.alpine" \
     org.label-schema.license="GNU" \
-    org.label-schema.name="node-red" \
+    org.label-schema.name="Node-RED" \
     org.label-schema.version=${BUILD_VERSION} \
     org.label-schema.description="Node-RED is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways." \
     org.label-schema.url="https://nodered.org" \
@@ -36,7 +36,7 @@ RUN set -ex && \
         if [ ${ARCH} == "arm32v6" ]; then \
             echo "Installing py-rpigpio" && \
             apk add py-rpigpio \
-        fi \
+        fi && \
     fi
 
 # Install Python 3 & gpio library
@@ -47,10 +47,10 @@ RUN set -ex && \
         if [ ${ARCH} == "arm32v6" ]; then \
             echo "Installing py-rpigpio" && \
             apk add py-rpigpio \
-        fi \
+        fi && \
     fi
 
-# Install tools, create node-red app and data dir, add user and set rights
+# Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
     apk add --no-cache bash git openssh-client && \
     mkdir -p /usr/src/node-red /data && \
@@ -78,9 +78,9 @@ RUN set -ex && \
             echo "Fixing 36-rpi-gpio.js for Python 3.6" && \
             sed -i 's/python2.7/python3.6/g' node_modules/\@node-red/nodes/core/hardware/36-rpi-gpio.js \
         else \
-            echo "Removing Node-red build-in rpi-gpio" && \
+            echo "Removing Node-RED build-in rpi-gpio" && \
             rm -r node_modules/\@node-red/nodes/core/hardware/* \
-        fi \
+        fi && \
     fi
 
 # Return as node-red user
