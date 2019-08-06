@@ -51,3 +51,7 @@
 | rpi-python                   | 0.20.7-alpine-arm32v6-python | arm32v6  | alpine | rpi 1, 2 & zero   |
 | rpi3-python                  | ~~0.20.7-alpine-arm32v7-python~~ | arm32v7  | alpine | not available yet |
 | rpi3-python                  | 0.20.7-slim-arm32v7-python   | arm32v7  | debian | rpi 3 & 4         |
+
+
+##### Docker Run
+`docker run -it --rm -p1441:1880 --user=root --privileged=true -v /dev/mem:/dev/mem raymondmm/node-red-gpio-python2v2`

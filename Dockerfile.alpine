@@ -29,22 +29,34 @@ COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 
 # Install Python 2 & gpio library (Python 2.7 will reach the end of its life on January 1st, 2020!)
 ARG PYTHON_VERSION=0
-RUN set -ex \
-    && if [ ${PYTHON_VERSION} == "2" ]; then (echo "Installing Python 2" && apk add --no-cache python \
-    && if [ ${ARCH} == "arm32v6" ]; then ( echo "Installing py-rpigpio" && apk add py-rpigpio ); fi ); fi
+RUN set -ex && \
+    if [ ${PYTHON_VERSION} == "2" ]; then \
+        echo "Installing Python 2" && \
+        apk add --no-cache python && \
+        if [ ${ARCH} == "arm32v6" ]; then \
+            echo "Installing py-rpigpio" && \
+            apk add py-rpigpio \
+        fi \
+    fi
 
 # Install Python 3 & gpio library
-RUN set -ex \
-    && if [ ${PYTHON_VERSION} == "3" ]; then (echo "Installing Python 3" && apk add --no-cache python3 \
-    && if [ ${ARCH} == "arm32v6" ]; then ( echo "Installing py-rpigpio" && apk add py-rpigpio ); fi ); fi
+RUN set -ex && \
+    if [ ${PYTHON_VERSION} == "3" ]; then \
+        echo "Installing Python 3" && \
+        apk add --no-cache python3 && \
+        if [ ${ARCH} == "arm32v6" ]; then
+            echo "Installing py-rpigpio" && \
+            apk add py-rpigpio
+        fi \
+    fi
 
 # Install tools, create node-red app and data dir, add user and set rights
-RUN set -ex \
-    && apk add --no-cache bash git openssh-client \
-    && mkdir -p /usr/src/node-red /data \
-    && adduser -h /usr/src/node-red -D -H node-red \
-    && chown -R node-red:node-red /data \
-    && chown -R node-red:node-red /usr/src/node-red
+RUN set -ex && \
+    apk add --no-cache bash git openssh-client && \
+    mkdir -p /usr/src/node-red /data && \
+    adduser -h /usr/src/node-red -D -H node-red && \
+    chown -R node-red:node-red /data && \
+    chown -R node-red:node-red /usr/src/node-red
 
 # Set work directory
 WORKDIR /usr/src/node-red
@@ -58,10 +70,18 @@ RUN npm install
 
 # Fix broken symlink and replace Python 2.7 with 3.6 in 36-rpi-gpio.js
 USER root
-RUN set -ex \
-    && if [ ${PYTHON_VERSION} == "3" ]; then (echo "Fixing Python 3 symlink and 36-rpi-gpio.js" \
-        && ln -s /usr/bin/python3 /usr/bin/python \
-        && sed -i 's/python2.7/python3.6/g' node_modules/\@node-red/nodes/core/hardware/36-rpi-gpio.js); fi
+RUN set -ex && \
+    if [ ${PYTHON_VERSION} == "3" ]; then \
+        echo "Fixing Python 3 symlink" && \
+        ln -s /usr/bin/python3 /usr/bin/python && \
+        if [ ${ARCH} == "arm32v6" ]; then \
+            echo "Fixing 36-rpi-gpio.js for Python 3.6" && \
+            sed -i 's/python2.7/python3.6/g' node_modules/\@node-red/nodes/core/hardware/36-rpi-gpio.js
+        else \
+            echo "Removing Node-red build-in rpi-gpio" && \
+            rm -r node_modules/\@node-red/nodes/core/hardware/* \
+        fi \
+    fi
 
 # Return as node-red user
 USER node-red
