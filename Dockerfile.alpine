@@ -9,6 +9,7 @@ ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG BUILD_REF
 ARG NODE_RED_VERSION
+ARG ARCH
 LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.docker.dockerfile=".docker/Dockerfile.alpine" \
     org.label-schema.license="GNU" \
@@ -19,6 +20,7 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.vcs-ref=${BUILD_REF} \
     org.label-schema.vcs-type="Git" \
     org.label-schema.vcs-url="https://github.com/RaymondMouthaan/node-red-docker" \
+    org.label-schema.arch=${ARCH} \
     maintainer="Raymond M Mouthaan <raymondmmouthaan@gmail.com>"
 
 # QEMU - Quick Emulation: Run operating systems for any machine, on any supported architecture.
