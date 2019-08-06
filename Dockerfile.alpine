@@ -29,12 +29,12 @@ COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 ARG PYTHON_VERSION=0
 RUN set -ex \
     && if [ ${PYTHON_VERSION} == "2" ]; then (echo "Installing Python 2" \
-        && apk add --no-cache python py-rpigpio && if [ ${} == "arm32v6" ]; then ( echo "Installing & py-rpigpio" && apk add py-rpigpio ); fi ); fi
+        && apk add --no-cache python py-rpigpio && if [ ${ARCH} == "arm32v6" ]; then ( echo "Installing & py-rpigpio" && apk add py-rpigpio ); fi ); fi
 
 # Install Python 3 & RPi.GPIO
 RUN set -ex \
     && if [ ${PYTHON_VERSION} == "2" ]; then (echo "Installing Python 3" \
-        && apk add --no-cache python3 py-rpigpio && if [ ${} == "arm32v6" ]; then ( echo "Installing & py-rpigpio" && apk add py-rpigpio ); fi ); fi
+        && apk add --no-cache python3 py-rpigpio && if [ ${ARCH} == "arm32v6" ]; then ( echo "Installing & py-rpigpio" && apk add py-rpigpio ); fi ); fi
 
 # Install tools, create node-red app and data dir, add user and set rights
 RUN set -ex \
