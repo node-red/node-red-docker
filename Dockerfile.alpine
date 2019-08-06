@@ -36,7 +36,7 @@ RUN set -ex && \
         if [ ${ARCH} == "arm32v6" ]; then \
             echo "Installing py-rpigpio" && \
             apk add py-rpigpio \
-        fi && \
+        fi \
     fi
 
 # Install Python 3 & gpio library
@@ -47,7 +47,7 @@ RUN set -ex && \
         if [ ${ARCH} == "arm32v6" ]; then \
             echo "Installing py-rpigpio" && \
             apk add py-rpigpio \
-        fi && \
+        fi \
     fi
 
 # Install tools, create Node-RED app and data dir, add user and set rights
@@ -80,7 +80,7 @@ RUN set -ex && \
         else \
             echo "Removing Node-RED build-in rpi-gpio" && \
             rm -r node_modules/\@node-red/nodes/core/hardware/* \
-        fi && \
+        fi \
     fi
 
 # Return as node-red user
