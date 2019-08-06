@@ -1,4 +1,4 @@
-ARG ARCH=amd
+ARG ARCH=amd64
 ARG NODE_VERSION=10
 ARG OS=alpine
 
@@ -28,13 +28,13 @@ COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 # Install Python 2 & gpio library (Python 2.7 will reach the end of its life on January 1st, 2020!)
 ARG PYTHON_VERSION=0
 RUN set -ex \
-    && if [ ${PYTHON_VERSION} == "2" ]; then (echo "Installing Python 2 & py-rpigpio" \
-        && apk add --no-cache python py-rpigpio); fi
+    && if [ ${PYTHON_VERSION} == "2" ]; then (echo "Installing Python 2" \
+        && apk add --no-cache python py-rpigpio && if [ ${} == "arm32v6" ]; then ( echo "Installing & py-rpigpio" && apk add py-rpigpio ); fi ); fi
 
 # Install Python 3 & RPi.GPIO
 RUN set -ex \
-    && if [ ${PYTHON_VERSION} == "3" ]; then (echo "Installing Python 3 & py-rpigpio" \
-        && apk add --no-cache python3 py-rpigpio); fi
+    && if [ ${PYTHON_VERSION} == "2" ]; then (echo "Installing Python 3" \
+        && apk add --no-cache python3 py-rpigpio && if [ ${} == "arm32v6" ]; then ( echo "Installing & py-rpigpio" && apk add py-rpigpio ); fi ); fi
 
 # Install tools, create node-red app and data dir, add user and set rights
 RUN set -ex \
