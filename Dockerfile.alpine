@@ -54,7 +54,12 @@ RUN set -ex && \
 
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
-    apk add --no-cache bash git openssh-client && \
+    apk add --no-cache \
+        bash \
+        iputils \
+        nano \
+        git \
+        openssh-client && \
     mkdir -p /usr/src/node-red /data && \
     adduser -h /usr/src/node-red -D -H node-red && \
     chown -R node-red:node-red /data && \
