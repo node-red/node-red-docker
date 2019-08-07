@@ -106,19 +106,28 @@ docker_manifest_list() {
   docker_manifest_list_version
   docker_manifest_list_version_python3
   docker_manifest_list_version_python2
+  docker_manifest_list_rpi
+  docker_manifest_list_rpi_python3
+  docker_manifest_list_rpi_python2
 
-#  # Create manifest list testing, beta or latest
-#  case ${BUILD_VERSION} in
-#    *"testing"*)
-#      echo "DOCKER MANIFEST: Create and Push docker manifest list TESTING."
-#      docker_manifest_list_testing;;
-#    *"beta"*)
-#      echo "DOCKER MANIFEST: Create and Push docker manifest list BETA."
-#      docker_manifest_list_beta;;
-#    *)
-#      echo "DOCKER MANIFEST: Create and Push docker manifest list LATEST."
-#      docker_manifest_list_latest;;
-#  esac
+  # Create manifest list testing, beta or latest
+  case ${BUILD_VERSION} in
+    *"testing"*)
+      echo "DOCKER MANIFEST: Create and Push docker manifest list TESTING."
+      docker_manifest_list_testing
+      docker_manifest_list_testing_python3
+      docker_manifest_list_testing_python2;;
+    *"beta"*)
+      echo "DOCKER MANIFEST: Create and Push docker manifest list BETA."
+      docker_manifest_list_beta
+      docker_manifest_list_beta_python3
+      docker_manifest_list_beta_python2;;
+    *)
+      echo "DOCKER MANIFEST: Create and Push docker manifest list LATEST."
+      docker_manifest_list_latest
+      docker_manifest_list_latest_python3
+      docker_manifest_list_latest_python2;;
+  esac
 
 #  docker_manifest_list_version_os_arch
 }
@@ -175,98 +184,196 @@ docker_manifest_list_latest() {
   # Manifest Create LATEST
   echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:latest."
   docker manifest create ${TARGET}:latest \
-    ${TARGET}:${BUILD_VERSION}-alpine-amd64 \
-    ${TARGET}:${BUILD_VERSION}-alpine-arm32v6 \
-#    ${TARGET}:${BUILD_VERSION}-slim-arm32v7 \
-    ${TARGET}:${BUILD_VERSION}-alpine-arm64v8
+      ${TARGET}:${BUILD_VERSION}-alpine-amd64 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm32v6 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm64v8
 
   # Manifest Annotate LATEST
   docker manifest annotate ${TARGET}:latest ${TARGET}:${BUILD_VERSION}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-#  docker manifest annotate ${TARGET}:latest ${TARGET}:${BUILD_VERSION}-slim-arm32v7 --os=linux --arch=arm --variant=v7
   docker manifest annotate ${TARGET}:latest ${TARGET}:${BUILD_VERSION}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
 
   # Manifest Push LATEST
   docker manifest push ${TARGET}:latest
 }
 
-docker_manifest_list_beta() {
-  # Manifest Create beta
-  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:beta."
-  docker manifest create ${TARGET}:beta \
-    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-amd64 \
-    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6 \
-    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 \
-    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8
-
-  # Manifest Annotate BUILD_VERSION
-  docker manifest annotate ${TARGET}:beta ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:beta ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 --os=linux --arch=arm --variant=v7
-  docker manifest annotate ${TARGET}:beta ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
-
-  # Manifest Push BUILD_VERSION
-  docker manifest push ${TARGET}:beta
-}
-
 docker_manifest_list_testing() {
-  # Manifest Create testing
+  # Manifest Create TESTING
   echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:testing."
   docker manifest create ${TARGET}:testing \
-    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-amd64 \
-    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6 \
-    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 \
-    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8
+      ${TARGET}:${BUILD_VERSION}-alpine-amd64 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm32v6 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm64v8
 
-  # Manifest Annotate BUILD_VERSION
-  docker manifest annotate ${TARGET}:testing ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:testing ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 --os=linux --arch=arm --variant=v7
-  docker manifest annotate ${TARGET}:testing ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
+  # Manifest Annotate TESTING
+  docker manifest annotate ${TARGET}:testing ${TARGET}:${BUILD_VERSION}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:testing ${TARGET}:${BUILD_VERSION}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
 
-  # Manifest Push BUILD_VERSION
+  # Manifest Push TESTING
   docker manifest push ${TARGET}:testing
 }
 
-docker_manifest_list_version_os_arch() {
-  # Manifest Create alpine-amd64
-  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-amd64."
-  docker manifest create ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-amd64 \
-    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-amd64
+docker_manifest_list_testing_python3() {
+  # Manifest Create TESTING-PYTHON3
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:testing-python3."
+  docker manifest create ${TARGET}:testing-python3 \
+      ${TARGET}:${BUILD_VERSION}-alpine-amd64-python3 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python3 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm64v8-python3
 
-  # Manifest Push alpine-amd64
-  docker manifest push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-amd64
+  # Manifest Annotate TESTING-PYTHON3
+  docker manifest annotate ${TARGET}:testing-python3 ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:testing-python3 ${TARGET}:${BUILD_VERSION}-alpine-arm64v8-python3 --os=linux --arch=arm64 --variant=v8
 
-  # Manifest Create alpine-arm32v6
-  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6."
-  docker manifest create ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6 \
-    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6
-
-  # Manifest Annotate alpine-arm32v6
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6 ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-
-  # Manifest Push alpine-arm32v6
-  docker manifest push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6
-
-  # Manifest Create slim-arm32v7
-  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7."
-  docker manifest create ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 \
-    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7
-
-  # Manifest Annotate slim-arm32v7
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 --os=linux --arch=arm --variant=v7
-
-  # Manifest Push slim-arm32v7
-  docker manifest push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7
-
-  # Manifest Create alpine-arm64v8
-  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8."
-  docker manifest create ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8 \
-    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8
-
-  # Manifest Annotate alpine-arm64v8
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8 ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
-
-  # Manifest Push alpine-arm64v8
-  docker manifest push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8
+  # Manifest Push TESTING-PYTHON3
+  docker manifest push ${TARGET}:testing-python3
 }
+
+docker_manifest_list_testing_python2() {
+  # Manifest Create TESTING-PYTHON2
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:testing-python2."
+  docker manifest create ${TARGET}:testing-python2 \
+      ${TARGET}:${BUILD_VERSION}-alpine-amd64-python2 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python2 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm64v8-python2
+
+  # Manifest Annotate TESTING-PYTHON2
+  docker manifest annotate ${TARGET}:testing-python2 ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:testing-python2 ${TARGET}:${BUILD_VERSION}-alpine-arm64v8-python2 --os=linux --arch=arm64 --variant=v8
+
+  # Manifest Push TESTING-PYTHON2
+  docker manifest push ${TARGET}:testing-python2
+}
+
+docker_manifest_list_beta() {
+  # Manifest Create BETA
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:beta."
+  docker manifest create ${TARGET}:beta \
+      ${TARGET}:${BUILD_VERSION}-alpine-amd64 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm32v6 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm64v8
+
+  # Manifest Annotate BETA
+  docker manifest annotate ${TARGET}:beta ${TARGET}:${BUILD_VERSION}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:beta ${TARGET}:${BUILD_VERSION}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
+
+  # Manifest Push BETA
+  docker manifest push ${TARGET}:beta
+}
+
+docker_manifest_list_beta_python3() {
+  # Manifest Create BETA-PYTHON3
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:beta-python3."
+  docker manifest create ${TARGET}:beta-python3 \
+      ${TARGET}:${BUILD_VERSION}-alpine-amd64-python3 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python3 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm64v8-python3
+
+  # Manifest Annotate BETA-PYTHON3
+  docker manifest annotate ${TARGET}:beta-python3 ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:beta-python3 ${TARGET}:${BUILD_VERSION}-alpine-arm64v8-python3 --os=linux --arch=arm64 --variant=v8
+
+  # Manifest Push BETA-PYTHON3
+  docker manifest push ${TARGET}:beta-python3
+}
+
+docker_manifest_list_beta_python2() {
+  # Manifest Create BETA-PYTHON2
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:beta-python2."
+  docker manifest create ${TARGET}:beta-python2 \
+      ${TARGET}:${BUILD_VERSION}-alpine-amd64-python2 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python2 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm64v8-python2
+
+  # Manifest Annotate BETA-PYTHON2
+  docker manifest annotate ${TARGET}:beta-python2 ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:beta-python2 ${TARGET}:${BUILD_VERSION}-alpine-arm64v8-python2 --os=linux --arch=arm64 --variant=v8
+
+  # Manifest Push BETA-PYTHON2
+  docker manifest push ${TARGET}:beta-python2
+}
+
+docker_manifest_list_rpi() {
+  # Manifest Create rpi
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:rpi."
+  docker manifest create ${TARGET}:rpi \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm32v6
+
+  # Manifest Annotate rpi
+  docker manifest annotate ${TARGET}:rpi ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
+
+  # Manifest Push rpi
+  docker manifest push ${TARGET}:rpi
+}
+
+docker_manifest_list_rpi_python3() {
+  # Manifest Create rpi-python3
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:rpi-python3."
+  docker manifest create ${TARGET}:rpi-python3 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python3
+
+  # Manifest Annotate rpi-python3
+  docker manifest annotate ${TARGET}:rpi-python3 ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
+
+  # Manifest Push rpi-python3
+  docker manifest push ${TARGET}:rpi-python3
+}
+
+docker_manifest_list_rpi_python2() {
+  # Manifest Create rpi-python2
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:rpi-python2."
+  docker manifest create ${TARGET}:rpi-python2 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python2
+
+  # Manifest Annotate rpi-python2
+  docker manifest annotate ${TARGET}:rpi-python2 ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
+
+  # Manifest Push rpi-python2
+  docker manifest push ${TARGET}:rpi-python2
+}
+
+#
+#docker_manifest_list_version_os_arch() {
+#  # Manifest Create alpine-amd64
+#  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-amd64."
+#  docker manifest create ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-amd64 \
+#    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-amd64
+#
+#  # Manifest Push alpine-amd64
+#  docker manifest push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-amd64
+#
+#  # Manifest Create alpine-arm32v6
+#  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6."
+#  docker manifest create ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6 \
+#    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6
+#
+#  # Manifest Annotate alpine-arm32v6
+#  docker manifest annotate ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6 ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
+#
+#  # Manifest Push alpine-arm32v6
+#  docker manifest push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm32v6
+#
+#  # Manifest Create slim-arm32v7
+#  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7."
+#  docker manifest create ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 \
+#    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7
+#
+#  # Manifest Annotate slim-arm32v7
+#  docker manifest annotate ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7 --os=linux --arch=arm --variant=v7
+#
+#  # Manifest Push slim-arm32v7
+#  docker manifest push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-slim-arm32v7
+#
+#  # Manifest Create alpine-arm64v8
+#  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8."
+#  docker manifest create ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8 \
+#    ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8
+#
+#  # Manifest Annotate alpine-arm64v8
+#  docker manifest annotate ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8 ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
+#
+#  # Manifest Push alpine-arm64v8
+#  docker manifest push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8
+#}
 
 setup_dependencies() {
   echo "PREPARE: Setting up dependencies."
