@@ -299,7 +299,7 @@ docker_manifest_list_rpi() {
       ${TARGET}:${BUILD_VERSION}-alpine-arm32v6
 
   # Manifest Annotate rpi
-  docker manifest annotate ${TARGET}:rpi ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:rpi ${TARGET}:${BUILD_VERSION}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
 
   # Manifest Push rpi
   docker manifest push ${TARGET}:rpi
