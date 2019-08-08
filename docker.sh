@@ -101,32 +101,32 @@ docker_push() {
 }
 
 docker_manifest_list() {
-  # Create and push manifest lists, displayed as FIFO
+  # Create and push manifest lists
   echo "DOCKER MANIFEST: Create and Push docker manifest lists."
-  docker_manifest_list_version
-  docker_manifest_list_version_python3
   docker_manifest_list_version_python2
-  docker_manifest_list_rpi
-  docker_manifest_list_rpi_python3
+  docker_manifest_list_version_python3
+  docker_manifest_list_version
   docker_manifest_list_rpi_python2
+  docker_manifest_list_rpi_python3
+  docker_manifest_list_rpi
 
   # Create manifest list testing, beta or latest
   case ${BUILD_VERSION} in
     *"testing"*)
       echo "DOCKER MANIFEST: Create and Push docker manifest list TESTING."
-      docker_manifest_list_testing
+      docker_manifest_list_testing_python2
       docker_manifest_list_testing_python3
-      docker_manifest_list_testing_python2;;
+      docker_manifest_list_testing;;
     *"beta"*)
       echo "DOCKER MANIFEST: Create and Push docker manifest list BETA."
-      docker_manifest_list_beta
+      docker_manifest_list_beta_python2
       docker_manifest_list_beta_python3
-      docker_manifest_list_beta_python2;;
+      docker_manifest_list_beta;;
     *)
       echo "DOCKER MANIFEST: Create and Push docker manifest list LATEST."
-      docker_manifest_list_latest
+      docker_manifest_list_latest_python2
       docker_manifest_list_latest_python3
-      docker_manifest_list_latest_python2;;
+      docker_manifest_list_latest;;
   esac
 
 #  docker_manifest_list_version_os_arch
