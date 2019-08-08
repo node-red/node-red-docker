@@ -463,6 +463,32 @@ docker_manifest_list_testing_rpi_python2() {
   docker manifest push ${TARGET}:testing-rpi-python2
 }
 
+docker_manifest_list_version_rpi_python3() {
+  # Manifest Create ${BUILD_VERSION}-rpi-python3
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}-rpi-python3."
+  docker manifest create ${TARGET}:${BUILD_VERSION}-rpi-python3 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python3
+
+  # Manifest Annotate ${BUILD_VERSION}-rpi-python3
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}-rpi-python3 ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
+
+  # Manifest Push ${BUILD_VERSION}-rpi-python3
+  docker manifest push ${TARGET}:${BUILD_VERSION}-rpi-python3
+}
+
+docker_manifest_list_version_rpi_python2() {
+  # Manifest Create ${BUILD_VERSION}-rpi-python2
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}-rpi-python2."
+  docker manifest create ${TARGET}:${BUILD_VERSION}-rpi-python2 \
+      ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python2
+
+  # Manifest Annotate ${BUILD_VERSION}-rpi-python2
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}-rpi-python2 ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
+
+  # Manifest Push ${BUILD_VERSION}-rpi-python2
+  docker manifest push ${TARGET}:${BUILD_VERSION}-rpi-python2
+}
+
 #
 #docker_manifest_list_version_os_arch() {
 #  # Manifest Create alpine-amd64

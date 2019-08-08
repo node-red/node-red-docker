@@ -44,15 +44,15 @@
 #### Raspberry PI Tags
 | **Tag**                      | **Image**                    | **Arch** | **OS** | **Description**   |
 |------------------------------|------------------------------|----------|--------|-------------------|
-| rpi                          | 0.20.7-alpine-arm32v6        | arm32v6  | alpine | rpi 1, 2 & zero   |
+| latest-rpi, 0.20.7-rpi       | 0.20.7-alpine-arm32v6        | arm32v6  | alpine | rpi 1, 2 & zero   |
 | rpi3                         | ~~0.20.7-alpine-arm32v7~~        | ~~arm32v7~~  | ~~alpine~~ | not available yet |
 | rpi3                         | 0.20.7-slim-arm32v7          | arm32v7  | debian | rpi 3 & 4         |
 ||
-| rpi-python3                   | 0.20.7-alpine-arm32v6-python | arm32v6  | alpine | rpi 1, 2 & zero   |
+| latest-rpi-python3, 0.20.7-rpi-python3 | 0.20.7-alpine-arm32v6-python | arm32v6  | alpine | rpi 1, 2 & zero   |
 | rpi3-python3                  | ~~0.20.7-alpine-arm32v7-python~~ | arm32v7  | alpine | not available yet |
 | rpi3-python3                  | 0.20.7-slim-arm32v7-python   | arm32v7  | debian | rpi 3 & 4         |
 ||
-| rpi-python2                   | 0.20.7-alpine-arm32v6-python | arm32v6  | alpine | rpi 1, 2 & zero   |
+| latest-rpi-python2, 0.20.7-rpi-python2 | 0.20.7-alpine-arm32v6-python | arm32v6  | alpine | rpi 1, 2 & zero   |
 | rpi3-python2                  | ~~0.20.7-alpine-arm32v7-python~~ | arm32v7  | alpine | not available yet |
 | rpi3-python2                  | 0.20.7-slim-arm32v7-python   | arm32v7  | debian | rpi 3 & 4         |
 
