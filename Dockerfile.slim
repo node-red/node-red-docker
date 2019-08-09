@@ -62,6 +62,7 @@ RUN set -ex && \
         git \
         openssh-client && \
     rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /usr/src/node-red /data && \
     useradd --home-dir /usr/src/node-red --no-create-home node-red && \
     chown -R node-red:node-red /data && \
     chown -R node-red:node-red /usr/src/node-red
