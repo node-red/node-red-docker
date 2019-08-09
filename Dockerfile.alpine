@@ -57,6 +57,7 @@ RUN set -ex && \
     apk add --no-cache \
         bash \
         iputils \
+        curl \
         nano \
         git \
         openssh-client && \
