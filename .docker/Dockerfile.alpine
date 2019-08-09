@@ -16,7 +16,7 @@ ARG QEMU_ARCH
 
 # Basic build-time metadata as defined at http://label-schema.org
 LABEL org.label-schema.build-date=${BUILD_DATE} \
-    org.label-schema.docker.dockerfile=".docker/Dockerfile.alpine-tmpl" \
+    org.label-schema.docker.dockerfile="Dockerfile.alpine" \
     org.label-schema.license="GNU" \
     org.label-schema.name="node-red" \
     org.label-schema.version=${BUILD_VERSION} \
