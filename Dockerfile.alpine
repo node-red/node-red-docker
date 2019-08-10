@@ -1,6 +1,6 @@
-ARG ARCH=amd64
-ARG NODE_VERSION=10
-ARG OS=alpine
+ARG ARCH
+ARG NODE_VERSION
+ARG OS
 ARG NODE_RED_VERSION
 
 FROM ${ARCH}/node:${NODE_VERSION}-${OS}
@@ -11,6 +11,9 @@ ARG BUILD_VERSION
 ARG BUILD_REF
 ARG NODE_RED_VERSION
 ARG ARCH
+ARG PYTHON_VERSION
+ARG QEMU_ARCH
+
 LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.docker.dockerfile=".docker/Dockerfile.alpine" \
     org.label-schema.license="GNU" \
@@ -24,34 +27,11 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.arch=${ARCH} \
     maintainer="Raymond M Mouthaan <raymondmmouthaan@gmail.com>"
 
-# QEMU - Quick Emulation: Run operating systems for any machine, on any supported architecture.
-ARG QEMU_ARCH=x86_64
+# QEMU - Quick Emulation
 COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 
-# Install Python 2 & gpio library (Python 2.7 will reach the end of its life on January 1st, 2020!)
-ARG PYTHON_VERSION=0
-RUN set -ex && \
-    if [ ${PYTHON_VERSION} == "2" ]; then \
-        echo "Installing Python 2"; \
-        apk add --no-cache python; \
-        if [ ${ARCH} == "arm32v6" ]; then \
-            echo "Installing py-rpigpio"; \
-            apk add py-rpigpio; \
-        fi; \
-    fi
-
-# Install Python 3 & gpio library
-RUN set -ex && \
-    if [ ${PYTHON_VERSION} == "3" ]; then \
-        echo "Installing Python 3"; \
-        apk add --no-cache python3; \
-        echo "Fixing Python 3 symlink"; \
-        ln -s /usr/bin/python3 /usr/bin/python; \
-        if [ ${ARCH} == "arm32v6" ]; then \
-            echo "Installing py-rpigpio"; \
-            apk add py-rpigpio; \
-        fi; \
-    fi
+# Copy scripts
+COPY scripts/* /tmp/
 
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
@@ -67,6 +47,12 @@ RUN set -ex && \
     chown -R node-red:node-red /data && \
     chown -R node-red:node-red /usr/src/node-red
 
+# Install Python 2 & gpio library (Python 2.7 will reach the end of its life on January 1st, 2020!)
+RUN chmod u+x /tmp/python2_gpio.sh && /tmp/python2_gpio.sh
+
+# Install Python 3 & gpio library
+RUN chmod u+x /tmp/python3_gpio.sh && /tmp/python3_gpio.sh
+
 # Set work directory
 WORKDIR /usr/src/node-red
 
@@ -79,15 +65,7 @@ RUN npm install
 
 # Replace Python 2.7 with 3.6 in 36-rpi-gpio.js or remove Node-RED build-in rpi-gpio for non arm32v6
 USER root
-RUN set -ex && \
-    if [ ${PYTHON_VERSION} == "3" ] && [ ${ARCH} == "arm32v6" ]; then \
-            echo "Fixing 36-rpi-gpio.js for Python 3.6"; \
-            sed -i 's/python2.7/python3.6/g' node_modules/\@node-red/nodes/core/hardware/36-rpi-gpio.js; \
-    fi && \
-    if [ ${ARCH} != "arm32v6" ]; then \
-        echo "Removing Node-RED build-in rpi-gpio"; \
-        rm -r node_modules/\@node-red/nodes/core/hardware/*; \
-    fi
+RUN chmod u+x /tmp/python_fix.sh && /tmp/python_fix.sh
 
 # Return as node-red user
 USER node-red
