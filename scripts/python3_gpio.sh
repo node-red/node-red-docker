@@ -18,7 +18,7 @@ if [[ ${PYTHON_VERSION} == "3" ]]; then
     ln -s /usr/bin/python3 /usr/bin/python
     if [[ ${ARCH} == "arm32v7" ]]; then
       echo "Installing py-rpigpio"
-      apt-get install -y --no-install-recommends python3-pigpio
+      apt-get install -y python3-pigpio
     fi
   fi
 fi

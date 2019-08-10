@@ -7,13 +7,13 @@
 This project describes some of the many ways Node-RED can be run under Docker and has support for multiple architectures (amd64, arm32v6, arm23v7 and arm64v8).
 Some basic familiarity with Docker and the [Docker Command Line](https://docs.docker.com/engine/reference/commandline/cli/) is assumed.
 
-This project also provides the build for the `nodered/node-red`
+This project also provides the build for the `raymondmm/node-red`
 container on [DockerHub](https://hub.docker.com/r/raymondmm/node-red/).
 
 ## Quick Start
 To run this directly in docker at it's simplest just run:
 
-        docker run -it -p 1880:1880 --name mynodered nodered/node-red
+        docker run -it -p 1880:1880 --name mynodered raymondmm/node-red
 
 Let's dissect that command:
 
@@ -21,7 +21,7 @@ Let's dissect that command:
         -it                     - attach a terminal session so we can see what is going on
         -p 1880:1880            - connect local port 1880 to the exposed internal port 1880
         --name mynodered        - give this machine a friendly local name
-        nodered/node-red-docker - the image to base it on - currently Node-RED v0.14.5
+        raymondmm/node-red      - the image to base it on - currently Node-RED v0.20.7
 
 
 Running that command should give a terminal window with a running instance of Node-RED.
