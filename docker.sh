@@ -424,7 +424,7 @@ docker_manifest_list_version_rpi_python2() {
 
   # Manifest Annotate ${BUILD_VERSION}-rpi-python2
   docker manifest annotate ${TARGET}:${BUILD_VERSION}-rpi-python2 ${TARGET}:${BUILD_VERSION}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}-rpi-python2 ${TARGET}:${BUILD_VERSION}-buster-arm32v7-python2 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}-rpi-python2 ${TARGET}:${BUILD_VERSION}-buster-slim-arm32v7-python2 --os=linux --arch=arm --variant=v7
 
   # Manifest Push ${BUILD_VERSION}-rpi-python2
   docker manifest push ${TARGET}:${BUILD_VERSION}-rpi-python2
