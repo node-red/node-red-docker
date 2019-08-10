@@ -105,9 +105,9 @@ docker_manifest_list() {
   echo "DOCKER MANIFEST: Create and Push docker manifest lists."
   docker_manifest_list_version_rpi_python2
   docker_manifest_list_version_rpi_python3
+  docker_manifest_list_version_rpi
   docker_manifest_list_version_python2
   docker_manifest_list_version_python3
-  docker_manifest_list_version_rpi
   docker_manifest_list_version
 
   # Create manifest list testing or latest
@@ -116,17 +116,17 @@ docker_manifest_list() {
       echo "DOCKER MANIFEST: Create and Push docker manifest list TESTING."
       docker_manifest_list_testing_rpi_python2
       docker_manifest_list_testing_rpi_python3
+      docker_manifest_list_testing_rpi
       docker_manifest_list_testing_python2
       docker_manifest_list_testing_python3
-      docker_manifest_list_testing_rpi
       docker_manifest_list_testing;;
     *)
       echo "DOCKER MANIFEST: Create and Push docker manifest list LATEST."
       docker_manifest_list_latest_rpi_python2
       docker_manifest_list_latest_rpi_python3
+      docker_manifest_list_latest_rpi
       docker_manifest_list_latest_python2
       docker_manifest_list_latest_python3
-      docker_manifest_list_latest_rpi
       docker_manifest_list_latest;;
   esac
 
