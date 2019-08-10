@@ -14,7 +14,7 @@ if [[ ${PYTHON_VERSION} == "2" ]]; then
     apt-get update && apt-get install -y --no-install-recommends python
     if [[ ${ARCH} == "arm32v7" ]]; then
       echo "Installing python-pigpio"
-      apt-get install -y --no-install-recommends python-pigpio
+      apt-get install -y python-pigpio python-rpi.gpio
     fi
   fi
 fi
