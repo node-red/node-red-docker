@@ -26,7 +26,7 @@ LABEL org.label-schema.build-date=$(date +"%Y-%m-%dT%H:%M:%SZ") \
     maintainer="Your Name <your email>"
 
 # Copy scripts
-COPY ./docker/scripts/* /tmp/
+COPY .docker/scripts/* /tmp/
 
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
