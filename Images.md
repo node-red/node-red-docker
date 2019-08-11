@@ -56,8 +56,3 @@
 ##### Docker Run
 `docker run -it --rm -p1441:1880 --user=root --privileged=true -v /dev/mem:/dev/mem raymondmm/node-red-gpio-python2v2`
 
-# debian
-ln -s /usr/lib/python3 /usr/lib/python
-
-# alpine
-ln -s /usr/lib/python3.6 /usr/lib/python
