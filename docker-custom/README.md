@@ -2,14 +2,16 @@
 
 The docker-custom directory contains files you need to build your own images.
 
+**
+
 The steps to take to build your own images are:
 
-1) **package.json**
+## 1. **package.json**
 
    - Change the node-red version in package.json (from the docker-custom directory) to the version you require
    - Add optionally packages you require
  
-2) **docker-make.sh**
+## 2. **docker-make.sh**
 
    Change the build arguments as needed:
 
@@ -22,22 +24,28 @@ The steps to take to build your own images are:
    - `--file Dockerfile-alpine.custom` : Dockerfile to use to build your image (Dockerfile-alpine.custom or Dockerfile-slim.custom)
    - `--tag mynodered:node-red-custom-build` : set the image name and tag
    
-3) **Run docker-make.sh**
+## 3. **Run docker-make.sh**
 
-```
-$ ./docker-make.sh
-```
+    ```
+    $ ./docker-make.sh
+    ```
+    
+    This starts building your custom image and might take a while depending on the system you are running on.
+    
+    When building is done you can run it by the following command:
+    
+    ```
+    $ docker run -it -p1880:1880 mynodered:node-red-custom-build
+    ```
+    
+    With the following command you can verify your docker image:
+    
+    ```
+    $ docker inspect testing:node-red-build
+    ```
 
-This starts building your custom image and might take a while depending on the system you are running on.
+## 4. **Advanced Configuration**
 
-When building is done you can run it by the following command:
+    `Dockerfile-alpine.custom` and `Dockerfile-slim.custom` can be modified as required, for example to add more tools. 
 
-```
-$ docker run -it -p1880:1880 mynodered:node-red-custom-build
-```
-
-With the following command you can verify your docker image:
-
-```
-$ docker inspect testing:node-red-build
-```
+    The scripts under `script` are used to determine if Python needs to be installed and fixed, as well to enable build-in support for gpio.
