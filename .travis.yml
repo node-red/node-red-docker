@@ -13,25 +13,25 @@ env:
     - QEMU_VERSION=v4.0.0
   matrix:
     # No Python Images
-    - DOCKER_FILE=./docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=0
-    - DOCKER_FILE=./docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=0
-    #- DOCKER_FILE=./docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=arm     ARCH=arm32v7 PYTHON_VERSION=0
-    - DOCKER_FILE=./docker/Dockerfile.slim   NODE_VERSION=10 OS=buster-slim QEMU_ARCH=arm ARCH=arm32v7 PYTHON_VERSION=0
-    - DOCKER_FILE=./docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=0
+    - DOCKER_FILE=.docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=0
+    - DOCKER_FILE=.docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=0
+    #- DOCKER_FILE=.docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=arm     ARCH=arm32v7 PYTHON_VERSION=0
+    - DOCKER_FILE=.docker/Dockerfile.slim   NODE_VERSION=10 OS=buster-slim QEMU_ARCH=arm ARCH=arm32v7 PYTHON_VERSION=0
+    - DOCKER_FILE=.docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=0
 
     # Python 2 Images
-    - DOCKER_FILE=./docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=2
-    - DOCKER_FILE=./docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=2
+    - DOCKER_FILE=.docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=2
+    - DOCKER_FILE=.docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=2
     #- DOCKER_FILE=./docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=arm     ARCH=arm32v7 PYTHON_VERSION=2
-    - DOCKER_FILE=./docker/Dockerfile.slim   NODE_VERSION=10 OS=buster-slim QEMU_ARCH=arm ARCH=arm32v7 PYTHON_VERSION=2
-    - DOCKER_FILE=./docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=2
+    - DOCKER_FILE=.docker/Dockerfile.slim   NODE_VERSION=10 OS=buster-slim QEMU_ARCH=arm ARCH=arm32v7 PYTHON_VERSION=2
+    - DOCKER_FILE=.docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=2
 
     # Python 3 Images
-    - DOCKER_FILE=./docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=3
-    - DOCKER_FILE=./docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=3
-    #- DOCKER_FILE=./docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=arm     ARCH=arm32v7 PYTHON_VERSION=3
-    - DOCKER_FILE=./docker/Dockerfile.slim   NODE_VERSION=10 OS=buster-slim QEMU_ARCH=arm ARCH=arm32v7 PYTHON_VERSION=3
-    - DOCKER_FILE=./docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=3
+    - DOCKER_FILE=.docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=3
+    - DOCKER_FILE=.docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=3
+    #- DOCKER_FILE=.docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=arm     ARCH=arm32v7 PYTHON_VERSION=3
+    - DOCKER_FILE=.docker/Dockerfile.slim   NODE_VERSION=10 OS=buster-slim QEMU_ARCH=arm ARCH=arm32v7 PYTHON_VERSION=3
+    - DOCKER_FILE=.docker/Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=3
 
 before_install:
   - ./.docker/docker.sh prepare
