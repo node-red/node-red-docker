@@ -32,7 +32,7 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
 COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 
 # Copy scripts
-COPY ./docker/scripts/* /tmp/
+COPY .docker/scripts/* /tmp/
 
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
