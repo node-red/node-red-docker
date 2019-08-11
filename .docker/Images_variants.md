@@ -53,6 +53,4 @@
 | latest-rpi-python2, 0.20.7-rpi-python2 | 0.20.7-alpine-arm32v6-python2      | arm32v6  | alpine | rpi 1, 2, 3, 4, zero |
 |                                        | 0.20.7-buster-slim-arm32v7-python2 | arm32v7  | alpine | |
 
-##### Docker Run
-`docker run -it --rm -p1441:1880 --user=root --privileged=true -v /dev/mem:/dev/mem raymondmm/node-red-gpio-python2v2`
 
