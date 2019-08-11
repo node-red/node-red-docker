@@ -282,7 +282,7 @@ services:
   node-red:
     image: raymondmm/node-red:latest
     environment:
-      - TZ="Europe/Amsterdam"
+      - TZ=Europe/Amsterdam
     ports:
       - "1880:1880"
     networks:
@@ -533,7 +533,7 @@ https://github.com/node-red/node-red/issues/15
 If you want to modify the default timezone, use the TZ environment variable with the [relevant timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
 
 ```
-docker run -it -p 1880:1880 --name mynodered -e TZ="Europe/London" raymondmm/node-red
+docker run -it -p 1880:1880 --name mynodered -e TZ=Europe/London raymondmm/node-red
 ```
 
 References:
