@@ -36,3 +36,8 @@ When building is done you can run it by the following command:
 $ docker run -it -p1880:1880 mynodered:node-red-custom-build
 ```
 
+With the following command you can verify your docker image:
+
+```
+$ docker inspect testing:node-red-build
+```
