@@ -7,18 +7,16 @@ FROM ${ARCH}/node:${NODE_VERSION}-${OS}
 
 # Basic build-time metadata as defined at http://label-schema.org
 ARG BUILD_DATE
-ARG BUILD_VERSION
-ARG BUILD_REF
 ARG NODE_RED_VERSION
 ARG ARCH
 ARG PYTHON_VERSION
 ARG OS
 
-LABEL org.label-schema.build-date=$(date +"%Y-%m-%dT%H:%M:%SZ") \
+LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.docker.dockerfile="Dockerfile-alpine.custom" \
     org.label-schema.license="GNU" \
     org.label-schema.name="Node-RED" \
-    org.label-schema.version=${BUILD_VERSION} \
+    org.label-schema.version=${NODE_RED_VERSION} \
     org.label-schema.description="Node-RED is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways." \
     org.label-schema.url="https://nodered.org" \
     org.label-schema.vcs-type="Git" \
@@ -26,7 +24,7 @@ LABEL org.label-schema.build-date=$(date +"%Y-%m-%dT%H:%M:%SZ") \
     maintainer="Your Name <your email>"
 
 # Copy scripts
-COPY .docker/scripts/* /tmp/
+COPY ../.docker/scripts/* /tmp/
 
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
