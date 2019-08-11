@@ -34,7 +34,7 @@ env:
     - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=3
 
 before_install:
-  - ./docker.sh prepare
+  - ./.docker/docker.sh prepare
 
 install: true
 
@@ -44,25 +44,25 @@ before_script:
 
 script:
   # Update NODE_RED_VERSION from package.json
-  - ./update_version.sh
+  - ./.docker/update_version.sh
 
   # Build Docker image
-  - ./docker.sh build
+  - ./.docker/docker.sh build
 
   # Test Docker image
-  - ./docker.sh test
+  - ./.docker/docker.sh test
 
   # Push Docker image
   - >
     if [ ! -z "${TRAVIS_TAG}" ]; then
       # Tag Docker image
-      ./docker.sh tag
+      ./.docker/docker.sh tag
 
       # Docker Login
       echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 
       # Push Docker image
-      ./docker.sh push
+      ./.docker/docker.sh push
 
       # Docker Logout
       docker logout
@@ -74,7 +74,7 @@ jobs:
           if: tag =~ ^v
           script:
               # Update NODE_RED_VERSION from package.json
-              - ./update_version.sh
+              - ./.docker/update_version.sh
 
               # Create and push Docker manifest lists (TODO move to function)
               # Docker Login
@@ -82,7 +82,7 @@ jobs:
 
               # Create and Push Docker Manifest Lists to Docker Hub
               - echo "Create manifest list for all docker images."
-              - ./docker.sh manifest-list
+              - ./.docker/docker.sh manifest-list
 
               # Docker Logout
               - docker logout

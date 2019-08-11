@@ -59,7 +59,7 @@ docker_build() {
     --build-arg NODE_RED_VERSION=v${NODE_RED_VERSION} \
     --build-arg QEMU_ARCH=${QEMU_ARCH} \
     --build-arg PYTHON_VERSION=${PYTHON_VERSION} \
-    --file ${DOCKER_FILE} \
+    --file ./docker/${DOCKER_FILE} \
     --tag ${TARGET}:build .
 }
 
