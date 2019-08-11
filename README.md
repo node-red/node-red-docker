@@ -128,25 +128,25 @@ _**Note**: Base image arm32v7/node:10-alpine is not available [#1081](https://gi
 
 The following table shows the provided Manifest Lists.
 
-| **Tag**                                | **Node-RED Base Image**                      |
-|----------------------------------------|--------------------------------------------- |
-| latest, 0.20.7                         | raymondmm/0.20.7-alpine-amd64                |
-|                                        | raymondmm/0.20.7-alpine-arm32v6              |
-|                                        | raymondmm/~~0.20.7-alpine-arm32v7~~          |
-|                                        | raymondmm/0.20.7-buster-slim-arm32v7         |
-|                                        | raymondmm/0.20.7-alpine-arm64v8              |
+| **Tag**                                | **Node-RED Base Image**                               |
+|----------------------------------------|-------------------------------------------------------|
+| latest, 0.20.7                         | raymondmm/node-red:0.20.7-alpine-amd64                |
+|                                        | raymondmm/node-red:0.20.7-alpine-arm32v6              |
+|                                        | raymondmm/node-red:~~0.20.7-alpine-arm32v7~~          |
+|                                        | raymondmm/node-red:0.20.7-buster-slim-arm32v7         |
+|                                        | raymondmm/node-red:0.20.7-alpine-arm64v8              |
 ||    
-| latest-python3, 0.20.7-python3         | raymondmm/0.20.7-alpine-amd64-python3        |
-|                                        | raymondmm/0.20.7-alpine-arm32v6-python3      |
-|                                        | raymondmm/~~0.20.7-alpine-arm32v7-python3~~  |
-|                                        | raymondmm/0.20.7-buster-slim-arm32v7-python3 |
-|                                        | raymondmm/0.20.7-alpine-arm64v8-python3      |
+| latest-python3, 0.20.7-python3         | raymondmm/node-red:0.20.7-alpine-amd64-python3        |
+|                                        | raymondmm/node-red:0.20.7-alpine-arm32v6-python3      |
+|                                        | raymondmm/node-red:~~0.20.7-alpine-arm32v7-python3~~  |
+|                                        | raymondmm/node-red:0.20.7-buster-slim-arm32v7-python3 |
+|                                        | raymondmm/node-red:0.20.7-alpine-arm64v8-python3      |
 ||    
-| latest-python2, 0.20.7-python2         | raymondmm/0.20.7-alpine-amd64-python2        |
-|                                        | raymondmm/0.20.7-alpine-arm32v6-python2      |
-|                                        | raymondmm/~~0.20.7-alpine-arm32v7-python2~~  |
-|                                        | raymondmm/0.20.7-buster-slim-arm32v7-python2 |
-|                                        | raymondmm/0.20.7-alpine-arm64v8-python2      |
+| latest-python2, 0.20.7-python2         | raymondmm/node-red:0.20.7-alpine-amd64-python2        |
+|                                        | raymondmm/node-red:0.20.7-alpine-arm32v6-python2      |
+|                                        | raymondmm/node-red:~~0.20.7-alpine-arm32v7-python2~~  |
+|                                        | raymondmm/node-red:0.20.7-buster-slim-arm32v7-python2 |
+|                                        | raymondmm/node-red:0.20.7-alpine-arm64v8-python2      |
 
 ## Raspberry PI Tags
 | **Tag**                                | **Node-RED Base Image Tag**        | **Description**      |
