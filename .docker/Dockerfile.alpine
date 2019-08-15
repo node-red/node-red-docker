@@ -17,7 +17,7 @@ ARG OS
 
 LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.docker.dockerfile=".docker/Dockerfile.alpine" \
-    org.label-schema.license="GNU" \
+    org.label-schema.license="Apache License 2.0" \
     org.label-schema.name="Node-RED" \
     org.label-schema.version=${BUILD_VERSION} \
     org.label-schema.description="Node-RED is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways." \
