@@ -52,7 +52,7 @@ script:
   # Test Docker image
   - ./.docker/docker.sh test
 
-  # Push Docker image
+  # Push Docker image, ony if TRAVIS_TAG is set
   - >
     if [ ! -z "${TRAVIS_TAG}" ]; then
       # Tag Docker image
@@ -71,12 +71,13 @@ script:
 jobs:
     include:
         - stage: manifest
+          # Only create and push manifest list to Docker Hub, when tag starts with a `v`, eg. v0.20.7
           if: tag =~ ^v
           script:
               # Update NODE_RED_VERSION from package.json
               - ./.docker/update_version.sh
 
-              # Create and push Docker manifest lists (TODO move to function)
+              # Create and push Docker manifest lists
               # Docker Login
               - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
