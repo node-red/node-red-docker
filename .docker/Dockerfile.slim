@@ -85,7 +85,4 @@ VOLUME ["/data"]
 # Expose the listening port of node-red
 EXPOSE 1880
 
-HEALTHCHECK --interval=10s --timeout=120s --retries=3 \
-      CMD curl -f http://localhost:1880 || exit 1
-
 ENTRYPOINT ["npm", "start", "--", "--userDir", "/data"]
