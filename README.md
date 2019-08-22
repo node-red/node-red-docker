@@ -128,37 +128,37 @@ _**Note**: Base image arm32v7/node:10-alpine is not available [#1081](https://gi
 
 The following table shows the provided Manifest Lists.
 
-| **Tag**                                | **Node-RED Base Image**                      |
-|----------------------------------------|--------------------------------------------- |
-| latest, 0.20.7                         | raymondmm/0.20.7-alpine-amd64                |
-|                                        | raymondmm/0.20.7-alpine-arm32v6              |
-|                                        | raymondmm/~~0.20.7-alpine-arm32v7~~          |
-|                                        | raymondmm/0.20.7-buster-slim-arm32v7         |
-|                                        | raymondmm/0.20.7-alpine-arm64v8              |
-||    
-| latest-python3, 0.20.7-python3         | raymondmm/0.20.7-alpine-amd64-python3        |
-|                                        | raymondmm/0.20.7-alpine-arm32v6-python3      |
-|                                        | raymondmm/~~0.20.7-alpine-arm32v7-python3~~  |
-|                                        | raymondmm/0.20.7-buster-slim-arm32v7-python3 |
-|                                        | raymondmm/0.20.7-alpine-arm64v8-python3      |
-||    
-| latest-python2, 0.20.7-python2         | raymondmm/0.20.7-alpine-amd64-python2        |
-|                                        | raymondmm/0.20.7-alpine-arm32v6-python2      |
-|                                        | raymondmm/~~0.20.7-alpine-arm32v7-python2~~  |
-|                                        | raymondmm/0.20.7-buster-slim-arm32v7-python2 |
-|                                        | raymondmm/0.20.7-alpine-arm64v8-python2      |
+| **Tag**                                | **Node-RED Base Image**                                      |
+|----------------------------------------|--------------------------------------------------------------|
+| latest, 0.20.7                         | raymondmm/0.20.7-10-alpine-amd64                             |
+|                                        | raymondmm/0.20.7-10-alpine-arm32v6                           |
+|                                        | raymondmm/~~0.20.7-10-alpine-arm32v7~~                       |
+|                                        | raymondmm/0.20.7-10-buster-slim-arm32v7                      |
+|                                        | raymondmm/0.20.7-10-alpine-arm64v8                           |
+|                                        |                                                              |
+| latest-python3, 0.20.7-python3         | raymondmm/0.20.7-10-alpine-amd64-python3                     |
+|                                        | raymondmm/0.20.7-10-alpine-arm32v6-python3                   |
+|                                        | raymondmm/~~0.20.7-10-alpine-arm32v7-python3~~               |
+|                                        | raymondmm/0.20.7-10-buster-slim-arm32v7-python3              |
+|                                        | raymondmm/0.20.7-10-alpine-arm64v8-python3                   |
+|                                        |                                                              |
+| latest-python2, 0.20.7-python2         | raymondmm/0.20.7-10-alpine-amd64-python2                     |
+|                                        | raymondmm/0.20.7-10-alpine-arm32v6-python2                   |
+|                                        | raymondmm/~~0.20.7-10-alpine-arm32v7-python2~~               |
+|                                        | raymondmm/0.20.7-10-buster-slim-arm32v7-python2              |
+|                                        | raymondmm/0.20.7-10-alpine-arm64v8-python2                   |
 
 ## Raspberry PI Tags
-| **Tag**                                | **Node-RED Base Image Tag**        | **Description**      |
-|----------------------------------------|------------------------------------|----------------------|
-| latest-rpi, 0.20.7-rpi                 | 0.20.7-alpine-arm32v6              | rpi 1, 2, 3, 4, zero |
-|                                        | 0.20.7-buster-slim-arm32v7         |                      |
+| **Tag**                                | **Node-RED Base Image Tag**           | **Description**      |
+|----------------------------------------|---------------------------------------|----------------------|
+| latest-rpi, 0.20.7-rpi                 | 0.20.7-10-alpine-arm32v6              | rpi 1, 2, 3, 4, zero |
+|                                        | 0.20.7-10-buster-slim-arm32v7         |                      |
 ||
-| latest-rpi-python3, 0.20.7-rpi-python3 | 0.20.7-alpine-arm32v6-python3      | rpi 1, 2, 3, 4, zero |
-|                                        | 0.20.7-buster-slim-arm32v7-python3 |                      |
+| latest-rpi-python3, 0.20.7-rpi-python3 | 0.20.7-10-alpine-arm32v6-python3      | rpi 1, 2, 3, 4, zero |
+|                                        | 0.20.7-10-buster-slim-arm32v7-python3 |                      |
 ||
-| latest-rpi-python2, 0.20.7-rpi-python2 | 0.20.7-alpine-arm32v6-python2      | rpi 1, 2, 3, 4, zero |
-|                                        | 0.20.7-buster-slim-arm32v7-python2 |                      |
+| latest-rpi-python2, 0.20.7-rpi-python2 | 0.20.7-10-alpine-arm32v6-python2      | rpi 1, 2, 3, 4, zero |
+|                                        | 0.20.7-10-buster-slim-arm32v7-python2 |                      |
 
 
 With the support of Docker manifest list, there is no need to explicit add the tag for the architecture to use. When a docker run command or docker service command or docker stack command is executed, docker checks which architecture is required and verifies if it is available in the docker repository. When it does, docker pulls the matching image for it.
