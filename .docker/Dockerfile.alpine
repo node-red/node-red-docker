@@ -38,6 +38,7 @@ COPY .docker/scripts/* /tmp/
 RUN set -ex && \
     apk add --no-cache \
         bash \
+        tzdata \
         iputils \
         curl \
         nano \

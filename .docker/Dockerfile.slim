@@ -37,6 +37,7 @@ COPY .docker/scripts/* /tmp/
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
     apt-get update && apt-get install -y --no-install-recommends \
+        tzdata \
         iputils-ping \
         curl \
         nano \
