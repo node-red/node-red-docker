@@ -425,4 +425,4 @@ prepare_qemu() {
     popd
 }
 
-main $1
+main $1 $2
