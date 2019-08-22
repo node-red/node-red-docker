@@ -205,7 +205,7 @@ docker_manifest_list_version_python3() {
 
 docker_manifest_list_version() {
   echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}${1}."
-  docker manifest create ${TARGET}:${BUILD_VERSION} \
+  docker manifest create ${TARGET}:${BUILD_VERSION}${1} \
     ${TARGET}:${BUILD_VERSION}${1}-alpine-amd64 \
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v6 \
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7 \
