@@ -20,7 +20,7 @@ main() {
     docker_push
     ;;
   "manifest-list")
-    docker_manifest_list
+    docker_manifest_list $2
     ;;
   *)
     echo "none of above!"
@@ -105,32 +105,32 @@ docker_manifest_list() {
 
   # Create and push manifest lists
   echo "DOCKER MANIFEST: Create and Push docker manifest lists."
-  docker_manifest_list_version_rpi_python2 "-10"
-  docker_manifest_list_version_rpi_python3 "-10"
-  docker_manifest_list_version_rpi "-10"
-  docker_manifest_list_version_python2 "-10"
-  docker_manifest_list_version_python3 "-10"
-  docker_manifest_list_version "-10"
+  docker_manifest_list_version_rpi_python2 ${1}
+  docker_manifest_list_version_rpi_python3 ${1}
+  docker_manifest_list_version_rpi ${1}
+  docker_manifest_list_version_python2 ${1}
+  docker_manifest_list_version_python3 ${1}
+  docker_manifest_list_version ${1}
 
   # Create manifest list testing or latest
   case ${BUILD_VERSION} in
   *"testing"*)
     echo "DOCKER MANIFEST: Create and Push docker manifest list TESTING."
-    docker_manifest_list_testing_or_latest_rpi_python2 "-10" "testing"
-    docker_manifest_list_testing_or_latest_rpi_python3 "-10" "testing"
-    docker_manifest_list_testing_or_latest_rpi "-10" "testing"
-    docker_manifest_list_testing_or_latest_python2 "-10" "testing"
-    docker_manifest_list_testing_or_latest_python3 "-10" "testing"
-    docker_manifest_list_testing_or_latest "-10" "testing"
+    docker_manifest_list_testing_or_latest_rpi_python2 ${1} "testing"
+    docker_manifest_list_testing_or_latest_rpi_python3 ${1} "testing"
+    docker_manifest_list_testing_or_latest_rpi ${1} "testing"
+    docker_manifest_list_testing_or_latest_python2 ${1} "testing"
+    docker_manifest_list_testing_or_latest_python3 ${1} "testing"
+    docker_manifest_list_testing_or_latest ${1} "testing"
     ;;
   *)
     echo "DOCKER MANIFEST: Create and Push docker manifest list TESTING."
-    docker_manifest_list_testing_or_latest_rpi_python2 "-10" "latest"
-    docker_manifest_list_testing_or_latest_rpi_python3 "-10" "latest"
-    docker_manifest_list_testing_or_latest_rpi "-10" "latest"
-    docker_manifest_list_testing_or_latest_python2 "-10" "latest"
-    docker_manifest_list_testing_or_latest_python3 "-10" "latest"
-    docker_manifest_list_testing_or_latest "-10" "latest"
+    docker_manifest_list_testing_or_latest_rpi_python2 ${1} "latest"
+    docker_manifest_list_testing_or_latest_rpi_python3 ${1} "latest"
+    docker_manifest_list_testing_or_latest_rpi ${1} "latest"
+    docker_manifest_list_testing_or_latest_python2 ${1} "latest"
+    docker_manifest_list_testing_or_latest_python3 ${1} "latest"
+    docker_manifest_list_testing_or_latest ${1} "latest"
     ;;
   esac
 
