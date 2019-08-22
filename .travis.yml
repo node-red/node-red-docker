@@ -12,27 +12,27 @@ env:
     - TARGET=raymondmm/node-red
     - QEMU_VERSION=v4.0.0
   matrix:
-    ### Node JS 12 ###
-    # No Python Images
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=0
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=0
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v7 PYTHON_VERSION=0
-#    - DOCKER_FILE=Dockerfile.slim   NODE_VERSION=12 OS=buster-slim QEMU_ARCH=arm ARCH=arm32v7 PYTHON_VERSION=0
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=0
-
-    # Python 2 Images
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=2
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=2
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v7 PYTHON_VERSION=2
-#    - DOCKER_FILE=Dockerfile.slim   NODE_VERSION=12 OS=buster-slim QEMU_ARCH=arm ARCH=arm32v7 PYTHON_VERSION=2
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=2
-
-    # Python 3 Images
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=3
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=3
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v7 PYTHON_VERSION=3
-#    - DOCKER_FILE=Dockerfile.slim   NODE_VERSION=12 OS=buster-slim QEMU_ARCH=arm ARCH=arm32v7 PYTHON_VERSION=3
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=3
+#    ### Node JS 12 ###
+#    # No Python Images
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=0
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=0
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v7 PYTHON_VERSION=0
+##    - DOCKER_FILE=Dockerfile.slim   NODE_VERSION=12 OS=buster-slim QEMU_ARCH=arm ARCH=arm32v7 PYTHON_VERSION=0
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=0
+#
+#    # Python 2 Images
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=2
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=2
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v7 PYTHON_VERSION=2
+##    - DOCKER_FILE=Dockerfile.slim   NODE_VERSION=12 OS=buster-slim QEMU_ARCH=arm ARCH=arm32v7 PYTHON_VERSION=2
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=2
+#
+#    # Python 3 Images
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=3
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=3
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v7 PYTHON_VERSION=3
+##    - DOCKER_FILE=Dockerfile.slim   NODE_VERSION=12 OS=buster-slim QEMU_ARCH=arm ARCH=arm32v7 PYTHON_VERSION=3
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=3
 
     ### Node JS 10 ###
     # No Python Images
@@ -99,13 +99,14 @@ jobs:
               # Update NODE_RED_VERSION from package.json
               - ./.docker/update_version.sh
 
-              # Create and push Docker manifest lists (TODO move to function)
+              # Create and push Docker manifest lists
               # Docker Login
               - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
               # Create and Push Docker Manifest Lists to Docker Hub
               - echo "Create manifest list for all docker images."
-              - ./.docker/docker.sh manifest-list
+              - ./.docker/docker.sh docker_manifest_list_version_rpi_python2 "-10"
+#              - ./.docker/docker.sh manifest-list
 
               # Docker Logout
               - docker logout
