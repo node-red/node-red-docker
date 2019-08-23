@@ -159,8 +159,8 @@ docker_manifest_list_version_rpi_python2() {
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v6-python2 \
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7-python2
 
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v7-python2 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python2 --os=linux --arch=arm --variant=v7
 
   docker manifest push ${TARGET}:${BUILD_VERSION}${1}-rpi-python2
 }
@@ -171,8 +171,8 @@ docker_manifest_list_version_rpi_python3() {
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v6-python3 \
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7-python3
 
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v7-python3 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python3 --os=linux --arch=arm --variant=v7
 
   docker manifest push ${TARGET}:${BUILD_VERSION}${1}-rpi-python3
 }
@@ -183,8 +183,8 @@ docker_manifest_list_version_rpi() {
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v6 \
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7
 
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v7 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7 --os=linux --arch=arm --variant=v7
 
   docker manifest push ${TARGET}:${BUILD_VERSION}${1}-rpi
 }
@@ -197,9 +197,9 @@ docker_manifest_list_version_python2() {
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7-python2 \
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm64v8-python2
 
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-python2 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-python2 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v7-python2 --os=linux --arch=arm --variant=v7
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-python2 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm64v8-python2 --os=linux --arch=arm64 --variant=v8
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python2 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm64v8-python2 --os=linux --arch=arm64 --variant=v8
 
   docker manifest push ${TARGET}:${BUILD_VERSION}${1}-python2
 }
@@ -212,9 +212,9 @@ docker_manifest_list_version_python3() {
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7-python3 \
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm64v8-python3
 
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-python3 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-python3 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v7-python3 --os=linux --arch=arm --variant=v7
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-python3 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm64v8-python3 --os=linux --arch=arm64 --variant=v8
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python3 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm64v8-python3 --os=linux --arch=arm64 --variant=v8
 
   docker manifest push ${TARGET}:${BUILD_VERSION}${1}-python3
 }
@@ -240,8 +240,8 @@ docker_manifest_list_testing_or_latest_rpi_python2() {
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v6-python2 \
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7-python2
 
-  docker manifest annotate ${TARGET}:${2}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${2}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v7-python2 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${2}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:${2}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python2 --os=linux --arch=arm --variant=v7
 
   docker manifest push ${TARGET}:${2}${1}-rpi-python2
 }
@@ -252,8 +252,8 @@ docker_manifest_list_testing_or_latest_rpi_python3() {
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v6-python3 \
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7-python3
 
-  docker manifest annotate ${TARGET}:${2}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${2}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v7-python3 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${2}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:${2}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python3 --os=linux --arch=arm --variant=v7
 
   docker manifest push ${TARGET}:${2}${1}-rpi-python3
 }
@@ -264,8 +264,8 @@ docker_manifest_list_testing_or_latest_rpi() {
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v6 \
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7
 
-  docker manifest annotate ${TARGET}:${2}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${2}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v7 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${2}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:${2}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7 --os=linux --arch=arm --variant=v7
 
   docker manifest push ${TARGET}:${2}${1}-rpi
 }
@@ -278,9 +278,9 @@ docker_manifest_list_testing_or_latest_python2() {
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7-python2 \
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm64v8-python2
 
-  docker manifest annotate ${TARGET}:${2}${1}-python2 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${2}${1}-python2 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v7-python2 --os=linux --arch=arm --variant=v7
-  docker manifest annotate ${TARGET}:${2}${1}-python2 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm64v8-python2 --os=linux --arch=arm64 --variant=v8
+  docker manifest annotate ${TARGET}:${2}${1}-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:${2}${1}-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python2 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${2}${1}-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm64v8-python2 --os=linux --arch=arm64 --variant=v8
 
   docker manifest push ${TARGET}:${2}${1}-python2
 }
@@ -293,9 +293,9 @@ docker_manifest_list_testing_or_latest_python3() {
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7-python3 \
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm64v8-python3
 
-  docker manifest annotate ${TARGET}:${2}${1}-python3 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${2}${1}-python3 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v7-python3 --os=linux --arch=arm --variant=v7
-  docker manifest annotate ${TARGET}:${2}${1}-python3 ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm64v8-python3 --os=linux --arch=arm64 --variant=v8
+  docker manifest annotate ${TARGET}:${2}${1}-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:${2}${1}-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python3 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${2}${1}-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm64v8-python3 --os=linux --arch=arm64 --variant=v8
 
   docker manifest push ${TARGET}:${2}${1}-python3
 }
@@ -308,9 +308,9 @@ docker_manifest_list_testing_or_latest() {
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7 \
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm64v8
 
-  docker manifest annotate ${TARGET}:${2}${1} ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${2}${1} ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm32v7 --os=linux --arch=arm --variant=v7
-  docker manifest annotate ${TARGET}:${2}${1} ${TARGET}:${BUILD_VERSION}${1:-10}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
+  docker manifest annotate ${TARGET}:${2}${1} ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:${2}${1} ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${2}${1} ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
 
   docker manifest push ${TARGET}:${2}${1}
 }
