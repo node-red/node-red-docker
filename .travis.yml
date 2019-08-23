@@ -14,10 +14,10 @@ env:
   matrix:
     ### Node JS 12 ####################################################################################################
     # No Python Images
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 NODE_RED_VERSION=${NODE_RED_VERSION} OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=0
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 NODE_RED_VERSION=${NODE_RED_VERSION} OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=0
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 NODE_RED_VERSION=${NODE_RED_VERSION} OS=alpine QEMU_ARCH=arm     ARCH=arm32v7 PYTHON_VERSION=0
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 NODE_RED_VERSION=${NODE_RED_VERSION} OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=0
+    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=0
+    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=0
+    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v7 PYTHON_VERSION=0
+    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=0
 
     # Python 2 Images
     - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=2
@@ -59,8 +59,11 @@ before_script:
     # Set BUILD_VERSION
     - if [ ! -z "${TRAVIS_TAG}" ]; then export BUILD_VERSION=${TRAVIS_TAG:1}; else export BUILD_VERSION=beta; fi
 
+    # Set Node-RED version
+    - export NODE_RED_VERSION=$(grep -Eo "\"node-red\": \"(\w*.\w*.\w*)" package.json | cut -d\" -f4)
+
     # Update NODE_RED_VERSION from package.json
-    - ./.docker/update_version.sh
+    #- ./.docker/update_version.sh
 
 script:
   # Build Docker image
