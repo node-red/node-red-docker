@@ -14,10 +14,10 @@ env:
   matrix:
     ### Node JS 12 ####################################################################################################
     # No Python Images
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 NODE_RED_VERSION=$ OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=0
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 NODE_RED_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=0
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 NODE_RED_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v7 PYTHON_VERSION=0
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 NODE_RED_VERSION=12 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=0
+    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=0
+    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v6 PYTHON_VERSION=0
+    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=arm     ARCH=arm32v7 PYTHON_VERSION=0
+    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8 PYTHON_VERSION=0
 
     # Python 2 Images
     - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=12 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64 PYTHON_VERSION=2
@@ -90,9 +90,6 @@ jobs:
         - stage: manifest
           if: tag =~ ^v
           script:
-              # Update NODE_RED_VERSION from package.json
-              - ./.docker/update_version.sh
-
               # Create and push Docker manifest lists
               # Docker Login
               - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
