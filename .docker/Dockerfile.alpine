@@ -49,8 +49,6 @@ RUN set -ex && \
     chown -R node-red:node-red /data && \
     chown -R node-red:node-red /usr/src/node-red
 
-RUN npm install -g npm
-
 # Install Python 2 & gpio library (Python 2.7 will reach the end of its life on January 1st, 2020!)
 RUN chmod u+x /tmp/python2_gpio.sh && /tmp/python2_gpio.sh
 
