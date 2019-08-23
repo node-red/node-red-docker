@@ -123,13 +123,15 @@ docker_manifest_list() {
     docker_manifest_list_testing_or_latest_python3 ${1} "testing"
     docker_manifest_list_testing_or_latest ${1} "testing"
 
-    echo "DOCKER MANIFEST: Create and Push docker manifest list TESTING."
-    docker_manifest_list_testing_or_latest_rpi_python2 "" "testing"
-    docker_manifest_list_testing_or_latest_rpi_python3 "" "testing"
-    docker_manifest_list_testing_or_latest_rpi "" "testing"
-    docker_manifest_list_testing_or_latest_python2 "" "testing"
-    docker_manifest_list_testing_or_latest_python3 "" "testing"
-    docker_manifest_list_testing_or_latest "" "testing"
+    if [[ ${1} == "10" ]]; then
+      echo "DOCKER MANIFEST: Create and Push docker manifest list TESTING."
+      docker_manifest_list_testing_or_latest_rpi_python2 ${1} "testing"
+      docker_manifest_list_testing_or_latest_rpi_python3 ${1} "testing"
+      docker_manifest_list_testing_or_latest_rpi ${1} "testing"
+      docker_manifest_list_testing_or_latest_python2 ${1} "testing"
+      docker_manifest_list_testing_or_latest_python3 ${1} "testing"
+      docker_manifest_list_testing_or_latest ${1} "testing"
+    fi
     ;;
   *)
     echo "DOCKER MANIFEST: Create and Push docker manifest list LATEST Node JS."
@@ -140,13 +142,15 @@ docker_manifest_list() {
     docker_manifest_list_testing_or_latest_python3 ${1} "latest"
     docker_manifest_list_testing_or_latest ${1} "latest"
 
-    echo "DOCKER MANIFEST: Create and Push docker manifest list LATEST."
-    docker_manifest_list_testing_or_latest_rpi_python2 "" "latest"
-    docker_manifest_list_testing_or_latest_rpi_python3 "" "latest"
-    docker_manifest_list_testing_or_latest_rpi "" "latest"
-    docker_manifest_list_testing_or_latest_python2 "" "latest"
-    docker_manifest_list_testing_or_latest_python3 "" "latest"
-    docker_manifest_list_testing_or_latest "" "latest"
+    if [[ ${1} == "10" ]]; then
+      echo "DOCKER MANIFEST: Create and Push docker manifest list LATEST."
+      docker_manifest_list_testing_or_latest_rpi_python2 ${1} "latest"
+      docker_manifest_list_testing_or_latest_rpi_python3 ${1} "latest"
+      docker_manifest_list_testing_or_latest_rpi ${1} "latest"
+      docker_manifest_list_testing_or_latest_python2 ${1} "latest"
+      docker_manifest_list_testing_or_latest_python3 ${1} "latest"
+      docker_manifest_list_testing_or_latest ${1} "latest"
+    fi
     ;;
   esac
 
