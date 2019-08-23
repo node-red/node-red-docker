@@ -72,7 +72,7 @@ USER root
 RUN chmod u+x /tmp/python_fix.sh && /tmp/python_fix.sh
 
 # Cleanup tmp
-RUN rm /tmp/*
+RUN rm -r /tmp/*
 
 # Return as node-red user
 USER node-red
