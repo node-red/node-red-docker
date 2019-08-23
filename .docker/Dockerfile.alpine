@@ -49,6 +49,8 @@ RUN set -ex && \
     chown -R node-red:node-red /data && \
     chown -R node-red:node-red /usr/src/node-red
 
+RUN npm install -g npm
+
 # Install Python 2 & gpio library (Python 2.7 will reach the end of its life on January 1st, 2020!)
 RUN chmod u+x /tmp/python2_gpio.sh && /tmp/python2_gpio.sh
 
@@ -63,7 +65,6 @@ USER node-red
 
 # package.json contains Node-RED NPM module and node dependencies
 COPY package.json /usr/src/node-red/
-RUN npm install -g npm
 RUN npm install
 
 # Replace Python 2.7 with 3.6 in 36-rpi-gpio.js or remove Node-RED build-in rpi-gpio for non arm32v6
