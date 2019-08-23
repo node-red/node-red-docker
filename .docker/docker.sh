@@ -227,9 +227,9 @@ docker_manifest_list_version() {
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7 \
     ${TARGET}:${BUILD_VERSION}${1}-alpine-arm64v8
 
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1} ${TARGET}:${BUILD_VERSION}${11:-10}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1} ${TARGET}:${BUILD_VERSION}${11:-10}-alpine-arm32v7 --os=linux --arch=arm --variant=v7
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1} ${TARGET}:${BUILD_VERSION}${11:-10}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1} ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1} ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1} ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
 
   docker manifest push ${TARGET}:${BUILD_VERSION}${1}
 }
