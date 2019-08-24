@@ -71,7 +71,7 @@ USER root
 RUN chmod u+x /tmp/fix_python_gpio.sh && /tmp/fix_python_gpio.sh
 
 # Rebuild bcrypt
-RUN chmod u+x /tmp/rebuild_bcrypt.sh && /tmp/rebuild_bcrypt.sh.sh
+RUN chmod u+x /tmp/rebuild_bcrypt.sh && /tmp/rebuild_bcrypt.sh
 
 # Cleanup tmp
 RUN rm -r /tmp/*
