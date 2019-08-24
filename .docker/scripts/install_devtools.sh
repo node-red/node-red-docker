@@ -1,9 +1,8 @@
 #!/bin/bash
 set -ex
 
-# Install Python3 and pigpio library for arm
+# Install Devtools
 if [[ ${DEVTOOLS} == "1" ]]; then
   echo "Installing Devtools"
-
-  apk --no-cache add --virtual builds-deps build-base
+  apk --no-cache add build-base
 fi
