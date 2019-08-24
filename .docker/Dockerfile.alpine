@@ -49,11 +49,11 @@ RUN set -ex && \
     chown -R node-red:node-red /data && \
     chown -R node-red:node-red /usr/src/node-red
 
-# Install Python 2 & gpio library (Python 2.7 will reach the end of its life on January 1st, 2020!)
-RUN chmod u+x /tmp/python2_gpio.sh && /tmp/python2_gpio.sh
+# Install Python gpio library
+RUN chmod u+x /tmp/install_python_gpio.sh && /tmp/install_python_gpio.sh
 
-# Install Python 3 & gpio library
-RUN chmod u+x /tmp/python3_gpio.sh && /tmp/python3_gpio.sh
+# Install Devtools
+#RUN chmod u+x /tmp/install_devtools.sh && /tmp/install_devtools.sh
 
 # Set work directory
 WORKDIR /usr/src/node-red
