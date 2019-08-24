@@ -123,7 +123,7 @@ docker_manifest_list() {
     docker_manifest_list_testing_or_latest_python3 ${1} "testing"
     docker_manifest_list_testing_or_latest ${1} "testing"
 
-    if [[ ${1} == "10" ]]; then
+    if [[ ${1} == "-10" ]]; then
       echo "DOCKER MANIFEST: Create and Push docker manifest list TESTING."
       docker_manifest_list_testing_or_latest_rpi_python2 ${1} "testing"
       docker_manifest_list_testing_or_latest_rpi_python3 ${1} "testing"
@@ -142,7 +142,7 @@ docker_manifest_list() {
     docker_manifest_list_testing_or_latest_python3 ${1} "latest"
     docker_manifest_list_testing_or_latest ${1} "latest"
 
-    if [[ ${1} == "10" ]]; then
+    if [[ ${1} == "-10" ]]; then
       echo "DOCKER MANIFEST: Create and Push docker manifest list LATEST."
       docker_manifest_list_testing_or_latest_rpi_python2 ${1} "latest"
       docker_manifest_list_testing_or_latest_rpi_python3 ${1} "latest"
