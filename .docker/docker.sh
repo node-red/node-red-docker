@@ -48,6 +48,8 @@ docker_build() {
   echo "DOCKER BUILD: build version -> ${BUILD_VERSION}."
   echo "DOCKER BUILD: node-red version -> ${NODE_RED_VERSION}."
   echo "DOCKER BUILD: qemu arch - ${QEMU_ARCH}."
+  echo "DOCKER BUILD: python version - ${PYTHON_VERSION}."
+  echo "DOCKER BUILD: devtools - ${DEVTOOLS}."
   echo "DOCKER BUILD: docker file - ${DOCKER_FILE}."
 
   docker build --no-cache \
@@ -60,6 +62,7 @@ docker_build() {
     --build-arg NODE_RED_VERSION=v${NODE_RED_VERSION} \
     --build-arg QEMU_ARCH=${QEMU_ARCH} \
     --build-arg PYTHON_VERSION=${PYTHON_VERSION} \
+    --build-arg DEVTOOLS=${DEVTOOLS} \
     --file ./.docker/${DOCKER_FILE} \
     --tag ${TARGET}:build .
 }
@@ -84,8 +87,13 @@ docker_tag() {
     echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}."
     docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}
   else
-    echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}."
-    docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}
+    if [ ${DEVTOOLS} == "1" ]; then
+      echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}-devtools."
+      docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}-devtools
+    else
+      echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}."
+      docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}
+    fi
   fi
 }
 
@@ -96,8 +104,13 @@ docker_push() {
     echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}."
     docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}
   else
-    echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}."
-    docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}
+    if [ ${DEVTOOLS} == "1" ]; then
+      echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}-devtools."
+      docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}-devtools
+    else
+      echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}."
+      docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}
+    fi
   fi
 }
 
@@ -318,43 +331,6 @@ docker_manifest_list_testing_or_latest() {
 
   docker manifest push ${TARGET}:${2}${1}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #
 #docker_manifest_list_version_os_arch() {
