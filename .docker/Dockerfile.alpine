@@ -65,9 +65,9 @@ USER node-red
 COPY package.json /usr/src/node-red/
 RUN npm install
 
-# Replace Python 2.7 with 3.6 in 36-rpi-gpio.js or remove Node-RED build-in rpi-gpio for non arm32v6
+# Replace Python 2.7 with 3.6 in 36-rpi-gpio.js or remove Node-RED build-in rpi-gpio for non arm
 USER root
-RUN chmod u+x /tmp/python_fix.sh && /tmp/python_fix.sh
+RUN chmod u+x /tmp/fix_python_gpio.sh && /tmp/fix_python_gpio.sh
 
 # Cleanup tmp
 RUN rm -r /tmp/*
