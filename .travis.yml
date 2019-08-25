@@ -45,17 +45,17 @@ env:
     - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=3 DEVTOOLS=0 TAG_SUFFIX=default OS=alpine QEMU_ARCH=arm     ARCH=arm32v7
     - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=3 DEVTOOLS=0 TAG_SUFFIX=default OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8
 
-    # Minimal Images
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=0 DEVTOOLS=0 TAG_SUFFIX=minimal OS=alpine QEMU_ARCH=x86_64  ARCH=amd64
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=0 DEVTOOLS=0 TAG_SUFFIX=minimal OS=alpine QEMU_ARCH=arm     ARCH=arm32v6
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=0 DEVTOOLS=0 TAG_SUFFIX=minimal OS=alpine QEMU_ARCH=arm     ARCH=arm32v7
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=0 DEVTOOLS=0 TAG_SUFFIX=minimal OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8
-
-#    # Devtools Images
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=3 DEVTOOLS=1 TAG_SUFFIX=devtools OS=alpine QEMU_ARCH=x86_64  ARCH=amd64
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=3 DEVTOOLS=1 TAG_SUFFIX=devtools OS=alpine QEMU_ARCH=arm     ARCH=arm32v6
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=3 DEVTOOLS=1 TAG_SUFFIX=devtools OS=alpine QEMU_ARCH=arm     ARCH=arm32v7
-    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=3 DEVTOOLS=1 TAG_SUFFIX=devtools OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8
+#    # Minimal Images
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=0 DEVTOOLS=0 TAG_SUFFIX=minimal OS=alpine QEMU_ARCH=x86_64  ARCH=amd64
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=0 DEVTOOLS=0 TAG_SUFFIX=minimal OS=alpine QEMU_ARCH=arm     ARCH=arm32v6
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=0 DEVTOOLS=0 TAG_SUFFIX=minimal OS=alpine QEMU_ARCH=arm     ARCH=arm32v7
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=0 DEVTOOLS=0 TAG_SUFFIX=minimal OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8
+#
+##    # Devtools Images
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=3 DEVTOOLS=1 TAG_SUFFIX=devtools OS=alpine QEMU_ARCH=x86_64  ARCH=amd64
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=3 DEVTOOLS=1 TAG_SUFFIX=devtools OS=alpine QEMU_ARCH=arm     ARCH=arm32v6
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=3 DEVTOOLS=1 TAG_SUFFIX=devtools OS=alpine QEMU_ARCH=arm     ARCH=arm32v7
+#    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=3 DEVTOOLS=1 TAG_SUFFIX=devtools OS=alpine QEMU_ARCH=aarch64 ARCH=arm64v8
 
 #    # Python 2 Images
 #    - DOCKER_FILE=Dockerfile.alpine NODE_VERSION=10 PYTHON_VERSION=2 DEVTOOLS=0 TAG_SUFFIX=python2 OS=alpine QEMU_ARCH=x86_64  ARCH=amd64
@@ -120,10 +120,20 @@ jobs:
 #              - echo "Create manifest list for Node 10 docker images."
 #              - ./.docker/docker.sh manifest-list "-10"
 
-              # Create manifest list for default
+              # Create and push manifest list for default
               - echo "Create manifest list for Node 10 docker images."
               - ./.docker/docker.sh manifest-list "" "default"
               - ./.docker/docker.sh manifest-list "10" "default"
+
+#              # Create and push manifest list for minimal
+#              - echo "Create manifest list for Node 10 docker images."
+#              - ./.docker/docker.sh manifest-list "" "minimal"
+#              - ./.docker/docker.sh manifest-list "10" "minimal"
+#
+#              # Create and push manifest list for devtools
+#              - echo "Create manifest list for Node 10 docker images."
+#              - ./.docker/docker.sh manifest-list "" "devtools"
+#              - ./.docker/docker.sh manifest-list "10" "devtools"
 
               # Docker Logout
               - docker logout

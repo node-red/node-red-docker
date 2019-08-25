@@ -86,14 +86,10 @@ docker_test() {
 docker_tag() {
   echo "DOCKER TAG: Tag Docker image."
 
-  if [ ${TAG_SUFFIX} == "default" ]; then
-    echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}."
-    docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}
-  else
-    echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}-${TAG_SUFFIX}"
-    docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}-${TAG_SUFFIX}
-  fi
+  if [ ${TAG_SUFFIX} == "default" ]; then export TAG_SUFFIX = ""; else export TAG_SUFFIX = "-${TAG_SUFFIX}"; fi
 
+  echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}${TAG_SUFFIX}"
+  docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}${TAG_SUFFIX}
 }
 
 docker_push() {
@@ -236,8 +232,8 @@ docker_manifest_list_version() {
   # arg 1 holds node version
   # arg 2 holds tag suffix
 
-  if [[ ${1} == "" ]]; then export NODE_VERSION "${1}"; else export NODE_VERSION "-${1}"; fi
-  if [[ ${2} == "" ]]; then export TAG_SUFFIX "${2}"; else export TAG_SUFFIX "-${2}"; fi
+  if [[ ${1} == "" ]]; then export NODE_VERSION=""; else export NODE_VERSION="-${1}"; fi
+  if [[ ${2} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${2}"; fi
 
   echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}."
 
