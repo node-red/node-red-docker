@@ -53,11 +53,11 @@ RUN set -ex && \
 # Install Python and gpio library
 RUN chmod u+x /tmp/install_python_gpio.sh && /tmp/install_python_gpio.sh
 
-# Rebuild bcrypt
-RUN chmod u+x /tmp/rebuild_bcrypt.sh && /tmp/rebuild_bcrypt.sh
-
 # Set work directory
 WORKDIR /usr/src/node-red
+
+# Rebuild bcrypt
+RUN chmod u+x /tmp/rebuild_bcrypt.sh && /tmp/rebuild_bcrypt.sh
 
 # Run as node-red user
 USER node-red
