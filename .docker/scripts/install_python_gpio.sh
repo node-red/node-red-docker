@@ -5,7 +5,7 @@ set -ex
 if [[ ${PYTHON_VERSION} == "3" ]]; then
   echo "Installing Python 3"
   apk add --no-cache python3
-  apk add --no-cache--virtual .builds-deps build-base
+  apk add --no-cache --virtual .builds-deps build-base
   echo "Fixing Python 3 symlink"
   ln -s /usr/bin/python3 /usr/bin/python
 else
@@ -16,7 +16,7 @@ fi
 if [[ ${PYTHON_VERSION} == "2" ]]; then
   echo "Installing Python 2"
   apk add --no-cache python
-  apk add --no-cache--virtual .builds-deps build-base
+  apk add --no-cache --virtual .builds-deps build-base
 else
   echo "Skip installing Python 2"
 fi
