@@ -90,7 +90,7 @@ The tag naming convention is `<node-red-version>-<node-version>-<image-type>-<ar
 - `<image-type>` is type of image and is optional, can be either _none_, minimal devtools or python2.
     - _none_ : is the default and has Python 3 installed
     - minimal : has no Python installed
-    - devtools :  has Python 3 installed and has development tools installed. currently nmap only
+    - devtools :  has Python 3 installed and has development tools installed. currently build-base only
     - python2 : has Python 2 installed
 - `<architecture>` is the architecture of the Docker host system, can be either amd64, arm32v6, arm32v7, arm64.
 
@@ -99,50 +99,49 @@ Using Alpine Linux reduces the built image size, but removes standard dependenci
 
 The following table shows the variation of provided Node-RED images.
 
-| **Tag**                    | **Node** | **Arch** | **OS** | **Python** | **GPIO** | **Devtools** | **Base Image**         | **Size** |
-|----------------------------|----------|----------|--------|------------|----------|--------------|------------------------|----------|
-| 0.20.7-10-amd64            |    10    | amd64    | alpine |     3.x    |    no    |      no      | amd64/node:10-alpine   |   ~75MB  |
-| 0.20.7-10-arm32v6          |    10    | arm32v6  | alpine |     3.x    |    yes   |      no      | arm32v6/node:10-alpine |   ~73MB  |
-| 0.20.7-10-arm32v7          |    10    | arm32v7  | alpine |     3.x    |    yes   |      no      | arm32v7/node:10-alpine |   ~71MB  |
-| 0.20.7-10-arm64v8          |    10    | arm64v8  | alpine |     3.x    |    no    |      no      | arm64v8/node:10-alpine |   ~75MB  |
-|                            |          |          |        |            |          |              |                        |          |
-| 0.20.7-10-minimal-amd64    |    10    | amd64    | alpine |     no     |    no    |      no      | amd64/node:10-alpine   |   ~59MB  |
-| 0.20.7-10-minimal-arm32v6  |    10    | arm32v6  | alpine |     no     |    no    |      no      | arm32v6/node:10-alpine |   ~57MB  |
-| 0.20.7-10-minimal-arm32v7  |    10    | arm32v7  | alpine |     no     |    no    |      no      | arm32v7/node:10-alpine |   ~56MB  |
-| 0.20.7-10-minimal-arm64v8  |    10    | arm64v8  | alpine |     no     |    no    |      no      | arm64v8/node:10-alpine |   ~59MB  |
-|                            |          |          |        |            |          |              |                        |          |
-| 0.20.7-10-devtools-amd64   |    10    | amd64    | alpine |     3.x    |    no    |      yes     | amd64/node:10-alpine   |          |
-| 0.20.7-10-devtools-arm32v6 |    10    | arm32v6  | alpine |     3.x    |    yes   |      yes     | arm32v6/node:10-alpine |          |
-| 0.20.7-10-devtools-arm32v7 |    10    | arm32v7  | alpine |     3.x    |    yes   |      yes     | arm32v7/node:10-alpine |          |
-| 0.20.7-10-devtools-arm64v8 |    10    | arm64v8  | alpine |     3.x    |    no    |      yes     | arm64v8/node:10-alpine |          |
-|                            |          |          |        |            |          |              |                        |          |
-| 0.20.7-10-python2-amd64    |    10    | amd64    | alpine |     2.x    |    no    |      no      | amd64/node:10-alpine   |          |
-| 0.20.7-10-python2-arm32v6  |    10    | arm32v6  | alpine |     2.x    |    yes   |      no      | arm32v6/node:10-alpine |          |
-| 0.20.7-10-python2-arm32v7  |    10    | arm32v7  | alpine |     2.x    |    yes   |      no      | arm32v7/node:10-alpine |          |
-| 0.20.7-10-python2-arm64v8  |    10    | arm64v8  | alpine |     2.x    |    no    |      no      | arm64v8/node:10-alpine |          |
+| **Tag**                    |**Node**| **Arch** | **Python** | **GPIO** |**Dev**| **Base Image**         |
+|----------------------------|--------|----------|------------|----------|-------|------------------------|
+| 0.20.7-10-amd64            |   10   | amd64    |     3.x    |    no    |  no   | amd64/node:10-alpine   |
+| 0.20.7-10-arm32v6          |   10   | arm32v6  |     3.x    |    yes   |  no   | arm32v6/node:10-alpine |
+| 0.20.7-10-arm32v7          |   10   | arm32v7  |     3.x    |    yes   |  no   | arm32v7/node:10-alpine |
+| 0.20.7-10-arm64v8          |   10   | arm64v8  |     3.x    |    no    |  no   | arm64v8/node:10-alpine |
+|                            |        |          |            |          |       |                        |
+| 0.20.7-10-minimal-amd64    |   10   | amd64    |     no     |    no    |  no   | amd64/node:10-alpine   |
+| 0.20.7-10-minimal-arm32v6  |   10   | arm32v6  |     no     |    no    |  no   | arm32v6/node:10-alpine |
+| 0.20.7-10-minimal-arm32v7  |   10   | arm32v7  |     no     |    no    |  no   | arm32v7/node:10-alpine |
+| 0.20.7-10-minimal-arm64v8  |   10   | arm64v8  |     no     |    no    |  no   | arm64v8/node:10-alpine |
+|                            |        |          |            |          |       |                        |
+| 0.20.7-10-devtools-amd64   |   10   | amd64    |     3.x    |    no    |  yes  | amd64/node:10-alpine   |
+| 0.20.7-10-devtools-arm32v6 |   10   | arm32v6  |     3.x    |    yes   |  yes  | arm32v6/node:10-alpine |
+| 0.20.7-10-devtools-arm32v7 |   10   | arm32v7  |     3.x    |    yes   |  yes  | arm32v7/node:10-alpine |
+| 0.20.7-10-devtools-arm64v8 |   10   | arm64v8  |     3.x    |    no    |  yes  | arm64v8/node:10-alpine |
+|                            |        |          |            |          |       |                        |
+| 0.20.7-10-python2-amd64    |   10   | amd64    |     2.x    |    no    |  no   | amd64/node:10-alpine   |
+| 0.20.7-10-python2-arm32v6  |   10   | arm32v6  |     2.x    |    yes   |  no   | arm32v6/node:10-alpine |
+| 0.20.7-10-python2-arm32v7  |   10   | arm32v7  |     2.x    |    yes   |  no   | arm32v7/node:10-alpine |
+| 0.20.7-10-python2-arm64v8  |   10   | arm64v8  |     2.x    |    no    |  no   | arm64v8/node:10-alpine |
 
-| **Tag**                    | **Node** | **Arch** |**OS**  | **Python** | **GPIO** | **Devtools** | **Base Image**         | **Size** |
-|----------------------------|----------|----------|--------|------------|----------|--------------|------------------------|----------|
-| 0.20.7-12-amd64            |    12    | amd64    | alpine |     3.x    |    no    |      no      | amd64/node:12-alpine   |          |
-| 0.20.7-12-arm32v6          |    12    | arm32v6  | alpine |     3.x    |    yes   |      no      | arm32v6/node:12-alpine |          |
-| 0.20.7-12-arm32v7          |    12    | arm32v7  | alpine |     3.x    |    yes   |      no      | arm32v7/node:12-alpine |          |
-| 0.20.7-12-arm64v8          |    12    | arm64v8  | alpine |     3.x    |    no    |      no      | arm64v8/node:12-alpine |          |
-|                            |          |          |        |            |          |              |                        |          |
-| 0.20.7-12-minimal-amd64    |    12    | amd64    | alpine |     no     |    no    |      no      | amd64/node:12-alpine   |          |
-| 0.20.7-12-minimal-arm32v6  |    12    | arm32v6  | alpine |     no     |    no    |      no      | arm32v6/node:12-alpine |          |
-| 0.20.7-12-minimal-arm32v7  |    12    | arm32v7  | alpine |     no     |    no    |      no      | arm32v7/node:12-alpine |          |
-| 0.20.7-12-minimal-arm64v8  |    12    | arm64v8  | alpine |     no     |    no    |      no      | arm64v8/node:12-alpine |          |
-|                            |          |          |        |            |          |              |                        |          |
-| 0.20.7-12-devtools-amd64   |    12    | amd64    | alpine |     3.x    |    no    |      yes     | amd64/node:12-alpine   |          |
-| 0.20.7-12-devtools-arm32v6 |    12    | arm32v6  | alpine |     3.x    |    yes   |      yes     | arm32v6/node:12-alpine |          |
-| 0.20.7-12-devtools-arm32v7 |    12    | arm32v7  | alpine |     3.x    |    yes   |      yes     | arm32v7/node:12-alpine |          |
-| 0.20.7-12-devtools-arm64v8 |    12    | arm64v8  | alpine |     3.x    |    no    |      yes     | arm64v8/node:12-alpine |          |
-|                            |          |          |        |            |          |              |                        |          |
-| 0.20.7-12-python2-amd64    |    12    | amd64    | alpine |     2.x    |    no    |      no      | amd64/node:12-alpine   |          |
-| 0.20.7-12-python2-arm32v6  |    12    | arm32v6  | alpine |     2.x    |    yes   |      no      | arm32v6/node:12-alpine |          |
-| 0.20.7-12-python2-arm32v7  |    12    | arm32v7  | alpine |     2.x    |    yes   |      no      | arm32v7/node:12-alpine |          |
-| 0.20.7-12-python2-arm64v8  |    12    | arm64v8  | alpine |     2.x    |    no    |      no      | arm64v8/node:12-alpine |          |
-|                            |          |          |        |            |          |              |                        |          |
+| **Tag**                    |**Node**| **Arch** | **Python** | **GPIO** |**Dev**| **Base Image**         |
+|----------------------------|--------|----------|------------|----------|-------|------------------------|
+| 0.20.7-12-amd64            |   12   | amd64    |     3.x    |    no    |  no   | amd64/node:12-alpine   |
+| 0.20.7-12-arm32v6          |   12   | arm32v6  |     3.x    |    yes   |  no   | arm32v6/node:12-alpine |
+| 0.20.7-12-arm32v7          |   12   | arm32v7  |     3.x    |    yes   |  no   | arm32v7/node:12-alpine |
+| 0.20.7-12-arm64v8          |   12   | arm64v8  |     3.x    |    no    |  no   | arm64v8/node:12-alpine |
+|                            |        |          |            |          |       |                        |
+| 0.20.7-12-minimal-amd64    |   12   | amd64    |     no     |    no    |  no   | amd64/node:12-alpine   |
+| 0.20.7-12-minimal-arm32v6  |   12   | arm32v6  |     no     |    no    |  no   | arm32v6/node:12-alpine |
+| 0.20.7-12-minimal-arm32v7  |   12   | arm32v7  |     no     |    no    |  no   | arm32v7/node:12-alpine |
+| 0.20.7-12-minimal-arm64v8  |   12   | arm64v8  |     no     |    no    |  no   | arm64v8/node:12-alpine |
+|                            |        |          |            |          |       |                        |
+| 0.20.7-12-devtools-amd64   |   12   | amd64    |     3.x    |    no    |  yes  | amd64/node:12-alpine   |
+| 0.20.7-12-devtools-arm32v6 |   12   | arm32v6  |     3.x    |    yes   |  yes  | arm32v6/node:12-alpine |
+| 0.20.7-12-devtools-arm32v7 |   12   | arm32v7  |     3.x    |    yes   |  yes  | arm32v7/node:12-alpine |
+| 0.20.7-12-devtools-arm64v8 |   12   | arm64v8  |     3.x    |    no    |  yes  | arm64v8/node:12-alpine |
+|                            |        |          |            |          |       |                        |
+| 0.20.7-12-python2-amd64    |   12   | amd64    |     2.x    |    no    |  no   | amd64/node:12-alpine   |
+| 0.20.7-12-python2-arm32v6  |   12   | arm32v6  |     2.x    |    yes   |  no   | arm32v6/node:12-alpine |
+| 0.20.7-12-python2-arm32v7  |   12   | arm32v7  |     2.x    |    yes   |  no   | arm32v7/node:12-alpine |
+| 0.20.7-12-python2-arm64v8  |   12   | arm64v8  |     2.x    |    no    |  no   | arm64v8/node:12-alpine |
 
 The Node-RED images have either no Python, Python 3.x or Python 2.x pre-installed and for arm32v6 and arm32v7 Node-RED build-in GPIO enabled.
 
