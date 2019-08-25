@@ -95,7 +95,7 @@ docker_tag() {
 docker_push() {
   echo "DOCKER PUSH: Push Docker image."
 
-  if [ ${TAG_SUFFIX} == "default" ]; then
+  if [[ ${TAG_SUFFIX} == "default" ]]; then
     echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}."
     docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}
   else
@@ -232,12 +232,15 @@ docker_manifest_list_version() {
   # arg 1 holds node version
   # arg 2 holds tag suffix
 
+  echo "node version: ${1}"
+  echo "tag suffix: ${2}"
+
   if [[ ${1} == "" ]]; then export NODE_VERSION=""; else export NODE_VERSION="-${1}"; fi
   if [[ ${2} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${2}"; fi
 
   echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}."
 
-  docker manifest create ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} \
+  docker manifest create ${TARGET}:${BUILD_VERSION}${VERSION}${TAG_SUFFIX} \
     ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}-amd64 \
     ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}-arm32v6 \
     ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}-arm32v7 \
