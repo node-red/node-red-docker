@@ -86,7 +86,7 @@ docker_test() {
 docker_tag() {
   echo "DOCKER TAG: Tag Docker image."
 
-  if [ ${TAG_SUFFIX} == "default" ]; then export TAG_SUFFIX = ""; else export TAG_SUFFIX = "-${TAG_SUFFIX}"; fi
+  if [[ ${TAG_SUFFIX} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${TAG_SUFFIX}"; fi
 
   echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}${TAG_SUFFIX}"
   docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}${TAG_SUFFIX}
