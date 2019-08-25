@@ -4,6 +4,9 @@ set -o errexit
 
 main() {
   # arg 1 holds switch string
+  # arg 2 holds node version
+  # arg 3 holds tag suffix
+
   case $1 in
   "prepare")
     docker_prepare
@@ -20,10 +23,11 @@ main() {
   "push")
     docker_push
     ;;
-  "manifest-list")
-    # arg 2 holds node version
-    # arg 3 holds tag suffix
-    docker_manifest_list "$2" "$3"
+  "manifest-list-version")
+    docker_manifest_list_version "$2" "$3"
+    ;;
+  "manifest-list-testing-or-latest")
+    docker_manifest_list_testing_or_latest "$2" "$3"
     ;;
   *)
     echo "none of above!"
@@ -31,7 +35,7 @@ main() {
   esac
 }
 
-docker_prepare() {
+function docker_prepare() {
   # Prepare the machine before any code installation scripts
   setup_dependencies
 
@@ -42,7 +46,7 @@ docker_prepare() {
   prepare_qemu
 }
 
-docker_build() {
+function docker_build() {
   # Build Docker image
   echo "DOCKER BUILD: Build Docker image."
   echo "DOCKER BUILD: arch - ${ARCH}."
@@ -70,7 +74,7 @@ docker_build() {
     --tag ${TARGET}:build .
 }
 
-docker_test() {
+function docker_test() {
   echo "DOCKER TEST: Test Docker image."
   echo "DOCKER TEST: testing image -> ${TARGET}:build"
 
@@ -83,7 +87,7 @@ docker_test() {
   fi
 }
 
-docker_tag() {
+function docker_tag() {
   echo "DOCKER TAG: Tag Docker image."
 
   if [[ ${TAG_SUFFIX} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${TAG_SUFFIX}"; fi
@@ -92,7 +96,7 @@ docker_tag() {
   docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}${TAG_SUFFIX}-${ARCH}
 }
 
-docker_push() {
+function docker_push() {
   echo "DOCKER PUSH: Push Docker image."
 
   if [[ ${TAG_SUFFIX} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${TAG_SUFFIX}"; fi
@@ -100,6 +104,65 @@ docker_push() {
   echo "DOCKER TAG: pushing image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}${TAG_SUFFIX}-${ARCH}"
   docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}${TAG_SUFFIX}-${ARCH}
 }
+
+
+function docker_manifest_list_version() {
+
+  if [[ ${1} == "" ]]; then export NODE_VERSION=""; else export NODE_VERSION="-${1}"; fi
+  if [[ ${2} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${2}"; fi
+
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}."
+
+  docker manifest create ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-amd64 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8
+
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 --os=linux --arch=arm64 --variant=v8
+
+  docker manifest push ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}
+}
+
+function docker_manifest_list_testing_or_latest() {
+
+  if [[ ${BUILD_VERSION} == *"testing"* ]]; then export BUILD_VERSION="testing"; else export BUILD_VERSION="latest"; fi
+
+  if [[ ${1} == "" ]]; then export NODE_VERSION=""; else export NODE_VERSION="-${1}"; fi
+  if [[ ${2} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${2}"; fi
+
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}."
+
+  docker manifest create ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-amd64 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8
+
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 --os=linux --arch=arm --variant=v6
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 --os=linux --arch=arm64 --variant=v8
+
+  docker manifest push ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 docker_manifest_list() {
   # arg 1 holds node version
@@ -112,7 +175,7 @@ docker_manifest_list() {
 #  docker_manifest_list_version_rpi ${1}
 #  docker_manifest_list_version_python2 ${1}
 #  docker_manifest_list_version_python3 ${1}
-  docker_manifest_list_version "${1}" "${2}"
+
 
   # Create manifest list testing or latest
 #  case ${BUILD_VERSION} in
@@ -225,33 +288,8 @@ docker_manifest_list_version_python3() {
   docker manifest push ${TARGET}:${BUILD_VERSION}${1}-python3
 }
 
-docker_manifest_list_version() {
-  # arg 1 holds node version
-  # arg 2 holds tag suffix
 
-  echo "node version: ${1}"
-  echo "tag suffix: ${2}"
 
-  if [[ ${1} == "" ]]; then export NODE_VERSION=""; else export NODE_VERSION="-${1}"; fi
-  if [[ ${2} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${2}"; fi
-
-  echo "NODE_VERSION: ${NODE_VERSION}"
-  echo "TAG_SUFFIX: ${TAG_SUFFIX}"
-
-  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}."
-
-  docker manifest create ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} \
-    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-amd64 \
-    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 \
-    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 \
-    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8
-
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 --os=linux --arch=arm --variant=v7
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 --os=linux --arch=arm64 --variant=v8
-
-  docker manifest push ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}
-}
 
 #docker_manifest_list_testing_or_latest_rpi_python2() {
 #  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${2}${1}-rpi-python2."
@@ -319,20 +357,7 @@ docker_manifest_list_testing_or_latest_python3() {
   docker manifest push ${TARGET}:${2}${1}-python3
 }
 
-docker_manifest_list_testing_or_latest() {
-  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${2}${1}."
-  docker manifest create ${TARGET}:${2}${1} \
-    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-amd64 \
-    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6 \
-    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7 \
-    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm64v8
 
-  docker manifest annotate ${TARGET}:${2}${1} ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${2}${1} ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7 --os=linux --arch=arm --variant=v7
-  docker manifest annotate ${TARGET}:${2}${1} ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm64v8 --os=linux --arch=arm64 --variant=v8
-
-  docker manifest push ${TARGET}:${2}${1}
-}
 
 #
 #docker_manifest_list_version_os_arch() {
@@ -378,7 +403,7 @@ docker_manifest_list_testing_or_latest() {
 #  docker manifest push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-alpine-arm64v8
 #}
 
-setup_dependencies() {
+function setup_dependencies() {
   echo "PREPARE: Setting up dependencies."
 
   sudo apt update -y
@@ -390,7 +415,7 @@ setup_dependencies() {
   # docker-compose --version
 }
 
-update_docker_configuration() {
+function update_docker_configuration() {
   echo "PREPARE: Updating docker configuration"
 
   mkdir $HOME/.docker
@@ -411,7 +436,7 @@ update_docker_configuration() {
   sudo service docker restart
 }
 
-prepare_qemu() {
+function prepare_qemu() {
   echo "PREPARE: Qemu"
   # Prepare qemu to build non amd64 / x86_64 images
   docker run --rm --privileged multiarch/qemu-user-static:register --reset

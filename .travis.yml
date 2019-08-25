@@ -109,31 +109,36 @@ jobs:
         - stage: manifest
           if: tag =~ ^v
           script:
+
               # Create and push Docker manifest lists
+              # The push order is displayed in reverse order on Docker Hub
+
               # Docker Login
               - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-#              # Create and Push Docker Manifest Lists to Docker Hub
-#              - echo "Create manifest list for Node 12 docker images."
-#              - ./.docker/docker.sh manifest-list "-12"
+              # Create and push manifest list `version` for devtools
+              - ./.docker/docker.sh manifest-list-version "" "devtools"
+              - ./.docker/docker.sh manifest-list-version "10" "devtools"
 
-#              - echo "Create manifest list for Node 10 docker images."
-#              - ./.docker/docker.sh manifest-list "-10"
+              # Create and push manifest list 'latest' or 'testing' for devtools
+              - ./.docker/docker.sh manifest-list-testing-or-latest "" "devtools"
+              - ./.docker/docker.sh manifest-list-testing-or-latest "10" "devtools"
 
-              # Create and push manifest list for default
-              - echo "Create manifest list for Node 10 docker images."
-              - ./.docker/docker.sh manifest-list "" "default"
-              - ./.docker/docker.sh manifest-list "10" "default"
+              # Create and push manifest list `version` for minimal
+              - ./.docker/docker.sh manifest-list-version "" "minimal"
+              - ./.docker/docker.sh manifest-list-version "10" "minimal"
 
-              # Create and push manifest list for minimal
-              - echo "Create manifest list for Node 10 docker images."
-              - ./.docker/docker.sh manifest-list "" "minimal"
-              - ./.docker/docker.sh manifest-list "10" "minimal"
+              # Create and push manifest list 'latest' or 'testing' for minimal
+              - ./.docker/docker.sh manifest-list-testing-or-latest "" "minimal"
+              - ./.docker/docker.sh manifest-list-testing-or-latest "10" "minimal"
 
-              # Create and push manifest list for devtools
-              - echo "Create manifest list for Node 10 docker images."
-              - ./.docker/docker.sh manifest-list "" "devtools"
-              - ./.docker/docker.sh manifest-list "10" "devtools"
+              # Create and push manifest list `version` for default
+              - ./.docker/docker.sh manifest-list-version "" "default"
+              - ./.docker/docker.sh manifest-list-version "10" "default"
+
+              # Create and push manifest list 'latest' or 'testing' for default
+              - ./.docker/docker.sh manifest-list-testing-or-latest "" "default"
+              - ./.docker/docker.sh manifest-list-testing-or-latest "10" "default"
 
               # Docker Logout
               - docker logout
