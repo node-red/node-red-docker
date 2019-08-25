@@ -83,34 +83,25 @@ docker_test() {
 docker_tag() {
   echo "DOCKER TAG: Tag Docker image."
 
-  if [ ${PYTHON_VERSION} == "0" ]; then
-    echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}."
-    docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}
+  if [ ${TAG_SUFFIX} == "default" ]; then
+    echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}."
+    docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}
   else
-    if [ ${DEVTOOLS} == "1" ]; then
-      echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}-devtools."
-      docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}-devtools
-    else
-      echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}."
-      docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}
-    fi
+    echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}-${TAG_SUFFIX}"
+    docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}-${TAG_SUFFIX}
   fi
+
 }
 
 docker_push() {
   echo "DOCKER PUSH: Push Docker image."
 
-  if [ ${PYTHON_VERSION} == "0" ]; then
-    echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}."
-    docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}
+  if [ ${TAG_SUFFIX} == "default" ]; then
+    echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}."
+    docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}
   else
-    if [ ${DEVTOOLS} == "1" ]; then
-      echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}-devtools."
-      docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}-devtools
-    else
-      echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}."
-      docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${OS}-${ARCH}-python${PYTHON_VERSION}
-    fi
+    echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}-${TAG_SUFFIX}."
+    docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}-${TAG_SUFFIX}
   fi
 }
 
@@ -118,9 +109,9 @@ docker_manifest_list() {
 
   # Create and push manifest lists
   echo "DOCKER MANIFEST: Create and Push docker manifest lists."
-  docker_manifest_list_version_rpi_python2 ${1}
-  docker_manifest_list_version_rpi_python3 ${1}
-  docker_manifest_list_version_rpi ${1}
+#  docker_manifest_list_version_rpi_python2 ${1}
+#  docker_manifest_list_version_rpi_python3 ${1}
+#  docker_manifest_list_version_rpi ${1}
   docker_manifest_list_version_python2 ${1}
   docker_manifest_list_version_python3 ${1}
   docker_manifest_list_version ${1}
@@ -129,18 +120,18 @@ docker_manifest_list() {
   case ${BUILD_VERSION} in
   *"testing"*)
     echo "DOCKER MANIFEST: Create and Push docker manifest list TESTING Node JS."
-    docker_manifest_list_testing_or_latest_rpi_python2 ${1} "testing"
-    docker_manifest_list_testing_or_latest_rpi_python3 ${1} "testing"
-    docker_manifest_list_testing_or_latest_rpi ${1} "testing"
+#    docker_manifest_list_testing_or_latest_rpi_python2 ${1} "testing"
+#    docker_manifest_list_testing_or_latest_rpi_python3 ${1} "testing"
+#    docker_manifest_list_testing_or_latest_rpi ${1} "testing"
     docker_manifest_list_testing_or_latest_python2 ${1} "testing"
     docker_manifest_list_testing_or_latest_python3 ${1} "testing"
     docker_manifest_list_testing_or_latest ${1} "testing"
 
     if [[ ${1} == "-10" ]]; then
       echo "DOCKER MANIFEST: Create and Push docker manifest list TESTING."
-      docker_manifest_list_testing_or_latest_rpi_python2 "" "testing"
-      docker_manifest_list_testing_or_latest_rpi_python3 "" "testing"
-      docker_manifest_list_testing_or_latest_rpi "" "testing"
+#      docker_manifest_list_testing_or_latest_rpi_python2 "" "testing"
+#      docker_manifest_list_testing_or_latest_rpi_python3 "" "testing"
+#      docker_manifest_list_testing_or_latest_rpi "" "testing"
       docker_manifest_list_testing_or_latest_python2 "" "testing"
       docker_manifest_list_testing_or_latest_python3 "" "testing"
       docker_manifest_list_testing_or_latest "" "testing"
@@ -148,18 +139,18 @@ docker_manifest_list() {
     ;;
   *)
     echo "DOCKER MANIFEST: Create and Push docker manifest list LATEST Node JS."
-    docker_manifest_list_testing_or_latest_rpi_python2 ${1} "latest"
-    docker_manifest_list_testing_or_latest_rpi_python3 ${1} "latest"
-    docker_manifest_list_testing_or_latest_rpi ${1} "latest"
+#    docker_manifest_list_testing_or_latest_rpi_python2 ${1} "latest"
+#    docker_manifest_list_testing_or_latest_rpi_python3 ${1} "latest"
+#    docker_manifest_list_testing_or_latest_rpi ${1} "latest"
     docker_manifest_list_testing_or_latest_python2 ${1} "latest"
     docker_manifest_list_testing_or_latest_python3 ${1} "latest"
     docker_manifest_list_testing_or_latest ${1} "latest"
 
     if [[ ${1} == "-10" ]]; then
       echo "DOCKER MANIFEST: Create and Push docker manifest list LATEST."
-      docker_manifest_list_testing_or_latest_rpi_python2 "" "latest"
-      docker_manifest_list_testing_or_latest_rpi_python3 "" "latest"
-      docker_manifest_list_testing_or_latest_rpi "" "latest"
+#      docker_manifest_list_testing_or_latest_rpi_python2 "" "latest"
+#      docker_manifest_list_testing_or_latest_rpi_python3 "" "latest"
+#      docker_manifest_list_testing_or_latest_rpi "" "latest"
       docker_manifest_list_testing_or_latest_python2 "" "latest"
       docker_manifest_list_testing_or_latest_python3 "" "latest"
       docker_manifest_list_testing_or_latest "" "latest"
@@ -170,41 +161,41 @@ docker_manifest_list() {
   #  docker_manifest_list_version_os_arch
 }
 
-docker_manifest_list_version_rpi_python2() {
-  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}${1}-rpi-python2."
-  docker manifest create ${TARGET}:${BUILD_VERSION}${1}-rpi-python2 \
-    ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v6-python2 \
-    ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7-python2
-
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python2 --os=linux --arch=arm --variant=v7
-
-  docker manifest push ${TARGET}:${BUILD_VERSION}${1}-rpi-python2
-}
-
-docker_manifest_list_version_rpi_python3() {
-  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}${1}-rpi-python3."
-  docker manifest create ${TARGET}:${BUILD_VERSION}${1}-rpi-python3 \
-    ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v6-python3 \
-    ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7-python3
-
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python3 --os=linux --arch=arm --variant=v7
-
-  docker manifest push ${TARGET}:${BUILD_VERSION}${1}-rpi-python3
-}
-
-docker_manifest_list_version_rpi() {
-  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}${1}-rpi."
-  docker manifest create ${TARGET}:${BUILD_VERSION}${1}-rpi \
-    ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v6 \
-    ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7
-
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7 --os=linux --arch=arm --variant=v7
-
-  docker manifest push ${TARGET}:${BUILD_VERSION}${1}-rpi
-}
+#docker_manifest_list_version_rpi_python2() {
+#  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}${1}-rpi-python2."
+#  docker manifest create ${TARGET}:${BUILD_VERSION}${1}-rpi-python2 \
+#    ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v6-python2 \
+#    ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7-python2
+#
+#  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
+#  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python2 --os=linux --arch=arm --variant=v7
+#
+#  docker manifest push ${TARGET}:${BUILD_VERSION}${1}-rpi-python2
+#}
+#
+#docker_manifest_list_version_rpi_python3() {
+#  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}${1}-rpi-python3."
+#  docker manifest create ${TARGET}:${BUILD_VERSION}${1}-rpi-python3 \
+#    ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v6-python3 \
+#    ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7-python3
+#
+#  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
+#  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python3 --os=linux --arch=arm --variant=v7
+#
+#  docker manifest push ${TARGET}:${BUILD_VERSION}${1}-rpi-python3
+#}
+#
+#docker_manifest_list_version_rpi() {
+#  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}${1}-rpi."
+#  docker manifest create ${TARGET}:${BUILD_VERSION}${1}-rpi \
+#    ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v6 \
+#    ${TARGET}:${BUILD_VERSION}${1}-alpine-arm32v7
+#
+#  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
+#  docker manifest annotate ${TARGET}:${BUILD_VERSION}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7 --os=linux --arch=arm --variant=v7
+#
+#  docker manifest push ${TARGET}:${BUILD_VERSION}${1}-rpi
+#}
 
 docker_manifest_list_version_python2() {
   echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}${1}-python2."
@@ -251,41 +242,41 @@ docker_manifest_list_version() {
   docker manifest push ${TARGET}:${BUILD_VERSION}${1}
 }
 
-docker_manifest_list_testing_or_latest_rpi_python2() {
-  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${2}${1}-rpi-python2."
-  docker manifest create ${TARGET}:${2}${1}-rpi-python2 \
-    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python2 \
-    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python2
-
-  docker manifest annotate ${TARGET}:${2}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${2}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python2 --os=linux --arch=arm --variant=v7
-
-  docker manifest push ${TARGET}:${2}${1}-rpi-python2
-}
-
-docker_manifest_list_testing_or_latest_rpi_python3() {
-  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${2}${1}-rpi-python3."
-  docker manifest create ${TARGET}:${2}${1}-rpi-python3 \
-    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python3 \
-    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python3
-
-  docker manifest annotate ${TARGET}:${2}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${2}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python3 --os=linux --arch=arm --variant=v7
-
-  docker manifest push ${TARGET}:${2}${1}-rpi-python3
-}
-
-docker_manifest_list_testing_or_latest_rpi() {
-  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${2}${1}-rpi."
-  docker manifest create ${TARGET}:${2}${1}-rpi \
-    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6 \
-    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7
-
-  docker manifest annotate ${TARGET}:${2}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${2}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7 --os=linux --arch=arm --variant=v7
-
-  docker manifest push ${TARGET}:${2}${1}-rpi
-}
+#docker_manifest_list_testing_or_latest_rpi_python2() {
+#  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${2}${1}-rpi-python2."
+#  docker manifest create ${TARGET}:${2}${1}-rpi-python2 \
+#    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python2 \
+#    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python2
+#
+#  docker manifest annotate ${TARGET}:${2}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python2 --os=linux --arch=arm --variant=v6
+#  docker manifest annotate ${TARGET}:${2}${1}-rpi-python2 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python2 --os=linux --arch=arm --variant=v7
+#
+#  docker manifest push ${TARGET}:${2}${1}-rpi-python2
+#}
+#
+#docker_manifest_list_testing_or_latest_rpi_python3() {
+#  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${2}${1}-rpi-python3."
+#  docker manifest create ${TARGET}:${2}${1}-rpi-python3 \
+#    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python3 \
+#    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python3
+#
+#  docker manifest annotate ${TARGET}:${2}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6-python3 --os=linux --arch=arm --variant=v6
+#  docker manifest annotate ${TARGET}:${2}${1}-rpi-python3 ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7-python3 --os=linux --arch=arm --variant=v7
+#
+#  docker manifest push ${TARGET}:${2}${1}-rpi-python3
+#}
+#
+#docker_manifest_list_testing_or_latest_rpi() {
+#  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${2}${1}-rpi."
+#  docker manifest create ${TARGET}:${2}${1}-rpi \
+#    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6 \
+#    ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7
+#
+#  docker manifest annotate ${TARGET}:${2}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v6 --os=linux --arch=arm --variant=v6
+#  docker manifest annotate ${TARGET}:${2}${1}-rpi ${TARGET}:${BUILD_VERSION}${1:--10}-alpine-arm32v7 --os=linux --arch=arm --variant=v7
+#
+#  docker manifest push ${TARGET}:${2}${1}-rpi
+#}
 
 docker_manifest_list_testing_or_latest_python2() {
   echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${2}${1}-python2."
