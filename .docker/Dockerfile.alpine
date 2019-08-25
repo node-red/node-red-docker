@@ -64,15 +64,11 @@ COPY package.json /usr/src/node-red/
 RUN npm install
 
 USER root
-# Rebuild bcrypt
-#RUN chmod u+x /tmp/rebuild_bcrypt.sh && /tmp/rebuild_bcrypt.sh
-
 # Replace Python 2.7 with 3.6 in 36-rpi-gpio.js or remove Node-RED build-in rpi-gpio for non arm
 RUN chmod u+x /tmp/fix_python_gpio.sh && /tmp/fix_python_gpio.sh
 
 # Cleanup tmp
 RUN set -ex && \
-    #chmod u+x /tmp/uninstall_devtools.sh && /tmp/uninstall_devtools.sh && \
     rm -r /tmp/*
 
 # Return as node-red user
