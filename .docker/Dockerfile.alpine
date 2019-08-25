@@ -53,6 +53,9 @@ RUN set -ex && \
 # Install Python and gpio library
 RUN chmod u+x /tmp/install_python_gpio.sh && /tmp/install_python_gpio.sh
 
+# Install Devtools
+RUN chmod u+x /tmp/install_devtools.sh && /tmp/install_devtools.sh
+
 # Set work directory
 WORKDIR /usr/src/node-red
 
