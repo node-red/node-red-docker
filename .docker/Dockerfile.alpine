@@ -50,8 +50,11 @@ RUN set -ex && \
     chown -R node-red:node-red /data && \
     chown -R node-red:node-red /usr/src/node-red
 
-# Install Python gpio library
+# Install Python and gpio library
 RUN chmod u+x /tmp/install_python_gpio.sh && /tmp/install_python_gpio.sh
+
+# Rebuild bcrypt
+RUN chmod u+x /tmp/rebuild_bcrypt.sh && /tmp/rebuild_bcrypt.sh
 
 # Set work directory
 WORKDIR /usr/src/node-red
@@ -66,9 +69,6 @@ RUN npm install
 # Replace Python 2.7 with 3.6 in 36-rpi-gpio.js or remove Node-RED build-in rpi-gpio for non arm
 USER root
 RUN chmod u+x /tmp/fix_python_gpio.sh && /tmp/fix_python_gpio.sh
-
-# Rebuild bcrypt
-RUN chmod u+x /tmp/rebuild_bcrypt.sh && /tmp/rebuild_bcrypt.sh
 
 # Cleanup tmp
 RUN set -ex && \
