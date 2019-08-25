@@ -104,24 +104,29 @@ script:
       docker logout
     fi
 
-#jobs:
-#    include:
-#        - stage: manifest
-#          if: tag =~ ^v
-#          script:
-#              # Create and push Docker manifest lists
-#              # Docker Login
-#              - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-#
+jobs:
+    include:
+        - stage: manifest
+          if: tag =~ ^v
+          script:
+              # Create and push Docker manifest lists
+              # Docker Login
+              - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
 #              # Create and Push Docker Manifest Lists to Docker Hub
 #              - echo "Create manifest list for Node 12 docker images."
 #              - ./.docker/docker.sh manifest-list "-12"
-#
+
 #              - echo "Create manifest list for Node 10 docker images."
 #              - ./.docker/docker.sh manifest-list "-10"
-#
-#              # Docker Logout
-#              - docker logout
+
+              # Create manifest list for default
+              - echo "Create manifest list for Node 10 docker images."
+              - ./.docker/docker.sh manifest-list "" "default"
+              - ./.docker/docker.sh manifest-list "10" "default"
+
+              # Docker Logout
+              - docker logout
 
 # notify me when things fail
 notifications:
