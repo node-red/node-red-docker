@@ -164,12 +164,12 @@ The following table shows the provided Manifest Lists.
 | latest-devtools, 0.20.7-devtools       | raymondmm/0.20.7-10-amd64-devtools    |
 | latest-10-devtools, 0.20.7-10-devtools | raymondmm/0.20.7-10-arm32v6-devtools  |
 |                                        | raymondmm/0.20.7-10-arm32v7-devtools  |
-|                                        | raymondmm/0.20.7-10--arm64v8-devtools |
+|                                        | raymondmm/0.20.7-10-arm64v8-devtools  |
 |                                        |                                       |
 | latest-python2, 0.20.7-python2         | raymondmm/0.20.7-10-amd64-python2     |
 | latest-10-python2, 0.20.7-10-python2   | raymondmm/0.20.7-10-arm32v6-python2   |
 |                                        | raymondmm/0.20.7-10-arm32v7-python2   |
-|                                        | raymondmm/0.20.7-10--arm64v8-python2  |
+|                                        | raymondmm/0.20.7-10-arm64v8-python2   |
 
 | **Tag**                                | **Node-RED Base Image**               |
 |----------------------------------------|---------------------------------------|
@@ -186,12 +186,12 @@ The following table shows the provided Manifest Lists.
 | latest-12-devtools, 0.20.7-12-devtools | raymondmm/0.20.7-12-amd64-devtools    |
 |                                        | raymondmm/0.20.7-12-arm32v6-devtools  |
 |                                        | raymondmm/0.20.7-12-arm32v7-devtools  |
-|                                        | raymondmm/0.20.7-12--arm64v8-devtools |
+|                                        | raymondmm/0.20.7-12-arm64v8-devtools  |
 |                                        |                                       |
 | latest-12-python2, 0.20.7-12-python2   | raymondmm/0.20.7-12-amd64-python2     |
 |                                        | raymondmm/0.20.7-12-arm32v6-python2   |
 |                                        | raymondmm/0.20.7-12-arm32v7-python2   |
-|                                        | raymondmm/0.20.7-12--arm64v8-python2  |
+|                                        | raymondmm/0.20.7-12-arm64v8-python2   |
 
 ## Raspberry PI Tags
 | **Tag**                                        | **Node-RED Base Image Tag**      | **Description**      |
