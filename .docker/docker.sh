@@ -88,20 +88,17 @@ docker_tag() {
 
   if [[ ${TAG_SUFFIX} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${TAG_SUFFIX}"; fi
 
-  echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}${TAG_SUFFIX}"
-  docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}${TAG_SUFFIX}
+  echo "DOCKER TAG: tagging image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${TAG_SUFFIX}${ARCH}"
+  docker tag ${TARGET}:build ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${TAG_SUFFIX}${ARCH}
 }
 
 docker_push() {
   echo "DOCKER PUSH: Push Docker image."
 
-  if [[ ${TAG_SUFFIX} == "default" ]]; then
-    echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}."
-    docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}
-  else
-    echo "DOCKER PUSH: pushing - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}-${TAG_SUFFIX}."
-    docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${ARCH}-${TAG_SUFFIX}
-  fi
+  if [[ ${TAG_SUFFIX} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${TAG_SUFFIX}"; fi
+
+  echo "DOCKER TAG: pushing image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${TAG_SUFFIX}${ARCH}"
+  docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}-${TAG_SUFFIX}${ARCH}
 }
 
 docker_manifest_list() {
