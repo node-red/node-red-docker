@@ -23,7 +23,7 @@ main() {
   "manifest-list")
     # arg 2 holds node version
     # arg 3 holds tag suffix
-    docker_manifest_list $2 $3
+    docker_manifest_list "$2" "$3"
     ;;
   *)
     echo "none of above!"
@@ -115,7 +115,7 @@ docker_manifest_list() {
 #  docker_manifest_list_version_rpi ${1}
 #  docker_manifest_list_version_python2 ${1}
 #  docker_manifest_list_version_python3 ${1}
-  docker_manifest_list_version ${1} ${2}
+  docker_manifest_list_version "${1}" "${2}"
 
   # Create manifest list testing or latest
 #  case ${BUILD_VERSION} in
@@ -237,6 +237,9 @@ docker_manifest_list_version() {
 
   if [[ ${1} == "" ]]; then export NODE_VERSION=""; else export NODE_VERSION="-${1}"; fi
   if [[ ${2} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${2}"; fi
+
+  echo "NODE_VERSION: ${NODE_VERSION}"
+  echo "TAG_SUFFIX: ${TAG_SUFFIX}"
 
   echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}."
 
@@ -423,4 +426,4 @@ prepare_qemu() {
     popd
 }
 
-main $1 $2 $3
+main "$1" "$2" "$3"
