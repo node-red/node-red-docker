@@ -72,7 +72,7 @@ RUN chmod u+x /tmp/fix_python_gpio.sh && /tmp/fix_python_gpio.sh
 
 # Cleanup tmp
 RUN set -ex && \
-    chmod u+x /tmp/uninstall_devtools.sh && /tmp/uninstall_devtools.sh && \
+    #chmod u+x /tmp/uninstall_devtools.sh && /tmp/uninstall_devtools.sh && \
     rm -r /tmp/*
 
 # Return as node-red user
