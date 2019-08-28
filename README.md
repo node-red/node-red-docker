@@ -81,113 +81,137 @@ extra nodes you install "outside" of the container. We do this so that you may r
 container without permanently losing all of your customisations._
 
 ## Image Variations
-The Node-RED images have different variations and are supported by manifest lists (auto-detect architecture). 
+The Node-RED images come in different variations and are supported by manifest lists (auto-detect architecture). 
 This makes it more easy to deploy in a multi architecture Docker environment. E.g. a Docker Swarm with mix of Raspberry Pi's and amd64 nodes. 
 
-The tag naming convention is `<node-red-version>-<os>-<architecture>`, where:
+The tag naming convention is `<node-red-version>-<node-version>-<image-type>-<architecture>`, where:
 - `<node-red-version>` is the Node-RED version.
-- `<os>` is either Alpine or Debian slim based.
-- `<architecture>` is the architecture of the Docker host system, either amd64, arm32v6, arm32v7, arm64.
+- `<node-version>` is the Node JS version.
+- `<image-type>` is type of image and is optional, can be either _none_, minimal devtools or python2.
+    - _none_ : is the default and has Python 3 installed
+    - minimal : has no Python installed
+    - devtools :  has Python 3 installed and has development tools installed. currently build-base only
+    - python2 : has Python 2 installed
+- `<architecture>` is the architecture of the Docker host system, can be either amd64, arm32v6, arm32v7, arm64.
 
-The Node-RED images are based on the [official Node JS v10](https://hub.docker.com/_/node/), which are based on Alpine Linux or Debian Linux (slim) 
-and are kept as small as possible (no build tools pre-installed).
-Using Alpine Linux or Debian Linux (slim) reduces the built image size (~100MB vs ~700MB), but removes
-standard dependencies that are required for native module compilation. If you want to add dependencies with native dependencies, extend the Node-RED image with the missing packages on running containers or build new images.
+The Node-RED images are based on [official Node JS Alpine Linux](https://hub.docker.com/_/node/) images to keep them as small as possible.
+Using Alpine Linux reduces the built image size, but removes standard dependencies that are required for native module compilation. If you want to add dependencies with native dependencies, extend the Node-RED image with the missing packages on running containers or build new images see [docker-custom](docker-custom/README.md).
 
-The following table shows the variation of provided images.
+The following table shows the variation of provided Node-RED images.
 
-|**Tag**                             |**Base Image**               |**Arch**    |**OS**     |**Python**|**GPIO**|
-|------------------------------------|-----------------------------|------------|-----------|----------|--------|
-| 0.20.7-alpine-amd64                | amd64/node:10-alpine        | amd64      | alpine    |    no    |   no   |
-| 0.20.7-alpine-arm32v6              | arm32v6/node:10-alpine      | arm32v6    | alpine    |    no    |   no   |
-| ~~0.20.7-alpine-arm32v7~~          | ~~arm32v7/node:10-alpine~~  | ~~arm32v7~~| ~~alpine~~|    no    |   no   |
-| 0.20.7-buster-slim-arm32v7         | arm32v7/node:10-buster-slim | arm32v7    | debian    |    no    |   no   |
-| 0.20.7-alpine-arm64v8              | arm64v8/node:10-alpine      | arm64v8    | alpine    |    no    |   no   |
-||
-| 0.20.7-alpine-amd64-python3        | amd64/node:10-alpine        | amd64      | alpine    |    3.x   |   no   |
-| 0.20.7-alpine-arm32v6-python3      | arm32v6/node:10-alpine      | arm32v6    | alpine    |    3.x   |   yes  |
-| ~~0.20.7-alpine-arm32v7-python3~~  | ~~arm32v7/node:10-alpine~~  | ~~arm32v7~~| ~~alpine~~|    3.x   |   yes  |
-| 0.20.7-buster-slim-arm32v7-python3 | arm32v7/node:10-slim        | arm32v7    | debian    |    3.x   |   yes  |
-| 0.20.7-alpine-arm64v8-python3      | arm64v8/node:10-alpine      | arm64v8    | alpine    |    3.x   |   no   |
-||
-| 0.20.7-alpine-amd64-python2        | amd64/node:10-alpine        | amd64      | alpine    |    2.x   |   no   |
-| 0.20.7-alpine-arm32v6-python2      | arm32v6/node:10-alpine      | arm32v6    | alpine    |    2.x   |   yes  |
-| ~~0.20.7-alpine-arm32v7-python2~~  | ~~arm32v7/node:10-alpine~~  | ~~arm32v7~~| ~~alpine~~|    2.x   |   yes  |
-| 0.20.7-buster-slim-arm32v7-python2 | arm32v7/node:10-slim        | arm32v7    | debian    |    2.x   |   yes  |
-| 0.20.7-alpine-arm64v8-python2      | arm64v8/node:10-alpine      | arm64v8    | alpine    |    2.x   |   no   |
+| **Tag**                    |**Node**| **Arch** | **Python** | **GPIO** |**Dev**| **Base Image**         |
+|----------------------------|--------|----------|------------|----------|-------|------------------------|
+| 0.20.7-10-amd64            |   10   | amd64    |     3.x    |    no    |  no   | amd64/node:10-alpine   |
+| 0.20.7-10-arm32v6          |   10   | arm32v6  |     3.x    |    yes   |  no   | arm32v6/node:10-alpine |
+| 0.20.7-10-arm32v7          |   10   | arm32v7  |     3.x    |    yes   |  no   | arm32v7/node:10-alpine |
+| 0.20.7-10-arm64v8          |   10   | arm64v8  |     3.x    |    no    |  no   | arm64v8/node:10-alpine |
+|                            |        |          |            |          |       |                        |
+| 0.20.7-10-minimal-amd64    |   10   | amd64    |     no     |    no    |  no   | amd64/node:10-alpine   |
+| 0.20.7-10-minimal-arm32v6  |   10   | arm32v6  |     no     |    no    |  no   | arm32v6/node:10-alpine |
+| 0.20.7-10-minimal-arm32v7  |   10   | arm32v7  |     no     |    no    |  no   | arm32v7/node:10-alpine |
+| 0.20.7-10-minimal-arm64v8  |   10   | arm64v8  |     no     |    no    |  no   | arm64v8/node:10-alpine |
+|                            |        |          |            |          |       |                        |
+| 0.20.7-10-devtools-amd64   |   10   | amd64    |     3.x    |    no    |  yes  | amd64/node:10-alpine   |
+| 0.20.7-10-devtools-arm32v6 |   10   | arm32v6  |     3.x    |    yes   |  yes  | arm32v6/node:10-alpine |
+| 0.20.7-10-devtools-arm32v7 |   10   | arm32v7  |     3.x    |    yes   |  yes  | arm32v7/node:10-alpine |
+| 0.20.7-10-devtools-arm64v8 |   10   | arm64v8  |     3.x    |    no    |  yes  | arm64v8/node:10-alpine |
+|                            |        |          |            |          |       |                        |
+| 0.20.7-10-python2-amd64    |   10   | amd64    |     2.x    |    no    |  no   | amd64/node:10-alpine   |
+| 0.20.7-10-python2-arm32v6  |   10   | arm32v6  |     2.x    |    yes   |  no   | arm32v6/node:10-alpine |
+| 0.20.7-10-python2-arm32v7  |   10   | arm32v7  |     2.x    |    yes   |  no   | arm32v7/node:10-alpine |
+| 0.20.7-10-python2-arm64v8  |   10   | arm64v8  |     2.x    |    no    |  no   | arm64v8/node:10-alpine |
+
+| **Tag**                    |**Node**| **Arch** | **Python** | **GPIO** |**Dev**| **Base Image**         |
+|----------------------------|--------|----------|------------|----------|-------|------------------------|
+| 0.20.7-12-amd64            |   12   | amd64    |     3.x    |    no    |  no   | amd64/node:12-alpine   |
+| 0.20.7-12-arm32v6          |   12   | arm32v6  |     3.x    |    yes   |  no   | arm32v6/node:12-alpine |
+| 0.20.7-12-arm32v7          |   12   | arm32v7  |     3.x    |    yes   |  no   | arm32v7/node:12-alpine |
+| 0.20.7-12-arm64v8          |   12   | arm64v8  |     3.x    |    no    |  no   | arm64v8/node:12-alpine |
+|                            |        |          |            |          |       |                        |
+| 0.20.7-12-minimal-amd64    |   12   | amd64    |     no     |    no    |  no   | amd64/node:12-alpine   |
+| 0.20.7-12-minimal-arm32v6  |   12   | arm32v6  |     no     |    no    |  no   | arm32v6/node:12-alpine |
+| 0.20.7-12-minimal-arm32v7  |   12   | arm32v7  |     no     |    no    |  no   | arm32v7/node:12-alpine |
+| 0.20.7-12-minimal-arm64v8  |   12   | arm64v8  |     no     |    no    |  no   | arm64v8/node:12-alpine |
+|                            |        |          |            |          |       |                        |
+| 0.20.7-12-devtools-amd64   |   12   | amd64    |     3.x    |    no    |  yes  | amd64/node:12-alpine   |
+| 0.20.7-12-devtools-arm32v6 |   12   | arm32v6  |     3.x    |    yes   |  yes  | arm32v6/node:12-alpine |
+| 0.20.7-12-devtools-arm32v7 |   12   | arm32v7  |     3.x    |    yes   |  yes  | arm32v7/node:12-alpine |
+| 0.20.7-12-devtools-arm64v8 |   12   | arm64v8  |     3.x    |    no    |  yes  | arm64v8/node:12-alpine |
+|                            |        |          |            |          |       |                        |
+| 0.20.7-12-python2-amd64    |   12   | amd64    |     2.x    |    no    |  no   | amd64/node:12-alpine   |
+| 0.20.7-12-python2-arm32v6  |   12   | arm32v6  |     2.x    |    yes   |  no   | arm32v6/node:12-alpine |
+| 0.20.7-12-python2-arm32v7  |   12   | arm32v7  |     2.x    |    yes   |  no   | arm32v7/node:12-alpine |
+| 0.20.7-12-python2-arm64v8  |   12   | arm64v8  |     2.x    |    no    |  no   | arm64v8/node:12-alpine |
 
 The Node-RED images have either no Python, Python 3.x or Python 2.x pre-installed and for arm32v6 and arm32v7 Node-RED build-in GPIO enabled.
 
-All images have bash, nano, curl git, openssl tools pre-installed to support Node-red's Projects feature.
-
-_**Note**: Python 2.7 will reach the end of its life on January 1st, 2020! Therefore it's highly recommended to use Python 3 based images, if you need Python pre-installed._
-
-_**Note**: Base image arm32v7/node:10-alpine is not available [#1081](https://github.com/nodejs/docker-node/issues/1081). As soon as it is available buster-slim images might be replaced by it._
+ - All images have bash, tzdata, nano, curl git and openssl tools pre-installed to support Node-REDs Projects feature.
+ - _**note**: Python 2.7 reaches end of life on January 1st, 2020! Therefore it's highly recommended to use Python 3 based images, if you need Python pre-installed._
 
 ## Manifest Lists
 
 The following table shows the provided Manifest Lists.
 
-| **Tag**                                | **Node-RED Base Image**                                    |
-|----------------------------------------|------------------------------------------------------------|
-| latest, 0.20.7                         | nodered/node-red-docker:0.20.7-alpine-amd64                |
-|                                        | nodered/node-red-docker:0.20.7-alpine-arm32v6              |
-|                                        | nodered/node-red-docker:~~0.20.7-alpine-arm32v7~~          |
-|                                        | nodered/node-red-docker:0.20.7-buster-slim-arm32v7         |
-|                                        | nodered/node-red-docker:0.20.7-alpine-arm64v8              |
-||    
-| latest-python3, 0.20.7-python3         | nodered/node-red-docker:0.20.7-alpine-amd64-python3        |
-|                                        | nodered/node-red-docker:0.20.7-alpine-arm32v6-python3      |
-|                                        | nodered/node-red-docker:~~0.20.7-alpine-arm32v7-python3~~  |
-|                                        | nodered/node-red-docker:0.20.7-buster-slim-arm32v7-python3 |
-|                                        | nodered/node-red-docker:0.20.7-alpine-arm64v8-python3      |
-||    
-| latest-python2, 0.20.7-python2         | nodered/node-red-docker:0.20.7-alpine-amd64-python2        |
-|                                        | nodered/node-red-docker:0.20.7-alpine-arm32v6-python2      |
-|                                        | nodered/node-red-docker:~~0.20.7-alpine-arm32v7-python2~~  |
-|                                        | nodered/node-red-docker:0.20.7-buster-slim-arm32v7-python2 |
-|                                        | nodered/node-red-docker:0.20.7-alpine-arm64v8-python2      |
+| **Tag**                                | **Node-RED Base Image**               |
+|----------------------------------------|---------------------------------------|
+| latest, 0.20.7,                        | raymondmm/0.20.7-10-amd64             |
+| latest-10, 0.20.7-10                   | raymondmm/0.20.7-10-arm32v6           |
+|                                        | raymondmm/0.20.7-10-arm32v7           |
+|                                        | raymondmm/0.20.7-10-arm64v8           |
+|                                        |                                       |
+| latest-minimal, 0.20.7-minimal,        | raymondmm/0.20.7-10-amd64-minimal     |
+| latest-10-minimal, 0.20.7-10-minimal   | raymondmm/0.20.7-10-arm32v6-minimal   |
+|                                        | raymondmm/0.20.7-10-arm32v7-minimal   |
+|                                        | raymondmm/0.20.7-10-arm64v8-minimal   |
+|                                        |                                       |
+| latest-devtools, 0.20.7-devtools       | raymondmm/0.20.7-10-amd64-devtools    |
+| latest-10-devtools, 0.20.7-10-devtools | raymondmm/0.20.7-10-arm32v6-devtools  |
+|                                        | raymondmm/0.20.7-10-arm32v7-devtools  |
+|                                        | raymondmm/0.20.7-10-arm64v8-devtools  |
+|                                        |                                       |
+| latest-python2, 0.20.7-python2         | raymondmm/0.20.7-10-amd64-python2     |
+| latest-10-python2, 0.20.7-10-python2   | raymondmm/0.20.7-10-arm32v6-python2   |
+|                                        | raymondmm/0.20.7-10-arm32v7-python2   |
+|                                        | raymondmm/0.20.7-10-arm64v8-python2   |
 
-## Raspberry PI Tags
-| **Tag**                                | **Node-RED Base Image Tag**        | **Description**      |
-|----------------------------------------|------------------------------------|----------------------|
-| latest-rpi, 0.20.7-rpi                 | 0.20.7-alpine-arm32v6              | rpi 1, 2, 3, 4, zero |
-|                                        | 0.20.7-buster-slim-arm32v7         |                      |
-||
-| latest-rpi-python3, 0.20.7-rpi-python3 | 0.20.7-alpine-arm32v6-python3      | rpi 1, 2, 3, 4, zero |
-|                                        | 0.20.7-buster-slim-arm32v7-python3 |                      |
-||
-| latest-rpi-python2, 0.20.7-rpi-python2 | 0.20.7-alpine-arm32v6-python2      | rpi 1, 2, 3, 4, zero |
-|                                        | 0.20.7-buster-slim-arm32v7-python2 |                      |
+| **Tag**                                | **Node-RED Base Image**               |
+|----------------------------------------|---------------------------------------|
+| latest-12, 0.20.7-12                   | raymondmm/0.20.7-12-amd64             |
+|                                        | raymondmm/0.20.7-12-arm32v6           |
+|                                        | raymondmm/0.20.7-12-arm32v7           |
+|                                        | raymondmm/0.20.7-12-arm64v8           |
+|                                        |                                       |
+| latest-12-minimal, 0.20.7-12-minimal   | raymondmm/0.20.7-12-amd64-minimal     |
+|                                        | raymondmm/0.20.7-12-arm32v6-minimal   |
+|                                        | raymondmm/0.20.7-12-arm32v7-minimal   |
+|                                        | raymondmm/0.20.7-12-arm64v8-minimal   |
+|                                        |                                       |
+| latest-12-devtools, 0.20.7-12-devtools | raymondmm/0.20.7-12-amd64-devtools    |
+|                                        | raymondmm/0.20.7-12-arm32v6-devtools  |
+|                                        | raymondmm/0.20.7-12-arm32v7-devtools  |
+|                                        | raymondmm/0.20.7-12-arm64v8-devtools  |
+|                                        |                                       |
+| latest-12-python2, 0.20.7-12-python2   | raymondmm/0.20.7-12-amd64-python2     |
+|                                        | raymondmm/0.20.7-12-arm32v6-python2   |
+|                                        | raymondmm/0.20.7-12-arm32v7-python2   |
+|                                        | raymondmm/0.20.7-12-arm64v8-python2   |
 
+With the support of Docker manifest list, there is no need to explicit add the tag for the architecture to use.
+When a docker run command or docker service command or docker stack command is executed, docker checks which architecture is required and verifies if it is available in the docker repository. When it does, docker pulls the matching image for it.
 
-With the support of Docker manifest list, there is no need to explicit add the tag for the architecture to use. When a docker run command or docker service command or docker stack command is executed, docker checks which architecture is required and verifies if it is available in the docker repository. When it does, docker pulls the matching image for it.
+Therefor all tags regarding Raspberry PI's are dropped.
 
-As an example: suppose you are running on a Pine64, which has arm64 as architecture. Then just simple run the following command, to pull the image with the correct tag (0.20.7-alpine-arm64v8) and run the container.
+For example: suppose you are running on a Raspberry PI 3B, which has arm32v7 as architecture. Then just simple run the following command to pull the image (tagged by `0.20.7-10-arm32v7`) and run the container.
 ```
 docker run -it -p 1880:1880 --name mynodered nodered/node-red-docker:latest
 ```
 
-The same command can be used for running on an amd64 system, since docker discovers its running on a amd64 host and pulls the image with matching tag (0.20.7-alpine-amd64).
+The same command can be used for running on an amd64 system, since docker discovers its running on a amd64 host and pulls the image with matching tag (`0.20.7-10-amd64`).
 
-This gives the advantaged that you don't need to know/specifiy which architecture you are running on and makes docker run commands and docker compose files exchangeable.
-
-## Raspberry PI
-Due to an open [issue](https://github.com/moby/moby/issues/34875) the above command pulls `0.20.7-alpine-arm32v6` for Raspberry PI 2, 3 and 4. Since arm32v6 is compatible with arm32v7, this is not a problem.
-However if you to make use of arm32v7 then specify it's corresponding tag explicit like this:
-
-```
-docker run -it -p 1880:1880 --name mynodered nodered/node-red-docker:0.20.7-buster-slim-arm32v7
-```
-Or:
-```
-docker run -it -p 1880:1880 --name mynodered nodered/node-red-docker:0.20.7-buster-slim-arm32v7-python3
-```
-
-You can see a full list of the tagged releases [here](https://hub.docker.com/r/nodered/node-red-docker/tags/).
+This gives the advantaged that you don't need to know/specifiy which architecture you are running on and makes docker run commands and docker compose files for flexible and exchangeable across systems.
 
 ## Raspberry PI - build-in GPIO support
-Node-RED Raspberry PI images provide build-in GPIO support, however it is highly recommended to use [node-red-node-pi-gpiod](https://github.com/node-red/node-red-nodes/tree/master/hardware/pigpiod) instead.
+The non-minimal Node-RED images `arm32v6` and `arm32v7` provide build-in GPIO support, however it is highly recommended to use [node-red-node-pi-gpiod](https://github.com/node-red/node-red-nodes/tree/master/hardware/pigpiod) instead.
 
 Disadvantages of the build-in GPIO support are:
 - Your Docker container needs to be deployed on the same Docker node/host on which you want to control the gpio's.
@@ -199,7 +223,7 @@ Disadvantages of the build-in GPIO support are:
 If you still do want to make use of the Node-RED build-in GPIO support, run your container like this:
 
 ```
-docker run -it --rm -p1880:1880 --user=root --privileged=true -v /dev/mem:/dev/mem nodered/node-red-docker:latest-rpi-python3
+docker run -it --rm -p1880:1880 --user=root --privileged=true -v /dev/mem:/dev/mem nodered/node-red-docker:latest
 ```  
 
 ### Host Directory As Volume (Persistent)
