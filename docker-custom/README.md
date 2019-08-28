@@ -2,9 +2,19 @@
 
 The docker-custom directory contains files you need to build your own images.
 
-**
+The follow steps describe in short which steps to take to build your own images.
 
-The steps to take to build your own images are:
+## 1. git clone
+
+Clone the Node-RED Docker project from github
+```shell script
+git clone https://github.com/node-red/node-red-docker.git
+```
+
+Change dir to docker-custom
+```shell script
+cd node-red-docker/docker-custom
+```
 
 ## 1. **package.json**
 
@@ -13,6 +23,8 @@ The steps to take to build your own images are:
  
 ## 2. **docker-make.sh**
 
+The `docker-make.sh` is a helper script to build a custom docker image. 
+
    Change the build arguments as needed:
 
    - `--build-arg ARCH=amd64` : architecture your are building for (arm32v6, arm32v7, arm64v8, amd64)
@@ -20,33 +32,34 @@ The steps to take to build your own images are:
    - `--build-arg NODE_RED_VERSION=${NODE_RED_VERSION}` : don't change this, ${NODE_RED_VERSION} gets populated from package.json
    - `--build-arg OS=alpine` : the linux distro you like to use (alpine or buster-slim)
    - `--build-arg BUILD_DATE="$(date +"%Y-%m-%dT%H:%M:%SZ")"` : don't change this
-   - `--build-arg PYTHON_VERSION=0` : add Python to your image (0=no Python, 2=Python 2.x, 3=Python 3.x) 
+   - `--build-arg PYTHON_VERSION=0` : install Python to your image (0=no Python, 2=Python 2.x, 3=Python 3.x)
+   - `--build-arg DEVTOOLS=0` : install Devtools to your image (0=no Devtools, 1=Devtools)
    - `--file Dockerfile-alpine.custom` : Dockerfile to use to build your image (Dockerfile-alpine.custom or Dockerfile-slim.custom)
    - `--tag mynodered:node-red-custom-build` : set the image name and tag
    
 ## 3. **Run docker-make.sh**
 
-    ```
-    $ ./docker-make.sh
-    ```
+Run `docker-make.sh` 
+
+```shell script
+$ ./docker-make.sh
+```
+
+This starts building your custom image and might take a while depending on the system you are running on.
+   
+When building is done you can run the custom image by the following command:
+   
+```shell script
+$ docker run -it -p1880:1880 mynodered:node-red-custom-build
+```
     
-    This starts building your custom image and might take a while depending on the system you are running on.
+With the following command you can verify your docker image:
     
-    When building is done you can run it by the following command:
-    
-    ```
-    $ docker run -it -p1880:1880 mynodered:node-red-custom-build
-    ```
-    
-    With the following command you can verify your docker image:
-    
-    ```
-    $ docker inspect testing:node-red-build
-    ```
+```shell script
+$ docker inspect testing:node-red-build
+```
 
 ## 4. **Advanced Configuration**
 
-    `Dockerfile-alpine.custom` and `Dockerfile-slim.custom` can be modified as required, for example to add more tools. 
-
-    The scripts under `script` are used to determine if Python needs to be installed and fixed, as well to enable build-in support for gpio.
-
+`Dockerfile-alpine.custom` can be modified as required. To add more applications the `install_devtools.sh` can be modified as needed.
+The scripts under `script` are used to determine if Python needs to be installed and fixed, as well to enable build-in support for gpio.

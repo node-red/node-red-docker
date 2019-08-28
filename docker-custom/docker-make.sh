@@ -13,5 +13,6 @@ docker build --no-cache \
     --build-arg OS=alpine \
     --build-arg BUILD_DATE="$(date +"%Y-%m-%dT%H:%M:%SZ")" \
     --build-arg PYTHON_VERSION=0 \
+    --build-arg DEVTOOLS=0 \
     --file Dockerfile-alpine.custom \
     --tag testing:node-red-build .
