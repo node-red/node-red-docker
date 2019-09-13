@@ -1,6 +1,11 @@
 #!/bin/bash
 set -ex
 
+# Skip 36-rpi-gpio if not exists
+if [[ ! -f "node_modules/\@node-red/nodes/core/hardware/36-rpi-gpio.js" ]]; then
+  exit 1;
+fi
+
 # Fix 36-rpi-gpio for Python
 if [[ ${PYTHON_VERSION} != "0" ]]; then
   echo "Fixing 36-rpi-gpio.js for Python"
