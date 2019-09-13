@@ -129,6 +129,7 @@ function docker_manifest_list_version() {
 function docker_manifest_list_testing_or_latest() {
 
   if [[ ${BUILD_VERSION} == *"testing"* ]]; then export TAG_PREFIX="testing"; else export TAG_PREFIX="latest"; fi
+  if [[ ${BUILD_VERSION} == *"beta"* ]]; then export TAG_PREFIX="beta"; else export TAG_PREFIX="latest"; fi
 
   if [[ ${1} == "" ]]; then export NODE_VERSION=""; else export NODE_VERSION="-${1}"; fi
   if [[ ${2} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${2}"; fi
