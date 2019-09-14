@@ -137,24 +137,24 @@ jobs:
               - ./.docker/docker.sh manifest-list-version "" "default"
 
               # Create and push manifest list 'latest' or 'testing' for python2
-              - ./.docker/docker.sh manifest-list-testing-or-latest "12" "python2"
-              - ./.docker/docker.sh manifest-list-testing-or-latest "10" "python2"
-              - ./.docker/docker.sh manifest-list-testing-or-latest "" "python2"
+              - ./.docker/docker.sh manifest-list-testing-beta-latest "12" "python2"
+              - ./.docker/docker.sh manifest-list-testing-beta-latest "10" "python2"
+              - ./.docker/docker.sh manifest-list-testing-beta-latest "" "python2"
 
               # Create and push manifest list 'latest' or 'testing' for devtools
-              - ./.docker/docker.sh manifest-list-testing-or-latest "12" "devtools"
-              - ./.docker/docker.sh manifest-list-testing-or-latest "10" "devtools"
-              - ./.docker/docker.sh manifest-list-testing-or-latest "" "devtools"
+              - ./.docker/docker.sh manifest-list-testing-beta-latest "12" "devtools"
+              - ./.docker/docker.sh manifest-list-testing-beta-latest "10" "devtools"
+              - ./.docker/docker.sh manifest-list-testing-beta-latest "" "devtools"
 
               # Create and push manifest list 'latest' or 'testing' for minimal
-              - ./.docker/docker.sh manifest-list-testing-or-latest "12" "minimal"
-              - ./.docker/docker.sh manifest-list-testing-or-latest "10" "minimal"
-              - ./.docker/docker.sh manifest-list-testing-or-latest "" "minimal"
+              - ./.docker/docker.sh manifest-list-testing-beta-latest "12" "minimal"
+              - ./.docker/docker.sh manifest-list-testing-beta-latest "10" "minimal"
+              - ./.docker/docker.sh manifest-list-testing-beta-latest "" "minimal"
 
               # Create and push manifest list 'latest' or 'testing' for default
-              - ./.docker/docker.sh manifest-list-testing-or-latest "12" "default"
-              - ./.docker/docker.sh manifest-list-testing-or-latest "10" "default"
-              - ./.docker/docker.sh manifest-list-testing-or-latest "" "default"
+              - ./.docker/docker.sh manifest-list-testing-beta-latest "12" "default"
+              - ./.docker/docker.sh manifest-list-testing-beta-latest "10" "default"
+              - ./.docker/docker.sh manifest-list-testing-beta-latest "" "default"
 
               # Docker Logout
               - docker logout

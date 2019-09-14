@@ -26,8 +26,8 @@ main() {
   "manifest-list-version")
     docker_manifest_list_version "$2" "$3"
     ;;
-  "manifest-list-testing-or-latest")
-    docker_manifest_list_testing_or_latest "$2" "$3"
+  "manifest-list-testing-beta-latest")
+    docker_manifest_list_testing_beta_latest "$2" "$3"
     ;;
   *)
     echo "none of above!"
@@ -126,7 +126,7 @@ function docker_manifest_list_version() {
   docker manifest push ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}
 }
 
-function docker_manifest_list_testing_or_latest() {
+function docker_manifest_list_testing_beta_latest() {
 
   if [[ ${BUILD_VERSION} == *"testing"* ]]; then export TAG_PREFIX="testing"; else export TAG_PREFIX="latest"; fi
   if [[ ${BUILD_VERSION} == *"beta"* ]]; then export TAG_PREFIX="beta"; else export TAG_PREFIX="latest"; fi

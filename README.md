@@ -20,7 +20,7 @@ Let's dissect that command:
         -it                          - attach a terminal session so we can see what is going on
         -p 1880:1880                 - connect local port 1880 to the exposed internal port 1880
         --name mynodered             - give this machine a friendly local name
-        nodered/node-red-docker      - the image to base it on - currently Node-RED v0.20.7
+        nodered/node-red-docker      - the image to base it on - currently Node-RED v0.20.8
 
 
 Running that command should give a terminal window with a running instance of Node-RED.
@@ -28,7 +28,7 @@ Running that command should give a terminal window with a running instance of No
         Welcome to Node-RED
         ===================
         
-        10 Aug 12:57:10 - [info] Node-RED version: v0.20.7
+        10 Aug 12:57:10 - [info] Node-RED version: v0.20.8
         10 Aug 12:57:10 - [info] Node.js  version: v10.16.2
         10 Aug 12:57:10 - [info] Linux 4.19.58-v7+ arm LE
         10 Aug 12:57:11 - [info] Loading palette nodes
@@ -101,47 +101,47 @@ The following table shows the variation of provided Node-RED images.
 
 | **Tag**                    |**Node**| **Arch** | **Python** | **GPIO** |**Dev**| **Base Image**         |
 |----------------------------|--------|----------|------------|----------|-------|------------------------|
-| 0.20.7-10-amd64            |   10   | amd64    |     3.x    |    no    |  no   | amd64/node:10-alpine   |
-| 0.20.7-10-arm32v6          |   10   | arm32v6  |     3.x    |    yes   |  no   | arm32v6/node:10-alpine |
-| 0.20.7-10-arm32v7          |   10   | arm32v7  |     3.x    |    yes   |  no   | arm32v7/node:10-alpine |
-| 0.20.7-10-arm64v8          |   10   | arm64v8  |     3.x    |    no    |  no   | arm64v8/node:10-alpine |
+| 0.20.8-10-amd64            |   10   | amd64    |     3.x    |    no    |  no   | amd64/node:10-alpine   |
+| 0.20.8-10-arm32v6          |   10   | arm32v6  |     3.x    |    yes   |  no   | arm32v6/node:10-alpine |
+| 0.20.8-10-arm32v7          |   10   | arm32v7  |     3.x    |    yes   |  no   | arm32v7/node:10-alpine |
+| 0.20.8-10-arm64v8          |   10   | arm64v8  |     3.x    |    no    |  no   | arm64v8/node:10-alpine |
 |                            |        |          |            |          |       |                        |
-| 0.20.7-10-minimal-amd64    |   10   | amd64    |     no     |    no    |  no   | amd64/node:10-alpine   |
-| 0.20.7-10-minimal-arm32v6  |   10   | arm32v6  |     no     |    no    |  no   | arm32v6/node:10-alpine |
-| 0.20.7-10-minimal-arm32v7  |   10   | arm32v7  |     no     |    no    |  no   | arm32v7/node:10-alpine |
-| 0.20.7-10-minimal-arm64v8  |   10   | arm64v8  |     no     |    no    |  no   | arm64v8/node:10-alpine |
+| 0.20.8-10-minimal-amd64    |   10   | amd64    |     no     |    no    |  no   | amd64/node:10-alpine   |
+| 0.20.8-10-minimal-arm32v6  |   10   | arm32v6  |     no     |    no    |  no   | arm32v6/node:10-alpine |
+| 0.20.8-10-minimal-arm32v7  |   10   | arm32v7  |     no     |    no    |  no   | arm32v7/node:10-alpine |
+| 0.20.8-10-minimal-arm64v8  |   10   | arm64v8  |     no     |    no    |  no   | arm64v8/node:10-alpine |
 |                            |        |          |            |          |       |                        |
-| 0.20.7-10-devtools-amd64   |   10   | amd64    |     3.x    |    no    |  yes  | amd64/node:10-alpine   |
-| 0.20.7-10-devtools-arm32v6 |   10   | arm32v6  |     3.x    |    yes   |  yes  | arm32v6/node:10-alpine |
-| 0.20.7-10-devtools-arm32v7 |   10   | arm32v7  |     3.x    |    yes   |  yes  | arm32v7/node:10-alpine |
-| 0.20.7-10-devtools-arm64v8 |   10   | arm64v8  |     3.x    |    no    |  yes  | arm64v8/node:10-alpine |
+| 0.20.8-10-devtools-amd64   |   10   | amd64    |     3.x    |    no    |  yes  | amd64/node:10-alpine   |
+| 0.20.8-10-devtools-arm32v6 |   10   | arm32v6  |     3.x    |    yes   |  yes  | arm32v6/node:10-alpine |
+| 0.20.8-10-devtools-arm32v7 |   10   | arm32v7  |     3.x    |    yes   |  yes  | arm32v7/node:10-alpine |
+| 0.20.8-10-devtools-arm64v8 |   10   | arm64v8  |     3.x    |    no    |  yes  | arm64v8/node:10-alpine |
 |                            |        |          |            |          |       |                        |
-| 0.20.7-10-python2-amd64    |   10   | amd64    |     2.x    |    no    |  no   | amd64/node:10-alpine   |
-| 0.20.7-10-python2-arm32v6  |   10   | arm32v6  |     2.x    |    yes   |  no   | arm32v6/node:10-alpine |
-| 0.20.7-10-python2-arm32v7  |   10   | arm32v7  |     2.x    |    yes   |  no   | arm32v7/node:10-alpine |
-| 0.20.7-10-python2-arm64v8  |   10   | arm64v8  |     2.x    |    no    |  no   | arm64v8/node:10-alpine |
+| 0.20.8-10-python2-amd64    |   10   | amd64    |     2.x    |    no    |  no   | amd64/node:10-alpine   |
+| 0.20.8-10-python2-arm32v6  |   10   | arm32v6  |     2.x    |    yes   |  no   | arm32v6/node:10-alpine |
+| 0.20.8-10-python2-arm32v7  |   10   | arm32v7  |     2.x    |    yes   |  no   | arm32v7/node:10-alpine |
+| 0.20.8-10-python2-arm64v8  |   10   | arm64v8  |     2.x    |    no    |  no   | arm64v8/node:10-alpine |
 
 | **Tag**                    |**Node**| **Arch** | **Python** | **GPIO** |**Dev**| **Base Image**         |
 |----------------------------|--------|----------|------------|----------|-------|------------------------|
-| 0.20.7-12-amd64            |   12   | amd64    |     3.x    |    no    |  no   | amd64/node:12-alpine   |
-| 0.20.7-12-arm32v6          |   12   | arm32v6  |     3.x    |    yes   |  no   | arm32v6/node:12-alpine |
-| 0.20.7-12-arm32v7          |   12   | arm32v7  |     3.x    |    yes   |  no   | arm32v7/node:12-alpine |
-| 0.20.7-12-arm64v8          |   12   | arm64v8  |     3.x    |    no    |  no   | arm64v8/node:12-alpine |
+| 0.20.8-12-amd64            |   12   | amd64    |     3.x    |    no    |  no   | amd64/node:12-alpine   |
+| 0.20.8-12-arm32v6          |   12   | arm32v6  |     3.x    |    yes   |  no   | arm32v6/node:12-alpine |
+| 0.20.8-12-arm32v7          |   12   | arm32v7  |     3.x    |    yes   |  no   | arm32v7/node:12-alpine |
+| 0.20.8-12-arm64v8          |   12   | arm64v8  |     3.x    |    no    |  no   | arm64v8/node:12-alpine |
 |                            |        |          |            |          |       |                        |
-| 0.20.7-12-minimal-amd64    |   12   | amd64    |     no     |    no    |  no   | amd64/node:12-alpine   |
-| 0.20.7-12-minimal-arm32v6  |   12   | arm32v6  |     no     |    no    |  no   | arm32v6/node:12-alpine |
-| 0.20.7-12-minimal-arm32v7  |   12   | arm32v7  |     no     |    no    |  no   | arm32v7/node:12-alpine |
-| 0.20.7-12-minimal-arm64v8  |   12   | arm64v8  |     no     |    no    |  no   | arm64v8/node:12-alpine |
+| 0.20.8-12-minimal-amd64    |   12   | amd64    |     no     |    no    |  no   | amd64/node:12-alpine   |
+| 0.20.8-12-minimal-arm32v6  |   12   | arm32v6  |     no     |    no    |  no   | arm32v6/node:12-alpine |
+| 0.20.8-12-minimal-arm32v7  |   12   | arm32v7  |     no     |    no    |  no   | arm32v7/node:12-alpine |
+| 0.20.8-12-minimal-arm64v8  |   12   | arm64v8  |     no     |    no    |  no   | arm64v8/node:12-alpine |
 |                            |        |          |            |          |       |                        |
-| 0.20.7-12-devtools-amd64   |   12   | amd64    |     3.x    |    no    |  yes  | amd64/node:12-alpine   |
-| 0.20.7-12-devtools-arm32v6 |   12   | arm32v6  |     3.x    |    yes   |  yes  | arm32v6/node:12-alpine |
-| 0.20.7-12-devtools-arm32v7 |   12   | arm32v7  |     3.x    |    yes   |  yes  | arm32v7/node:12-alpine |
-| 0.20.7-12-devtools-arm64v8 |   12   | arm64v8  |     3.x    |    no    |  yes  | arm64v8/node:12-alpine |
+| 0.20.8-12-devtools-amd64   |   12   | amd64    |     3.x    |    no    |  yes  | amd64/node:12-alpine   |
+| 0.20.8-12-devtools-arm32v6 |   12   | arm32v6  |     3.x    |    yes   |  yes  | arm32v6/node:12-alpine |
+| 0.20.8-12-devtools-arm32v7 |   12   | arm32v7  |     3.x    |    yes   |  yes  | arm32v7/node:12-alpine |
+| 0.20.8-12-devtools-arm64v8 |   12   | arm64v8  |     3.x    |    no    |  yes  | arm64v8/node:12-alpine |
 |                            |        |          |            |          |       |                        |
-| 0.20.7-12-python2-amd64    |   12   | amd64    |     2.x    |    no    |  no   | amd64/node:12-alpine   |
-| 0.20.7-12-python2-arm32v6  |   12   | arm32v6  |     2.x    |    yes   |  no   | arm32v6/node:12-alpine |
-| 0.20.7-12-python2-arm32v7  |   12   | arm32v7  |     2.x    |    yes   |  no   | arm32v7/node:12-alpine |
-| 0.20.7-12-python2-arm64v8  |   12   | arm64v8  |     2.x    |    no    |  no   | arm64v8/node:12-alpine |
+| 0.20.8-12-python2-amd64    |   12   | amd64    |     2.x    |    no    |  no   | amd64/node:12-alpine   |
+| 0.20.8-12-python2-arm32v6  |   12   | arm32v6  |     2.x    |    yes   |  no   | arm32v6/node:12-alpine |
+| 0.20.8-12-python2-arm32v7  |   12   | arm32v7  |     2.x    |    yes   |  no   | arm32v7/node:12-alpine |
+| 0.20.8-12-python2-arm64v8  |   12   | arm64v8  |     2.x    |    no    |  no   | arm64v8/node:12-alpine |
 
 The Node-RED images have either no Python, Python 3.x or Python 2.x pre-installed and for arm32v6 and arm32v7 Node-RED build-in GPIO enabled.
 
@@ -152,61 +152,61 @@ The Node-RED images have either no Python, Python 3.x or Python 2.x pre-installe
 
 The following table shows the provided Manifest Lists.
 
-| **Tag**                                | **Node-RED Base Image**               |
-|----------------------------------------|---------------------------------------|
-| latest, 0.20.7,                        | raymondmm/0.20.7-10-amd64             |
-| latest-10, 0.20.7-10                   | raymondmm/0.20.7-10-arm32v6           |
-|                                        | raymondmm/0.20.7-10-arm32v7           |
-|                                        | raymondmm/0.20.7-10-arm64v8           |
+| **Tag**                                | **Node-RED Base Image**                             |
+|----------------------------------------|-----------------------------------------------------|
+| latest, 0.20.8,                        | nodered/node-red-docker:0.20.8-10-amd64             |
+| latest-10, 0.20.8-10                   | nodered/node-red-docker:0.20.8-10-arm32v6           |
+|                                        | nodered/node-red-docker:0.20.8-10-arm32v7           |
+|                                        | nodered/node-red-docker:0.20.8-10-arm64v8           |
+|                                        |                                                     |
+| latest-minimal, 0.20.8-minimal,        | nodered/node-red-docker:0.20.8-10-amd64-minimal     |
+| latest-10-minimal, 0.20.8-10-minimal   | nodered/node-red-docker:0.20.8-10-arm32v6-minimal   |
+|                                        | nodered/node-red-docker:0.20.8-10-arm32v7-minimal   |
+|                                        | nodered/node-red-docker:0.20.8-10-arm64v8-minimal   |
+|                                        |                                                     |
+| latest-devtools, 0.20.8-devtools       | nodered/node-red-docker:0.20.8-10-amd64-devtools    |
+| latest-10-devtools, 0.20.8-10-devtools | nodered/node-red-docker:0.20.8-10-arm32v6-devtools  |
+|                                        | nodered/node-red-docker:0.20.8-10-arm32v7-devtools  |
+|                                        | nodered/node-red-docker:0.20.8-10-arm64v8-devtools  |
 |                                        |                                       |
-| latest-minimal, 0.20.7-minimal,        | raymondmm/0.20.7-10-amd64-minimal     |
-| latest-10-minimal, 0.20.7-10-minimal   | raymondmm/0.20.7-10-arm32v6-minimal   |
-|                                        | raymondmm/0.20.7-10-arm32v7-minimal   |
-|                                        | raymondmm/0.20.7-10-arm64v8-minimal   |
-|                                        |                                       |
-| latest-devtools, 0.20.7-devtools       | raymondmm/0.20.7-10-amd64-devtools    |
-| latest-10-devtools, 0.20.7-10-devtools | raymondmm/0.20.7-10-arm32v6-devtools  |
-|                                        | raymondmm/0.20.7-10-arm32v7-devtools  |
-|                                        | raymondmm/0.20.7-10-arm64v8-devtools  |
-|                                        |                                       |
-| latest-python2, 0.20.7-python2         | raymondmm/0.20.7-10-amd64-python2     |
-| latest-10-python2, 0.20.7-10-python2   | raymondmm/0.20.7-10-arm32v6-python2   |
-|                                        | raymondmm/0.20.7-10-arm32v7-python2   |
-|                                        | raymondmm/0.20.7-10-arm64v8-python2   |
+| latest-python2, 0.20.8-python2         | nodered/node-red-docker:0.20.8-10-amd64-python2     |
+| latest-10-python2, 0.20.8-10-python2   | nodered/node-red-docker:0.20.8-10-arm32v6-python2   |
+|                                        | nodered/node-red-docker:0.20.8-10-arm32v7-python2   |
+|                                        | nodered/node-red-docker:0.20.8-10-arm64v8-python2   |
 
-| **Tag**                                | **Node-RED Base Image**               |
-|----------------------------------------|---------------------------------------|
-| latest-12, 0.20.7-12                   | raymondmm/0.20.7-12-amd64             |
-|                                        | raymondmm/0.20.7-12-arm32v6           |
-|                                        | raymondmm/0.20.7-12-arm32v7           |
-|                                        | raymondmm/0.20.7-12-arm64v8           |
-|                                        |                                       |
-| latest-12-minimal, 0.20.7-12-minimal   | raymondmm/0.20.7-12-amd64-minimal     |
-|                                        | raymondmm/0.20.7-12-arm32v6-minimal   |
-|                                        | raymondmm/0.20.7-12-arm32v7-minimal   |
-|                                        | raymondmm/0.20.7-12-arm64v8-minimal   |
-|                                        |                                       |
-| latest-12-devtools, 0.20.7-12-devtools | raymondmm/0.20.7-12-amd64-devtools    |
-|                                        | raymondmm/0.20.7-12-arm32v6-devtools  |
-|                                        | raymondmm/0.20.7-12-arm32v7-devtools  |
-|                                        | raymondmm/0.20.7-12-arm64v8-devtools  |
-|                                        |                                       |
-| latest-12-python2, 0.20.7-12-python2   | raymondmm/0.20.7-12-amd64-python2     |
-|                                        | raymondmm/0.20.7-12-arm32v6-python2   |
-|                                        | raymondmm/0.20.7-12-arm32v7-python2   |
-|                                        | raymondmm/0.20.7-12-arm64v8-python2   |
+| **Tag**                                | **Node-RED Base Image**                             |
+|----------------------------------------|-----------------------------------------------------|
+| latest-12, 0.20.8-12                   | nodered/node-red-docker:0.20.8-12-amd64             |
+|                                        | nodered/node-red-docker:0.20.8-12-arm32v6           |
+|                                        | nodered/node-red-docker:0.20.8-12-arm32v7           |
+|                                        | nodered/node-red-docker:0.20.8-12-arm64v8           |
+|                                        |                                                     |
+| latest-12-minimal, 0.20.8-12-minimal   | nodered/node-red-docker:0.20.8-12-amd64-minimal     |
+|                                        | nodered/node-red-docker:0.20.8-12-arm32v6-minimal   |
+|                                        | nodered/node-red-docker:0.20.8-12-arm32v7-minimal   |
+|                                        | nodered/node-red-docker:0.20.8-12-arm64v8-minimal   |
+|                                        |                                                     |
+| latest-12-devtools, 0.20.8-12-devtools | nodered/node-red-docker:0.20.8-12-amd64-devtools    |
+|                                        | nodered/node-red-docker:0.20.8-12-arm32v6-devtools  |
+|                                        | nodered/node-red-docker:0.20.8-12-arm32v7-devtools  |
+|                                        | nodered/node-red-docker:0.20.8-12-arm64v8-devtools  |
+|                                        |                                                     |
+| latest-12-python2, 0.20.8-12-python2   | nodered/node-red-docker:0.20.8-12-amd64-python2     |
+|                                        | nodered/node-red-docker:0.20.8-12-arm32v6-python2   |
+|                                        | nodered/node-red-docker:0.20.8-12-arm32v7-python2   |
+|                                        | nodered/node-red-docker:0.20.8-12-arm64v8-python2   |
 
 With the support of Docker manifest list, there is no need to explicit add the tag for the architecture to use.
 When a docker run command or docker service command or docker stack command is executed, docker checks which architecture is required and verifies if it is available in the docker repository. When it does, docker pulls the matching image for it.
 
 Therefor all tags regarding Raspberry PI's are dropped.
 
-For example: suppose you are running on a Raspberry PI 3B, which has arm32v7 as architecture. Then just simple run the following command to pull the image (tagged by `0.20.7-10-arm32v7`) and run the container.
+For example: suppose you are running on a Raspberry PI 3B, which has arm32v7 as architecture. Then just simple run the following command to pull the image (tagged by `0.20.8-10-arm32v7`) and run the container.
 ```
 docker run -it -p 1880:1880 --name mynodered nodered/node-red-docker:latest
 ```
 
-The same command can be used for running on an amd64 system, since docker discovers its running on a amd64 host and pulls the image with matching tag (`0.20.7-10-amd64`).
+The same command can be used for running on an amd64 system, since docker discovers its running on a amd64 host and pulls the image with matching tag (`0.20.8-10-amd64`).
 
 This gives the advantaged that you don't need to know/specifiy which architecture you are running on and makes docker run commands and docker compose files for flexible and exchangeable across systems.
 
