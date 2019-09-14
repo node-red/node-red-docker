@@ -26,8 +26,8 @@ main() {
   "manifest-list-version")
     docker_manifest_list_version "$2" "$3"
     ;;
-  "manifest-list-testing-or-latest")
-    docker_manifest_list_testing_or_latest "$2" "$3"
+  "manifest-list-test-beta-latest")
+    docker_manifest_list_test_beta_latest "$2" "$3"
     ;;
   *)
     echo "none of above!"
@@ -55,8 +55,7 @@ function docker_build() {
   echo "DOCKER BUILD: build version -> ${BUILD_VERSION}."
   echo "DOCKER BUILD: node-red version -> ${NODE_RED_VERSION}."
   echo "DOCKER BUILD: qemu arch - ${QEMU_ARCH}."
-  echo "DOCKER BUILD: python version - ${PYTHON_VERSION}."
-  echo "DOCKER BUILD: devtools - ${DEVTOOLS}."
+  echo "DOCKER BUILD: tag suffix - ${TAG_SUFFIX}."
   echo "DOCKER BUILD: docker file - ${DOCKER_FILE}."
 
   docker build --no-cache \
@@ -68,8 +67,7 @@ function docker_build() {
     --build-arg BUILD_REF=${TRAVIS_COMMIT} \
     --build-arg NODE_RED_VERSION=v${NODE_RED_VERSION} \
     --build-arg QEMU_ARCH=${QEMU_ARCH} \
-    --build-arg PYTHON_VERSION=${PYTHON_VERSION} \
-    --build-arg DEVTOOLS=${DEVTOOLS} \
+    --build-arg TAG_SUFFIX=${TAG_SUFFIX} \
     --file ./.docker/${DOCKER_FILE} \
     --tag ${TARGET}:build .
 }
@@ -105,7 +103,6 @@ function docker_push() {
   docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}${TAG_SUFFIX}-${ARCH}
 }
 
-
 function docker_manifest_list_version() {
 
   if [[ ${1} == "" ]]; then export NODE_VERSION=""; else export NODE_VERSION="-${1}"; fi
@@ -126,10 +123,15 @@ function docker_manifest_list_version() {
   docker manifest push ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}
 }
 
-function docker_manifest_list_testing_or_latest() {
+function docker_manifest_list_test_beta_latest() {
 
-  if [[ ${BUILD_VERSION} == *"testing"* ]]; then export TAG_PREFIX="testing"; else export TAG_PREFIX="latest"; fi
-  if [[ ${BUILD_VERSION} == *"beta"* ]]; then export TAG_PREFIX="beta"; else export TAG_PREFIX="latest"; fi
+  if [[ ${BUILD_VERSION} == *"test"* ]]; then
+    export TAG_PREFIX="test";
+  elif [[ ${BUILD_VERSION} == *"beta"* ]]; then
+    export TAG_PREFIX="beta";
+  else
+    export TAG_PREFIX="latest";
+  fi
 
   if [[ ${1} == "" ]]; then export NODE_VERSION=""; else export NODE_VERSION="-${1}"; fi
   if [[ ${2} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${2}"; fi
@@ -151,7 +153,8 @@ function docker_manifest_list_testing_or_latest() {
 
 function setup_dependencies() {
   echo "PREPARE: Setting up dependencies."
-  sudo apt update -y && sudo apt install --only-upgrade docker-ce -y
+  sudo apt update -y
+  sudo apt install --only-upgrade docker-ce -y
 }
 
 function update_docker_configuration() {

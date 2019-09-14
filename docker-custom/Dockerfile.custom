@@ -4,10 +4,6 @@ ARG OS=alpine
 
 #### Stage BASE ########################################################################################################
 FROM ${ARCH}/node:${NODE_VERSION}-${OS} AS base
-ARG QEMU_ARCH
-
-# QEMU - Quick Emulation
-COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 
 # Copy scripts
 COPY .docker/scripts/*.sh /tmp/
@@ -54,8 +50,7 @@ ARG BUILD_VERSION
 ARG BUILD_REF
 ARG NODE_RED_VERSION
 ARG ARCH
-ARG QEMU_ARCH
-ARG TAG_SUFFIX
+ARG TAG_SUFFIX=default
 
 LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.docker.dockerfile=".docker/Dockerfile.alpine" \
@@ -73,7 +68,7 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
 USER root
 # Install devtools & Clean up
 RUN /tmp/install_devtools.sh && \
-    rm /tmp/* && rm /usr/bin/qemu-$QEMU_ARCH-static
+    rm /tmp/*
 
 USER node-red
 COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
