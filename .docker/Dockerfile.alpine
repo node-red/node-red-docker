@@ -71,7 +71,7 @@ RUN npm install
 USER root
 
 # Cleanup
-RUN && \
+RUN set -ex && \
     chmod u+x /tmp/remove_native_gpio.sh && /tmp/remove_native_gpio.sh \
     chmod u+x /tmp/remove_devtools.sh && /tmp/remove_devtools.sh \
     rm -r /tmp/*
