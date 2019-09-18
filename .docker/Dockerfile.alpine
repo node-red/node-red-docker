@@ -68,12 +68,13 @@ USER node-red
 COPY package.json /usr/src/node-red/
 RUN npm install
 
-USER root
 
-# Cleanup
+
+# Cleanup as root
+USER root
 RUN set -ex && \
-    chmod u+x /tmp/remove_native_gpio.sh && /tmp/remove_native_gpio.sh \
-    chmod u+x /tmp/remove_devtools.sh && /tmp/remove_devtools.sh \
+    chmod u+x /tmp/remove_native_gpio.sh && /tmp/remove_native_gpio.sh && \
+    chmod u+x /tmp/remove_devtools.sh && /tmp/remove_devtools.sh && \
     rm -r /tmp/*
 
 # Return as node-red user
