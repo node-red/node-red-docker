@@ -4,5 +4,5 @@ set -ex
 # Removing Devtools
 if [[ ${TAG_SUFFIX} == "minimal" ]]; then
   echo "Removing devtools"
-  apk add del devtools
+  apk del devtools
 fi
