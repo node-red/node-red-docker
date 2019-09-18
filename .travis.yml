@@ -161,13 +161,13 @@ jobs:
 
               # Create and push manifest list 'latest' or 'testing' for minimal
 #              - ./.docker/docker.sh manifest-list-testing-beta-latest "12" "minimal"
-              - ./.docker/docker.sh manifest-list-testing-beta-latest "10" "minimal"
-              - ./.docker/docker.sh manifest-list-testing-beta-latest "" "minimal"
+              - ./.docker/docker.sh manifest-list-test-beta-latest "10" "minimal"
+              - ./.docker/docker.sh manifest-list-test-beta-latest "" "minimal"
 
               # Create and push manifest list 'latest' or 'testing' for default
 #              - ./.docker/docker.sh manifest-list-testing-beta-latest "12" "default"
 #              - ./.docker/docker.sh manifest-list-testing-beta-latest "10" "default"
-              - ./.docker/docker.sh manifest-list-testing-beta-latest "" "default"
+              - ./.docker/docker.sh manifest-list-test-beta-latest "" "default"
 
               # Docker Logout
               - docker logout
