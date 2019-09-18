@@ -41,6 +41,12 @@ RUN set -ex && \
         nano \
         git \
         openssh-client && \
+    apk add --no-cache --virtual devtools \
+        build-base \
+        linux-headers \
+        udev \
+        python \
+        python3 && \
     mkdir -p /usr/src/node-red /data && \
     adduser -h /usr/src/node-red -D -H node-red && \
     chown -R node-red:node-red /data && \
@@ -63,14 +69,12 @@ COPY package.json /usr/src/node-red/
 RUN npm install
 
 USER root
-# Remove native gpio
-RUN chmod u+x /tmp/remove_native_gpio.sh && /tmp/remove_native_gpio.sh
 
-# Rebuild bcrypt
-#RUN chmod u+x /tmp/rebuild_bcrypt.sh && /tmp/rebuild_bcrypt.sh
-
-# Cleanup tmp
-RUN rm -r /tmp/*
+# Cleanup
+RUN && \
+    chmod u+x /tmp/remove_native_gpio.sh && /tmp/remove_native_gpio.sh \
+    chmod u+x /tmp/remove_devtools.sh && /tmp/remove_devtools.sh \
+    rm -r /tmp/*
 
 # Return as node-red user
 USER node-red
