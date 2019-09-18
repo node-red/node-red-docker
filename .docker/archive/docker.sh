@@ -55,10 +55,11 @@ function docker_build() {
   echo "DOCKER BUILD: build version -> ${BUILD_VERSION}."
   echo "DOCKER BUILD: node-red version -> ${NODE_RED_VERSION}."
   echo "DOCKER BUILD: qemu arch - ${QEMU_ARCH}."
-  echo "DOCKER BUILD: tag suffix - ${TAG_SUFFIX}."
+  echo "DOCKER BUILD: python version - ${PYTHON_VERSION}."
+  echo "DOCKER BUILD: devtools - ${DEVTOOLS}."
   echo "DOCKER BUILD: docker file - ${DOCKER_FILE}."
 
-  docker build \
+  docker build --no-cache \
     --build-arg ARCH=${ARCH} \
     --build-arg NODE_VERSION=${NODE_VERSION} \
     --build-arg OS=${OS} \
@@ -67,7 +68,8 @@ function docker_build() {
     --build-arg BUILD_REF=${TRAVIS_COMMIT} \
     --build-arg NODE_RED_VERSION=v${NODE_RED_VERSION} \
     --build-arg QEMU_ARCH=${QEMU_ARCH} \
-    --build-arg TAG_SUFFIX=${TAG_SUFFIX} \
+    --build-arg PYTHON_VERSION=${PYTHON_VERSION} \
+    --build-arg DEVTOOLS=${DEVTOOLS} \
     --file ./.docker/${DOCKER_FILE} \
     --tag ${TARGET}:build .
 }
@@ -102,6 +104,7 @@ function docker_push() {
   echo "DOCKER TAG: pushing image - ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}${TAG_SUFFIX}-${ARCH}"
   docker push ${TARGET}:${BUILD_VERSION}-${NODE_VERSION}${TAG_SUFFIX}-${ARCH}
 }
+
 
 function docker_manifest_list_version() {
 
