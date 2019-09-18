@@ -1,8 +1,10 @@
 #!/bin/bash
 set -ex
 
-# Install Devtools
-if [[ ${DEVTOOLS} == "1" ]]; then
-  echo "Installing Devtools"
-  apk add --no-cache build-base
+# Installing Devtools
+if [[ ${TAG_SUFFIX} != "minimal" ]]; then
+  echo "Installing devtools"
+  apk add --no-cache --virtual devtools build-base linux-headers udev python python3
+else
+  echo "Skip installing devtools"
 fi
