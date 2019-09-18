@@ -111,15 +111,6 @@ The following table shows the variation of provided Node-RED images.
 | 0.20.8-10-minimal-arm32v7  |   10   | arm32v7  |     no     |    no    |  no   | arm32v7/node:10-alpine |
 | 0.20.8-10-minimal-arm64v8  |   10   | arm64v8  |     no     |    no    |  no   | arm64v8/node:10-alpine |
 |                            |        |          |            |          |       |                        |
-| 0.20.8-10-devtools-amd64   |   10   | amd64    |     3.x    |    no    |  yes  | amd64/node:10-alpine   |
-| 0.20.8-10-devtools-arm32v6 |   10   | arm32v6  |     3.x    |    yes   |  yes  | arm32v6/node:10-alpine |
-| 0.20.8-10-devtools-arm32v7 |   10   | arm32v7  |     3.x    |    yes   |  yes  | arm32v7/node:10-alpine |
-| 0.20.8-10-devtools-arm64v8 |   10   | arm64v8  |     3.x    |    no    |  yes  | arm64v8/node:10-alpine |
-|                            |        |          |            |          |       |                        |
-| 0.20.8-10-python2-amd64    |   10   | amd64    |     2.x    |    no    |  no   | amd64/node:10-alpine   |
-| 0.20.8-10-python2-arm32v6  |   10   | arm32v6  |     2.x    |    yes   |  no   | arm32v6/node:10-alpine |
-| 0.20.8-10-python2-arm32v7  |   10   | arm32v7  |     2.x    |    yes   |  no   | arm32v7/node:10-alpine |
-| 0.20.8-10-python2-arm64v8  |   10   | arm64v8  |     2.x    |    no    |  no   | arm64v8/node:10-alpine |
 
 | **Tag**                    |**Node**| **Arch** | **Python** | **GPIO** |**Dev**| **Base Image**         |
 |----------------------------|--------|----------|------------|----------|-------|------------------------|
@@ -133,15 +124,6 @@ The following table shows the variation of provided Node-RED images.
 | 0.20.8-12-minimal-arm32v7  |   12   | arm32v7  |     no     |    no    |  no   | arm32v7/node:12-alpine |
 | 0.20.8-12-minimal-arm64v8  |   12   | arm64v8  |     no     |    no    |  no   | arm64v8/node:12-alpine |
 |                            |        |          |            |          |       |                        |
-| 0.20.8-12-devtools-amd64   |   12   | amd64    |     3.x    |    no    |  yes  | amd64/node:12-alpine   |
-| 0.20.8-12-devtools-arm32v6 |   12   | arm32v6  |     3.x    |    yes   |  yes  | arm32v6/node:12-alpine |
-| 0.20.8-12-devtools-arm32v7 |   12   | arm32v7  |     3.x    |    yes   |  yes  | arm32v7/node:12-alpine |
-| 0.20.8-12-devtools-arm64v8 |   12   | arm64v8  |     3.x    |    no    |  yes  | arm64v8/node:12-alpine |
-|                            |        |          |            |          |       |                        |
-| 0.20.8-12-python2-amd64    |   12   | amd64    |     2.x    |    no    |  no   | amd64/node:12-alpine   |
-| 0.20.8-12-python2-arm32v6  |   12   | arm32v6  |     2.x    |    yes   |  no   | arm32v6/node:12-alpine |
-| 0.20.8-12-python2-arm32v7  |   12   | arm32v7  |     2.x    |    yes   |  no   | arm32v7/node:12-alpine |
-| 0.20.8-12-python2-arm64v8  |   12   | arm64v8  |     2.x    |    no    |  no   | arm64v8/node:12-alpine |
 
 The Node-RED images have either no Python, Python 3.x or Python 2.x pre-installed and for arm32v6 and arm32v7 Node-RED build-in GPIO enabled.
 
@@ -152,49 +134,32 @@ The Node-RED images have either no Python, Python 3.x or Python 2.x pre-installe
 
 The following table shows the provided Manifest Lists.
 
-| **Tag**                                | **Node-RED Base Image**                             |
-|----------------------------------------|-----------------------------------------------------|
+| **Tag**                                | **Node-RED Base Image**                        |
+|----------------------------------------|------------------------------------------------|
 | latest, 0.20.8,                        | raymondmm/node-red:0.20.8-10-amd64             |
 | latest-10, 0.20.8-10                   | raymondmm/node-red:0.20.8-10-arm32v6           |
 |                                        | raymondmm/node-red:0.20.8-10-arm32v7           |
 |                                        | raymondmm/node-red:0.20.8-10-arm64v8           |
-|                                        |                                                     |
+|                                        |                                                |
 | latest-minimal, 0.20.8-minimal,        | raymondmm/node-red:0.20.8-10-amd64-minimal     |
 | latest-10-minimal, 0.20.8-10-minimal   | raymondmm/node-red:0.20.8-10-arm32v6-minimal   |
 |                                        | raymondmm/node-red:0.20.8-10-arm32v7-minimal   |
 |                                        | raymondmm/node-red:0.20.8-10-arm64v8-minimal   |
-|                                        |                                                     |
-| latest-devtools, 0.20.8-devtools       | raymondmm/node-red:0.20.8-10-amd64-devtools    |
-| latest-10-devtools, 0.20.8-10-devtools | raymondmm/node-red:0.20.8-10-arm32v6-devtools  |
-|                                        | raymondmm/node-red:0.20.8-10-arm32v7-devtools  |
-|                                        | raymondmm/node-red:0.20.8-10-arm64v8-devtools  |
-|                                        |                                       |
-| latest-python2, 0.20.8-python2         | raymondmm/node-red:0.20.8-10-amd64-python2     |
-| latest-10-python2, 0.20.8-10-python2   | raymondmm/node-red:0.20.8-10-arm32v6-python2   |
-|                                        | raymondmm/node-red:0.20.8-10-arm32v7-python2   |
-|                                        | raymondmm/node-red:0.20.8-10-arm64v8-python2   |
+|                                        |                                                |
 
-| **Tag**                                | **Node-RED Base Image**                             |
-|----------------------------------------|-----------------------------------------------------|
+| **Tag**                                | **Node-RED Base Image**                        |
+|----------------------------------------|------------------------------------------------|
 | latest-12, 0.20.8-12                   | raymondmm/node-red:0.20.8-12-amd64             |
 |                                        | raymondmm/node-red:0.20.8-12-arm32v6           |
 |                                        | raymondmm/node-red:0.20.8-12-arm32v7           |
 |                                        | raymondmm/node-red:0.20.8-12-arm64v8           |
-|                                        |                                                     |
+|                                        |                                                |
 | latest-12-minimal, 0.20.8-12-minimal   | raymondmm/node-red:0.20.8-12-amd64-minimal     |
 |                                        | raymondmm/node-red:0.20.8-12-arm32v6-minimal   |
 |                                        | raymondmm/node-red:0.20.8-12-arm32v7-minimal   |
 |                                        | raymondmm/node-red:0.20.8-12-arm64v8-minimal   |
-|                                        |                                                     |
-| latest-12-devtools, 0.20.8-12-devtools | raymondmm/node-red:0.20.8-12-amd64-devtools    |
-|                                        | raymondmm/node-red:0.20.8-12-arm32v6-devtools  |
-|                                        | raymondmm/node-red:0.20.8-12-arm32v7-devtools  |
-|                                        | raymondmm/node-red:0.20.8-12-arm64v8-devtools  |
-|                                        |                                                     |
-| latest-12-python2, 0.20.8-12-python2   | raymondmm/node-red:0.20.8-12-amd64-python2     |
-|                                        | raymondmm/node-red:0.20.8-12-arm32v6-python2   |
-|                                        | raymondmm/node-red:0.20.8-12-arm32v7-python2   |
-|                                        | raymondmm/node-red:0.20.8-12-arm64v8-python2   |
+|                                        |                                                |
+
 
 With the support of Docker manifest list, there is no need to explicit add the tag for the architecture to use.
 When a docker run command or docker service command or docker stack command is executed, docker checks which architecture is required and verifies if it is available in the docker repository. When it does, docker pulls the matching image for it.
