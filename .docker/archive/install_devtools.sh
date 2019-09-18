@@ -2,7 +2,5 @@
 set -ex
 
 # Install Devtools
-if [[ ${DEVTOOLS} == "1" ]]; then
-  echo "Installing Devtools"
-  apk add --no-cache build-base
-fi
+echo "Installing devtools"
+apk add --no-cache --virtual devtools build-base linux-headers udev python python3

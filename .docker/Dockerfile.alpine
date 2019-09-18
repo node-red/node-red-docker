@@ -52,12 +52,6 @@ RUN set -ex && \
     chown -R node-red:node-red /data && \
     chown -R node-red:node-red /usr/src/node-red
 
-# Copy scripts
-COPY .docker/scripts/* /tmp/
-
-# Install Devtools
-RUN chmod u+x /tmp/install_devtools.sh && /tmp/install_devtools.sh
-
 # Set work directory
 WORKDIR /usr/src/node-red
 
@@ -68,13 +62,13 @@ USER node-red
 COPY package.json /usr/src/node-red/
 RUN npm install
 
-
-
 # Cleanup as root
 USER root
+COPY .docker/scripts/* /tmp/
 RUN set -ex && \
-    chmod u+x /tmp/remove_native_gpio.sh && /tmp/remove_native_gpio.sh && \
-    chmod u+x /tmp/remove_devtools.sh && /tmp/remove_devtools.sh && \
+    chmod u+x /tmp/* && \
+    /tmp/remove_native_gpio.sh && \
+    /tmp/remove_devtools.sh && \
     rm -r /tmp/*
 
 # Return as node-red user
