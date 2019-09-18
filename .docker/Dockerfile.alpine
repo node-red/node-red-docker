@@ -67,7 +67,7 @@ USER root
 RUN chmod u+x /tmp/remove_native_gpio.sh && /tmp/remove_native_gpio.sh
 
 # Rebuild bcrypt
-RUN chmod u+x /tmp/rebuild_bcrypt.sh && /tmp/rebuild_bcrypt.sh
+#RUN chmod u+x /tmp/rebuild_bcrypt.sh && /tmp/rebuild_bcrypt.sh
 
 # Cleanup tmp
 RUN rm -r /tmp/*
