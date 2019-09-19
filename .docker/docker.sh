@@ -59,6 +59,8 @@ function docker_build() {
   echo "DOCKER BUILD: docker file - ${DOCKER_FILE}."
 
   docker build --no-cache \
+    --volume type=bind,source=/tmp/qemu-${QEMU_ARCH}-static,target=/usr/bin/${QEMU_ARCH}-static \
+    --volume type=bind,source=/.docker/scripts,target=/tmp \
     --build-arg ARCH=${ARCH} \
     --build-arg NODE_VERSION=${NODE_VERSION} \
     --build-arg OS=${OS} \
