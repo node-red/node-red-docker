@@ -1,18 +1,9 @@
 ARG ARCH=amd64
 ARG NODE_VERSION=10
 ARG OS=alpine
-ARG NODE_RED_VERSION=0.20.8
 
 FROM ${ARCH}/node:${NODE_VERSION}-${OS} AS base
-
-ARG BUILD_DATE
-ARG BUILD_VERSION
-ARG BUILD_REF
-ARG NODE_RED_VERSION
-ARG ARCH
 ARG QEMU_ARCH
-ARG OS
-ARG TAG_SUFFIX
 
 #### Stage BASE ########################################################################################################
 # QEMU - Quick Emulation
@@ -58,6 +49,14 @@ RUN cp -R node_modules prod_node_modules
 
 #### Stage RELEASE #####################################################################################################
 FROM base AS RELEASE
+ARG BUILD_DATE
+ARG BUILD_VERSION
+ARG BUILD_REF
+ARG NODE_RED_VERSION
+ARG ARCH
+ARG QEMU_ARCH
+ARG TAG_SUFFIX
+
 LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.docker.dockerfile=".docker/Dockerfile.alpine" \
     org.label-schema.license="Apache License 2.0" \
