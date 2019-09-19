@@ -155,7 +155,9 @@ function docker_manifest_list_test_beta_latest() {
 
 function setup_dependencies() {
   echo "PREPARE: Setting up dependencies."
-  sudo apt update -y && sudo apt install --only-upgrade docker-ce -y
+  sudo apt update -y && \
+  sudo apt remove -y docker-ce && \
+  sudo apt install -y docker-engine
 }
 
 function update_docker_configuration() {
