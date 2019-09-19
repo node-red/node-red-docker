@@ -58,7 +58,7 @@ function docker_build() {
   echo "DOCKER BUILD: tag suffix - ${TAG_SUFFIX}."
   echo "DOCKER BUILD: docker file - ${DOCKER_FILE}."
 
-  docker build \
+  docker build --no-cache \
     --build-arg ARCH=${ARCH} \
     --build-arg NODE_VERSION=${NODE_VERSION} \
     --build-arg OS=${OS} \
