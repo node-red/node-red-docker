@@ -31,6 +31,10 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
 # QEMU - Quick Emulation
 COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 
+# Copy scripts
+COPY .docker/scripts/* /tmp/
+RUN chmod u+x /tmp/*
+
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
     apk add --no-cache \
@@ -41,12 +45,6 @@ RUN set -ex && \
         nano \
         git \
         openssh-client && \
-    apk add --no-cache --virtual devtools \
-        build-base \
-        linux-headers \
-        udev \
-        python \
-        python3 && \
     mkdir -p /usr/src/node-red /data && \
     adduser -h /usr/src/node-red -D -H node-red && \
     chown -R node-red:node-red /data && \
@@ -54,6 +52,9 @@ RUN set -ex && \
 
 # Set work directory
 WORKDIR /usr/src/node-red
+
+# Install Devtools
+RUN /tmp/install_devtools.sh
 
 # Run as node-red user
 USER node-red
@@ -64,11 +65,8 @@ RUN npm install
 
 # Cleanup as root
 USER root
-COPY .docker/scripts/* /tmp/
-RUN set -ex && \
-    chmod u+x /tmp/* && \
-    /tmp/remove_native_gpio.sh && \
-    /tmp/remove_devtools.sh && \
+
+RUN /tmp/remove_native_gpio.sh && \
     rm -r /tmp/*
 
 # Return as node-red user
