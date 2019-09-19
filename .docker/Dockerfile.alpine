@@ -62,10 +62,11 @@ USER node-red
 COPY package.json /usr/src/node-red/
 RUN npm install
 
-# Cleanup as root
+# Clean up as root
 USER root
 RUN /tmp/remove_native_gpio.sh && \
- rm /usr/bin/qemu-$QEMU_ARCH-static
+ rm /usr/bin/qemu-$QEMU_ARCH-static && \
+ rm /tmp/*
 
 # Return as node-red user
 USER node-red
