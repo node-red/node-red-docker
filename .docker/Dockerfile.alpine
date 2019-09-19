@@ -28,9 +28,11 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.arch=${ARCH} \
     authors="Dave Conway-Jones, Nick O'Leary, James Thomas, Raymond Mouthaan"
 
+# QEMU - Quick Emulation
+COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
+
 # Copy scripts
-#COPY .docker/scripts/* /tmp/
-#RUN chmod u+x /tmp/*
+COPY .docker/scripts/*.sh /tmp/
 
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
@@ -62,7 +64,8 @@ RUN npm install
 
 # Cleanup as root
 USER root
-RUN /tmp/remove_native_gpio.sh
+RUN /tmp/remove_native_gpio.sh && \
+ rm /usr/bin/qemu-$QEMU_ARCH-static
 
 # Return as node-red user
 USER node-red

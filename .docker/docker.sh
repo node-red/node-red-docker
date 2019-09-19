@@ -59,8 +59,6 @@ function docker_build() {
   echo "DOCKER BUILD: docker file - ${DOCKER_FILE}."
 
   docker build --no-cache \
-    --volume type=bind,source=/tmp/qemu-${QEMU_ARCH}-static,target=/usr/bin/${QEMU_ARCH}-static \
-    --volume type=bind,source=/.docker/scripts,target=/tmp \
     --build-arg ARCH=${ARCH} \
     --build-arg NODE_VERSION=${NODE_VERSION} \
     --build-arg OS=${OS} \
@@ -155,9 +153,8 @@ function docker_manifest_list_test_beta_latest() {
 
 function setup_dependencies() {
   echo "PREPARE: Setting up dependencies."
-  sudo apt update -y && \
-  sudo apt remove -y docker-ce && \
-  sudo apt install -y docker-engine
+  sudo apt update -y
+  sudo apt install --only-upgrade docker-ce -y
 }
 
 function update_docker_configuration() {
