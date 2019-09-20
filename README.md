@@ -7,7 +7,7 @@
 This project describes some of the many ways Node-RED can be run under Docker and has support for multiple architectures (amd64, arm32v6, arm32v7 and arm64v8).
 Some basic familiarity with Docker and the [Docker Command Line](https://docs.docker.com/engine/reference/commandline/cli/) is assumed.
 
-This project also provides the build for the `raymondmm/node-red` container on [DockerHub](https://hub.docker.com/r/raymondmm/node-red/).
+This project also provides the build for the `raymondmm/node-red` container on [Docker Hub](https://hub.docker.com/r/raymondmm/node-red/).
 
 ## Quick Start
 To run this directly in Docker at it's simplest just run:
@@ -255,7 +255,7 @@ project's package.json and re-build._
 ## Docker Stack / Docker Compose
 
 Below an example of a Docker Compose file which can be run by `docker stack` or `docker-compose`.
-Please refer to the official Docker pages for more info about [docker stack](https://docs.docker.com/engine/reference/commandline/stack/) and [docker compose](https://docs.docker.com/compose/).
+Please refer to the official Docker pages for more info about [Docker stack](https://docs.docker.com/engine/reference/commandline/stack/) and [Docker compose](https://docs.docker.com/compose/).
 
 ```
 ################################################################################
