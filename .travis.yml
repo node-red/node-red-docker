@@ -11,7 +11,7 @@ env:
     - TARGET=raymondmm/node-red
     - QEMU_VERSION=v4.0.0
     - OS=alpine
-    - DOCKER_FILE=Dockerfile.alpineNew
+    - DOCKER_FILE=Dockerfile.alpine
 
   matrix:
     ### Node JS 10 ###############################################################################################################
