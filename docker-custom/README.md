@@ -23,18 +23,17 @@ cd node-red-docker/docker-custom
  
 ## 2. **docker-make.sh**
 
-The `docker-make.sh` is a helper script to build a custom docker image. 
+The `docker-make.sh` is a helper script to build a custom Node-RED docker image. 
 
-   Change the build arguments as needed:
+Change the build arguments as needed:
 
    - `--build-arg ARCH=amd64` : architecture your are building for (arm32v6, arm32v7, arm64v8, amd64)
    - `--build-arg NODE_VERSION=10` : NodeJS version you like to use
    - `--build-arg NODE_RED_VERSION=${NODE_RED_VERSION}` : don't change this, ${NODE_RED_VERSION} gets populated from package.json
-   - `--build-arg OS=alpine` : the linux distro you like to use (alpine or buster-slim)
+   - `--build-arg OS=alpine` : the linux distro to use (alpine)
    - `--build-arg BUILD_DATE="$(date +"%Y-%m-%dT%H:%M:%SZ")"` : don't change this
-   - `--build-arg PYTHON_VERSION=0` : install Python to your image (0=no Python, 2=Python 2.x, 3=Python 3.x)
-   - `--build-arg DEVTOOLS=0` : install Devtools to your image (0=no Devtools, 1=Devtools)
-   - `--file Dockerfile-alpine.custom` : Dockerfile to use to build your image (Dockerfile-alpine.custom or Dockerfile-slim.custom)
+   - `--build-arg TAG_SUFFIX=default` : to build the default or minimal image 
+   - `--file Dockerfile.custom` : Dockerfile to use to build your image.
    - `--tag mynodered:node-red-custom-build` : set the image name and tag
    
 ## 3. **Run docker-make.sh**
@@ -61,5 +60,5 @@ $ docker inspect testing:node-red-build
 
 ## 4. **Advanced Configuration**
 
-`Dockerfile-alpine.custom` can be modified as required. To add more applications the `install_devtools.sh` can be modified as needed.
-The scripts under `script` are used to determine if Python needs to be installed and fixed, as well to enable build-in support for gpio.
+`Dockerfile.custom` can be modified as required. To add more applications the `install_devtools.sh` can be modified as needed.
+
