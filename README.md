@@ -1,7 +1,7 @@
 # Node-RED-Docker
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/RaymondMouthaan/node-red.svg)](https://greenkeeper.io/)
-[![Build Status](https://travis-ci.org/RaymondMouthaan/node-red.svg?branch=master)](https://travis-ci.org/RaymondMouthaan/node-red)
+[![Greenkeeper badge](https://badges.greenkeeper.io/RaymondMouthaan/node-red-docker.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.org/RaymondMouthaan/node-red-docker.svg?branch=master)](https://travis-ci.org/RaymondMouthaan/node-red-docker)
 [![DockerHub Pull](https://img.shields.io/docker/pulls/raymondmm/node-red.svg)](https://hub.docker.com/r/raymondmm/node-red/)
 
 This project describes some of the many ways Node-RED can be run under Docker and has support for multiple architectures (amd64, arm32v6, arm32v7 and arm64v8).

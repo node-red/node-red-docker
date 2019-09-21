@@ -23,7 +23,8 @@ RUN set -ex && \
         git \
         openssh-client && \
     mkdir -p /usr/src/node-red /data && \
-    adduser -h /usr/src/node-red -D -H node-red && \
+    deluser --remove-home node && \
+    adduser -h /usr/src/node-red -D -H node-red -u 1000 && \
     chown -R node-red:node-red /data && \
     chown -R node-red:node-red /usr/src/node-red
 
