@@ -14,7 +14,7 @@ env:
     - DOCKER_FILE=Dockerfile.alpine
 
   matrix:
-    ### Node JS 10 ###############################################################################################################
+    ### Node JS 10 #####################################################################################################
     # Default Images
     - NODE_VERSION=10 TAG_SUFFIX=default QEMU_ARCH=x86_64  ARCH=amd64
     - NODE_VERSION=10 TAG_SUFFIX=default QEMU_ARCH=arm     ARCH=arm32v6
@@ -27,7 +27,7 @@ env:
     - NODE_VERSION=10 TAG_SUFFIX=minimal QEMU_ARCH=arm     ARCH=arm32v7
     - NODE_VERSION=10 TAG_SUFFIX=minimal QEMU_ARCH=aarch64 ARCH=arm64v8
 
-    ### Node JS 12 ###############################################################################################################
+    ### Node JS 12 #####################################################################################################
     # Default Images
     - NODE_VERSION=12 TAG_SUFFIX=default QEMU_ARCH=x86_64  ARCH=amd64
     - NODE_VERSION=12 TAG_SUFFIX=default QEMU_ARCH=arm     ARCH=arm32v6
@@ -50,12 +50,11 @@ before_script:
   - >
     if [ ! -z "${TRAVIS_TAG}" ]; then
       export BUILD_VERSION=${TRAVIS_TAG:1};
-    else      export BUILD_VERSION=beta;
     fi
 
-  # Set NODE_RED_VERSION
+  # Set NODE_RED_VERSION from package.json
   - >
-    export NODE_RED_VERSION=$(grep -Eo "\"node-red\": \"(\w*.\w*.\w*)" package.json | cut -d\" -f4)
+    export NODE_RED_VERSION=$(grep -oE "\"node-red\": \"(\w*.\w*.\w*.\w*.\w*.)" package.json | cut -d\" -f4)
 
 script:
   # Build Docker image
@@ -86,7 +85,6 @@ jobs:
           # Only create and push manifest list to Docker Hub, when tag starts with a `v`, eg. v0.20.8
           if: tag =~ ^v
           script:
-
               # Create and push Docker manifest lists
               # The push order is displayed in reverse order on Docker Hub
 
