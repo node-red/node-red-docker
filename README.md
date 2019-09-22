@@ -29,7 +29,7 @@ Running that command should give a terminal window with a running instance of No
         ===================
         
         10 Aug 12:57:10 - [info] Node-RED version: v0.20.8
-        10 Aug 12:57:10 - [info] Node.js  version: v10.16.2F
+        10 Aug 12:57:10 - [info] Node.js  version: v10.16.2
         10 Aug 12:57:10 - [info] Linux 4.19.58-v7+ arm LE
         10 Aug 12:57:11 - [info] Loading palette nodes
         10 Aug 12:57:16 - [info] Settings file  : /data/settings.js
