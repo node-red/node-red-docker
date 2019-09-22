@@ -88,8 +88,8 @@ The tag naming convention is `<node-red-version>-<node-version>-<image-type>-<ar
 - `<node-red-version>` is the Node-RED version.
 - `<node-version>` is the Node JS version.
 - `<image-type>` is type of image and is optional, can be either _none_ or minimal.
-    - _none_ : is the default and has Python 3 installed
-    - minimal : has no Python installed
+    - _none_ : is the default and has Python 2 & Python 3 + devtools installed
+    - minimal : has no Python installed and no devtools installed
 - `<architecture>` is the architecture of the Docker host system, can be either amd64, arm32v6, arm32v7, arm64.
 
 The Node-RED images are based on [official Node JS Alpine Linux](https://hub.docker.com/_/node/) images to keep them as small as possible.
@@ -99,10 +99,10 @@ The following table shows the variation of provided Node-RED images.
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**         |
 |----------------------------|--------|----------|------------|-------|------------------------|
-| 0.20.8-10-amd64            |   10   | amd64    |   2.x 3.x  |  no   | amd64/node:10-alpine   |
-| 0.20.8-10-arm32v6          |   10   | arm32v6  |   2.x 3.x  |  no   | arm32v6/node:10-alpine |
-| 0.20.8-10-arm32v7          |   10   | arm32v7  |   2.x 3.x  |  no   | arm32v7/node:10-alpine |
-| 0.20.8-10-arm64v8          |   10   | arm64v8  |   2.x 3.x  |  no   | arm64v8/node:10-alpine |
+| 0.20.8-10-amd64            |   10   | amd64    |   2.x 3.x  |  yes  | amd64/node:10-alpine   |
+| 0.20.8-10-arm32v6          |   10   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:10-alpine |
+| 0.20.8-10-arm32v7          |   10   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:10-alpine |
+| 0.20.8-10-arm64v8          |   10   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:10-alpine |
 |                            |        |          |            |       |                        |
 | 0.20.8-10-minimal-amd64    |   10   | amd64    |     no     |  no   | amd64/node:10-alpine   |
 | 0.20.8-10-minimal-arm32v6  |   10   | arm32v6  |     no     |  no   | arm32v6/node:10-alpine |
@@ -112,18 +112,16 @@ The following table shows the variation of provided Node-RED images.
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**         |
 |----------------------------|--------|----------|------------|-------|------------------------|
-| 0.20.8-12-amd64            |   12   | amd64    |   2.x 3.x  |  no   | amd64/node:12-alpine   |
-| 0.20.8-12-arm32v6          |   12   | arm32v6  |   2.x 3.x  |  no   | arm32v6/node:12-alpine |
-| 0.20.8-12-arm32v7          |   12   | arm32v7  |   2.x 3.x  |  no   | arm32v7/node:12-alpine |
-| 0.20.8-12-arm64v8          |   12   | arm64v8  |   2.x 3.x  |  no   | arm64v8/node:12-alpine |
+| 0.20.8-12-amd64            |   12   | amd64    |   2.x 3.x  |  yes  | amd64/node:12-alpine   |
+| 0.20.8-12-arm32v6          |   12   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:12-alpine |
+| 0.20.8-12-arm32v7          |   12   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:12-alpine |
+| 0.20.8-12-arm64v8          |   12   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:12-alpine |
 |                            |        |          |            |       |                        |
 | 0.20.8-12-minimal-amd64    |   12   | amd64    |     no     |  no   | amd64/node:12-alpine   |
 | 0.20.8-12-minimal-arm32v6  |   12   | arm32v6  |     no     |  no   | arm32v6/node:12-alpine |
 | 0.20.8-12-minimal-arm32v7  |   12   | arm32v7  |     no     |  no   | arm32v7/node:12-alpine |
 | 0.20.8-12-minimal-arm64v8  |   12   | arm64v8  |     no     |  no   | arm64v8/node:12-alpine |
 
-
-- The Node-RED images have either no Python or both Python 2.x and Python 3.x pre-installed.
 - All images have bash, tzdata, nano, curl git and openssl tools pre-installed to support Node-REDs Projects feature.
 
 ## Manifest Lists
@@ -168,7 +166,7 @@ The same command can be used for running on an amd64 system, since docker discov
 This gives the advantaged that you don't need to know/specifiy which architecture you are running on and makes docker run commands and docker compose files for flexible and exchangeable across systems.
 
 ## Raspberry PI - native GPIO support
-| WARNING: Native GPIO support for Raspberry PI has been dropped! |
+| BREAKING: Native GPIO support for Raspberry PI has been dropped! |
 | --- |
 The replacement for native GPIO is [node-red-node-pi-gpiod](https://github.com/node-red/node-red-nodes/tree/master/hardware/pigpiod).
 
