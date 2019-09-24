@@ -6,7 +6,7 @@ ARG OS=alpine
 FROM ${ARCH}/node:${NODE_VERSION}-${OS} AS base
 
 # Copy scripts
-COPY .docker/scripts/*.sh /tmp/
+COPY scripts/*.sh /tmp/
 
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \

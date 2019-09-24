@@ -8,7 +8,7 @@ language: bash
 
 env:
   global:
-    - TARGET=nodered/node-red-docker
+    - TARGET=nodered/node-red
     - QEMU_VERSION=v4.0.0
     - OS=alpine
     - DOCKER_FILE=Dockerfile.alpine

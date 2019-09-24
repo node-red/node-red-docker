@@ -34,7 +34,7 @@ Change the build arguments as needed:
    - `--build-arg BUILD_DATE="$(date +"%Y-%m-%dT%H:%M:%SZ")"` : don't change this
    - `--build-arg TAG_SUFFIX=default` : to build the default or minimal image 
    - `--file Dockerfile.custom` : Dockerfile to use to build your image.
-   - `--tag mynodered:node-red-custom-build` : set the image name and tag
+   - `--tag testing:node-red-build` : set the image name and tag
    
 ## 3. **Run docker-make.sh**
 
@@ -49,7 +49,7 @@ This starts building your custom image and might take a while depending on the s
 When building is done you can run the custom image by the following command:
    
 ```shell script
-$ docker run -it -p1880:1880 mynodered:node-red-custom-build
+$ docker run -it -p1880:1880 testing:node-red-build
 ```
     
 With the following command you can verify your docker image:
@@ -60,5 +60,5 @@ $ docker inspect testing:node-red-build
 
 ## 4. **Advanced Configuration**
 
-`Dockerfile.custom` can be modified as required. To add more applications the `install_devtools.sh` can be modified as needed.
+`Dockerfile.custom` can be modified as required. To add more applications the `scripts/install_devtools.sh` can be modified as needed.
 
