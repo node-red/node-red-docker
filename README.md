@@ -1,4 +1,4 @@
-# Node-RED-Docker
+# Node-RED Docker
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/RaymondMouthaan/node-red-docker.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/RaymondMouthaan/node-red-docker.svg?branch=master)](https://travis-ci.org/RaymondMouthaan/node-red-docker)
@@ -265,7 +265,7 @@ version: 3.7
 
 services:
   node-red:
-    image: nodered/node-red-docker:latest
+    image: raymondmm/node-red:latest
     environment:
       - TZ=Europe/Amsterdam
     ports:
