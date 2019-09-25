@@ -27,7 +27,7 @@ Running that command should give a terminal window with a running instance of No
 
         Welcome to Node-RED
         ===================
-        
+
         10 Aug 12:57:10 - [info] Node-RED version: v0.20.8
         10 Aug 12:57:10 - [info] Node.js  version: v10.16.2
         10 Aug 12:57:10 - [info] Linux 4.19.58-v7+ arm LE
@@ -38,20 +38,20 @@ Running that command should give a terminal window with a running instance of No
         10 Aug 12:57:16 - [warn] Projects disabled : editorTheme.projects.enabled=false
         10 Aug 12:57:16 - [info] Flows file     : /data/flows.json
         10 Aug 12:57:16 - [info] Creating new flow file
-        10 Aug 12:57:17 - [warn] 
-        
+        10 Aug 12:57:17 - [warn]
+
         ---------------------------------------------------------------------
         Your flow credentials file is encrypted using a system-generated key.
-        
+
         If the system-generated key is lost for any reason, your credentials
         file will not be recoverable, you will have to delete it and re-enter
         your credentials.
-        
+
         You should set your own key using the 'credentialSecret' option in
         your settings file. Node-RED will then re-encrypt your credentials
         file using your chosen key the next time you deploy a change.
         ---------------------------------------------------------------------
-        
+
         10 Aug 12:57:17 - [info] Server now running at http://127.0.0.1:1880/
 
         [...]
@@ -81,8 +81,8 @@ extra nodes you install "outside" of the container. We do this so that you may r
 container without permanently losing all of your customisations._
 
 ## Image Variations
-The Node-RED images come in different variations and are supported by manifest lists (auto-detect architecture). 
-This makes it more easy to deploy in a multi architecture Docker environment. E.g. a Docker Swarm with mix of Raspberry Pi's and amd64 nodes. 
+The Node-RED images come in different variations and are supported by manifest lists (auto-detect architecture).
+This makes it more easy to deploy in a multi architecture Docker environment. E.g. a Docker Swarm with mix of Raspberry Pi's and amd64 nodes.
 
 The tag naming convention is `<node-red-version>-<node-version>-<image-type>-<architecture>`, where:
 - `<node-red-version>` is the Node-RED version.
@@ -163,7 +163,7 @@ docker run -it -p 1880:1880 --name mynodered nodered/node-red:latest
 
 The same command can be used for running on an amd64 system, since docker discovers its running on a amd64 host and pulls the image with matching tag (`0.20.8-10-amd64`).
 
-This gives the advantaged that you don't need to know/specifiy which architecture you are running on and makes docker run commands and docker compose files for flexible and exchangeable across systems.
+This gives the advantage that you don't need to know/specify which architecture you are running on and makes docker run commands and docker compose files for flexible and exchangeable across systems.
 
 ## Raspberry PI - native GPIO support
 | BREAKING: Native GPIO support for Raspberry PI has been dropped! |
@@ -175,7 +175,7 @@ Disadvantages of the native GPIO support are:
 - Gain access to /dev/mem of your Docker node/host
 - privileged=true is not supported for `docker stack` command
 
-`node-red-node-pi-gpiod` solves all these disadvantages. With `node-red-node-pi-gpiod` it is possible to interact with gpio's of multiple Raspberry Pi's from a single Node-RED container. 
+`node-red-node-pi-gpiod` solves all these disadvantages. With `node-red-node-pi-gpiod` it is possible to interact with gpio's of multiple Raspberry Pi's from a single Node-RED container.
 
 ### Quick Migration steps to `node-red-node-pi-gpiod`
 1. Install `node-red-node-pi-gpiod` through the Node-RED pallete
@@ -186,8 +186,8 @@ Disadvantages of the native GPIO support are:
 For install instruction details please refer to the `node-red-node-pi-gpiod` [README](https://github.com/node-red/node-red-nodes/tree/master/hardware/pigpiod#node-red-node-pi-gpiod)  
 
 ## Host Directory As Volume (Persistent)
-To save your Node-RED user directory inside the container to a host directory outside the container, you can use the command below. 
-But to allow access to this host directory, the node-red user (default uid=1001) inside the container must have the same uid as the owner of the host directory. 
+To save your Node-RED user directory inside the container to a host directory outside the container, you can use the command below.
+But to allow access to this host directory, the node-red user (default uid=1001) inside the container must have the same uid as the owner of the host directory.
 To override the default uid and gid of the node-red user inside the the container you can use the option `--user="<my_host_uid>:<my_host_gid>"`:
 
 ```
@@ -284,7 +284,7 @@ The above compose file:
 - creates a node-red service
 - pulls the latest node-red image
 - sets the timezone to Europe/Amsterdam
-- Maps the container port 1880 to the the host port 1880 
+- Maps the container port 1880 to the the host port 1880
 - creates a node-red-net network and attaches the container to this network
 - persists the `/data` dir inside the container to the `/mnt/docker-cluster/node-red/data` dir outside the container
 
