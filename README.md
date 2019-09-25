@@ -7,7 +7,9 @@
 This project describes some of the many ways Node-RED can be run under Docker and has support for multiple architectures (amd64, arm32v6, arm32v7 and arm64v8).
 Some basic familiarity with Docker and the [Docker Command Line](https://docs.docker.com/engine/reference/commandline/cli/) is assumed.
 
-This project also provides the build for the `nodered/node-red` container on [Docker Hub](https://hub.docker.com/r/nodered/node-red/).
+As of Node-RED 1.0 this project provides the build for the `nodered/node-red` container on [Docker Hub](https://hub.docker.com/r/nodered/node-red/). Note: the name has changed to nodered/node-red.
+
+Previous 0.20.x versions are still available at https://hub.docker.com/r/nodered/node-red-docker.
 
 ## Quick Start
 To run this directly in Docker at it's simplest just run:
@@ -28,7 +30,7 @@ Running that command should give a terminal window with a running instance of No
         Welcome to Node-RED
         ===================
 
-        10 Aug 12:57:10 - [info] Node-RED version: v0.20.8
+        10 Aug 12:57:10 - [info] Node-RED version: v1.0.0
         10 Aug 12:57:10 - [info] Node.js  version: v10.16.2
         10 Aug 12:57:10 - [info] Linux 4.19.58-v7+ arm LE
         10 Aug 12:57:11 - [info] Loading palette nodes
