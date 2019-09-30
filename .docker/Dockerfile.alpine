@@ -83,7 +83,7 @@ COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
 ENV NODE_RED_VERSION=$NODE_RED_VERSION
 ENV FLOWS=flows.json
 ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
-ENV SAVE_MODE
+ENV SAVE_MODE=""
 
 # User configuration directory volume
 VOLUME ["/data"]
