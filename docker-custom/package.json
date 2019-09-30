@@ -1,7 +1,7 @@
 {
     "name": "node-red-docker",
     "version": "1.0.0",
-    "description": "A visual tool for wiring the Internet of Things",
+    "description": "Low-code programming for event-driven applications",
     "homepage": "http://nodered.org",
     "license": "Apache-2.0",
     "repository": {
