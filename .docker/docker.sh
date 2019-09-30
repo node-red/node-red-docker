@@ -121,6 +121,8 @@ function docker_manifest_list_version() {
   docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 --os=linux --arch=arm64 --variant=v8
 
   docker manifest push ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}
+  
+  docker run --rm mplatform/mquery ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}
 }
 
 function docker_manifest_list_test_beta_latest() {
@@ -149,6 +151,8 @@ function docker_manifest_list_test_beta_latest() {
   docker manifest annotate ${TARGET}:${TAG_PREFIX}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 --os=linux --arch=arm64 --variant=v8
 
   docker manifest push ${TARGET}:${TAG_PREFIX}${NODE_VERSION}${TAG_SUFFIX}
+  
+  docker run --rm mplatform/mquery ${TARGET}:${TAG_PREFIX}${NODE_VERSION}${TAG_SUFFIX}
 }
 
 function setup_dependencies() {
