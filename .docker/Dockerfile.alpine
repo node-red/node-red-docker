@@ -83,6 +83,7 @@ COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
 ENV NODE_RED_VERSION=$NODE_RED_VERSION
 ENV FLOWS=flows.json
 ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
+ENV SAVE_MODE=""
 
 # User configuration directory volume
 VOLUME ["/data"]
@@ -90,4 +91,4 @@ VOLUME ["/data"]
 # Expose the listening port of node-red
 EXPOSE 1880
 
-ENTRYPOINT ["npm", "start", "--", "--userDir", "/data"]
+ENTRYPOINT npm start -- --userDir /data $SAVE_MODE
