@@ -7,7 +7,7 @@
 This project describes some of the many ways Node-RED can be run under Docker and has support for multiple architectures (amd64, arm32v6, arm32v7 and arm64v8).
 Some basic familiarity with Docker and the [Docker Command Line](https://docs.docker.com/engine/reference/commandline/cli/) is assumed.
 
-As of Node-RED 1.0 this project provides the build for the `nodered/node-red` container on [Docker Hub](https://hub.docker.com/r/nodered/node-red/). Note: the name has changed to nodered/node-red.
+As of Node-RED 1.0 this project provides the build for the `nodered/node-red` container on [Docker Hub](https://hub.docker.com/r/nodered/node-red/). Note: the name has changed to `nodered/node-red`.
 
 Previous 0.20.x versions are still available at https://hub.docker.com/r/nodered/node-red-docker.
 
@@ -95,6 +95,10 @@ The tag naming convention is `<node-red-version>-<node-version>-<image-type>-<ar
 - `<architecture>` is the architecture of the Docker host system, can be either amd64, arm32v6, arm32v7, arm64.
 
 The minimal versions (without python and build tools) are not able to install nodes that require any locally compiled native code.
+
+For example - to run the latest minimal version, you would run
+
+        docker run -it -p 1880:1880 --name mynodered nodered/node-red:latest-minimal
 
 The Node-RED images are based on [official Node JS Alpine Linux](https://hub.docker.com/_/node/) images to keep them as small as possible.
 Using Alpine Linux reduces the built image size, but removes standard dependencies that are required for native module compilation. If you want to add dependencies with native dependencies, extend the Node-RED image with the missing packages on running containers or build new images see [docker-custom](docker-custom/README.md).
