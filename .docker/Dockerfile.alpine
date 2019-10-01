@@ -38,11 +38,10 @@ COPY package.json .
 FROM base AS build
 
 # Install Build tools
-RUN apk add --no-cache --virtual buildtools build-base linux-headers udev python
-
-RUN npm install --unsafe-perm --no-update-notifier --only=production
-RUN /tmp/remove_native_gpio.sh
-RUN cp -R node_modules prod_node_modules
+RUN apk add --no-cache --virtual buildtools build-base linux-headers udev python && \
+    npm install --unsafe-perm --no-update-notifier --only=production && \
+    /tmp/remove_native_gpio.sh && \
+    cp -R node_modules prod_node_modules
 
 #### Stage RELEASE #####################################################################################################
 FROM base AS RELEASE
@@ -68,11 +67,14 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     authors="Dave Conway-Jones, Nick O'Leary, James Thomas, Raymond Mouthaan"
 
 COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
-RUN chown -R node-red:node-red /usr/src/node-red
 
-# Install devtools & Clean up
-RUN /tmp/install_devtools.sh && \
-    rm /tmp/* && rm /usr/bin/qemu-$QEMU_ARCH-static
+# Chown, install devtools & Clean up
+RUN chown -R node-red:node-red /usr/src/node-red && \
+    /tmp/install_devtools.sh && \
+    rm /tmp/* && \
+    rm /usr/bin/qemu-$QEMU_ARCH-static
+
+USER node-red
 
 # Env variables
 ENV NODE_RED_VERSION=$NODE_RED_VERSION
@@ -81,8 +83,6 @@ ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
 
 # User configuration directory volume
 VOLUME ["/data"]
-
-USER node-red
 
 # Expose the listening port of node-red
 EXPOSE 1880
