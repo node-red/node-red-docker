@@ -60,10 +60,10 @@ ARG TAG_SUFFIX
 
 LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.docker.dockerfile=".docker/Dockerfile.alpine" \
-    org.label-schema.license="Apache License 2.0" \
+    org.label-schema.license="Apache-2.0" \
     org.label-schema.name="Node-RED" \
     org.label-schema.version=${BUILD_VERSION} \
-    org.label-schema.description="Node-RED is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways." \
+    org.label-schema.description="Low-code programming for event-driven applications." \
     org.label-schema.url="https://nodered.org" \
     org.label-schema.vcs-ref=${BUILD_REF} \
     org.label-schema.vcs-type="Git" \
