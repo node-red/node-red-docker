@@ -27,19 +27,15 @@ RUN set -ex && \
 # Set work directory
 WORKDIR /usr/src/node-red
 
-# Run as node-red user
-USER node-red
 # package.json contains Node-RED NPM module and node dependencies
 COPY package.json .
 
 #### Stage BUILD #######################################################################################################
 FROM base AS build
 
-USER root
 # Install Build tools
 RUN apk add --no-cache --virtual buildtools build-base linux-headers udev python
 
-USER node-red
 RUN npm install --only=production
 RUN /tmp/remove_native_gpio.sh
 RUN cp -R node_modules prod_node_modules
@@ -66,13 +62,14 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.arch=${ARCH} \
     authors="Dave Conway-Jones, Nick O'Leary, James Thomas, Raymond Mouthaan"
 
-USER root
 # Install devtools & Clean up
 RUN /tmp/install_devtools.sh && \
     rm /tmp/*
 
-USER node-red
 COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
+RUN chown -R node-red:node-red /usr/src/node-red
+
+USER node-red
 
 # Env variables
 ENV NODE_RED_VERSION=$NODE_RED_VERSION
