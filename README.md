@@ -1,3 +1,10 @@
+# DEPRECATION NOTICE:
+**This repository has been deprecated in favour of the official [Node-RED Docker repo](https://hub.docker.com/r/nodered/node-red), which has multi-arch and manifest list support adopted from this project.**
+
+**All users of this repo are strongly advised to use the official Node-RED images.**
+
+**This repo remains for TESTING purpose only!**
+
 # Node-RED Docker
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/RaymondMouthaan/node-red-docker.svg)](https://greenkeeper.io/)
