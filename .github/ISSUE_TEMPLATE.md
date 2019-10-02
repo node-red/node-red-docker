@@ -28,8 +28,18 @@ To help us understand the issue, please fill-in as much of the following informa
 
 ### Please tell us about your environment:
 
-- [ ] Node-RED version:
-- [ ] node.js version:
-- [ ] npm version:
-- [ ] Platform/OS:
-- [ ] Browser:
+[ ] Platform/OS:
+
+[ ] Browser:
+ 
+  - If you are a Portainer user, please attach a screenshot of your container details.
+  
+    ```
+    Containers -> Click on the node-red container -> Scroll to Container Details and take a screenshot
+    ```
+    
+  - If you are a command line user please execute the following command and attach the log file.
+
+    ```shell
+    docker inspect <container_id> > container.log
+    ```
