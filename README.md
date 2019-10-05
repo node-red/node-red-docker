@@ -207,13 +207,18 @@ Node-RED uses the `/data` directory inside the container to store user configura
 To save your Node-RED user directory inside the container to a host directory outside the container, you can use the
 command below. To allow access to this host directory, the node-red user (default uid=1000) inside the container must
 have the same uid as the owner of the host directory.
-See [the wiki](https://github.com/node-red/node-red-docker/wiki/Permissions-and-Persistence) for detailed information
-on permissions.
-
 ```
 docker run -it -p 1880:1880 -v /home/pi/.node-red:/data --name mynodered nodered/node-red
 ```
+
 In this example the host `/home/pi/.node-red` directory is bound to the container `/data` directory.
+
+**Note**: Users migrating from version 0.20 to 1.0 will need to ensure that any existing `/data`
+directory has the correct ownership. As of 1.0 this needs to be `1000:1000`. This can be forced by
+the command `sudo chown -R 1000:1000 path/to/your/node-red/data`
+
+See [the wiki](https://github.com/node-red/node-red-docker/wiki/Permissions-and-Persistence) for detailed information
+on permissions.
 
 ### Using Named Data Volumes
 
