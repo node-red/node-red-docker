@@ -54,7 +54,7 @@ before_script:
     if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
       export TARGET=nodered/node-red
     else
-      export TARGET=nodered/node-red-edge
+      export TARGET=nodered/node-red-dev
     fi
 
   # Set BUILD_VERSION
@@ -112,15 +112,33 @@ jobs:
               - ./.docker/docker.sh manifest-list-version "10" "default"
               - ./.docker/docker.sh manifest-list-version "" "default"
 
-              # Create and push manifest list 'latest' or 'testing' for minimal
-              - ./.docker/docker.sh manifest-list-test-beta-latest "12" "minimal"
-              - ./.docker/docker.sh manifest-list-test-beta-latest "10" "minimal"
-              - ./.docker/docker.sh manifest-list-test-beta-latest "" "minimal"
+              # Tags with either `dev`, `test`, `edge` or `beta` get manifest listed and pushed to `nodered/node-red-dev`
+              - >
+                if [[ "${TRAVIS_BRANCH}" == "dev" ]]; then
+                  # Create and push manifest list `dev`, `test`, `edge` or `beta` for minimal
+                  ./.docker/docker.sh manifest_list_dev_test_edge_beta_latest "12" "minimal"
+                  ./.docker/docker.sh manifest_list_dev_test_edge_beta_latest "10" "minimal"
+                  ./.docker/docker.sh manifest_list_dev_test_edge_beta_latest "" "minimal"
 
-              # Create and push manifest list 'latest' or 'testing' for default
-              - ./.docker/docker.sh manifest-list-test-beta-latest "12" "default"
-              - ./.docker/docker.sh manifest-list-test-beta-latest "10" "default"
-              - ./.docker/docker.sh manifest-list-test-beta-latest "" "default"
+                  # Create and push manifest list `dev`, `test`, `edge` or `beta` for default
+                  - ./.docker/docker.sh manifest_list_dev_test_edge_beta_latest "12" "default"
+                  - ./.docker/docker.sh manifest_list_dev_test_edge_beta_latest "10" "default"
+                  - ./.docker/docker.sh manifest_list_dev_test_edge_beta_latest "" "default"
+                fi
+
+              # Tags with either `beta` or none of these (in case of a final) get manifest listed and pushed to `nodered/node-red`
+              - >
+                if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
+                 # Create and push manifest list `beta` or `latest` for minimal
+                 ./.docker/docker.sh manifest_list_beta_latest "12" "minimal"
+                 ./.docker/docker.sh manifest_list_beta_latest "10" "minimal"
+                 ./.docker/docker.sh manifest_list_beta_latest "" "minimal"
+
+                 # Create and push manifest list `beta` or `latest` for default
+                 - ./.docker/docker.sh manifest_list_beta_latest "12" "default"
+                 - ./.docker/docker.sh manifest_list_beta_latest "10" "default"
+                 - ./.docker/docker.sh manifest_list_beta_latest "" "default"
+                fi
 
               # Docker Logout
               - docker logout
