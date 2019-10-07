@@ -257,11 +257,12 @@ Please refer to the official Docker pages for more info about [Docker stack](htt
 
 ```
 ################################################################################
-# Node-RED Stack
+# Node-RED Stack or Compose
 ################################################################################
-#$ docker stack deploy node-red --compose-file docker-compose-node-red.yml
+# docker stack deploy node-red --compose-file docker-compose-node-red.yml
+# docker-compose -f docker-compose-node-red.yml -p myNoderedProject up
 ################################################################################
-version: 3.7
+version: "3.7"
 
 services:
   node-red:
@@ -273,7 +274,10 @@ services:
     networks:
       - node-red-net
     volumes:
-      - /mnt/docker-cluster/node-red/data:/data
+      - node-red-data
+
+volumes:
+  node-red-data:
 
 networks:
   node-red-net:
