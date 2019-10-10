@@ -125,9 +125,9 @@ jobs:
                   ./.docker/docker.sh manifest_list_latest "" "minimal"
 
                   # Create and push manifest list `latest` for default
-                  - ./.docker/docker.sh manifest_list_latest "12" "default"
-                  - ./.docker/docker.sh manifest_list_latest "10" "default"
-                  - ./.docker/docker.sh manifest_list_latest "" "default"
+                  ./.docker/docker.sh manifest_list_latest "12" "default"
+                  ./.docker/docker.sh manifest_list_latest "10" "default"
+                  ./.docker/docker.sh manifest_list_latest "" "default"
 
                 elif [[ "${TRAVIS_BRANCH}" == "dev" ] && [ "${TRAVIS_TAG}" =~ "beta" ]]; then
                   # Create and push manifest list `beta` for minimal
@@ -136,9 +136,9 @@ jobs:
                   ./.docker/docker.sh manifest_list_beta "" "minimal"
 
                   # Create and push manifest list `beta` for default
-                  - ./.docker/docker.sh manifest_list_beta "12" "default"
-                  - ./.docker/docker.sh manifest_list_beta "10" "default"
-                  - ./.docker/docker.sh manifest_list_beta "" "default"
+                  ./.docker/docker.sh manifest_list_beta "12" "default"
+                  ./.docker/docker.sh manifest_list_beta "10" "default"
+                  ./.docker/docker.sh manifest_list_beta "" "default"
 
                 else
                   # Create and push manifest list `branch` for minimal
@@ -147,9 +147,9 @@ jobs:
                   ./.docker/docker.sh manifest_list_branch "" "minimal"
 
                   # Create and push manifest list `branch` for default
-                  - ./.docker/docker.sh manifest_list_branch "12" "default"
-                  - ./.docker/docker.sh manifest_list_branch "10" "default"
-                  - ./.docker/docker.sh manifest_list_branch "" "default"
+                  ./.docker/docker.sh manifest_list_branch "12" "default"
+                  ./.docker/docker.sh manifest_list_branch "10" "default"
+                  ./.docker/docker.sh manifest_list_branch "" "default"
                 fi
 
               # Docker Logout
