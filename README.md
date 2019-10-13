@@ -18,7 +18,7 @@ To run in Docker in its simplest form just run:
 
 Let's dissect that command:
 
-        docker run              - run this container... initially building locally if necessary
+        docker run              - run this container, initially building locally if necessary
         -it                     - attach a terminal session so we can see what is going on
         -p 1880:1880            - connect local port 1880 to the exposed internal port 1880
         --name mynodered        - give this machine a friendly local name
@@ -61,6 +61,12 @@ Running that command should give a terminal window with a running instance of No
         [...]
 
 You can then browse to `http://{host-ip}:1880` to get the familiar Node-RED desktop.
+
+**Note**: Currently there is a bug in Docker's architecture detection that fails for Arm6 CPU - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full build label, for example: 
+
+```
+docker run -it -p 1880:1880 --name mynodered nodered/node-red:1.0.1-10-arm32v6
+```
 
 The advantage of doing this is that by giving it a name (mynodered) we can manipulate it
 more easily, and by fixing the host port we know we are on familiar ground.
@@ -181,6 +187,12 @@ The same command can be used for running on an amd64 system, since docker discov
 
 This gives the advantage that you don't need to know/specify which architecture you are running on and makes docker run commands and docker compose files more flexible and exchangeable across systems.
 
+**Note**: Currently there is a bug in Docker's architecture detection that fails for Arm6 CPU - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full build label, for example: 
+
+```
+docker run -it -p 1880:1880 --name mynodered nodered/node-red:1.0.1-10-minimal-arm32v6
+```
+
 ## Raspberry PI - native GPIO support
 | v1.0 - BREAKING: Native GPIO support for Raspberry PI has been dropped |
 | --- |
@@ -201,6 +213,7 @@ Disadvantages of the native GPIO support are:
 
 For detailed install instruction please refer to the `node-red-node-pi-gpiod` [README](https://github.com/node-red/node-red-nodes/tree/master/hardware/pigpiod#node-red-node-pi-gpiod)  
 
+**Note**: There is a contributed [gpiod project](https://github.com/corbosman/node-red-gpiod) that runs the gpiod in its own container rather than on the host if required.
 
 ## Managing User Data
 
