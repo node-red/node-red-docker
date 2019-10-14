@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/node-red/node-red-docker.svg?branch=master)](https://travis-ci.org/node-red/node-red-docker)
 [![DockerHub Pull](https://img.shields.io/docker/pulls/nodered/node-red.svg)](https://hub.docker.com/r/nodered/node-red/)
 
-This project describes some of the many ways Node-RED can be run under Docker and has support for multiple architectures (amd64, arm32v6, arm32v7 and arm64v8).
+This project describes some of the many ways Node-RED can be run under Docker and has support for multiple architectures (amd64, arm32v6, arm32v7, arm64v8, and s390x).
 Some basic familiarity with Docker and the [Docker Command Line](https://docs.docker.com/engine/reference/commandline/cli/) is assumed.
 
 As of Node-RED 1.0 this project provides the build for the `nodered/node-red` container on [Docker Hub](https://hub.docker.com/r/nodered/node-red/). Note: the Docker Hub name has changed to `nodered/node-red`.
@@ -18,7 +18,7 @@ To run in Docker in its simplest form just run:
 
 Let's dissect that command:
 
-        docker run              - run this container... initially building locally if necessary
+        docker run              - run this container, initially building locally if necessary
         -it                     - attach a terminal session so we can see what is going on
         -p 1880:1880            - connect local port 1880 to the exposed internal port 1880
         --name mynodered        - give this machine a friendly local name
@@ -62,6 +62,12 @@ Running that command should give a terminal window with a running instance of No
 
 You can then browse to `http://{host-ip}:1880` to get the familiar Node-RED desktop.
 
+**Note**: Currently there is a bug in Docker's architecture detection that fails for Arm6 CPU - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full build label, for example: 
+
+```
+docker run -it -p 1880:1880 --name mynodered nodered/node-red:1.0.1-10-arm32v6
+```
+
 The advantage of doing this is that by giving it a name (mynodered) we can manipulate it
 more easily, and by fixing the host port we know we are on familiar ground.
 Of course this does mean we can only run one instance at a time... but one step at a time folks...
@@ -91,7 +97,7 @@ The tag naming convention is `<node-red-version>-<node-version>-<image-type>-<ar
 - `<image-type>` is type of image and is optional, can be either _none_ or minimal.
     - _none_ : is the default and has Python 2 & Python 3 + devtools installed
     - minimal : has no Python installed and no devtools installed
-- `<architecture>` is the architecture of the Docker host system, can be either amd64, arm32v6, arm32v7, arm64.
+- `<architecture>` is the architecture of the Docker host system, can be either amd64, arm32v6, arm32v7, arm64, or s390x
 
 The minimal versions (without python and build tools) are not able to install nodes that require any locally compiled native code.
 
@@ -111,11 +117,13 @@ The following table shows the variety of provided Node-RED images.
 | 1.0.1-10-arm32v6           |   10   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:10-alpine |
 | 1.0.1-10-arm32v7           |   10   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:10-alpine |
 | 1.0.1-10-arm64v8           |   10   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:10-alpine |
+| 1.0.1-10-s390x             |   10   | s390x    |   2.x 3.x  |  yes  | s390x/node:10-alpine   |
 |                            |        |          |            |       |                        |
 | 1.0.1-10-minimal-amd64     |   10   | amd64    |     no     |  no   | amd64/node:10-alpine   |
 | 1.0.1-10-minimal-arm32v6   |   10   | arm32v6  |     no     |  no   | arm32v6/node:10-alpine |
 | 1.0.1-10-minimal-arm32v7   |   10   | arm32v7  |     no     |  no   | arm32v7/node:10-alpine |
 | 1.0.1-10-minimal-arm64v8   |   10   | arm64v8  |     no     |  no   | arm64v8/node:10-alpine |
+| 1.0.1-10-minima-s390x      |   10   | s390x    |     no     |  no   | s390x/node:10-alpine   |
 
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**         |
@@ -124,11 +132,13 @@ The following table shows the variety of provided Node-RED images.
 | 1.0.1-12-arm32v6           |   12   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:12-alpine |
 | 1.0.1-12-arm32v7           |   12   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:12-alpine |
 | 1.0.1-12-arm64v8           |   12   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:12-alpine |
+| 1.0.1-12-s390x             |   12   | s390x    |   2.x 3.x  |  yes  | s390x/node:12-alpine   |
 |                            |        |          |            |       |                        |
 | 1.0.1-12-minimal-amd64     |   12   | amd64    |     no     |  no   | amd64/node:12-alpine   |
 | 1.0.1-12-minimal-arm32v6   |   12   | arm32v6  |     no     |  no   | arm32v6/node:12-alpine |
 | 1.0.1-12-minimal-arm32v7   |   12   | arm32v7  |     no     |  no   | arm32v7/node:12-alpine |
 | 1.0.1-12-minimal-arm64v8   |   12   | arm64v8  |     no     |  no   | arm64v8/node:12-alpine |
+| 1.0.1-12-minimal-s390x     |   12   | s390x    |     no     |  no   | s390x/node:12-alpine   |
 
 - All images have bash, tzdata, nano, curl git and openssl tools pre-installed to support Node-RED's Projects feature.
 
@@ -141,11 +151,13 @@ The following table shows the provided Manifest Lists.
 | latest-10, 1.0.1-10                    | nodered/node-red:1.0.1-10-arm32v6          |
 |                                        | nodered/node-red:1.0.1-10-arm32v7          |
 |                                        | nodered/node-red:1.0.1-10-arm64v8          |
+|                                        | nodered/node-red:1.0.1-10-s390x            |
 |                                        |                                            |
 | latest-minimal, 1.0.1-minimal,         | nodered/node-red:1.0.1-10-amd64-minimal    |
 | latest-10-minimal, 1.0.1-10-minimal    | nodered/node-red:1.0.1-10-arm32v6-minimal  |
 |                                        | nodered/node-red:1.0.1-10-arm32v7-minimal  |
 |                                        | nodered/node-red:1.0.1-10-arm64v8-minimal  |
+|                                        | nodered/node-red:1.0.1-10-s390x-minimal    |
 
 | **Tag**                                | **Node-RED Base Image**                    |
 |----------------------------------------|--------------------------------------------|
@@ -153,11 +165,13 @@ The following table shows the provided Manifest Lists.
 |                                        | nodered/node-red:1.0.1-12-arm32v6          |
 |                                        | nodered/node-red:1.0.1-12-arm32v7          |
 |                                        | nodered/node-red:1.0.1-12-arm64v8          |
+|                                        | nodered/node-red:1.0.1-12-s390x            |
 |                                        |                                            |
 | latest-12-minimal, 1.0.1-12-minimal    | nodered/node-red:1.0.1-12-amd64-minimal    |
 |                                        | nodered/node-red:1.0.1-12-arm32v6-minimal  |
 |                                        | nodered/node-red:1.0.1-12-arm32v7-minimal  |
 |                                        | nodered/node-red:1.0.1-12-arm64v8-minimal  |
+|                                        | nodered/node-red:1.0.1-12-s390x-minimal    |
 
 With the support of Docker manifest list, there is no need to explicitly add the tag for the architecture to use.
 When a docker run command or docker service command or docker stack command is executed, docker checks which architecture is required and verifies if it is available in the docker repository. If it does, docker pulls the matching image for it.
@@ -172,6 +186,12 @@ docker run -it -p 1880:1880 --name mynodered nodered/node-red:latest
 The same command can be used for running on an amd64 system, since docker discovers its running on a amd64 host and pulls the image with the matching tag (`1.0.1-10-amd64`).
 
 This gives the advantage that you don't need to know/specify which architecture you are running on and makes docker run commands and docker compose files more flexible and exchangeable across systems.
+
+**Note**: Currently there is a bug in Docker's architecture detection that fails for Arm6 CPU - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full build label, for example: 
+
+```
+docker run -it -p 1880:1880 --name mynodered nodered/node-red:1.0.1-10-minimal-arm32v6
+```
 
 ## Raspberry PI - native GPIO support
 | v1.0 - BREAKING: Native GPIO support for Raspberry PI has been dropped |
@@ -195,6 +215,7 @@ For detailed install instruction please refer to the `node-red-node-pi-gpiod` [R
 
 If you want to run gpiod in a container rather than on the host, then [this project](https://github.com/corbosman/node-red-gpiod) may help.
 
+**Note**: There is a contributed [gpiod project](https://github.com/corbosman/node-red-gpiod) that runs the gpiod in its own container rather than on the host if required.
 
 ## Managing User Data
 
