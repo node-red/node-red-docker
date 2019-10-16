@@ -27,7 +27,7 @@
         }
     ],
     "dependencies": {
-        "node-red": "1.0.1"
+        "node-red": "1.0.2"
     },
     "engines": {
         "node": ">=10"

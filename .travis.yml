@@ -49,7 +49,7 @@ before_install:
 install: true
 
 before_script:
-  # Set TARGET Docker repo
+  # Set TARGET Docker Repo
   - >
     if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
       export TARGET=nodered/node-red
@@ -65,8 +65,6 @@ before_script:
   - >
     if [ ! -z "${TRAVIS_TAG}" ]; then
       export BUILD_VERSION=${TRAVIS_TAG:1};
-    else
-      export BUILD_VERSION=${NODE_RED_VERSION}-${TRAVIS_BRANCH}
     fi
 
 script:
@@ -76,27 +74,27 @@ script:
   # Test Docker image
   - ./.docker/docker.sh test
 
-  # Push Docker image, only for non TRAVIS_PULL_REQUEST
+  # Push Docker image, only if TRAVIS_TAG is set
   - >
-    if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
-        # Tag Docker image
-        ./.docker/docker.sh tag
+    if [ ! -z "${TRAVIS_TAG}" ]; then
+      # Tag Docker image
+      ./.docker/docker.sh tag
 
-        # Docker Login
-        echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+      # Docker Login
+      echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 
-        # Push Docker image
-        ./.docker/docker.sh push
+      # Push Docker image
+      ./.docker/docker.sh push
 
-        # Docker Logout
-        docker logout
+      # Docker Logout
+      docker logout
     fi
 
 jobs:
     include:
         - stage: manifest
-          # Only create and push manifest list to Docker Hub, when non PULL_REQUEST
-          if: type != pull_request
+          # Only create and push manifest list to Docker Hub, when tag starts with a `v`, eg. v1.0.2
+          if: tag =~ ^v
           script:
               # Create and push Docker manifest lists
               # The push order is displayed in reverse order on Docker Hub
@@ -115,10 +113,10 @@ jobs:
               - ./.docker/docker.sh manifest-list-version "" "default"
 
               # Tags starting with `v` and the origin is master branch get manifest listed as `latest` and push to `nodered/node-red`
-              # Tags containing `beta` get manifest listed as `beta` and pushed to `nodered/node-red-dev`
-              # Any branch get manifest listed as branch and pushed to `nodered/node-red-dev`
+              # Tags containing `beta` and the origin is dev branch get manifest listed as `beta` and pushed to `nodered/node-red-dev`
+              # Any other branch are ignored
               - >
-                if [[ "${TRAVIS_BRANCH}" == "master" ] && [ "${TRAVIS_TAG}" == "v*" ]]; then
+                if [ "${TRAVIS_BRANCH}" == "master" ] && [ "${TRAVIS_TAG}" == "v*" ]; then
                   # Create and push manifest list `latest` for minimal
                   ./.docker/docker.sh manifest_list_latest "12" "minimal"
                   ./.docker/docker.sh manifest_list_latest "10" "minimal"
@@ -129,7 +127,7 @@ jobs:
                   ./.docker/docker.sh manifest_list_latest "10" "default"
                   ./.docker/docker.sh manifest_list_latest "" "default"
 
-                elif [[ "${TRAVIS_BRANCH}" == "dev" ] && [ "${TRAVIS_TAG}" =~ "beta" ]]; then
+                elif [ "${TRAVIS_BRANCH}" == "dev" ] && [ "${TRAVIS_TAG}" =~ "beta" ]; then
                   # Create and push manifest list `beta` for minimal
                   ./.docker/docker.sh manifest_list_beta "12" "minimal"
                   ./.docker/docker.sh manifest_list_beta "10" "minimal"
@@ -140,21 +138,24 @@ jobs:
                   ./.docker/docker.sh manifest_list_beta "10" "default"
                   ./.docker/docker.sh manifest_list_beta "" "default"
 
-                else
-                  # Create and push manifest list `branch` for minimal
-                  ./.docker/docker.sh manifest_list_branch "12" "minimal"
-                  ./.docker/docker.sh manifest_list_branch "10" "minimal"
-                  ./.docker/docker.sh manifest_list_branch "" "minimal"
+                elif [ "${TRAVIS_BRANCH}" == "dev" ]; then
+                  # Create and push manifest list `test` for minimal
+                  ./.docker/docker.sh manifest_list_test "12" "minimal"
+                  ./.docker/docker.sh manifest_list_test "10" "minimal"
+                  ./.docker/docker.sh manifest_list_test "" "minimal"
 
-                  # Create and push manifest list `branch` for default
-                  ./.docker/docker.sh manifest_list_branch "12" "default"
-                  ./.docker/docker.sh manifest_list_branch "10" "default"
-                  ./.docker/docker.sh manifest_list_branch "" "default"
+                  # Create and push manifest list `test` for default
+                  ./.docker/docker.sh manifest_list_test "12" "default"
+                  ./.docker/docker.sh manifest_list_test "10" "default"
+                  ./.docker/docker.sh manifest_list_test "" "default"
+
+                else
+                  # Do nothing
                 fi
 
               # Docker Logout
               - docker logout
 
-# notify me when things fail
+# Notify me when things fail
 notifications:
   email: true
