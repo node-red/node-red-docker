@@ -112,11 +112,11 @@ jobs:
               - ./.docker/docker.sh manifest-list-version "10" "default"
               - ./.docker/docker.sh manifest-list-version "" "default"
 
-              # Tags starting with `v` and the origin is master branch get manifest listed as `latest` and push to `nodered/node-red`
-              # Tags containing `beta` and the origin is dev branch get manifest listed as `beta` and pushed to `nodered/node-red-dev`
-              # Any other branch are ignored
+              # Tags starting with `v` and the origin is master branch, manifest lists get tagged as `latest` and push to `nodered/node-red`
+              # Tags containing `beta` and the origin is dev branch, manifest lists get tagged as `beta` and push to `nodered/node-red-dev`
+              # Tags starting with `v` and the origin is any other branch, manifest lists get tagged as `test` and push to `nodered/node-red-dev`
               - >
-                if [ "${TRAVIS_BRANCH}" == "master" ] && [ "${TRAVIS_TAG}" == "v*" ]; then
+                if [ "${TRAVIS_BRANCH}" == "master" ]; then
                   # Create and push manifest list `latest` for minimal
                   ./.docker/docker.sh manifest_list_latest "12" "minimal"
                   ./.docker/docker.sh manifest_list_latest "10" "minimal"
@@ -127,7 +127,7 @@ jobs:
                   ./.docker/docker.sh manifest_list_latest "10" "default"
                   ./.docker/docker.sh manifest_list_latest "" "default"
 
-                elif [ "${TRAVIS_BRANCH}" == "dev" ] && [ "${TRAVIS_TAG}" =~ "beta" ]; then
+                elif [ "${TRAVIS_TAG}" =~ "beta" ]; then
                   # Create and push manifest list `beta` for minimal
                   ./.docker/docker.sh manifest_list_beta "12" "minimal"
                   ./.docker/docker.sh manifest_list_beta "10" "minimal"
@@ -138,7 +138,7 @@ jobs:
                   ./.docker/docker.sh manifest_list_beta "10" "default"
                   ./.docker/docker.sh manifest_list_beta "" "default"
 
-                elif [ "${TRAVIS_BRANCH}" == "dev" ]; then
+                else
                   # Create and push manifest list `test` for minimal
                   ./.docker/docker.sh manifest_list_test "12" "minimal"
                   ./.docker/docker.sh manifest_list_test "10" "minimal"
@@ -148,9 +148,6 @@ jobs:
                   ./.docker/docker.sh manifest_list_test "12" "default"
                   ./.docker/docker.sh manifest_list_test "10" "default"
                   ./.docker/docker.sh manifest_list_test "" "default"
-
-                else
-                  # Do nothing
                 fi
 
               # Docker Logout
