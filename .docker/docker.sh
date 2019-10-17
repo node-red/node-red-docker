@@ -29,6 +29,9 @@ main() {
   "manifest_list_beta")
     docker_manifest_list_beta "$2" "$3"
     ;;
+  "manifest_list_dev")
+    docker_manifest_list_dev "$2" "$3"
+    ;;
   "manifest_list_test")
     docker_manifest_list_test "$2" "$3"
     ;;
@@ -158,6 +161,31 @@ function docker_manifest_list_beta() {
   docker manifest push ${TARGET}:beta${NODE_VERSION}${TAG_SUFFIX}
 
   docker run --rm mplatform/mquery ${TARGET}:beta${NODE_VERSION}${TAG_SUFFIX}
+}
+
+function docker_manifest_list_dev() {
+  if [[ ${1} == "" ]]; then export NODE_VERSION=""; else export NODE_VERSION="-${1}"; fi
+  if [[ ${2} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${2}"; fi
+
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX}."
+
+  docker manifest create ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX} \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-amd64 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-s390x \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-i386
+
+  docker manifest annotate ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 --os=linux --arch=arm   --variant=v6
+  docker manifest annotate ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 --os=linux --arch=arm   --variant=v7
+  docker manifest annotate ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 --os=linux --arch=arm64 --variant=v8
+  docker manifest annotate ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-s390x   --os=linux --arch=s390x
+  docker manifest annotate ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-i386    --os=linux --arch=386
+
+  docker manifest push ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX}
+
+  docker run --rm mplatform/mquery ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX}
 }
 
 function docker_manifest_list_test() {

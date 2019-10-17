@@ -118,6 +118,7 @@ jobs:
 
               # Tags starting with `v` and the origin is master branch, manifest lists get tagged as `latest` and push to `nodered/node-red`
               # Tags containing `beta` and the origin is dev branch, manifest lists get tagged as `beta` and push to `nodered/node-red-dev`
+              # Tags containing `dev` and the origin is dev branch, manifest lists get tagged as `dev` and push to `nodered/node-red-dev`
               # Tags starting with `v` and the origin is any other branch, manifest lists get tagged as `test` and push to `nodered/node-red-dev`
               - >
                 if [ "${TRAVIS_BRANCH}" == "master" ]; then
@@ -131,7 +132,7 @@ jobs:
                   ./.docker/docker.sh manifest_list_latest "10" "default"
                   ./.docker/docker.sh manifest_list_latest "" "default"
 
-                elif [ "${TRAVIS_TAG}" =~ "beta" ]; then
+                elif [ "${TRAVIS_TAG}" == *"beta"* ]; then
                   # Create and push manifest list `beta` for minimal
                   ./.docker/docker.sh manifest_list_beta "12" "minimal"
                   ./.docker/docker.sh manifest_list_beta "10" "minimal"
@@ -141,6 +142,17 @@ jobs:
                   ./.docker/docker.sh manifest_list_beta "12" "default"
                   ./.docker/docker.sh manifest_list_beta "10" "default"
                   ./.docker/docker.sh manifest_list_beta "" "default"
+
+                elif [ "${TRAVIS_TAG}" == *"dev"* ]; then
+                  # Create and push manifest list `dev` for minimal
+                  ./.docker/docker.sh manifest_list_dev "12" "minimal"
+                  ./.docker/docker.sh manifest_list_dev "10" "minimal"
+                  ./.docker/docker.sh manifest_list_dev "" "minimal"
+
+                  # Create and push manifest list `dev` for default
+                  ./.docker/docker.sh manifest_list_dev "12" "default"
+                  ./.docker/docker.sh manifest_list_dev "10" "default"
+                  ./.docker/docker.sh manifest_list_dev "" "default"
 
                 else
                   # Create and push manifest list `test` for minimal
