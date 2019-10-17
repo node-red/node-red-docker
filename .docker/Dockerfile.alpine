@@ -24,7 +24,7 @@ RUN set -ex && \
         openssh-client && \
     mkdir -p /usr/src/node-red /data && \
     deluser --remove-home node && \
-    adduser -h /usr/src/node-red -D -H node-red -u 1000 && \
+    adduser -h /usr/src/node-red -D -H node-red -u 1000 -G dialout && \
     chown -R node-red:node-red /data && \
     chown -R node-red:node-red /usr/src/node-red
 
