@@ -62,7 +62,7 @@ Running that command should give a terminal window with a running instance of No
 
 You can then browse to `http://{host-ip}:1880` to get the familiar Node-RED desktop.
 
-**Note**: Currently there is a bug in Docker's architecture detection that fails for Arm6 CPU - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full build label, for example: 
+**Note**: Currently there is a bug in Docker's architecture detection that fails for Arm6 CPU - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full build label, for example:
 
 ```
 docker run -it -p 1880:1880 --name mynodered nodered/node-red:1.0.2-10-arm32v6
@@ -195,8 +195,7 @@ The same command can be used for running on an amd64 system, since docker discov
 
 This gives the advantage that you don't need to know/specify which architecture you are running on and makes docker run commands and docker compose files more flexible and exchangeable across systems.
 
-**Note**: Currently there is a bug in Docker's architecture detection that fails for Arm6 CPU - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full build label, for example: 
-
+**Note**: Currently there is a bug in Docker's architecture detection that fails for Arm6 CPU - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full build label, for example:
 ```
 docker run -it -p 1880:1880 --name mynodered nodered/node-red:1.0.2-10-minimal-arm32v6
 ```
@@ -219,7 +218,7 @@ Disadvantages of the native GPIO support are:
   3. Replace all native gpio nodes with `pi gpiod` nodes.
   4. Configure `pi gpiod` nodes to connect to `PiGPIOd daemon`. Often the host machine will have an IP 172.17.0.1 port 8888 - but not always. You can use `docker exec -it mynodered ip route show default | awk '/default/ {print $3}'` to check.
 
-For detailed install instruction please refer to the `node-red-node-pi-gpiod` [README](https://github.com/node-red/node-red-nodes/tree/master/hardware/pigpiod#node-red-node-pi-gpiod)  
+For detailed install instruction please refer to the `node-red-node-pi-gpiod` [README](https://github.com/node-red/node-red-nodes/tree/master/hardware/pigpiod#node-red-node-pi-gpiod)
 
 **Note**: There is a contributed [gpiod project](https://github.com/corbosman/node-red-gpiod) that runs the gpiod in its own container rather than on the host if required.
 
@@ -303,10 +302,7 @@ services:
     networks:
       - node-red-net
     volumes:
-      - node-red-data
-
-volumes:
-  node-red-data:
+      - ~/node-red/data:/data
 
 networks:
   node-red-net:
@@ -318,7 +314,7 @@ The above compose file:
 - sets the timezone to Europe/Amsterdam
 - Maps the container port 1880 to the the host port 1880
 - creates a node-red-net network and attaches the container to this network
-- persists the `/data` dir inside the container to the `/mnt/docker-cluster/node-red/data` dir outside the container
+- persists the `/data` dir inside the container to the users local `node-red/data` directory. The `node-red/data` directory must exist prior to starting the container.
 
 ## Project Layout
 This repository contains Dockerfiles to build the Node-RED Docker images listed above.
@@ -459,6 +455,28 @@ Then a simple flow like below should work - using the alias *broker* we just set
 
 This way the internal broker is not exposed outside of the docker host - of course
 you may add `-p 1883:1883`  etc to the broker run command if you want to see it...
+
+### Docker-Compose linking example
+
+Another way to link containers is by using docker-compose. The following docker-compose.yml
+file creates a Node-RED instance, and a local MQTT broker instance. In the Node-RED flow the broker can be addressed simply as `broker` at its default port `1883`.
+
+```
+version: "3.7"
+
+services:
+  node-red:
+    image: nodered/node-red
+    restart: unless-stopped
+    volumes:
+      - /home/pi/.node-red:/data
+    ports:
+      - 1880:1880
+
+  broker:
+    image: eclipse-mosquitto
+    restart: unless-stopped
+```
 
 
 ## Common Issues and Hints
