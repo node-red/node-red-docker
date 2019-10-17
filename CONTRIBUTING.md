@@ -5,11 +5,10 @@ We welcome contributions, but request you follow these guidelines.
  - [Raising issues](#raising-issues)
  - [Feature requests](#feature-requests)
  - [Pull-Requests](#pull-requests)
-   - [Contributor License Agreement](#contributor-license-agreement)
 
 This project adheres to the [Contributor Covenant 1.4](http://contributor-covenant.org/version/1/4/).
 By participating, you are expected to uphold this code. Please report unacceptable
-behavior to any of the [project's core team](https://github.com/orgs/node-red/teams/core).
+behavior to the project's core team at team@nodered.org.
 
 ## Raising issues
 
@@ -30,29 +29,21 @@ At a minimum, please include:
 
 ## Feature requests
 
-For feature requests, please raise them on the [mailing list](https://groups.google.com/forum/#!forum/node-red).
+For feature requests, please raise them on the [mailing list](https://discourse.nodered.org).
 
 ## Pull-Requests
 
 If you want to raise a pull-request with a new feature, or a refactoring
 of existing code, it may well get rejected if you haven't discussed it on
-the [mailing list](https://groups.google.com/forum/#!forum/node-red) first.
+the [forum](https://discourse.nodered.org) first.
 
-### Contributor License Agreement
+All contributors need to sign the JS Foundation's Contributor License Agreement.
+It is an online process and quick to do. You can read the details of the agreement
+here: https://cla.js.foundation/node-red/node-red.
 
-In order for us to accept pull-requests, the contributor must first complete
-a Contributor License Agreement (CLA). This clarifies the intellectual
-property license granted with any contribution. It is for your protection as a
-Contributor as well as the protection of IBM and its customers; it does not
-change your rights to use your own Contributions for any other purpose.
+If you raise a pull-request without having signed the CLA, you will be prompted
+to do so automatically.
 
-You can download the CLAs here:
-
- - [individual](http://nodered.org/cla/node-red-cla-individual.pdf)
- - [corporate](http://nodered.org/cla/node-red-cla-corporate.pdf)
-
-If you are an IBMer, please contact us directly as the contribution process is
-slightly different.
 
 ### Coding standards
 
@@ -63,4 +54,3 @@ code base. Some basic rules include:
  - indent with 4-spaces, no tabs. No arguments.
  - opening brace on same line as `if`/`for`/`function` and so on, closing brace
  on its own line.
- - There are .jshintrc and .jscsrc files included in the project which may help

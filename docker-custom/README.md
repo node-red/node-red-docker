@@ -20,10 +20,10 @@ cd node-red-docker/docker-custom
 
    - Change the node-red version in package.json (from the docker-custom directory) to the version you require
    - Add optionally packages you require
- 
+
 ## 2. **docker-make.sh**
 
-The `docker-make.sh` is a helper script to build a custom Node-RED docker image. 
+The `docker-make.sh` is a helper script to build a custom Node-RED docker image.
 
 Change the build arguments as needed:
 
@@ -32,28 +32,28 @@ Change the build arguments as needed:
    - `--build-arg NODE_RED_VERSION=${NODE_RED_VERSION}` : don't change this, ${NODE_RED_VERSION} gets populated from package.json
    - `--build-arg OS=alpine` : the linux distro to use (alpine)
    - `--build-arg BUILD_DATE="$(date +"%Y-%m-%dT%H:%M:%SZ")"` : don't change this
-   - `--build-arg TAG_SUFFIX=default` : to build the default or minimal image 
+   - `--build-arg TAG_SUFFIX=default` : to build the default or minimal image
    - `--file Dockerfile.custom` : Dockerfile to use to build your image.
    - `--tag testing:node-red-build` : set the image name and tag
-   
+
 ## 3. **Run docker-make.sh**
 
-Run `docker-make.sh` 
+Run `docker-make.sh`
 
 ```shell script
 $ ./docker-make.sh
 ```
 
 This starts building your custom image and might take a while depending on the system you are running on.
-   
+
 When building is done you can run the custom image by the following command:
-   
+
 ```shell script
 $ docker run -it -p1880:1880 testing:node-red-build
 ```
-    
+
 With the following command you can verify your docker image:
-    
+
 ```shell script
 $ docker inspect testing:node-red-build
 ```
@@ -61,4 +61,3 @@ $ docker inspect testing:node-red-build
 ## 4. **Advanced Configuration**
 
 `Dockerfile.custom` can be modified as required. To add more applications the `scripts/install_devtools.sh` can be modified as needed.
-

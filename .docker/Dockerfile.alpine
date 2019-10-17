@@ -39,7 +39,7 @@ FROM base AS build
 
 # Install Build tools
 RUN apk add --no-cache --virtual buildtools build-base linux-headers udev python && \
-    npm install --unsafe-perm --no-update-notifier --only=production && \
+    npm install --unsafe-perm --no-update-notifier --no-audit --only=production && \
     /tmp/remove_native_gpio.sh && \
     cp -R node_modules prod_node_modules
 
@@ -77,9 +77,12 @@ RUN chown -R node-red:node-red /usr/src/node-red && \
 USER node-red
 
 # Env variables
-ENV NODE_RED_VERSION=$NODE_RED_VERSION
-ENV FLOWS=flows.json
-ENV NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules
+ENV NODE_RED_VERSION=$NODE_RED_VERSION \
+    NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules \
+    FLOWS=flows.json
+
+# ENV NODE_RED_ENABLE_SAFE_MODE=true    # Uncomment to enable safe start mode (flows not running)
+# ENV NODE_RED_ENABLE_PROJECTS=true     # Uncomment to enable projects option
 
 # User configuration directory volume
 VOLUME ["/data"]

@@ -1,6 +1,6 @@
 {
     "name": "node-red-docker",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Low-code programming for event-driven applications",
     "homepage": "http://nodered.org",
     "license": "Apache-2.0",
@@ -10,7 +10,7 @@
     },
     "main": "node_modules/node-red/red/red.js",
     "scripts": {
-        "start": "node $NODE_OPTIONS node_modules/node-red/red.js -v $FLOWS"
+        "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS"
     },
     "contributors": [
         {
@@ -27,7 +27,7 @@
         }
     ],
     "dependencies": {
-        "node-red": "1.0.0"
+        "node-red": "^1.0.1"
     },
     "engines": {
         "node": ">=10"
