@@ -26,8 +26,17 @@ main() {
   "manifest-list-version")
     docker_manifest_list_version "$2" "$3"
     ;;
-  "manifest-list-test-beta-latest")
-    docker_manifest_list_test_beta_latest "$2" "$3"
+  "manifest_list_beta")
+    docker_manifest_list_beta "$2" "$3"
+    ;;
+  "manifest_list_dev")
+    docker_manifest_list_dev "$2" "$3"
+    ;;
+  "manifest_list_test")
+    docker_manifest_list_test "$2" "$3"
+    ;;
+  "manifest_list_latest")
+    docker_manifest_list_latest "$2" "$3"
     ;;
   *)
     echo "none of above!"
@@ -115,48 +124,118 @@ function docker_manifest_list_version() {
     ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 \
     ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 \
     ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 \
-    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-s390x
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-s390x \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-i386
 
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 --os=linux --arch=arm --variant=v7
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 --os=linux --arch=arm   --variant=v6
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 --os=linux --arch=arm   --variant=v7
   docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 --os=linux --arch=arm64 --variant=v8
   docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-s390x   --os=linux --arch=s390x
+  docker manifest annotate ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-i386    --os=linux --arch=386
 
   docker manifest push ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}
   
   docker run --rm mplatform/mquery ${TARGET}:${BUILD_VERSION}${NODE_VERSION}${TAG_SUFFIX}
 }
 
-function docker_manifest_list_test_beta_latest() {
-
-  if [[ ${BUILD_VERSION} == *"test"* ]]; then
-    export TAG_PREFIX="test";
-  elif [[ ${BUILD_VERSION} == *"beta"* ]]; then
-    export TAG_PREFIX="beta";
-  else
-    export TAG_PREFIX="latest";
-  fi
-
+function docker_manifest_list_beta() {
   if [[ ${1} == "" ]]; then export NODE_VERSION=""; else export NODE_VERSION="-${1}"; fi
   if [[ ${2} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${2}"; fi
 
-  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:${TAG_PREFIX}${NODE_VERSION}${TAG_SUFFIX}."
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:beta${NODE_VERSION}${TAG_SUFFIX}."
 
-  docker manifest create ${TARGET}:${TAG_PREFIX}${NODE_VERSION}${TAG_SUFFIX} \
+  docker manifest create ${TARGET}:beta${NODE_VERSION}${TAG_SUFFIX} \
     ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-amd64 \
     ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 \
     ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 \
     ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 \
-    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-s390x
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-s390x \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-i386
 
-  docker manifest annotate ${TARGET}:${TAG_PREFIX}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 --os=linux --arch=arm --variant=v6
-  docker manifest annotate ${TARGET}:${TAG_PREFIX}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 --os=linux --arch=arm --variant=v7
-  docker manifest annotate ${TARGET}:${TAG_PREFIX}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 --os=linux --arch=arm64 --variant=v8
-  docker manifest annotate ${TARGET}:${TAG_PREFIX}${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-s390x   --os=linux --arch=s390x
+  docker manifest annotate ${TARGET}:beta${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 --os=linux --arch=arm   --variant=v6
+  docker manifest annotate ${TARGET}:beta${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 --os=linux --arch=arm   --variant=v7
+  docker manifest annotate ${TARGET}:beta${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 --os=linux --arch=arm64 --variant=v8
+  docker manifest annotate ${TARGET}:beta${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-s390x   --os=linux --arch=s390x
+  docker manifest annotate ${TARGET}:beta${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-i386    --os=linux --arch=386
 
-  docker manifest push ${TARGET}:${TAG_PREFIX}${NODE_VERSION}${TAG_SUFFIX}
-  
-  docker run --rm mplatform/mquery ${TARGET}:${TAG_PREFIX}${NODE_VERSION}${TAG_SUFFIX}
+  docker manifest push ${TARGET}:beta${NODE_VERSION}${TAG_SUFFIX}
+
+  docker run --rm mplatform/mquery ${TARGET}:beta${NODE_VERSION}${TAG_SUFFIX}
+}
+
+function docker_manifest_list_dev() {
+  if [[ ${1} == "" ]]; then export NODE_VERSION=""; else export NODE_VERSION="-${1}"; fi
+  if [[ ${2} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${2}"; fi
+
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX}."
+
+  docker manifest create ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX} \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-amd64 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-s390x \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-i386
+
+  docker manifest annotate ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 --os=linux --arch=arm   --variant=v6
+  docker manifest annotate ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 --os=linux --arch=arm   --variant=v7
+  docker manifest annotate ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 --os=linux --arch=arm64 --variant=v8
+  docker manifest annotate ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-s390x   --os=linux --arch=s390x
+  docker manifest annotate ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-i386    --os=linux --arch=386
+
+  docker manifest push ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX}
+
+  docker run --rm mplatform/mquery ${TARGET}:dev${NODE_VERSION}${TAG_SUFFIX}
+}
+
+function docker_manifest_list_test() {
+  if [[ ${1} == "" ]]; then export NODE_VERSION=""; else export NODE_VERSION="-${1}"; fi
+  if [[ ${2} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${2}"; fi
+
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:test${NODE_VERSION}${TAG_SUFFIX}."
+
+  docker manifest create ${TARGET}:test${NODE_VERSION}${TAG_SUFFIX} \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-amd64 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-s390x \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-i386
+
+  docker manifest annotate ${TARGET}:test${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 --os=linux --arch=arm   --variant=v6
+  docker manifest annotate ${TARGET}:test${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 --os=linux --arch=arm   --variant=v7
+  docker manifest annotate ${TARGET}:test${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 --os=linux --arch=arm64 --variant=v8
+  docker manifest annotate ${TARGET}:test${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-s390x   --os=linux --arch=s390x
+  docker manifest annotate ${TARGET}:test${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-i386    --os=linux --arch=386
+
+  docker manifest push ${TARGET}:test${NODE_VERSION}${TAG_SUFFIX}
+
+  docker run --rm mplatform/mquery ${TARGET}:test${NODE_VERSION}${TAG_SUFFIX}
+}
+
+function docker_manifest_list_latest() {
+  if [[ ${1} == "" ]]; then export NODE_VERSION=""; else export NODE_VERSION="-${1}"; fi
+  if [[ ${2} == "default" ]]; then export TAG_SUFFIX=""; else export TAG_SUFFIX="-${2}"; fi
+
+  echo "DOCKER MANIFEST: Create and Push docker manifest list - ${TARGET}:latest${NODE_VERSION}${TAG_SUFFIX}."
+
+  docker manifest create ${TARGET}:latest${NODE_VERSION}${TAG_SUFFIX} \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-amd64 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-s390x \
+    ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-i386
+
+  docker manifest annotate ${TARGET}:latest${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v6 --os=linux --arch=arm   --variant=v6
+  docker manifest annotate ${TARGET}:latest${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm32v7 --os=linux --arch=arm   --variant=v7
+  docker manifest annotate ${TARGET}:latest${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-arm64v8 --os=linux --arch=arm64 --variant=v8
+  docker manifest annotate ${TARGET}:latest${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-s390x   --os=linux --arch=s390x
+  docker manifest annotate ${TARGET}:latest${NODE_VERSION}${TAG_SUFFIX} ${TARGET}:${BUILD_VERSION}${NODE_VERSION:--10}${TAG_SUFFIX}-i386    --os=linux --arch=386
+
+  docker manifest push ${TARGET}:latest${NODE_VERSION}${TAG_SUFFIX}
+
+  docker run --rm mplatform/mquery ${TARGET}:latest${NODE_VERSION}${TAG_SUFFIX}
 }
 
 function setup_dependencies() {
@@ -196,6 +275,7 @@ function prepare_qemu() {
     curl -L -o qemu-arm-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-arm-static.tar.gz && tar xzf qemu-arm-static.tar.gz &&
     curl -L -o qemu-aarch64-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-aarch64-static.tar.gz && tar xzf qemu-aarch64-static.tar.gz &&
     curl -L -o qemu-s390x-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-s390x-static.tar.gz && tar xzf qemu-s390x-static.tar.gz &&
+    curl -L -o qemu-i386-static.tar.gz https://github.com/multiarch/qemu-user-static/releases/download/$QEMU_VERSION/qemu-i386-static.tar.gz && tar xzf qemu-i386-static.tar.gz &&
     popd
 }
 
