@@ -63,11 +63,6 @@ Running that command should give a terminal window with a running instance of No
 
 You can then browse to `http://{host-ip}:1880` to get the familiar Node-RED desktop.
 
-**Note**: Currently there is a bug in Docker's architecture detection that fails for Arm6 CPU - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full build label, for example:
-
-```
-docker run -it -p 1880:1880 --name mynodered nodered/node-red:1.0.2-10-arm32v6
-```
 
 The advantage of doing this is that by giving it a name (mynodered) we can manipulate it
 more easily, and by fixing the host port we know we are on familiar ground.
@@ -187,7 +182,7 @@ When a docker run command or docker service command or docker stack command is e
 
 Therefore all tags regarding Raspberry PI's are dropped.
 
-For example: suppose you are running on a Raspberry PI 3B, which has arm32v7 as architecture. Then just run the following command to pull the image (tagged by `1.0.2-10-arm32v7`), and run the container.
+For example: suppose you are running on a Raspberry PI 3B, which has `arm32v7` as architecture. Then just run the following command to pull the image (tagged by `1.0.2-10-arm32v7`), and run the container.
 ```
 docker run -it -p 1880:1880 --name mynodered nodered/node-red:latest
 ```
@@ -196,7 +191,7 @@ The same command can be used for running on an amd64 system, since docker discov
 
 This gives the advantage that you don't need to know/specify which architecture you are running on and makes docker run commands and docker compose files more flexible and exchangeable across systems.
 
-**Note**: Currently there is a bug in Docker's architecture detection that fails for Arm6 CPU - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full build label, for example:
+**Note**: Currently there is a bug in Docker's architecture detection that fails for `arm32v6` - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full image tag, for example:
 ```
 docker run -it -p 1880:1880 --name mynodered nodered/node-red:1.0.2-10-minimal-arm32v6
 ```
