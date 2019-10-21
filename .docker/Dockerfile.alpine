@@ -24,9 +24,10 @@ RUN set -ex && \
         openssh-client && \
     mkdir -p /usr/src/node-red /data && \
     deluser --remove-home node && \
-    adduser -h /usr/src/node-red -D -H node-red -u 1000 -G dialout && \
-    chown -R node-red:dialout /data && \
-    chown -R node-red:dialout /usr/src/node-red
+    adduser -h /usr/src/node-red -D -H node-red -u 1000 && \
+    addgroup node-red dialout && \
+    chown -R node-red:node-red /data && \
+    chown -R node-red:node-red /usr/src/node-red
 
 # Set work directory
 WORKDIR /usr/src/node-red
@@ -69,7 +70,7 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
 COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
 
 # Chown, install devtools & Clean up
-RUN chown -R node-red:dialout /usr/src/node-red && \
+RUN chown -R node-red:node-red /usr/src/node-red && \
     /tmp/install_devtools.sh && \
     rm /tmp/* && \
     rm /usr/bin/qemu-$QEMU_ARCH-static
