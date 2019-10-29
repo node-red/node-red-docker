@@ -17,6 +17,7 @@ RUN set -ex && \
         curl \
         nano \
         git \
+        openssl \
         openssh-client && \
     mkdir -p /usr/src/node-red /data && \
     deluser --remove-home node && \
