@@ -109,92 +109,36 @@ The following table shows the variety of provided Node-RED images.
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**         |
 |----------------------------|--------|----------|------------|-------|------------------------|
-<<<<<<< HEAD
-| 1.0.2-10-amd64             |   10   | amd64    |   2.x 3.x  |  yes  | amd64/node:10-alpine   |
-| 1.0.2-10-arm32v6           |   10   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:10-alpine |
-| 1.0.2-10-arm32v7           |   10   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:10-alpine |
-| 1.0.2-10-arm64v8           |   10   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:10-alpine |
-| 1.0.2-10-s390x             |   10   | s390x    |   2.x 3.x  |  yes  | s390x/node:10-alpine   |
-| 1.0.2-10-i386              |   10   | i386     |   2.x 3.x  |  yes  | i386/node:10-alpine    |
-||||||| merged common ancestors
-| 1.0.2-10-amd64             |   10   | amd64    |   2.x 3.x  |  yes  | amd64/node:10-alpine   |
-| 1.0.2-10-arm32v6           |   10   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:10-alpine |
-| 1.0.2-10-arm32v7           |   10   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:10-alpine |
-| 1.0.2-10-arm64v8           |   10   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:10-alpine |
-=======
 | 1.0.3-10-amd64             |   10   | amd64    |   2.x 3.x  |  yes  | amd64/node:10-alpine   |
 | 1.0.3-10-arm32v6           |   10   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:10-alpine |
 | 1.0.3-10-arm32v7           |   10   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:10-alpine |
 | 1.0.3-10-arm64v8           |   10   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:10-alpine |
 | 1.0.3-10-s390x             |   10   | s390x    |   2.x 3.x  |  yes  | s390x/node:10-alpine   |
 | 1.0.3-10-i386              |   10   | i386     |   2.x 3.x  |  yes  | i386/node:10-alpine    |
->>>>>>> origin/master
 |                            |        |          |            |       |                        |
-<<<<<<< HEAD
-| 1.0.2-10-minimal-amd64     |   10   | amd64    |     no     |  no   | amd64/node:10-alpine   |
-| 1.0.2-10-minimal-arm32v6   |   10   | arm32v6  |     no     |  no   | arm32v6/node:10-alpine |
-| 1.0.2-10-minimal-arm32v7   |   10   | arm32v7  |     no     |  no   | arm32v7/node:10-alpine |
-| 1.0.2-10-minimal-arm64v8   |   10   | arm64v8  |     no     |  no   | arm64v8/node:10-alpine |
-| 1.0.2-10-minimal-s390x     |   10   | s390x    |     no     |  no   | s390x/node:10-alpine   |
-| 1.0.2-10-minimal-i386      |   10   | i386     |     no     |  no   | i386/node:10-alpine    |
-||||||| merged common ancestors
-| 1.0.2-10-minimal-amd64     |   10   | amd64    |     no     |  no   | amd64/node:10-alpine   |
-| 1.0.2-10-minimal-arm32v6   |   10   | arm32v6  |     no     |  no   | arm32v6/node:10-alpine |
-| 1.0.2-10-minimal-arm32v7   |   10   | arm32v7  |     no     |  no   | arm32v7/node:10-alpine |
-| 1.0.2-10-minimal-arm64v8   |   10   | arm64v8  |     no     |  no   | arm64v8/node:10-alpine |
-=======
 | 1.0.3-10-minimal-amd64     |   10   | amd64    |     no     |  no   | amd64/node:10-alpine   |
 | 1.0.3-10-minimal-arm32v6   |   10   | arm32v6  |     no     |  no   | arm32v6/node:10-alpine |
 | 1.0.3-10-minimal-arm32v7   |   10   | arm32v7  |     no     |  no   | arm32v7/node:10-alpine |
 | 1.0.3-10-minimal-arm64v8   |   10   | arm64v8  |     no     |  no   | arm64v8/node:10-alpine |
 | 1.0.3-10-minimal-s390x     |   10   | s390x    |     no     |  no   | s390x/node:10-alpine   |
 | 1.0.3-10-minimal-i386      |   10   | i386     |     no     |  no   | i386/node:10-alpine    |
->>>>>>> origin/master
 
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**         |
 |----------------------------|--------|----------|------------|-------|------------------------|
-<<<<<<< HEAD
-| 1.0.2-12-amd64             |   12   | amd64    |   2.x 3.x  |  yes  | amd64/node:12-alpine   |
-| 1.0.2-12-arm32v6           |   12   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:12-alpine |
-| 1.0.2-12-arm32v7           |   12   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:12-alpine |
-| 1.0.2-12-arm64v8           |   12   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:12-alpine |
-| 1.0.2-12-s390x             |   12   | s390x    |   2.x 3.x  |  yes  | s390x/node:12-alpine   |
-| 1.0.2-12-i386              |   12   | i386     |   2.x 3.x  |  yes  | i386/node:12-alpine    |
-||||||| merged common ancestors
-| 1.0.2-12-amd64             |   12   | amd64    |   2.x 3.x  |  yes  | amd64/node:12-alpine   |
-| 1.0.2-12-arm32v6           |   12   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:12-alpine |
-| 1.0.2-12-arm32v7           |   12   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:12-alpine |
-| 1.0.2-12-arm64v8           |   12   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:12-alpine |
-=======
 | 1.0.3-12-amd64             |   12   | amd64    |   2.x 3.x  |  yes  | amd64/node:12-alpine   |
 | 1.0.3-12-arm32v6           |   12   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:12-alpine |
 | 1.0.3-12-arm32v7           |   12   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:12-alpine |
 | 1.0.3-12-arm64v8           |   12   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:12-alpine |
 | 1.0.3-12-s390x             |   12   | s390x    |   2.x 3.x  |  yes  | s390x/node:12-alpine   |
 | 1.0.3-12-i386              |   12   | i386     |   2.x 3.x  |  yes  | i386/node:12-alpine    |
->>>>>>> origin/master
 |                            |        |          |            |       |                        |
-<<<<<<< HEAD
-| 1.0.2-12-minimal-amd64     |   12   | amd64    |     no     |  no   | amd64/node:12-alpine   |
-| 1.0.2-12-minimal-arm32v6   |   12   | arm32v6  |     no     |  no   | arm32v6/node:12-alpine |
-| 1.0.2-12-minimal-arm32v7   |   12   | arm32v7  |     no     |  no   | arm32v7/node:12-alpine |
-| 1.0.2-12-minimal-arm64v8   |   12   | arm64v8  |     no     |  no   | arm64v8/node:12-alpine |
-| 1.0.2-12-minimal-s390x     |   12   | s390x    |     no     |  no   | s390x/node:12-alpine   |
-| 1.0.2-12-minimal-i386      |   12   | i386     |     no     |  no   | i386/node:12-alpine    |
-||||||| merged common ancestors
-| 1.0.2-12-minimal-amd64     |   12   | amd64    |     no     |  no   | amd64/node:12-alpine   |
-| 1.0.2-12-minimal-arm32v6   |   12   | arm32v6  |     no     |  no   | arm32v6/node:12-alpine |
-| 1.0.2-12-minimal-arm32v7   |   12   | arm32v7  |     no     |  no   | arm32v7/node:12-alpine |
-| 1.0.2-12-minimal-arm64v8   |   12   | arm64v8  |     no     |  no   | arm64v8/node:12-alpine |
-=======
 | 1.0.3-12-minimal-amd64     |   12   | amd64    |     no     |  no   | amd64/node:12-alpine   |
 | 1.0.3-12-minimal-arm32v6   |   12   | arm32v6  |     no     |  no   | arm32v6/node:12-alpine |
 | 1.0.3-12-minimal-arm32v7   |   12   | arm32v7  |     no     |  no   | arm32v7/node:12-alpine |
 | 1.0.3-12-minimal-arm64v8   |   12   | arm64v8  |     no     |  no   | arm64v8/node:12-alpine |
 | 1.0.3-12-minimal-s390x     |   12   | s390x    |     no     |  no   | s390x/node:12-alpine   |
 | 1.0.3-12-minimal-i386      |   12   | i386     |     no     |  no   | i386/node:12-alpine    |
->>>>>>> origin/master
 
 - All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.
 
@@ -203,104 +147,42 @@ The following table shows the provided Manifest Lists.
 
 | **Tag**                                | **Node-RED Base Image**                    |
 |----------------------------------------|--------------------------------------------|
-<<<<<<< HEAD
-| latest, 1.0.2,                         | nodered/node-red:1.0.2-10-amd64            |
-| latest-10, 1.0.2-10                    | nodered/node-red:1.0.2-10-arm32v6          |
-|                                        | nodered/node-red:1.0.2-10-arm32v7          |
-|                                        | nodered/node-red:1.0.2-10-arm64v8          |
-|                                        | nodered/node-red:1.0.2-10-s390x            |
-|                                        | nodered/node-red:1.0.2-10-i386             |
-||||||| merged common ancestors
-| latest, 1.0.2,                         | nodered/node-red:1.0.2-10-amd64            |
-| latest-10, 1.0.2-10                    | nodered/node-red:1.0.2-10-arm32v6          |
-|                                        | nodered/node-red:1.0.2-10-arm32v7          |
-|                                        | nodered/node-red:1.0.2-10-arm64v8          |
-=======
 | latest, 1.0.3,                         | nodered/node-red:1.0.3-10-amd64            |
 | latest-10, 1.0.3-10                    | nodered/node-red:1.0.3-10-arm32v6          |
 |                                        | nodered/node-red:1.0.3-10-arm32v7          |
 |                                        | nodered/node-red:1.0.3-10-arm64v8          |
 |                                        | nodered/node-red:1.0.3-10-s390x            |
 |                                        | nodered/node-red:1.0.3-10-i386             |
->>>>>>> origin/master
 |                                        |                                            |
-<<<<<<< HEAD
-| latest-minimal, 1.0.2-minimal,         | nodered/node-red:1.0.2-10-amd64-minimal    |
-| latest-10-minimal, 1.0.2-10-minimal    | nodered/node-red:1.0.2-10-arm32v6-minimal  |
-|                                        | nodered/node-red:1.0.2-10-arm32v7-minimal  |
-|                                        | nodered/node-red:1.0.2-10-arm64v8-minimal  |
-|                                        | nodered/node-red:1.0.2-10-s390x-minimal    |
-|                                        | nodered/node-red:1.0.2-10-i386-minimal     |
-||||||| merged common ancestors
-| latest-minimal, 1.0.2-minimal,         | nodered/node-red:1.0.2-10-amd64-minimal    |
-| latest-10-minimal, 1.0.2-10-minimal    | nodered/node-red:1.0.2-10-arm32v6-minimal  |
-|                                        | nodered/node-red:1.0.2-10-arm32v7-minimal  |
-|                                        | nodered/node-red:1.0.2-10-arm64v8-minimal  |
-=======
 | latest-minimal, 1.0.3-minimal,         | nodered/node-red:1.0.3-10-amd64-minimal    |
 | latest-10-minimal, 1.0.3-10-minimal    | nodered/node-red:1.0.3-10-arm32v6-minimal  |
 |                                        | nodered/node-red:1.0.3-10-arm32v7-minimal  |
 |                                        | nodered/node-red:1.0.3-10-arm64v8-minimal  |
 |                                        | nodered/node-red:1.0.3-10-s390x-minimal    |
 |                                        | nodered/node-red:1.0.3-10-i386-minimal     |
->>>>>>> origin/master
 
 | **Tag**                                | **Node-RED Base Image**                    |
 |----------------------------------------|--------------------------------------------|
-<<<<<<< HEAD
-| latest-12, 1.0.2-12                    | nodered/node-red:1.0.2-12-amd64            |
-|                                        | nodered/node-red:1.0.2-12-arm32v6          |
-|                                        | nodered/node-red:1.0.2-12-arm32v7          |
-|                                        | nodered/node-red:1.0.2-12-arm64v8          |
-|                                        | nodered/node-red:1.0.2-12-s390x            |
-|                                        | nodered/node-red:1.0.2-12-i386             |
-||||||| merged common ancestors
-| latest-12, 1.0.2-12                    | nodered/node-red:1.0.2-12-amd64            |
-|                                        | nodered/node-red:1.0.2-12-arm32v6          |
-|                                        | nodered/node-red:1.0.2-12-arm32v7          |
-|                                        | nodered/node-red:1.0.2-12-arm64v8          |
-=======
 | latest-12, 1.0.3-12                    | nodered/node-red:1.0.3-12-amd64            |
 |                                        | nodered/node-red:1.0.3-12-arm32v6          |
 |                                        | nodered/node-red:1.0.3-12-arm32v7          |
 |                                        | nodered/node-red:1.0.3-12-arm64v8          |
 |                                        | nodered/node-red:1.0.3-12-s390x            |
 |                                        | nodered/node-red:1.0.3-12-i386             |
->>>>>>> origin/master
 |                                        |                                            |
-<<<<<<< HEAD
-| latest-12-minimal, 1.0.2-12-minimal    | nodered/node-red:1.0.2-12-amd64-minimal    |
-|                                        | nodered/node-red:1.0.2-12-arm32v6-minimal  |
-|                                        | nodered/node-red:1.0.2-12-arm32v7-minimal  |
-|                                        | nodered/node-red:1.0.2-12-arm64v8-minimal  |
-|                                        | nodered/node-red:1.0.2-12-s390x-minimal    |
-|                                        | nodered/node-red:1.0.2-12-i386-minimal     |
-||||||| merged common ancestors
-| latest-12-minimal, 1.0.2-12-minimal    | nodered/node-red:1.0.2-12-amd64-minimal    |
-|                                        | nodered/node-red:1.0.2-12-arm32v6-minimal  |
-|                                        | nodered/node-red:1.0.2-12-arm32v7-minimal  |
-|                                        | nodered/node-red:1.0.2-12-arm64v8-minimal  |
-=======
 | latest-12-minimal, 1.0.3-12-minimal    | nodered/node-red:1.0.3-12-amd64-minimal    |
 |                                        | nodered/node-red:1.0.3-12-arm32v6-minimal  |
 |                                        | nodered/node-red:1.0.3-12-arm32v7-minimal  |
 |                                        | nodered/node-red:1.0.3-12-arm64v8-minimal  |
 |                                        | nodered/node-red:1.0.3-12-s390x-minimal    |
 |                                        | nodered/node-red:1.0.3-12-i386-minimal     |
->>>>>>> origin/master
 
 With the support of Docker manifest list, there is no need to explicitly add the tag for the architecture to use.
 When a docker run command or docker service command or docker stack command is executed, docker checks which architecture is required and verifies if it is available in the docker repository. If it does, docker pulls the matching image for it.
 
 Therefore all tags regarding Raspberry PI's are dropped.
 
-<<<<<<< HEAD
-For example: suppose you are running on a Raspberry PI 3B, which has `arm32v7` as architecture. Then just run the following command to pull the image (tagged by `1.0.2-10-arm32v7`), and run the container.
-||||||| merged common ancestors
-For example: suppose you are running on a Raspberry PI 3B, which has arm32v7 as architecture. Then just run the following command to pull the image (tagged by `1.0.2-10-arm32v7`), and run the container.
-=======
 For example: suppose you are running on a Raspberry PI 3B, which has `arm32v7` as architecture. Then just run the following command to pull the image (tagged by `1.0.3-10-arm32v7`), and run the container.
->>>>>>> origin/master
 ```
 docker run -it -p 1880:1880 --name mynodered nodered/node-red:latest
 ```
