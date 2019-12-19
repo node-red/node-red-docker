@@ -1,6 +1,7 @@
 var http = require('http');
 var https = require('https');
 var settings = require('/data/settings.js');
+var request;
 
 var options = {
     host : "localhost",
@@ -9,14 +10,14 @@ var options = {
 };
 
 if (settings.hasOwnProperty("https")) {
-    var requests = https.request(options, (res) => {
+    request = https.request(options, (res) => {
         //console.log(`STATUS: ${res.statusCode}`);
         if (res.statusCode == 200) { process.exit(0); }
         else { process.exit(1); }
     });
 }
 else {
-    var request = http.request(options, (res) => {
+    request = http.request(options, (res) => {
         //console.log(`STATUS: ${res.statusCode}`);
         if (res.statusCode == 200) { process.exit(0); }
         else { process.exit(1); }
