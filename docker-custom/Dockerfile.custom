@@ -17,6 +17,7 @@ RUN set -ex && \
         curl \
         nano \
         git \
+        openssl \
         openssh-client && \
     mkdir -p /usr/src/node-red /data && \
     deluser --remove-home node && \
@@ -83,5 +84,8 @@ VOLUME ["/data"]
 
 # Expose the listening port of node-red
 EXPOSE 1880
+
+# Add a healthcheck (default every 30 secs)
+# HEALTHCHECK CMD curl http://localhost:1880/ || exit 1
 
 ENTRYPOINT ["npm", "start", "--", "--userDir", "/data"]

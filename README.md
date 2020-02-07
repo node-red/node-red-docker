@@ -140,7 +140,7 @@ The following table shows the variety of provided Node-RED images.
 | 1.0.3-12-minimal-s390x     |   12   | s390x    |     no     |  no   | s390x/node:12-alpine   |
 | 1.0.3-12-minimal-i386      |   12   | i386     |     no     |  no   | i386/node:12-alpine    |
 
-- All images have bash, tzdata, nano, curl git and openssl tools pre-installed to support Node-RED's Projects feature.
+- All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.
 
 ## Manifest Lists
 The following table shows the provided Manifest Lists.

@@ -11,6 +11,7 @@ COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 
 # Copy scripts
 COPY .docker/scripts/*.sh /tmp/
+COPY .docker/healthcheck.js /
 
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
@@ -21,6 +22,7 @@ RUN set -ex && \
         curl \
         nano \
         git \
+        openssl \
         openssh-client && \
     mkdir -p /usr/src/node-red /data && \
     deluser --remove-home node && \
@@ -89,5 +91,8 @@ VOLUME ["/data"]
 
 # Expose the listening port of node-red
 EXPOSE 1880
+
+# Add a healthcheck (default every 30 secs)
+HEALTHCHECK CMD node /healthcheck.js
 
 ENTRYPOINT ["npm", "start", "--", "--userDir", "/data"]
