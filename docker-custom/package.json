@@ -10,7 +10,9 @@
     },
     "main": "node_modules/node-red/red/red.js",
     "scripts": {
-        "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS"
+        "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS",
+        "debug": "node --inspect=0.0.0.0:9229 $NODE_OPTIONS node_modules/node-red/red.js $FLOWS",
+        "debug_brk": "node --inspect=0.0.0.0:9229 --inspect-brk $NODE_OPTIONS node_modules/node-red/red.js $FLOWS"
     },
     "contributors": [
         {
