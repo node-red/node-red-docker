@@ -3,6 +3,8 @@ var https = require('https');
 var settings = require('/data/settings.js');
 var request;
 
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+
 var options = {
     host : "localhost",
     port : settings.uiPort || 1880,
@@ -12,14 +14,14 @@ var options = {
 if (settings.hasOwnProperty("https")) {
     request = https.request(options, (res) => {
         //console.log(`STATUS: ${res.statusCode}`);
-        if (res.statusCode == 200) { process.exit(0); }
+        if ((res.statusCode >= 200) && (res.statusCode < 500)) { process.exit(0); }
         else { process.exit(1); }
     });
 }
 else {
     request = http.request(options, (res) => {
         //console.log(`STATUS: ${res.statusCode}`);
-        if (res.statusCode == 200) { process.exit(0); }
+        if ((res.statusCode >= 200) && (res.statusCode < 500)) { process.exit(0); }
         else { process.exit(1); }
     });
 }
