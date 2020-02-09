@@ -476,9 +476,9 @@ services:
 
 ## Debugging containers
 
-Sometimes it is useful to debug the code which is running inside the container.  Two scripts (*'debug'* and *'debug_brk'* in the package.json file) are available to start NodeJs in debug mode, which means that NodeJs will start listening (to port 9229) for a debug client.
+Sometimes it is useful to debug the code which is running inside the container.  Two scripts (*'debug'* and *'debug_brk'* in the package.json file) are available to start NodeJs in debug mode, which means that NodeJs will start listening (to port 9229) for a debug client. Various remote debugger tools (like Visual Code, Chrome Developer Tools ...) can be used to debug a Node-RED application.  A [wiki](https://github.com/node-red/node-red-docker/wiki/Debug-container-via-Chrome-Developer-Tools) page has been provided, to explain step-by-step how to use the Chrome Developer Tools debugger.
 
-1. In most cases the *'debug'* script will be sufficient, to debug a Node-RED application that is already running.  The NodeJs server can be started in debug mode using following command:
+1. In most cases the *'debug'* script will be sufficient, to debug a Node-RED application that is fully up-and-running (i.e. when the application startup code is not relevant).  The NodeJs server can be started in debug mode using following command:
    ```
    docker run -it -p 1880:1880 -p 9229:9229 --name mynodered --entrypoint npm nodered/node-red run debug -- --userDir /data
    ```
