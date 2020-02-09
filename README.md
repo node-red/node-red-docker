@@ -474,6 +474,38 @@ services:
     restart: unless-stopped
 ```
 
+## Debugging containers
+
+Sometimes it is useful to debug the code which is running inside the container.  Two scripts (*'debug'* and *'debug_brk'* in the package.json file) are available to start NodeJs in debug mode, which means that NodeJs will start listening (to port 9229) for a debug client.
+
+1. In most cases the *'debug'* script will be sufficient, to debug a Node-RED application that is already running.  The NodeJs server can be started in debug mode using following command:
+   ```
+   docker run -it -p 1880:1880 -p 9229:9229 --name mynodered --entrypoint npm nodered/node-red run debug -- --userDir /data
+   ```
+
+2. In case debugging of the Node-RED startup code is required, the  *'debug_brk'* script will instruct NodeJs to break at the first statement of the Node-RED application.  The NodeJs server can be started in debug mode using following command:
+   ```
+   docker run -it -p 1880:1880 -p 9229:9229 --name mynodered --entrypoint npm nodered/node-red run debug_brk -- --userDir /data
+   ```
+   Note that in this case NodeJs will wait - at the first statement of the Node-RED application - until a debugger client connects...
+   
+As soon as NodeJs is listening to the debug port, this will be shown in the startup log:
+```
+Debugger listening on ws://0.0.0.0:9229/...
+```
+
+Let's dissect both commands:
+
+        docker run              - run this container, initially building locally if necessary
+        -it                     - attach a terminal session so we can see what is going on
+        -p 1880:1880            - connect local port 1880 to the exposed internal port 1880
+        -p 9229:9229            - connect local port 9229 to the exposed internal port 9229 (for debugger communication)
+        --name mynodered        - give this machine a friendly local name
+        --entrypoint npm        - overwrite the default entrypoint (which would run the *'start'* script)
+        nodered/node-red        - the image to base it on - currently Node-RED v1.0.3
+        run debug(_brk)         - (npm) arguments for the custom endpoint (which must be added AFTER the image name!)
+        --                      - the arguments that will follow are not npm arguments, but need to be passed to the script
+        --userDir /data         - instruct the script where the Node-RED data needs to be stored
 
 ## Common Issues and Hints
 
