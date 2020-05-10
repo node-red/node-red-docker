@@ -97,4 +97,4 @@ EXPOSE 1880
 # Add a healthcheck (default every 30 secs)
 HEALTHCHECK CMD node /healthcheck.js
 
-ENTRYPOINT ["npm", "start", "--", "--userDir", "/data"]
+ENTRYPOINT ["npm", "start", "--cache", "/data/.npm", "--", "--userDir", "/data"]
