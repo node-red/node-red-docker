@@ -22,8 +22,10 @@ RUN set -ex && \
     mkdir -p /usr/src/node-red /data && \
     deluser --remove-home node && \
     adduser -h /usr/src/node-red -D -H node-red -u 1000 && \
-    chown -R node-red:node-red /data && \
-    chown -R node-red:node-red /usr/src/node-red
+    chown -R node-red:root /data && chmod -R g+rwX /data && \ 
+    chown -R node-red:root /usr/src/node-red && chmod -R g+rwX /usr/src/node-red
+    # chown -R node-red:node-red /data && \
+    # chown -R node-red:node-red /usr/src/node-red
 
 # Set work directory
 WORKDIR /usr/src/node-red
@@ -65,7 +67,7 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
 COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
 
 # Chown, install devtools & Clean up
-RUN chown -R node-red:node-red /usr/src/node-red && \
+RUN chown -R node-red:root /usr/src/node-red && \
     /tmp/install_devtools.sh && \
     rm -r /tmp/*
 
@@ -88,4 +90,4 @@ EXPOSE 1880
 # Add a healthcheck (default every 30 secs)
 # HEALTHCHECK CMD curl http://localhost:1880/ || exit 1
 
-ENTRYPOINT ["npm", "start", "--", "--userDir", "/data"]
+ENTRYPOINT ["npm", "start", "--cache", "/data/.npm", "--", "--userDir", "/data"]
