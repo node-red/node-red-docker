@@ -6,7 +6,7 @@
 [![DockerHub Stars](https://img.shields.io/docker/stars/nodered/node-red.svg?maxAge=2592000)](https://hub.docker.com/r/nodered/node-red/)
 
 This project describes some of the many ways Node-RED can be run under Docker and has support for multiple architectures (amd64, arm32v6, arm32v7, arm64v8, i386 and s390x).
-Some basic familiarity with Docker and the [Docker Command Line](https://docs.docker.com/engine/reference/commandline/cli/) is assumed. 
+Some basic familiarity with Docker and the [Docker Command Line](https://docs.docker.com/engine/reference/commandline/cli/) is assumed.
 
 As of Node-RED 1.0 this project provides the build for the `nodered/node-red` container on [Docker Hub](https://hub.docker.com/r/nodered/node-red/).
 
@@ -492,7 +492,7 @@ Sometimes it is useful to debug the code which is running inside the container. 
    docker run -it -p 1880:1880 -p 9229:9229 --name mynodered --entrypoint npm nodered/node-red run debug_brk -- --userDir /data
    ```
    Note that in this case NodeJs will wait - at the first statement of the Node-RED application - until a debugger client connects...
-   
+
 As soon as NodeJs is listening to the debug port, this will be shown in the startup log:
 ```
 Debugger listening on ws://0.0.0.0:9229/...
