@@ -83,6 +83,8 @@ and stop it again when required:
 
         $ docker stop mynodered
 
+**Healthcheck**: to turn off the Healthcheck add `--no-healthcheck` to the run command.
+
 ## Image Variations
 The Node-RED images come in different variations and are supported by manifest lists (auto-detect architecture).
 This makes it more easy to deploy in a multi architecture Docker environment. E.g. a Docker Swarm with mix of Raspberry Pi's and amd64 nodes.
@@ -226,6 +228,8 @@ This user data can be persisted by mounting a data directory to a volume outside
 This can either be done using a bind mount or a named data volume.
 
 Node-RED uses the `/data` directory inside the container to store user configuration data.
+
+Depending on how and where you mount the user data directory you may want to turn off the built in healthcheck function by adding `--no-healthcheck` to the run command.
 
 ### Using a Host Directory for Persistence (Bind Mount)
 To save your Node-RED user directory inside the container to a host directory outside the container, you can use the
