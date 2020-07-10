@@ -31,17 +31,17 @@ Running that command should give a terminal window with a running instance of No
         Welcome to Node-RED
         ===================
 
-        03 Oct 12:57:10 - [info] Node-RED version: v1.1.2
-        03 Oct 12:57:10 - [info] Node.js  version: v10.16.3
-        03 Oct 12:57:10 - [info] Linux 4.9.184-linuxkit x64 LE
-        03 Oct 12:57:11 - [info] Loading palette nodes
-        03 Oct 12:57:16 - [info] Settings file  : /data/settings.js
-        03 Oct 12:57:16 - [info] Context store  : 'default' [module=memory]
-        03 Oct 12:57:16 - [info] User directory : /data
-        03 Oct 12:57:16 - [warn] Projects disabled : editorTheme.projects.enabled=false
-        03 Oct 12:57:16 - [info] Flows file     : /data/flows.json
-        03 Oct 12:57:16 - [info] Creating new flow file
-        03 Oct 12:57:17 - [warn]
+        10 Jul 12:57:10 - [info] Node-RED version: v1.1.2
+        10 Jul 12:57:10 - [info] Node.js  version: v10.21.0
+        10 Jul 12:57:10 - [info] Linux 4.9.184-linuxkit x64 LE
+        10 Jul 12:57:11 - [info] Loading palette nodes
+        10 Jul 12:57:16 - [info] Settings file  : /data/settings.js
+        10 Jul 12:57:16 - [info] Context store  : 'default' [module=memory]
+        10 Jul 12:57:16 - [info] User directory : /data
+        10 Jul 12:57:16 - [warn] Projects disabled : editorTheme.projects.enabled=false
+        10 Jul 12:57:16 - [info] Flows file     : /data/flows.json
+        10 Jul 12:57:16 - [info] Creating new flow file
+        10 Jul 12:57:17 - [warn]
 
         ---------------------------------------------------------------------
         Your flow credentials file is encrypted using a system-generated key.
@@ -55,9 +55,9 @@ Running that command should give a terminal window with a running instance of No
         file using your chosen key the next time you deploy a change.
         ---------------------------------------------------------------------
 
-        03 Oct 12:57:17 - [info] Starting flows
-        03 Oct 12:57:17 - [info] Started flows
-        03 Oct 12:57:17 - [info] Server now running at http://127.0.0.1:1880/
+        10 Jul 12:57:17 - [info] Starting flows
+        10 Jul 12:57:17 - [info] Started flows
+        10 Jul 12:57:17 - [info] Server now running at http://127.0.0.1:1880/
 
         [...]
 
@@ -82,6 +82,8 @@ If you need to restart the container (e.g. after a reboot or restart of the Dock
 and stop it again when required:
 
         $ docker stop mynodered
+
+**Healthcheck**: to turn off the Healthcheck add `--no-healthcheck` to the run command.
 
 ## Image Variations
 The Node-RED images come in different variations and are supported by manifest lists (auto-detect architecture).
@@ -226,6 +228,8 @@ This user data can be persisted by mounting a data directory to a volume outside
 This can either be done using a bind mount or a named data volume.
 
 Node-RED uses the `/data` directory inside the container to store user configuration data.
+
+Depending on how and where you mount the user data directory you may want to turn off the built in healthcheck function by adding `--no-healthcheck` to the run command.
 
 ### Using a Host Directory for Persistence (Bind Mount)
 To save your Node-RED user directory inside the container to a host directory outside the container, you can use the
@@ -502,7 +506,7 @@ Let's dissect both commands:
         -p 9229:9229            - connect local port 9229 to the exposed internal port 9229 (for debugger communication)
         --name mynodered        - give this machine a friendly local name
         --entrypoint npm        - overwrite the default entrypoint (which would run the *'start'* script)
-        nodered/node-red        - the image to base it on - currently Node-RED v1.0.3
+        nodered/node-red        - the image to base it on - currently Node-RED v1.1.0
         run debug(_brk)         - (npm) arguments for the custom endpoint (which must be added AFTER the image name!)
         --                      - the arguments that will follow are not npm arguments, but need to be passed to the script
         --userDir /data         - instruct the script where the Node-RED data needs to be stored
