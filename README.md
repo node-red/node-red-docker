@@ -384,12 +384,11 @@ Refreshing the browser page should now reveal the newly added node in the palett
 
 ### Node-RED Commands from the host 
 
-Admin commands can also be accessed from the host machine without installing anything, 
-simply by prepending a command with "npx" and applying it to the container - e.g  
+Admin commands can also be accessed without installing npm or the
+node-red-admin tool on the host machine. Simply prepend your command
+with "npx" and apply it to the container - e.g  
 
-```bash
-docker exec -it mynodered npx node-red admin hash-pw
-```
+        $ docker exec -it mynodered npx node-red admin hash-pw
 
 ### Container Shell
 
