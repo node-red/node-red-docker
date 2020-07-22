@@ -382,6 +382,15 @@ This tool assumes Node-RED is available at the following address
 
 Refreshing the browser page should now reveal the newly added node in the palette.
 
+### Node-RED Commands from the host 
+
+Admin commands can also be accessed from the host machine without installing anything, 
+simply by prepending a command with "npx" and applying it to the container - e.g  
+
+```bash
+docker exec -it mynodered npx node-red admin hash-pw
+```
+
 ### Container Shell
 
         $ docker exec -it mynodered /bin/bash
@@ -562,24 +571,3 @@ __References:__
 https://groups.google.com/forum/#!topic/node-red/ieo5IVFAo2o  
 
 <br>
-
-### Accessing node-red admin Commands
-
-When deploying Node-RED via Docker, `node-red` [admin commands](https://nodered.org/docs/user-guide/node-red-admin) are not accessable from the host machine.  
-
-Instead, these can be run by prepending `npx` before a command and applying it to the Docker container from the host.
-
-For instance, if you want to [generate a password hash](https://nodered.org/docs/user-guide/runtime/securing-node-red#generating-the-password-hash) to use within your settings file, instead of using `node-red admin hash-pw`, you would run the following command from the container's host:
-```bash
-docker exec -it node-red npx node-red admin hash-pw
-```
-> (where the first "node-red" is replaced with the container name listed via the `docker ps -a` command).
-
-`npx` is an extension of `npm`, which can be used to run any npm-installed executable in the local directory.  
-
-
-__References:__  
-
-https://discourse.nodered.org/t/using-command-line-access-with-the-docker-install/30434/7  
-
-https://github.com/node-red/node-red-docker/issues/193
