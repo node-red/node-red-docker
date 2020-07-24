@@ -382,6 +382,14 @@ This tool assumes Node-RED is available at the following address
 
 Refreshing the browser page should now reveal the newly added node in the palette.
 
+### Node-RED Commands from the host 
+
+Admin commands can also be accessed without installing npm or the
+node-red-admin tool on the host machine. Simply prepend your command
+with "npx" and apply it to the container - e.g  
+
+        $ docker exec -it mynodered npx node-red admin hash-pw
+
 ### Container Shell
 
         $ docker exec -it mynodered /bin/bash
@@ -513,7 +521,9 @@ Let's dissect both commands:
 
 ## Common Issues and Hints
 
-Here is a list of common issues users have reported with possible solutions.
+Here is a list of common issues users have reported with possible solutions.  
+
+<br>
 
 ### User Permission Errors
 
@@ -526,11 +536,13 @@ If you are seeing *permission denied* errors opening files or accessing host dev
 docker run -it -p 1880:1880 --name mynodered -u root nodered/node-red
 ```
 
-References:
+__References:__  
 
-https://github.com/node-red/node-red/issues/15
+https://github.com/node-red/node-red/issues/15  
 
-https://github.com/node-red/node-red/issues/8
+https://github.com/node-red/node-red/issues/8  
+
+<br>
 
 ### Accessing Host Devices
 
@@ -539,8 +551,11 @@ If you want to access a device from the host inside the container, e.g. serial p
 ```
 docker run -it -p 1880:1880 --name mynodered --device=/dev/ttyACM0 nodered/node-red
 ```
-References:
-https://github.com/node-red/node-red/issues/15
+__References:__   
+
+https://github.com/node-red/node-red/issues/15  
+
+<br>
 
 ### Setting Timezone
 
@@ -550,5 +565,8 @@ If you want to modify the default timezone, use the TZ environment variable with
 docker run -it -p 1880:1880 --name mynodered -e TZ=Europe/London nodered/node-red
 ```
 
-References:
-https://groups.google.com/forum/#!topic/node-red/ieo5IVFAo2o
+__References:__  
+
+https://groups.google.com/forum/#!topic/node-red/ieo5IVFAo2o  
+
+<br>
