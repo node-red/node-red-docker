@@ -15,13 +15,14 @@ Previous 0.20.x versions are still available at https://hub.docker.com/r/nodered
 ## Quick Start
 To run in Docker in its simplest form just run:
 
-        docker run -it -p 1880:1880 --name mynodered nodered/node-red
+        docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red
 
 Let's dissect that command:
 
         docker run              - run this container, initially building locally if necessary
         -it                     - attach a terminal session so we can see what is going on
         -p 1880:1880            - connect local port 1880 to the exposed internal port 1880
+        -v node_red_data:/data - mount the host node_red_data directory to the container /data directory so any changes made to flows are persisted
         --name mynodered        - give this machine a friendly local name
         nodered/node-red        - the image to base it on - currently Node-RED v1.1.3
 
@@ -101,7 +102,7 @@ The minimal versions (without python and build tools) are not able to install no
 
 For example - to run the latest minimal version, you would run
 ```
-docker run -it -p 1880:1880 --name mynodered nodered/node-red:latest-minimal
+docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red:latest-minimal
 ```
 
 The Node-RED images are based on [official Node JS Alpine Linux](https://hub.docker.com/_/node/) images to keep them as small as possible.
@@ -186,7 +187,7 @@ Therefore all tags regarding Raspberry PI's are dropped.
 
 For example: suppose you are running on a Raspberry PI 3B, which has `arm32v7` as architecture. Then just run the following command to pull the image (tagged by `1.1.3-10-arm32v7`), and run the container.
 ```
-docker run -it -p 1880:1880 --name mynodered nodered/node-red:latest
+docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red:latest
 ```
 
 The same command can be used for running on an amd64 system, since docker discovers its running on a amd64 host and pulls the image with the matching tag (`1.1.3-10-amd64`).
@@ -195,7 +196,7 @@ This gives the advantage that you don't need to know/specify which architecture 
 
 **Note**: Currently there is a bug in Docker's architecture detection that fails for `arm32v6` - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full image tag, for example:
 ```
-docker run -it -p 1880:1880 --name mynodered nodered/node-red:1.1.3-10-minimal-arm32v6
+docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red:1.1.3-10-minimal-arm32v6
 ```
 
 ## Raspberry PI - native GPIO support
@@ -256,17 +257,17 @@ to store persistent or shared data outside the container.
 To create a new named data volume to persist our user data and run a new
 container using this volume.
 
-        $ docker volume create --name node_red_user_data
+        $ docker volume create --name node_red_data_vol
         $ docker volume ls
         DRIVER              VOLUME NAME
-        local               node_red_user_data
-        $ docker run -it -p 1880:1880 -v node_red_user_data:/data --name mynodered nodered/node-red
+        local               node_red_data_vol
+        $ docker run -it -p 1880:1880 -v node_red_data_vol:/data --name mynodered nodered/node-red
 
 Using Node-RED to create and deploy some sample flows, we can now destroy the
 container and start a new instance without losing our user data.
 
         $ docker rm mynodered
-        $ docker run -it -p 1880:1880 -v node_red_user_data:/data --name mynodered nodered/node-red
+        $ docker run -it -p 1880:1880 -v node_red_data_vol:/data --name mynodered nodered/node-red
 
 ## Updating
 
@@ -350,7 +351,7 @@ The flows configuration file is set using an environment parameter (**FLOWS**),
 which defaults to *'flows.json'*. This can be changed at runtime using the
 following command-line flag.
 ```
-docker run -it -p 1880:1880 -e FLOWS=my_flows.json nodered/node-red
+docker run -it -p 1880:1880 -e FLOWS=my_flows.json -v node_red_data:/data nodered/node-red
 ```
 
 **Note**: If you set `-e FLOWS=""` then the flow file can be set via the *flowFile*
@@ -360,7 +361,7 @@ Node.js runtime arguments can be passed to the container using an environment
 parameter (**NODE_OPTIONS**). For example, to fix the heap size used by
 the Node.js garbage collector you would use the following command.
 ```
-docker run -it -p 1880:1880 -e NODE_OPTIONS="--max_old_space_size=128" nodered/node-red
+docker run -it -p 1880:1880 -e NODE_OPTIONS="--max_old_space_size=128" -v node_red_data:/data nodered/node-red
 ```
 
 Other useful environment variables include
@@ -439,6 +440,8 @@ docker id number and be running on a random port... to find out run
 You can now point a browser to the host machine on the tcp port reported back, so in the example
 above browse to  `http://{host ip}:49154`
 
+**NOTE**: as this does not mount the `/data` volume externally any changes to flows will not be saved and if the container is debuilt or upgraded these will be lost. The volume may persist on the host filing sysem and can probably be retrieved and remounted if required.
+
 ## Linking Containers
 
 You can link containers "internally" within the docker runtime by using the --link option.
@@ -451,7 +454,7 @@ For example I have a simple MQTT broker container available as
 
 Then run nodered docker - but this time with a link parameter (name:alias)
 
-        docker run -it -p 1880:1880 --name mynodered --link mybroker:broker nodered/node-red
+        docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered --link mybroker:broker nodered/node-red
 
 the magic here being the `--link` that inserts a entry into the node-red instance
 hosts file called *broker* that links to the external mybroker instance....  but we do
@@ -492,12 +495,12 @@ Sometimes it is useful to debug the code which is running inside the container. 
 
 1. In most cases the *'debug'* script will be sufficient, to debug a Node-RED application that is fully up-and-running (i.e. when the application startup code is not relevant).  The NodeJs server can be started in debug mode using following command:
    ```
-   docker run -it -p 1880:1880 -p 9229:9229 --name mynodered --entrypoint npm nodered/node-red run debug -- --userDir /data
+   docker run -it -p 1880:1880 -p 9229:9229 -v node_red_data:/data --name mynodered --entrypoint npm nodered/node-red run debug -- --userDir /data
    ```
 
 2. In case debugging of the Node-RED startup code is required, the  *'debug_brk'* script will instruct NodeJs to break at the first statement of the Node-RED application.  The NodeJs server can be started in debug mode using following command:
    ```
-   docker run -it -p 1880:1880 -p 9229:9229 --name mynodered --entrypoint npm nodered/node-red run debug_brk -- --userDir /data
+   docker run -it -p 1880:1880 -p 9229:9229 -v node_red_data:/data --name mynodered --entrypoint npm nodered/node-red run debug_brk -- --userDir /data
    ```
    Note that in this case NodeJs will wait - at the first statement of the Node-RED application - until a debugger client connects...
 
@@ -512,6 +515,7 @@ Let's dissect both commands:
         -it                     - attach a terminal session so we can see what is going on
         -p 1880:1880            - connect local port 1880 to the exposed internal port 1880
         -p 9229:9229            - connect local port 9229 to the exposed internal port 9229 (for debugger communication)
+        -v node_red_data:/data  - mount the internal /data to the host mode_red_data directory 
         --name mynodered        - give this machine a friendly local name
         --entrypoint npm        - overwrite the default entrypoint (which would run the *'start'* script)
         nodered/node-red        - the image to base it on - currently Node-RED v1.1.0
@@ -533,7 +537,7 @@ on permissions.
 If you are seeing *permission denied* errors opening files or accessing host devices, try running the container as the root user.
 
 ```
-docker run -it -p 1880:1880 --name mynodered -u root nodered/node-red
+docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered -u root nodered/node-red
 ```
 
 __References:__  
@@ -549,7 +553,7 @@ https://github.com/node-red/node-red/issues/8
 If you want to access a device from the host inside the container, e.g. serial port, use the following command-line flag to pass access through.
 
 ```
-docker run -it -p 1880:1880 --name mynodered --device=/dev/ttyACM0 nodered/node-red
+docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered --device=/dev/ttyACM0 nodered/node-red
 ```
 __References:__   
 
@@ -562,7 +566,7 @@ https://github.com/node-red/node-red/issues/15
 If you want to modify the default timezone, use the TZ environment variable with the [relevant timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
 
 ```
-docker run -it -p 1880:1880 --name mynodered -e TZ=Europe/London nodered/node-red
+docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered -e TZ=Europe/London nodered/node-red
 ```
 
 __References:__  

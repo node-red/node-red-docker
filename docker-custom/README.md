@@ -21,9 +21,9 @@ cd node-red-docker/docker-custom
    - Change the node-red version in package.json (from the docker-custom directory) to the version you require
    - Add optionally packages you require
 
-## 2. **docker-make.sh**
+## 2. **docker-make.sh, docker-debian.sh**
 
-The `docker-make.sh` is a helper script to build a custom Node-RED docker image.
+The `docker-make.sh` and `docker-debian.sh` are helper scripts to build a custom Node-RED docker image. The docker-make script is based on Alpine as per the default docker package. The docker-debian is based on debian that may be more familiar to users and may support extra customisation more easily.
 
 Change the build arguments as needed:
 
@@ -36,9 +36,9 @@ Change the build arguments as needed:
    - `--file Dockerfile.custom` : Dockerfile to use to build your image.
    - `--tag testing:node-red-build` : set the image name and tag
 
-## 3. **Run docker-make.sh**
+## 3. **Run docker-make.sh** or **docker-debian.sh**
 
-Run `docker-make.sh`
+Run `docker-make.sh` or `docker-debian.sh`
 
 ```shell script
 $ ./docker-make.sh
@@ -49,7 +49,7 @@ This starts building your custom image and might take a while depending on the s
 When building is done you can run the custom image by the following command:
 
 ```shell script
-$ docker run -it -p1880:1880 testing:node-red-build
+$ docker run -it -p1880:1880 -v node_red_data:/data testing:node-red-build
 ```
 
 With the following command you can verify your docker image:
