@@ -440,7 +440,7 @@ docker id number and be running on a random port... to find out run
 You can now point a browser to the host machine on the tcp port reported back, so in the example
 above browse to  `http://{host ip}:49154`
 
-**NOTE**: as this does not mount the `/data` volume externally any changes to flows will not be saved and if the container is debuilt or upgraded these will be lost. The volume may persist on the host filing sysem and can probably be retrieved and remounted if required.
+**NOTE**: as this does not mount the `/data` volume externally any changes to flows will not be saved and if the container is redeployed or upgraded these will be lost. The volume may persist on the host filing sysem and can probably be retrieved and remounted if required.
 
 ## Linking Containers
 
