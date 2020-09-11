@@ -53,7 +53,7 @@ ARG ARCH
 ARG TAG_SUFFIX=default
 
 LABEL org.label-schema.build-date=${BUILD_DATE} \
-    org.label-schema.docker.dockerfile=".docker/Dockerfile.alpine" \
+    org.label-schema.docker.dockerfile=".docker/Dockerfile.debian" \
     org.label-schema.license="Apache-2.0" \
     org.label-schema.name="Node-RED" \
     org.label-schema.version=${BUILD_VERSION} \
