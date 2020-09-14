@@ -33,6 +33,7 @@ WORKDIR /usr/src/node-red
 
 # package.json contains Node-RED NPM module and node dependencies
 COPY package.json .
+COPY flows.json /data
 
 #### Stage BUILD #######################################################################################################
 FROM base AS build
