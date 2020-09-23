@@ -471,21 +471,20 @@ you may add `-p 1883:1883`  etc to the broker run command if you want other syst
 ### Docker-Compose linking example
 
 Another way to link containers is by using docker-compose. The following docker-compose.yml
-file creates a Node-RED instance, and a local MQTT broker instance. In the Node-RED flow the broker can be addressed simply as `broker` at its default port `1883`.
+file creates a Node-RED instance, and a local MQTT broker instance. In the Node-RED flow the broker can be addressed simply as `mybroker` at its default port `1883`.
 
 ```
 version: "3.7"
 
 services:
-  node-red:
+  mynodered:
     image: nodered/node-red
     restart: unless-stopped
     volumes:
       - /home/pi/.node-red:/data
     ports:
       - 1880:1880
-
-  broker:
+  mybroker:
     image: eclipse-mosquitto
     restart: unless-stopped
 ```
