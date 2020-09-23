@@ -37,6 +37,7 @@ WORKDIR /usr/src/node-red
 
 # package.json contains Node-RED NPM module and node dependencies
 COPY package.json .
+COPY flows.json /data
 
 #### Stage BUILD #######################################################################################################
 FROM base AS build
@@ -87,9 +88,6 @@ ENV NODE_RED_VERSION=$NODE_RED_VERSION \
 
 # ENV NODE_RED_ENABLE_SAFE_MODE=true    # Uncomment to enable safe start mode (flows not running)
 # ENV NODE_RED_ENABLE_PROJECTS=true     # Uncomment to enable projects option
-
-# User configuration directory volume
-VOLUME ["/data"]
 
 # Expose the listening port of node-red
 EXPOSE 1880

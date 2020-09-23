@@ -1,6 +1,6 @@
 ARG ARCH=amd64
 ARG NODE_VERSION=12
-ARG OS=alpine
+ARG OS=buster-slim
 
 #### Stage BASE ########################################################################################################
 FROM ${ARCH}/node:${NODE_VERSION}-${OS} AS base
@@ -10,18 +10,19 @@ COPY scripts/*.sh /tmp/
 
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
-    apk add --no-cache \
+    apt-get update && apt-get install -y \
         bash \
         tzdata \
-        iputils \
         curl \
         nano \
+        wget \
         git \
         openssl \
         openssh-client && \
     mkdir -p /usr/src/node-red /data && \
     deluser --remove-home node && \
-    adduser -h /usr/src/node-red -D -H node-red -u 1000 && \
+    # adduser --home /usr/src/node-red --disabled-password --no-create-home node-red --uid 1000 && \
+    useradd --home-dir /usr/src/node-red --uid 1000 node-red && \
     chown -R node-red:root /data && chmod -R g+rwX /data && \ 
     chown -R node-red:root /usr/src/node-red && chmod -R g+rwX /usr/src/node-red
     # chown -R node-red:node-red /data && \
@@ -38,9 +39,9 @@ COPY flows.json /data
 FROM base AS build
 
 # Install Build tools
-RUN apk add --no-cache --virtual buildtools build-base linux-headers udev python && \
+RUN apt-get update && apt-get install -y build-essential python && \
     npm install --unsafe-perm --no-update-notifier --no-fund --only=production && \
-    /tmp/remove_native_gpio.sh && \
+    npm uninstall node-red-node-gpio && \
     cp -R node_modules prod_node_modules
 
 #### Stage RELEASE #####################################################################################################
@@ -53,7 +54,7 @@ ARG ARCH
 ARG TAG_SUFFIX=default
 
 LABEL org.label-schema.build-date=${BUILD_DATE} \
-    org.label-schema.docker.dockerfile=".docker/Dockerfile.alpine" \
+    org.label-schema.docker.dockerfile=".docker/Dockerfile.debian" \
     org.label-schema.license="Apache-2.0" \
     org.label-schema.name="Node-RED" \
     org.label-schema.version=${BUILD_VERSION} \
@@ -69,7 +70,7 @@ COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
 
 # Chown, install devtools & Clean up
 RUN chown -R node-red:root /usr/src/node-red && \
-    /tmp/install_devtools.sh && \
+    apt-get update && apt-get install -y build-essential python-dev python3 && \
     rm -r /tmp/*
 
 USER node-red
