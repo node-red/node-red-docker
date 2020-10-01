@@ -444,47 +444,51 @@ above browse to  `http://{host ip}:49154`
 
 ## Linking Containers
 
-You can link containers "internally" within the docker runtime by using the --link option.
+You can link containers "internally" within the docker runtime by using Docker [user-defined bridges](https://docs.docker.com/network/bridge/).
 
-For example I have a simple MQTT broker container available as
+Before using a bridge, it needs to be created.  The command below will create a new bridge called **iot**
 
-        docker run -it --name mybroker eclipse-mosquitto
+    docker network create iot
+
+Then all containers that need to communicate need to be added to the same bridge using the **--network** command line option
+
+    docker run -itd --network iot --name mybroker eclipse-mosquitto
 
 (no need to expose the port 1883 globally unless you want to... as we do magic below)
 
-Then run nodered docker - but this time with a link parameter (name:alias)
+Then run nodered docker, also added to the same bridge
 
-        docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered --link mybroker:broker nodered/node-red
+    docker run -itd -p 1880:1880 --network iot --name mynodered nodered/node-red
 
-the magic here being the `--link` that inserts a entry into the node-red instance
-hosts file called *broker* that links to the external mybroker instance....  but we do
-expose the 1880 port so we can use an external browser to do the node-red editing.
+containers on the same user-defined bridge can take advantage of the built in name resolution provided by the bridge and use the container name (specified using the **--name** option) as the target hostname.  
 
-Then a simple flow like below should work - using the alias *broker* we just set up a second ago.
 
-        [{"id":"190c0df7.e6f3f2","type":"mqtt-broker","broker":"broker","port":"1883","clientid":""},{"id":"37963300.c869cc","type":"mqtt in","name":"","topic":"test","broker":"190c0df7.e6f3f2","x":226,"y":244,"z":"f34f9922.0cb068","wires":[["802d92f9.7fd27"]]},{"id":"edad4162.1252c","type":"mqtt out","name":"","topic":"test","qos":"","retain":"","broker":"190c0df7.e6f3f2","x":453,"y":135,"z":"f34f9922.0cb068","wires":[]},{"id":"13d1cf31.ec2e31","type":"inject","name":"","topic":"","payload":"","payloadType":"date","repeat":"","crontab":"","once":false,"x":226,"y":157,"z":"f34f9922.0cb068","wires":[["edad4162.1252c"]]},{"id":"802d92f9.7fd27","type":"debug","name":"","active":true,"console":"false","complete":"false","x":441,"y":261,"z":"f34f9922.0cb068","wires":[]}]
+In the above example the broker can be reached from the Node-RED application using hostname *mybroker*.
+
+Then a simple flow like below show the mqtt nodes connecting to the broker
+
+        [{"id":"c51cbf73.d90738","type":"mqtt in","z":"3fa278ec.8cbaf","name":"","topic":"test","broker":"5673f1d5.dd5f1","x":290,"y":240,"wires":[["7781c73.639b8b8"]]},{"id":"7008d6ef.b6ee38","type":"mqtt out","z":"3fa278ec.8cbaf","name":"","topic":"test","qos":"","retain":"","broker":"5673f1d5.dd5f1","x":517,"y":131,"wires":[]},{"id":"ef5b970c.7c864","type":"inject","z":"3fa278ec.8cbaf","name":"","repeat":"","crontab":"","once":false,"topic":"","payload":"","payloadType":"date","x":290,"y":153,"wires":[["7008d6ef.b6ee38"]]},{"id":"7781c73.639b8b8","type":"debug","z":"3fa278ec.8cbaf","name":"","active":true,"tosidebar":true,"console":false,"tostatus":true,"complete":"payload","targetType":"msg","statusVal":"payload","statusType":"auto","x":505,"y":257,"wires":[]},{"id":"5673f1d5.dd5f1","type":"mqtt-broker","z":"","name":"","broker":"mybroker","port":"1883","clientid":"","usetls":false,"compatmode":false,"keepalive":"15","cleansession":true,"birthTopic":"","birthQos":"0","birthRetain":"false","birthPayload":"","closeTopic":"","closeRetain":"false","closePayload":"","willTopic":"","willQos":"0","willRetain":"false","willPayload":""}]
 
 This way the internal broker is not exposed outside of the docker host - of course
-you may add `-p 1883:1883`  etc to the broker run command if you want to see it...
+you may add `-p 1883:1883`  etc to the broker run command if you want other systems outside your computer to be able to use the broker.
 
 ### Docker-Compose linking example
 
 Another way to link containers is by using docker-compose. The following docker-compose.yml
-file creates a Node-RED instance, and a local MQTT broker instance. In the Node-RED flow the broker can be addressed simply as `broker` at its default port `1883`.
+file creates a Node-RED instance, and a local MQTT broker instance. In the Node-RED flow the broker can be addressed simply as `mybroker` at its default port `1883`.
 
 ```
 version: "3.7"
 
 services:
-  node-red:
+  mynodered:
     image: nodered/node-red
     restart: unless-stopped
     volumes:
       - /home/pi/.node-red:/data
     ports:
       - 1880:1880
-
-  broker:
+  mybroker:
     image: eclipse-mosquitto
     restart: unless-stopped
 ```
