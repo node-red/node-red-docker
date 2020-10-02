@@ -197,6 +197,7 @@ This gives the advantage that you don't need to know/specify which architecture 
 **Note**: Currently there is a bug in Docker's architecture detection that fails for `arm32v6` - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full image tag, for example:
 ```
 docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red:1.1.3-10-minimal-arm32v6
+
 ```
 
 ## Raspberry PI - native GPIO support
