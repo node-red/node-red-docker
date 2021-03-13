@@ -455,7 +455,7 @@ Before using a bridge, it needs to be created.  The command below will create a 
 
 Then all containers that need to communicate need to be added to the same bridge using the **--network** command line option
 
-    docker run -itd --network iot --name mybroker eclipse-mosquitto
+    docker run -itd --network iot --name mybroker eclipse-mosquitto mosquitto -c /mosquitto-no-auth.conf
 
 (no need to expose the port 1883 globally unless you want to... as we do magic below)
 
@@ -494,6 +494,7 @@ services:
   mybroker:
     image: eclipse-mosquitto
     restart: unless-stopped
+    command: mosquitto -c /mosquitto-no-auth.conf
 ```
 
 ## Debugging containers
