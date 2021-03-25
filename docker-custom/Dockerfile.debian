@@ -18,12 +18,13 @@ RUN set -ex && \
         wget \
         git \
         openssl \
-        openssh-client && \
+        openssh-client \
+        ca-certificates && \
     mkdir -p /usr/src/node-red /data && \
     deluser --remove-home node && \
     # adduser --home /usr/src/node-red --disabled-password --no-create-home node-red --uid 1000 && \
     useradd --home-dir /usr/src/node-red --uid 1000 node-red && \
-    chown -R node-red:root /data && chmod -R g+rwX /data && \ 
+    chown -R node-red:root /data && chmod -R g+rwX /data && \
     chown -R node-red:root /usr/src/node-red && chmod -R g+rwX /usr/src/node-red
     # chown -R node-red:node-red /data && \
     # chown -R node-red:node-red /usr/src/node-red
