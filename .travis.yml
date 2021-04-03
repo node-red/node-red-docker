@@ -47,6 +47,23 @@ env:
     - NODE_VERSION=12 TAG_SUFFIX=minimal QEMU_ARCH=s390x   ARCH=s390x
     - NODE_VERSION=12 TAG_SUFFIX=minimal QEMU_ARCH=i386    ARCH=i386
 
+    ### Node JS 14 #####################################################################################################
+    # Default Images
+    - NODE_VERSION=14 TAG_SUFFIX=default QEMU_ARCH=x86_64  ARCH=amd64
+    - NODE_VERSION=14 TAG_SUFFIX=default QEMU_ARCH=arm     ARCH=arm32v6
+    - NODE_VERSION=14 TAG_SUFFIX=default QEMU_ARCH=arm     ARCH=arm32v7
+    - NODE_VERSION=14 TAG_SUFFIX=default QEMU_ARCH=aarch64 ARCH=arm64v8
+    - NODE_VERSION=14 TAG_SUFFIX=default QEMU_ARCH=s390x   ARCH=s390x
+    - NODE_VERSION=14 TAG_SUFFIX=default QEMU_ARCH=i386    ARCH=i386
+
+    # Minimal Images
+    - NODE_VERSION=14 TAG_SUFFIX=minimal QEMU_ARCH=x86_64  ARCH=amd64
+    - NODE_VERSION=14 TAG_SUFFIX=minimal QEMU_ARCH=arm     ARCH=arm32v6
+    - NODE_VERSION=14 TAG_SUFFIX=minimal QEMU_ARCH=arm     ARCH=arm32v7
+    - NODE_VERSION=14 TAG_SUFFIX=minimal QEMU_ARCH=aarch64 ARCH=arm64v8
+    - NODE_VERSION=14 TAG_SUFFIX=minimal QEMU_ARCH=s390x   ARCH=s390x
+    - NODE_VERSION=14 TAG_SUFFIX=minimal QEMU_ARCH=i386    ARCH=i386
+
 before_install:
   - ./.docker/docker.sh prepare
 
@@ -109,11 +126,13 @@ jobs:
               - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
               # Create and push manifest list `version` for minimal
+              - ./.docker/docker.sh manifest-list-version "14" "minimal"
               - ./.docker/docker.sh manifest-list-version "12" "minimal"
               - ./.docker/docker.sh manifest-list-version "10" "minimal"
               - ./.docker/docker.sh manifest-list-version "" "minimal"
 
               # Create and push manifest list `version` for default
+              - ./.docker/docker.sh manifest-list-version "14" "default"
               - ./.docker/docker.sh manifest-list-version "12" "default"
               - ./.docker/docker.sh manifest-list-version "10" "default"
               - ./.docker/docker.sh manifest-list-version "" "default"
@@ -125,41 +144,49 @@ jobs:
               - >
                 if [[ "${TARGET}" == "nodered/node-red" ]]; then
                   # Create and push manifest list `latest` for minimal
+                  ./.docker/docker.sh manifest_list_latest "14" "minimal"
                   ./.docker/docker.sh manifest_list_latest "12" "minimal"
                   ./.docker/docker.sh manifest_list_latest "10" "minimal"
                   ./.docker/docker.sh manifest_list_latest "" "minimal"
 
                   # Create and push manifest list `latest` for default
+                  ./.docker/docker.sh manifest_list_latest "14" "default"
                   ./.docker/docker.sh manifest_list_latest "12" "default"
                   ./.docker/docker.sh manifest_list_latest "10" "default"
                   ./.docker/docker.sh manifest_list_latest "" "default"
                 elif [[ "${TRAVIS_TAG}" == *"beta"* ]]; then
                   # Create and push manifest list `beta` for minimal
+                  ./.docker/docker.sh manifest_list_beta "14" "minimal"
                   ./.docker/docker.sh manifest_list_beta "12" "minimal"
                   ./.docker/docker.sh manifest_list_beta "10" "minimal"
                   ./.docker/docker.sh manifest_list_beta "" "minimal"
 
                   # Create and push manifest list `beta` for default
+                  ./.docker/docker.sh manifest_list_beta "14" "default"
                   ./.docker/docker.sh manifest_list_beta "12" "default"
                   ./.docker/docker.sh manifest_list_beta "10" "default"
                   ./.docker/docker.sh manifest_list_beta "" "default"
                 elif [[ "${TRAVIS_TAG}" == *"dev"* ]]; then
                   # Create and push manifest list `dev` for minimal
+                  ./.docker/docker.sh manifest_list_dev "14" "minimal"
                   ./.docker/docker.sh manifest_list_dev "12" "minimal"
                   ./.docker/docker.sh manifest_list_dev "10" "minimal"
                   ./.docker/docker.sh manifest_list_dev "" "minimal"
 
                   # Create and push manifest list `dev` for default
+                  ./.docker/docker.sh manifest_list_dev "14" "default"
                   ./.docker/docker.sh manifest_list_dev "12" "default"
                   ./.docker/docker.sh manifest_list_dev "10" "default"
                   ./.docker/docker.sh manifest_list_dev "" "default"
                 else
                   # Create and push manifest list `test` for minimal
+                  ./.docker/docker.sh manifest_list_test "14" "minimal"
                   ./.docker/docker.sh manifest_list_test "12" "minimal"
                   ./.docker/docker.sh manifest_list_test "10" "minimal"
                   ./.docker/docker.sh manifest_list_test "" "minimal"
 
                   # Create and push manifest list `test` for default
+                  ./.docker/docker.sh manifest_list_test "14" "default"
                   ./.docker/docker.sh manifest_list_test "12" "default"
                   ./.docker/docker.sh manifest_list_test "10" "default"
                   ./.docker/docker.sh manifest_list_test "" "default"
