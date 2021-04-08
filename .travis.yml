@@ -102,12 +102,12 @@ jobs:
 
               # Create and push manifest list `version` for minimal
               # - ./.docker/docker.sh manifest-list-version "12" "minimal"
-              - ./.docker/docker.sh manifest-list-version "14" "minimal"
+              # - ./.docker/docker.sh manifest-list-version "14" "minimal"
               - ./.docker/docker.sh manifest-list-version "" "minimal"
 
               # Create and push manifest list `version` for default
               # - ./.docker/docker.sh manifest-list-version "12" "default"
-              - ./.docker/docker.sh manifest-list-version "14" "default"
+              # - ./.docker/docker.sh manifest-list-version "14" "default"
               - ./.docker/docker.sh manifest-list-version "" "default"
 
               # if TARGET = `nodered/node-red` then manifest lists get tagged as `latest` and push to `nodered/node-red`
@@ -118,42 +118,42 @@ jobs:
                 if [[ "${TARGET}" == "nodered/node-red" ]]; then
                   # Create and push manifest list `latest` for minimal
                   # ./.docker/docker.sh manifest_list_latest "12" "minimal"
-                  ./.docker/docker.sh manifest_list_latest "14" "minimal"
+                  # ./.docker/docker.sh manifest_list_latest "14" "minimal"
                   ./.docker/docker.sh manifest_list_latest "" "minimal"
 
                   # Create and push manifest list `latest` for default
                   # ./.docker/docker.sh manifest_list_latest "12" "default"
-                  ./.docker/docker.sh manifest_list_latest "14" "default"
+                  # ./.docker/docker.sh manifest_list_latest "14" "default"
                   ./.docker/docker.sh manifest_list_latest "" "default"
                 elif [[ "${TRAVIS_TAG}" == *"beta"* ]]; then
                   # Create and push manifest list `beta` for minimal
                   # ./.docker/docker.sh manifest_list_beta "12" "minimal"
-                  ./.docker/docker.sh manifest_list_beta "14" "minimal"
+                  # ./.docker/docker.sh manifest_list_beta "14" "minimal"
                   ./.docker/docker.sh manifest_list_beta "" "minimal"
 
                   # Create and push manifest list `beta` for default
                   # ./.docker/docker.sh manifest_list_beta "12" "default"
-                  ./.docker/docker.sh manifest_list_beta "14" "default"
+                  # ./.docker/docker.sh manifest_list_beta "14" "default"
                   ./.docker/docker.sh manifest_list_beta "" "default"
                 elif [[ "${TRAVIS_TAG}" == *"dev"* ]]; then
                   # Create and push manifest list `dev` for minimal
                   # ./.docker/docker.sh manifest_list_dev "12" "minimal"
-                  ./.docker/docker.sh manifest_list_dev "14" "minimal"
+                  # ./.docker/docker.sh manifest_list_dev "14" "minimal"
                   ./.docker/docker.sh manifest_list_dev "" "minimal"
 
                   # Create and push manifest list `dev` for default
                   # ./.docker/docker.sh manifest_list_dev "12" "default"
-                  ./.docker/docker.sh manifest_list_dev "14" "default"
+                  # ./.docker/docker.sh manifest_list_dev "14" "default"
                   ./.docker/docker.sh manifest_list_dev "" "default"
                 else
                   # Create and push manifest list `test` for minimal
                   # ./.docker/docker.sh manifest_list_test "12" "minimal"
-                  ./.docker/docker.sh manifest_list_test "14" "minimal"
+                  # ./.docker/docker.sh manifest_list_test "14" "minimal"
                   ./.docker/docker.sh manifest_list_test "" "minimal"
 
                   # Create and push manifest list `test` for Default
                   # ./.docker/docker.sh manifest_list_test "12" "default"
-                  ./.docker/docker.sh manifest_list_test "14" "default"
+                  # ./.docker/docker.sh manifest_list_test "14" "default"
                   ./.docker/docker.sh manifest_list_test "" "default"
                 fi
 
