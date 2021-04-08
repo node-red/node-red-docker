@@ -12,8 +12,6 @@ Some basic familiarity with Docker and the [Docker Command Line](https://docs.do
 
 As of Node-RED 1.0 this project provides the build for the `nodered/node-red` container on [Docker Hub](https://hub.docker.com/r/nodered/node-red/).
 
-Previous 0.20.x versions are still available at https://hub.docker.com/r/nodered/node-red-docker.
-
 ## Quick Start
 To run in Docker in its simplest form just run:
 
@@ -35,7 +33,7 @@ Running that command should give a terminal window with a running instance of No
         ===================
 
         10 Oct 12:57:10 - [info] Node-RED version: v1.3.1
-        10 Oct 12:57:10 - [info] Node.js  version: v10.22.1
+        10 Oct 12:57:10 - [info] Node.js  version: v12.19.0
         10 Oct 12:57:10 - [info] Linux 4.19.76-linuxkit x64 LE
         10 Oct 12:57:11 - [info] Loading palette nodes
         10 Oct 12:57:16 - [info] Settings file  : /data/settings.js
@@ -114,19 +112,19 @@ The following table shows the variety of provided Node-RED images.
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**         |
 |----------------------------|--------|----------|------------|-------|------------------------|
-| 1.3.1-10-amd64             |   10   | amd64    |   2.x 3.x  |  yes  | amd64/node:10-alpine   |
-| 1.3.1-10-arm32v6           |   10   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:10-alpine |
-| 1.3.1-10-arm32v7           |   10   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:10-alpine |
-| 1.3.1-10-arm64v8           |   10   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:10-alpine |
-| 1.3.1-10-s390x             |   10   | s390x    |   2.x 3.x  |  yes  | s390x/node:10-alpine   |
-| 1.3.1-10-i386              |   10   | i386     |   2.x 3.x  |  yes  | i386/node:10-alpine    |
+| 1.3.1-14-amd64             |   10   | amd64    |   2.x 3.x  |  yes  | amd64/node:14-alpine   |
+| 1.3.1-14-arm32v6           |   10   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:14-alpine |
+| 1.3.1-14-arm32v7           |   10   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:14-alpine |
+| 1.3.1-14-arm64v8           |   10   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:14-alpine |
+| 1.3.1-14-s390x             |   10   | s390x    |   2.x 3.x  |  yes  | s390x/node:14-alpine   |
+| 1.3.1-14-i386              |   10   | i386     |   2.x 3.x  |  yes  | i386/node:14-alpine    |
 |                            |        |          |            |       |                        |
-| 1.3.1-10-minimal-amd64     |   10   | amd64    |     no     |  no   | amd64/node:10-alpine   |
-| 1.3.1-10-minimal-arm32v6   |   10   | arm32v6  |     no     |  no   | arm32v6/node:10-alpine |
-| 1.3.1-10-minimal-arm32v7   |   10   | arm32v7  |     no     |  no   | arm32v7/node:10-alpine |
-| 1.3.1-10-minimal-arm64v8   |   10   | arm64v8  |     no     |  no   | arm64v8/node:10-alpine |
-| 1.3.1-10-minimal-s390x     |   10   | s390x    |     no     |  no   | s390x/node:10-alpine   |
-| 1.3.1-10-minimal-i386      |   10   | i386     |     no     |  no   | i386/node:10-alpine    |
+| 1.3.1-14-minimal-amd64     |   10   | amd64    |     no     |  no   | amd64/node:14-alpine   |
+| 1.3.1-14-minimal-arm32v6   |   10   | arm32v6  |     no     |  no   | arm32v6/node:14-alpine |
+| 1.3.1-14-minimal-arm32v7   |   10   | arm32v7  |     no     |  no   | arm32v7/node:14-alpine |
+| 1.3.1-14-minimal-arm64v8   |   10   | arm64v8  |     no     |  no   | arm64v8/node:14-alpine |
+| 1.3.1-14-minimal-s390x     |   10   | s390x    |     no     |  no   | s390x/node:14-alpine   |
+| 1.3.1-14-minimal-i386      |   10   | i386     |     no     |  no   | i386/node:14-alpine    |
 
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**         |
@@ -152,19 +150,19 @@ The following table shows the provided Manifest Lists.
 
 | **Tag**                                | **Node-RED Base Image**                    |
 |----------------------------------------|--------------------------------------------|
-| latest, 1.3.1,                         | nodered/node-red:1.3.1-10-amd64            |
-| latest-10, 1.3.1-10                    | nodered/node-red:1.3.1-10-arm32v6          |
-|                                        | nodered/node-red:1.3.1-10-arm32v7          |
-|                                        | nodered/node-red:1.3.1-10-arm64v8          |
-|                                        | nodered/node-red:1.3.1-10-s390x            |
-|                                        | nodered/node-red:1.3.1-10-i386             |
+| latest, 1.3.1,                         | nodered/node-red:1.3.1-14-amd64            |
+| latest-10, 1.3.1-14                    | nodered/node-red:1.3.1-14-arm32v6          |
+|                                        | nodered/node-red:1.3.1-14-arm32v7          |
+|                                        | nodered/node-red:1.3.1-14-arm64v8          |
+|                                        | nodered/node-red:1.3.1-14-s390x            |
+|                                        | nodered/node-red:1.3.1-14-i386             |
 |                                        |                                            |
-| latest-minimal, 1.3.1-minimal,         | nodered/node-red:1.3.1-10-amd64-minimal    |
-| latest-10-minimal, 1.3.1-10-minimal    | nodered/node-red:1.3.1-10-arm32v6-minimal  |
-|                                        | nodered/node-red:1.3.1-10-arm32v7-minimal  |
-|                                        | nodered/node-red:1.3.1-10-arm64v8-minimal  |
-|                                        | nodered/node-red:1.3.1-10-s390x-minimal    |
-|                                        | nodered/node-red:1.3.1-10-i386-minimal     |
+| latest-minimal, 1.3.1-minimal,         | nodered/node-red:1.3.1-14-amd64-minimal    |
+| latest-10-minimal, 1.3.1-14-minimal    | nodered/node-red:1.3.1-14-arm32v6-minimal  |
+|                                        | nodered/node-red:1.3.1-14-arm32v7-minimal  |
+|                                        | nodered/node-red:1.3.1-14-arm64v8-minimal  |
+|                                        | nodered/node-red:1.3.1-14-s390x-minimal    |
+|                                        | nodered/node-red:1.3.1-14-i386-minimal     |
 
 | **Tag**                                | **Node-RED Base Image**                    |
 |----------------------------------------|--------------------------------------------|
@@ -187,18 +185,18 @@ When a docker run command or docker service command or docker stack command is e
 
 Therefore all tags regarding Raspberry PI's are dropped.
 
-For example: suppose you are running on a Raspberry PI 3B, which has `arm32v7` as architecture. Then just run the following command to pull the image (tagged by `1.3.1-10-arm32v7`), and run the container.
+For example: suppose you are running on a Raspberry PI 3B, which has `arm32v7` as architecture. Then just run the following command to pull the image (tagged by `1.3.1-14-arm32v7`), and run the container.
 ```
 docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red:latest
 ```
 
-The same command can be used for running on an amd64 system, since docker discovers its running on a amd64 host and pulls the image with the matching tag (`1.3.1-10-amd64`).
+The same command can be used for running on an amd64 system, since docker discovers its running on a amd64 host and pulls the image with the matching tag (`1.3.1-14-amd64`).
 
 This gives the advantage that you don't need to know/specify which architecture you are running on and makes docker run commands and docker compose files more flexible and exchangeable across systems.
 
 **Note**: Currently there is a bug in Docker's architecture detection that fails for `arm32v6` - eg Raspberry Pi Zero or 1. For these devices you currently need to specify the full image tag, for example:
 ```
-docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red:1.3.1-10-minimal-arm32v6
+docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red:1.3.1-14-minimal-arm32v6
 
 ```
 
