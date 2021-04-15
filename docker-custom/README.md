@@ -20,6 +20,13 @@ cd node-red-docker/docker-custom
 
    - Change the node-red version in package.json (from the docker-custom directory) to the version you require
    - Add optionally packages you require
+   - ensure it has a start option within the scripts, for example:
+
+```
+    "scripts": {
+        "start": "node $NODE_OPTIONS node_modules/node-red/red.js $FLOWS",
+        ...
+```
 
 ## 2. **flows.json**
 
