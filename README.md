@@ -32,17 +32,17 @@ Running that command should give a terminal window with a running instance of No
         Welcome to Node-RED
         ===================
 
-        10 Oct 12:57:10 - [info] Node-RED version: v1.3.5
-        10 Oct 12:57:10 - [info] Node.js  version: v10.22.1
-        10 Oct 12:57:10 - [info] Linux 4.19.76-linuxkit x64 LE
-        10 Oct 12:57:11 - [info] Loading palette nodes
-        10 Oct 12:57:16 - [info] Settings file  : /data/settings.js
-        10 Oct 12:57:16 - [info] Context store  : 'default' [module=memory]
-        10 Oct 12:57:16 - [info] User directory : /data
-        10 Oct 12:57:16 - [warn] Projects disabled : editorTheme.projects.enabled=false
-        10 Oct 12:57:16 - [info] Flows file     : /data/flows.json
-        10 Oct 12:57:16 - [info] Creating new flow file
-        10 Oct 12:57:17 - [warn]
+        17 May 12:57:10 - [info] Node-RED version: v1.3.5
+        17 May 12:57:10 - [info] Node.js  version: v14.17.0
+        17 May 12:57:10 - [info] Linux 4.19.76-linuxkit x64 LE
+        17 May 12:57:11 - [info] Loading palette nodes
+        17 May 12:57:16 - [info] Settings file  : /data/settings.js
+        17 May 12:57:16 - [info] Context store  : 'default' [module=memory]
+        17 May 12:57:16 - [info] User directory : /data
+        17 May 12:57:16 - [warn] Projects disabled : editorTheme.projects.enabled=false
+        17 May 12:57:16 - [info] Flows file     : /data/flows.json
+        17 May 12:57:16 - [info] Creating new flow file
+        17 May 12:57:17 - [warn]
 
         ---------------------------------------------------------------------
         Your flow credentials file is encrypted using a system-generated key.
@@ -56,9 +56,9 @@ Running that command should give a terminal window with a running instance of No
         file using your chosen key the next time you deploy a change.
         ---------------------------------------------------------------------
 
-        30 Apr 12:57:17 - [info] Starting flows
-        30 Apr 12:57:17 - [info] Started flows
-        30 Apr 12:57:17 - [info] Server now running at http://127.0.0.1:1880/
+        17 May 12:57:17 - [info] Starting flows
+        17 May 12:57:17 - [info] Started flows
+        17 May 12:57:17 - [info] Server now running at http://127.0.0.1:1880/
 
         [...]
 
