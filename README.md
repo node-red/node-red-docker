@@ -587,3 +587,30 @@ __References:__
 https://groups.google.com/forum/#!topic/node-red/ieo5IVFAo2o
 
 <br>
+
+### SSH Known Hosts
+
+The containers are pre-populated with a `/etc/ssh/ssh_known_hosts` file which holds the public SSH fingerprints for the following services:
+
+ - Github (github.com)
+ - Gitlab (gitlab.com)
+ - Azure (ssh.dev.azure.com)
+ - Visual Studio (vs-ssh.visualstudio.com)
+ - BitBucket (bitbucket.org)
+ - Google (source.developers.google.com port 2022) 
+
+This is to allow the Projects feature to work without complaining the first time you try and connect to a git repository hosted on one of 
+these services. If you are using Projects with your own git server and using SSH URLS then you can mount your own known_hosts file into the 
+container. e.g.
+
+```
+docker run -d -p 1880:1880 -e NODE_RED_ENABLE_PROJECTS=true -v /path/to/known_hosts:/etc/ssh/ssh_known_hosts nodered/node-red
+```
+
+You can generate the known_hosts file as follows:
+
+```
+ssh-keyscan hostname > known_hosts
+```
+
+<br>
