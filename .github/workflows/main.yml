@@ -18,8 +18,8 @@ jobs:
     env:
       # Setting the defaults up front
       LATEST_NODE: 14
-      DEFAULT_IMAGE: hardillb/testing
-      DEV_IMAGE: hardillb/testing-dev
+      DEFAULT_IMAGE: nodered/node-red
+      DEV_IMAGE: nodered/node-red-dev
     runs-on: ubuntu-latest
 
     strategy:
