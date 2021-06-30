@@ -108,7 +108,7 @@ docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node
 ```
 
 The Node-RED images are based on [official Node JS Alpine Linux](https://hub.docker.com/_/node/) images to keep them as small as possible.
-Using Alpine Linux reduces the built image size, but removes standard dependencies that are required for native module compilation. If you want to add dependencies with native dependencies, extend the Node-RED image with the missing packages on running containers or build new images see [docker-custom](docker-custom/README.md).
+Using Alpine Linux reduces the built image size, but removes standard dependencies that are required for native module compilation. If you want to add dependencies with native dependencies, extend the Node-RED image with the missing packages on running containers or build new images see [docker-custom](docker-custom/README.md) and the documentation on the Node-RED site [here](https://nodered.org/docs/getting-started/docker-custom).
 
 The following table shows the variety of provided Node-RED images.
 

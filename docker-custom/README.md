@@ -64,4 +64,5 @@ $ docker inspect testing:node-red-build
 
 ## 5. **Advanced Configuration**
 
-The relevant `Dockerfile` can be modified as required.
+The relevant `Dockerfile` can be modified as required. Examples of how to extend `Dockerfiles` to add prerequisite libraries can be found [here](https://nodered.org/docs/getting-started/docker-custom).
+
