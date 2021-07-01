@@ -4,12 +4,7 @@ name: Docker Build
 
 # Controls when the action will run. 
 on:
-  release: 
-    types: [published]
-
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  pull_request:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -97,12 +92,12 @@ jobs:
           echo "::set-output name=push::$PUSH"
           echo "::set-output name=version::$(echo $GITHUB_REF | awk -F '/' '{ print $3}')"
           echo "::set-output name=buildVersion::$VERSION"
-      - 
-        name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # - 
+      #   name: Login to DockerHub
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push
         id: build-push
@@ -111,7 +106,7 @@ jobs:
         with:
           context: .
           platforms: linux/amd64, linux/arm64, linux/s390x, linux/arm/v7
-          push: ${{ steps.nrVersion.outputs.push }}
+          push: false
           file: .docker/Dockerfile.alpine 
           build-args: |
             NODE_VERSION=${{ matrix.node }}
@@ -122,25 +117,3 @@ jobs:
             TAG_SUFFIX=${{ matrix.suffix }}
             
           tags: ${{ steps.nrVersion.outputs.tags }}
-
-      # -
-      #   name: Sign Image
-      #   run: |
-      #     echo "Digest ${{ steps.build-push.outputs.digest }}"
-      #     for TAG in $(echo "${{ steps.nrVersion.outputs.tags }}" | sed "s/,/ /g"); do
-      #       if [[ "$TAG" == "${{ env.DEFAULT_IMAGE }}:latest" ]]; then
-      #         export DOCKER_CONTENT_TRUST=1
-      #         SIGNER_KEY_NAME="8b08f4d8315a5d6443a4f59eaab60a49dacbc105c13d25f167cdb5cc9fa8f9ed.key"
-      #         PATH_KEYS=$HOME/.docker/trust/private
-      #         mkdir -p $PATH_KEYS
-      #         cp .docker/$SIGNER_KEY_NAME $PATH_KEYS
-      #         chmod 600 $PATH_KEYS/$SIGNER_KEY_NAME
-      #         export DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE=${{ secrets.DOCKER_SIGNING_PASSWORD }}
-      #         docker trust key load $PATH_KEYS/$SIGNER_KEY_NAME
-      #         # docker trust sign $TAG
-      #         # docker trust inspect --pretty $TAG
-      #         echo "Siging tag $TAG"
-      #       else
-      #         echo "Not signing $TAG"
-      #       fi
-      #     done
