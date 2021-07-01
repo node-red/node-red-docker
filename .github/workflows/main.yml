@@ -4,6 +4,7 @@ name: Docker Build
 
 # Controls when the action will run. 
 on:
+  pull_request:
   release: 
     types: [published]
 
