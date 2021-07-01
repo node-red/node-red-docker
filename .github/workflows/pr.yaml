@@ -55,7 +55,7 @@ jobs:
       - name: Get Node-RED Version
         id: nrVersion
         run: |
-          TAGS=""
+          TAGS="nodered/node-red-dev:pr-test"
           while IFS= read -r TAG;do
             if [ -z  "$TAGS" ]; then
               TAGS=$TAG
@@ -67,18 +67,12 @@ jobs:
           TRAVIS_TAG=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')
           if [[ "$TRAVIS_TAG" =~ ^v[0-9\.-]*$ ]]; then
             IMAGE=${{ env.DEFAULT_IMAGE }}
-            PUSH="true"
             VERSION=${TRAVIS_TAG:1}
             if [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "" ]; then
               TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:latest"
             fi
           else
             IMAGE=${{ env.DEV_IMAGE }}
-            if [[ "$TRAVIS_TAG" == *"dev"*  || "$TRAVIS_TAG" == *"beta"* ]]; then
-              PUSH="true"
-            else
-              PUSH="false"
-            fi
             VERSION=${TRAVIS_TAG}
             TAGS=$(echo $TAGS | sed 's!${{ env.DEFAULT_IMAGE}}!${{ env.DEV_IMAGE }}!')
             if [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "" ]; then
@@ -89,7 +83,6 @@ jobs:
           echo $TAGS
 
           echo "::set-output name=tags::$TAGS"
-          echo "::set-output name=push::$PUSH"
           echo "::set-output name=version::$(echo $GITHUB_REF | awk -F '/' '{ print $3}')"
           echo "::set-output name=buildVersion::$VERSION"
       # - 
