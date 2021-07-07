@@ -1,0 +1,112 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Manual Build Test for PRs
+
+# Controls when the action will run. 
+on:
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    env:
+      # Setting the defaults up front
+      LATEST_NODE: 14
+      DEFAULT_IMAGE: nodered/node-red
+      DEV_IMAGE: nodered/node-red-dev
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node: [12, 14]
+        suffix: ["", "-minimal"]
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      - name: Show Env
+        run: env
+      -
+        name: Docker Metadata
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          flavor: |
+            latest=false
+            suffix=-${{matrix.node}}${{matrix.suffix}}
+          images: |
+            ${{ env.DEFAULT_IMAGE }}
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+
+      - 
+        name: Setup QEMU
+        uses: docker/setup-qemu-action@v1
+      - 
+        name: Setup Docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Get Date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
+      - name: Get Node-RED Version
+        id: nrVersion
+        run: |
+          TAGS="nodered/node-red-dev:pr-test"
+          while IFS= read -r TAG;do
+            if [ -z  "$TAGS" ]; then
+              TAGS=$TAG
+            else
+              TAGS="$TAGS,$TAG"
+            fi
+          done <<< "${{ steps.meta.outputs.tags }}"
+
+          TRAVIS_TAG=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')
+          if [[ "$TRAVIS_TAG" =~ ^v[0-9\.-]*$ ]]; then
+            IMAGE=${{ env.DEFAULT_IMAGE }}
+            VERSION=${TRAVIS_TAG:1}
+            if [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "" ]; then
+              TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:latest"
+            fi
+          else
+            IMAGE=${{ env.DEV_IMAGE }}
+            VERSION=${TRAVIS_TAG}
+            TAGS=$(echo $TAGS | sed 's!${{ env.DEFAULT_IMAGE}}!${{ env.DEV_IMAGE }}!')
+            if [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "" ]; then
+              TAGS="$TAGS,$IMAGE:$VERSION"
+            fi
+          fi
+
+          echo $TAGS
+
+          echo "::set-output name=tags::$TAGS"
+          echo "::set-output name=version::$(echo $GITHUB_REF | awk -F '/' '{ print $3}')"
+          echo "::set-output name=buildVersion::$VERSION"
+      # - 
+      #   name: Login to DockerHub
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        id: build-push
+        uses: docker/build-push-action@v2
+        continue-on-error: true
+        with:
+          context: .
+          platforms: linux/amd64, linux/arm64, linux/s390x, linux/arm/v7
+          push: false
+          file: .docker/Dockerfile.alpine 
+          build-args: |
+            NODE_VERSION=${{ matrix.node }}
+            BUILD_DATE=${{ steps.date.outputs.date }}
+            BUILD_VERSION=${{ steps.nrVersion.outputs.buildVersion }}
+            BUILD_REF=${{ env.GITHUB_SHA }}
+            NODE_RED_VERSION=v${{ steps.nrVersion.outputs.version }}
+            TAG_SUFFIX=${{ matrix.suffix }}
+            
+          tags: ${{ steps.nrVersion.outputs.tags }}
