@@ -4,6 +4,7 @@ name: Docker Build
 
 # Controls when the action will run. 
 on:
+  pull_request:
   release: 
     types: [published]
 
@@ -73,6 +74,12 @@ jobs:
             VERSION=${TRAVIS_TAG:1}
             if [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "" ]; then
               TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:latest"
+            elif [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "-minimal" ]; then
+              TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:latest-minimal"
+            fi
+            TAGS="$TAGS,$IMAGE:latest-${{ matrix.node }}"
+            if [ "${{ matrix.suffix}}" == "-minimal" ]; then
+              TAGS="$TAGS,$IMAGE:latest-${{ matrix.node }}${{ matrix.suffix }}"
             fi
           else
             IMAGE=${{ env.DEV_IMAGE }}
