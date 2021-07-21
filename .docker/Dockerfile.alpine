@@ -1,9 +1,8 @@
-ARG ARCH=amd64
-ARG NODE_VERSION=10
+ARG NODE_VERSION=12
 ARG OS=alpine
 
 #### Stage BASE ########################################################################################################
-FROM ${ARCH}/node:${NODE_VERSION}-${OS} AS base
+FROM node:${NODE_VERSION}-${OS} AS base
 ARG QEMU_ARCH
 
 # Copy scripts
