@@ -73,13 +73,14 @@ COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
 # Chown, install devtools & Clean up
 RUN chown -R node-red:root /usr/src/node-red && \
     /tmp/install_devtools.sh && \
-    rm -r /tmp/* 
+    rm -r /tmp/*
 
 USER node-red
 
 # Env variables
 ENV NODE_RED_VERSION=$NODE_RED_VERSION \
     NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules \
+    PATH=/usr/src/node-red/node_modules/.bin:${PATH} \
     FLOWS=flows.json
 
 # ENV NODE_RED_ENABLE_SAFE_MODE=true    # Uncomment to enable safe start mode (flows not running)

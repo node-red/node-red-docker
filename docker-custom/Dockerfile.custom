@@ -78,6 +78,7 @@ USER node-red
 # Env variables
 ENV NODE_RED_VERSION=$NODE_RED_VERSION \
     NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules \
+    PATH=/usr/src/node-red/node_modules/.bin:${PATH} \
     FLOWS=flows.json
 
 # ENV NODE_RED_ENABLE_SAFE_MODE=true    # Uncomment to enable safe start mode (flows not running)
