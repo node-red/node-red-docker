@@ -109,7 +109,7 @@ jobs:
         continue-on-error: true
         with:
           context: .
-          platforms: linux/amd64, linux/arm64, linux/s390x, linux/arm/v7, linux/arm/v6, linux/386
+          platforms: linux/amd64, linux/arm64, linux/s390x, linux/arm/v7, linux/arm/v6
           push: ${{ steps.nrVersion.outputs.push }}
           file: .docker/Dockerfile.alpine 
           build-args: |
