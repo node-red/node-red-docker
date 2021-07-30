@@ -67,19 +67,19 @@ jobs:
           TRAVIS_TAG=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')
           if [[ "$TRAVIS_TAG" =~ ^v[0-9\.-]*$ ]]; then
             IMAGE=${{ env.DEFAULT_IMAGE }}
-            PUSH="true"
+            PUSH="false"
             VERSION=${TRAVIS_TAG:1}
-            # Never tag 1.3.x as latest
-            # if [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "" ]; then
-            #   TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:latest"
-            # elif [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "-minimal" ]; then
-            #   TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:latest-minimal"
-            # fi
-            # TAGS="$TAGS,$IMAGE:latest-${{ matrix.node }}"
-            # if [ "${{ matrix.suffix}}" == "-minimal" ]; then
-            #   TAGS="$TAGS,$IMAGE:latest-${{ matrix.node }}${{ matrix.suffix }}"
-            # fi
-            TAGS="$TAGS,$IMAGE:$VERSION
+            # Never tag 1.3.x as latest only as latest-10 and latest-10-minimal
+            if [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "" ]; then
+              TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:latest-${{ matrix.node }}"
+            fi
+            
+            if [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "-minimal" ]; then
+              TAGS="$TAGS,$IMAGE:$VERSION${{ matrix-suffix }},$IMAGE:latest-${{ matrix.node }}${{ matrix.suffix }}"
+            fi
+
+            TAGS="$TAGS,$IMAGE:$VERSION-${{ matrix-node }}"
+
           else
             IMAGE=${{ env.DEV_IMAGE }}
             if [[ "$TRAVIS_TAG" == *"dev"*  || "$TRAVIS_TAG" == *"beta"* ]]; then
