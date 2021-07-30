@@ -75,7 +75,7 @@ jobs:
             fi
             
             if [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "-minimal" ]; then
-              TAGS="$TAGS,$IMAGE:$VERSION${{ matrix-suffix }},$IMAGE:latest-${{ matrix.node }}${{ matrix.suffix }}"
+              TAGS="$TAGS,$IMAGE:$VERSION${{ matrix.suffix }},$IMAGE:latest-${{ matrix.node }}${{ matrix.suffix }}"
             fi
 
             TAGS="$TAGS,$IMAGE:$VERSION-${{ matrix-node }}"
