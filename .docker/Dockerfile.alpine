@@ -1,13 +1,9 @@
-ARG ARCH=amd64
 ARG NODE_VERSION=10
 ARG OS=alpine
 
 #### Stage BASE ########################################################################################################
-FROM ${ARCH}/node:${NODE_VERSION}-${OS} AS base
-ARG QEMU_ARCH
+FROM node:${NODE_VERSION}-${OS} AS base
 
-# QEMU - Quick Emulation
-COPY tmp/qemu-$QEMU_ARCH-static /usr/bin/qemu-$QEMU_ARCH-static
 
 # Copy scripts
 COPY .docker/scripts/*.sh /tmp/
@@ -77,8 +73,7 @@ COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
 # Chown, install devtools & Clean up
 RUN chown -R node-red:root /usr/src/node-red && \
     /tmp/install_devtools.sh && \
-    rm -r /tmp/* && \
-    rm /usr/bin/qemu-$QEMU_ARCH-static
+    rm -r /tmp/* 
 
 USER node-red
 
