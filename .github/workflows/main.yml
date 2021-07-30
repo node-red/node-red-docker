@@ -78,8 +78,6 @@ jobs:
               TAGS="$TAGS,$IMAGE:$VERSION${{ matrix.suffix }},$IMAGE:latest-${{ matrix.node }}${{ matrix.suffix }}"
             fi
 
-            TAGS="$TAGS,$IMAGE:$VERSION-${{ matrix-node }}"
-
           else
             IMAGE=${{ env.DEV_IMAGE }}
             if [[ "$TRAVIS_TAG" == *"dev"*  || "$TRAVIS_TAG" == *"beta"* ]]; then
