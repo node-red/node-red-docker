@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-ARG ARCH=amd64
-ARG NODE_VERSION=14
-=======
 ARG NODE_VERSION=12
->>>>>>> aa66343d764cc4f200ec7fbef0f01afeb1d82d5c
 ARG OS=alpine
 
 #### Stage BASE ########################################################################################################
