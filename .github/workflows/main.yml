@@ -73,6 +73,12 @@ jobs:
             VERSION=${TRAVIS_TAG:1}
             if [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "" ]; then
               TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:latest"
+            elif [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "-minimal" ]; then
+              TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:latest-minimal"
+            fi
+            TAGS="$TAGS,$IMAGE:latest-${{ matrix.node }}"
+            if [ "${{ matrix.suffix}}" == "-minimal" ]; then
+              TAGS="$TAGS,$IMAGE:latest-${{ matrix.node }}${{ matrix.suffix }}"
             fi
           else
             IMAGE=${{ env.DEV_IMAGE }}
@@ -107,7 +113,7 @@ jobs:
         continue-on-error: true
         with:
           context: .
-          platforms: linux/amd64, linux/arm64, linux/s390x, linux/arm/v7
+          platforms: linux/amd64, linux/arm64, linux/s390x, linux/arm/v7, linux/arm/v6
           push: ${{ steps.nrVersion.outputs.push }}
           file: .docker/Dockerfile.alpine 
           build-args: |

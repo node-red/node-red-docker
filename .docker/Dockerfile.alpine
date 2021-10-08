@@ -1,9 +1,13 @@
+<<<<<<< HEAD
 ARG ARCH=amd64
 ARG NODE_VERSION=14
+=======
+ARG NODE_VERSION=12
+>>>>>>> aa66343d764cc4f200ec7fbef0f01afeb1d82d5c
 ARG OS=alpine
 
 #### Stage BASE ########################################################################################################
-FROM ${ARCH}/node:${NODE_VERSION}-${OS} AS base
+FROM node:${NODE_VERSION}-${OS} AS base
 ARG QEMU_ARCH
 
 # Copy scripts
@@ -34,7 +38,11 @@ RUN set -ex && \
 WORKDIR /usr/src/node-red
 
 # Setup SSH known_hosts file
+<<<<<<< HEAD
 COPY known_hosts.sh .
+=======
+COPY .docker/known_hosts.sh .
+>>>>>>> aa66343d764cc4f200ec7fbef0f01afeb1d82d5c
 RUN ./known_hosts.sh /etc/ssh/ssh_known_hosts && rm /usr/src/node-red/known_hosts.sh
 
 # package.json contains Node-RED NPM module and node dependencies
@@ -85,6 +93,7 @@ USER node-red
 # Env variables
 ENV NODE_RED_VERSION=$NODE_RED_VERSION \
     NODE_PATH=/usr/src/node-red/node_modules:/data/node_modules \
+    PATH=/usr/src/node-red/node_modules/.bin:${PATH} \
     FLOWS=flows.json
 
 # ENV NODE_RED_ENABLE_SAFE_MODE=true    # Uncomment to enable safe start mode (flows not running)
