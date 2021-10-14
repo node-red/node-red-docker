@@ -102,6 +102,9 @@ jobs:
             fi
           fi
 
+          echo $GITHUB_REF
+          echo $TRAVIS_TAG
+          echo $VERSION
           echo $TAGS
 
           echo "::set-output name=tags::$TAGS"
