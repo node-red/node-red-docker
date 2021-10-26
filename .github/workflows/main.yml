@@ -78,7 +78,7 @@ jobs:
               TAGS="$TAGS,$IMAGE:$VERSION-minimal,$IMAGE:latest-minimal"
             fi
 
-            TAGS="$TAGS,$IMAGE:latest-{{ matrix.node }}${{ matrix.suffix }}"
+            TAGS="$TAGS,$IMAGE:latest-${{ matrix.node }}${{ matrix.suffix }}"
 
           else
             IMAGE=${{ env.DEV_IMAGE }}
