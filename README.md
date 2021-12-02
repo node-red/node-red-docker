@@ -144,6 +144,22 @@ The following table shows the variety of provided Node-RED images.
 |                            |   14   | s390x    |     no     |  no   | s390x/node:14-alpine   |
 |                            |   14   | i386     |     no     |  no   | i386/node:14-alpine    |
 
+| **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**         |
+|----------------------------|--------|----------|------------|-------|------------------------|
+| 2.1.4-16                   |   16   | amd64    |   2.x 3.x  |  yes  | amd64/node:16-alpine   |
+|                            |   16   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:16-alpine |
+|                            |   16   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:16-alpine |
+|                            |   16   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:16-alpine |
+|                            |   16   | s390x    |   2.x 3.x  |  yes  | s390x/node:16-alpine   |
+|                            |   16   | i386     |   2.x 3.x  |  yes  | i386/node:16-alpine    |
+|                            |        |          |            |       |                        |
+| 2.1.4-16-minimal           |   16   | amd64    |     no     |  no   | amd64/node:16-alpine   |
+|                            |   16   | arm32v6  |     no     |  no   | arm32v6/node:16-alpine |
+|                            |   16   | arm32v7  |     no     |  no   | arm32v7/node:16-alpine |
+|                            |   16   | arm64v8  |     no     |  no   | arm64v8/node:16-alpine |
+|                            |   16   | s390x    |     no     |  no   | s390x/node:16-alpine   |
+|                            |   16   | i386     |     no     |  no   | i386/node:16-alpine    |
+
 - All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.
 
 ## Manifest Lists
@@ -163,7 +179,14 @@ The following table shows the provided Manifest Lists.
 |----------------------------------------|--------------------------------------------|
 | latest-12, 2.1.4-12                    | nodered/node-red:2.1.4-12                  |
 |                                        |                                            |
-| latest-12-minimal, 2.1.4-12-minimal    | nodered/node-red:2.1.4-12-minimal    |
+| latest-12-minimal, 2.1.4-12-minimal    | nodered/node-red:2.1.4-12-minimal          |
+
+| **Tag**                                | **Node-RED Base Image**                    |
+|----------------------------------------|--------------------------------------------|
+| latest-16, 2.1.4-16                    | nodered/node-red:2.1.4-16                  |
+|                                        |                                            |
+| latest-16-minimal, 2.1.4-16-minimal    | nodered/node-red:2.1.4-16-minimal          |
+
 
 
 With the support of Docker manifest list, there is no need to explicitly add the tag for the architecture to use.
