@@ -1,10 +1,14 @@
 {
     "name": "node-red-docker",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "version": "3.0.0-beta.3",
 =======
     "version": "2.1.6",
 >>>>>>> 3ae5946 (Bump to 2.1.6)
+=======
+    "version": "2.2.0",
+>>>>>>> 6c4b0f9 (Bump to 2.2.0)
     "description": "Low-code programming for event-driven applications",
     "homepage": "http://nodered.org",
     "license": "Apache-2.0",
@@ -34,10 +38,14 @@
     ],
     "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
         "node-red": "3.0.0-beta.3"
 =======
         "node-red": "2.1.6"
 >>>>>>> 3ae5946 (Bump to 2.1.6)
+=======
+        "node-red": "2.2.0"
+>>>>>>> 6c4b0f9 (Bump to 2.2.0)
     },
     "engines": {
         "node": ">=12"
