@@ -1,5 +1,5 @@
-ARG NODE_VERSION=14
-ARG OS=alpine3.12
+ARG NODE_VERSION=16
+ARG OS=alpine
 
 #### Stage BASE ########################################################################################################
 FROM node:${NODE_VERSION}-${OS} AS base
