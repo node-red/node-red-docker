@@ -130,35 +130,35 @@ The following table shows the variety of provided Node-RED images.
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**             |
 |----------------------------|--------|----------|------------|-------|----------------------------|
-| 3.0.0-16                   |   14   | amd64    |   2.x 3.x  |  yes  | amd64/node:14-alpine3.12   |
-|                            |   14   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:14-alpine3.12 |
-|                            |   14   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:14-alpine3.12 |
-|                            |   14   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:14-alpine3.12 |
-|                            |   14   | s390x    |   2.x 3.x  |  yes  | s390x/node:14-alpine3.12   |
-|                            |   14   | i386     |   2.x 3.x  |  yes  | i386/node:14-alpine3.12    |
+| 3.0.0-16                   |   14   | amd64    |   2.x 3.x  |  yes  | amd64/node:16-alpine       |
+|                            |   14   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:16-alpine     |
+|                            |   14   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:16-alpine     |
+|                            |   14   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:16-alpine     |
+|                            |   14   | s390x    |   2.x 3.x  |  yes  | s390x/node:16-alpine       |
+|                            |   14   | i386     |   2.x 3.x  |  yes  | i386/node:16-alpine        |
 |                            |        |          |            |       |                            |
-| 3.0.0-16-minimal           |   14   | amd64    |     no     |  no   | amd64/node:14-alpine3.12   |
-|                            |   14   | arm32v6  |     no     |  no   | arm32v6/node:14-alpine3.12 |
-|                            |   14   | arm32v7  |     no     |  no   | arm32v7/node:14-alpine3.12 |
-|                            |   14   | arm64v8  |     no     |  no   | arm64v8/node:14-alpine3.12 |
-|                            |   14   | s390x    |     no     |  no   | s390x/node:14-alpine3.12   |
-|                            |   14   | i386     |     no     |  no   | i386/node:14-alpine3.12    |
+| 3.0.0-16-minimal           |   14   | amd64    |     no     |  no   | amd64/node:14-alpine       |
+|                            |   14   | arm32v6  |     no     |  no   | arm32v6/node:14-alpine     |
+|                            |   14   | arm32v7  |     no     |  no   | arm32v7/node:14-alpine     |
+|                            |   14   | arm64v8  |     no     |  no   | arm64v8/node:14-alpine     |
+|                            |   14   | s390x    |     no     |  no   | s390x/node:14-alpine       |
+|                            |   14   | i386     |     no     |  no   | i386/node:14-alpine        |
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**             |
 |----------------------------|--------|----------|------------|-------|----------------------------|
-| 3.0.0-16                   |   16   | amd64    |   2.x 3.x  |  yes  | amd64/node:16-alpine3.12   |
-|                            |   16   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:16-alpine3.12 |
-|                            |   16   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:16-alpine3.12 |
-|                            |   16   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:16-alpine3.12 |
-|                            |   16   | s390x    |   2.x 3.x  |  yes  | s390x/node:16-alpine3.12   |
-|                            |   16   | i386     |   2.x 3.x  |  yes  | i386/node:16-alpine3.12    |
+| 3.0.0-18                   |   18   | amd64    |   2.x 3.x  |  yes  | amd64/node:18-alpine       |
+|                            |   18   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:18-alpine     |
+|                            |   18   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:18-alpine     |
+|                            |   18   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:18-alpine     |
+|                            |   18   | s390x    |   2.x 3.x  |  yes  | s390x/node:18-alpine       |
+|                            |   18   | i386     |   2.x 3.x  |  yes  | i386/node:18-alpine        |
 |                            |        |          |            |       |                            |
-| 3.0.0-16-minimal           |   16   | amd64    |     no     |  no   | amd64/node:16-alpine3.12   |
-|                            |   16   | arm32v6  |     no     |  no   | arm32v6/node:16-alpine3.12 |
-|                            |   16   | arm32v7  |     no     |  no   | arm32v7/node:16-alpine3.12 |
-|                            |   16   | arm64v8  |     no     |  no   | arm64v8/node:16-alpine3.12 |
-|                            |   16   | s390x    |     no     |  no   | s390x/node:16-alpine3.12   |
-|                            |   16   | i386     |     no     |  no   | i386/node:16-alpine3.12    |
+| 3.0.0-18-minimal           |   18   | amd64    |     no     |  no   | amd64/node:18-alpine       |
+|                            |   18   | arm32v6  |     no     |  no   | arm32v6/node:18-alpine     |
+|                            |   18   | arm32v7  |     no     |  no   | arm32v7/node:18-alpine     |
+|                            |   18   | arm64v8  |     no     |  no   | arm64v8/node:18-alpine     |
+|                            |   18   | s390x    |     no     |  no   | s390x/node:18-alpine       |
+|                            |   18   | i386     |     no     |  no   | i386/node:18-alpine        |
 
 - All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.
 
