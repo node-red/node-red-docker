@@ -14,14 +14,14 @@ jobs:
   build:
     env:
       # Setting the defaults up front
-      LATEST_NODE: 14
+      LATEST_NODE: 16
       DEFAULT_IMAGE: nodered/node-red
       DEV_IMAGE: nodered/node-red-dev
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node: [12, 14, 16]
+        node: [14, 16, 18]
         suffix: ["", "-minimal"]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
