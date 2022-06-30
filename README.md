@@ -160,7 +160,6 @@ The following table shows the variety of provided Node-RED images.
 |                            |   18   | s390x    |     no     |  no   | s390x/node:18-alpine       |
 |                            |   18   | i386     |     no     |  no   | i386/node:18-alpine        |
 
-
 - All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.
 
 ## Manifest Lists
