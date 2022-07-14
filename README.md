@@ -26,7 +26,7 @@ Let's dissect that command:
         -p 1880:1880            - connect local port 1880 to the exposed internal port 1880
         -v node_red_data:/data  - mount the host node_red_data directory to the container /data directory so any changes made to flows are persisted
         --name mynodered        - give this machine a friendly local name
-        nodered/node-red        - the image to base it on - currently Node-RED v2.2.2
+        nodered/node-red        - the image to base it on - currently Node-RED v3.0.0
 
 
 Running that command should give a terminal window with a running instance of Node-RED.
@@ -34,8 +34,8 @@ Running that command should give a terminal window with a running instance of No
         Welcome to Node-RED
         ===================
 
-        10 Oct 12:57:10 - [info] Node-RED version: v2.2.2
-        10 Oct 12:57:10 - [info] Node.js  version: v14.18.2
+        10 Oct 12:57:10 - [info] Node-RED version: v3.0.0
+        10 Oct 12:57:10 - [info] Node.js  version: v16.14.1
         10 Oct 12:57:10 - [info] Linux 4.19.76-linuxkit x64 LE
         10 Oct 12:57:11 - [info] Loading palette nodes
         10 Oct 12:57:16 - [info] Settings file  : /data/settings.js
@@ -114,52 +114,51 @@ The following table shows the variety of provided Node-RED images.
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**             |
 |----------------------------|--------|----------|------------|-------|----------------------------|
-| 2.2.2-12                   |   12   | amd64    |   2.x 3.x  |  yes  | amd64/node:12-alpine3.12   |
-|                            |   12   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:12-alpine3.12 |
-|                            |   12   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:12-alpine3.12 |
-|                            |   12   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:12-alpine3.12 |
-|                            |   12   | s390x    |   2.x 3.x  |  yes  | s390x/node:12-alpine3.12   |
-|                            |   12   | i386     |   2.x 3.x  |  yes  | i386/node:12-alpine3.12    |
+| 3.0.0-14                   |   14   | amd64    |   2.x 3.x  |  yes  | amd64/node:14-alpine       |
+|                            |   14   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:14-alpine     |
+|                            |   14   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:14-alpine     |
+|                            |   14   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:14-alpine     |
+|                            |   14   | s390x    |   2.x 3.x  |  yes  | s390x/node:14-alpine       |
+|                            |   14   | i386     |   2.x 3.x  |  yes  | i386/node:14-alpine        |
 |                            |        |          |            |       |                            |
-| 2.2.2-12-minimal           |   12   | amd64    |     no     |  no   | amd64/node:12-alpine3.12   |
-|                            |   12   | arm32v6  |     no     |  no   | arm32v6/node:12-alpine3.12 |
-|                            |   12   | arm32v7  |     no     |  no   | arm32v7/node:12-alpine3.12 |
-|                            |   12   | arm64v8  |     no     |  no   | arm64v8/node:12-alpine3.12 |
-|                            |   12   | s390x    |     no     |  no   | s390x/node:12-alpine3.12   |
-|                            |   12   | i386     |     no     |  no   | i386/node:12-alpine3.12    |
+| 3.0.0-14-minimal           |   14   | amd64    |     no     |  no   | amd64/node:14-alpine       |
+|                            |   14   | arm32v6  |     no     |  no   | arm32v6/node:14-alpine     |
+|                            |   14   | arm32v7  |     no     |  no   | arm32v7/node:14-alpine     |
+|                            |   14   | arm64v8  |     no     |  no   | arm64v8/node:14-alpine     |
+|                            |   14   | s390x    |     no     |  no   | s390x/node:14-alpine       |
+|                            |   14   | i386     |     no     |  no   | i386/node:14-alpine        |
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**             |
 |----------------------------|--------|----------|------------|-------|----------------------------|
-| 2.2.2-14                   |   14   | amd64    |   2.x 3.x  |  yes  | amd64/node:14-alpine3.12   |
-|                            |   14   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:14-alpine3.12 |
-|                            |   14   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:14-alpine3.12 |
-|                            |   14   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:14-alpine3.12 |
-|                            |   14   | s390x    |   2.x 3.x  |  yes  | s390x/node:14-alpine3.12   |
-|                            |   14   | i386     |   2.x 3.x  |  yes  | i386/node:14-alpine3.12    |
+| 3.0.0-16                   |   14   | amd64    |   2.x 3.x  |  yes  | amd64/node:16-alpine       |
+|                            |   14   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:16-alpine     |
+|                            |   14   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:16-alpine     |
+|                            |   14   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:16-alpine     |
+|                            |   14   | s390x    |   2.x 3.x  |  yes  | s390x/node:16-alpine       |
+|                            |   14   | i386     |   2.x 3.x  |  yes  | i386/node:16-alpine        |
 |                            |        |          |            |       |                            |
-| 2.2.2-14-minimal           |   14   | amd64    |     no     |  no   | amd64/node:14-alpine3.12   |
-|                            |   14   | arm32v6  |     no     |  no   | arm32v6/node:14-alpine3.12 |
-|                            |   14   | arm32v7  |     no     |  no   | arm32v7/node:14-alpine3.12 |
-|                            |   14   | arm64v8  |     no     |  no   | arm64v8/node:14-alpine3.12 |
-|                            |   14   | s390x    |     no     |  no   | s390x/node:14-alpine3.12   |
-|                            |   14   | i386     |     no     |  no   | i386/node:14-alpine3.12    |
+| 3.0.0-16-minimal           |   14   | amd64    |     no     |  no   | amd64/node:14-alpine       |
+|                            |   14   | arm32v6  |     no     |  no   | arm32v6/node:14-alpine     |
+|                            |   14   | arm32v7  |     no     |  no   | arm32v7/node:14-alpine     |
+|                            |   14   | arm64v8  |     no     |  no   | arm64v8/node:14-alpine     |
+|                            |   14   | s390x    |     no     |  no   | s390x/node:14-alpine       |
+|                            |   14   | i386     |     no     |  no   | i386/node:14-alpine        |
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**             |
 |----------------------------|--------|----------|------------|-------|----------------------------|
-| 2.2.2-16                   |   16   | amd64    |   2.x 3.x  |  yes  | amd64/node:16-alpine3.12   |
-|                            |   16   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:16-alpine3.12 |
-|                            |   16   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:16-alpine3.12 |
-|                            |   16   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:16-alpine3.12 |
-|                            |   16   | s390x    |   2.x 3.x  |  yes  | s390x/node:16-alpine3.12   |
-|                            |   16   | i386     |   2.x 3.x  |  yes  | i386/node:16-alpine3.12    |
+| 3.0.0-18                   |   18   | amd64    |   2.x 3.x  |  yes  | amd64/node:18-alpine       |
+|                            |   18   | arm32v6  |   2.x 3.x  |  yes  | arm32v6/node:18-alpine     |
+|                            |   18   | arm32v7  |   2.x 3.x  |  yes  | arm32v7/node:18-alpine     |
+|                            |   18   | arm64v8  |   2.x 3.x  |  yes  | arm64v8/node:18-alpine     |
+|                            |   18   | s390x    |   2.x 3.x  |  yes  | s390x/node:18-alpine       |
+|                            |   18   | i386     |   2.x 3.x  |  yes  | i386/node:18-alpine        |
 |                            |        |          |            |       |                            |
-| 2.2.2-16-minimal           |   16   | amd64    |     no     |  no   | amd64/node:16-alpine3.12   |
-|                            |   16   | arm32v6  |     no     |  no   | arm32v6/node:16-alpine3.12 |
-|                            |   16   | arm32v7  |     no     |  no   | arm32v7/node:16-alpine3.12 |
-|                            |   16   | arm64v8  |     no     |  no   | arm64v8/node:16-alpine3.12 |
-|                            |   16   | s390x    |     no     |  no   | s390x/node:16-alpine3.12   |
-|                            |   16   | i386     |     no     |  no   | i386/node:16-alpine3.12    |
-
+| 3.0.0-18-minimal           |   18   | amd64    |     no     |  no   | amd64/node:18-alpine       |
+|                            |   18   | arm32v6  |     no     |  no   | arm32v6/node:18-alpine     |
+|                            |   18   | arm32v7  |     no     |  no   | arm32v7/node:18-alpine     |
+|                            |   18   | arm64v8  |     no     |  no   | arm64v8/node:18-alpine     |
+|                            |   18   | s390x    |     no     |  no   | s390x/node:18-alpine       |
+|                            |   18   | i386     |     no     |  no   | i386/node:18-alpine        |
 - All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.
 
 ## Manifest Lists
@@ -167,26 +166,25 @@ The following table shows the provided Manifest Lists.
 
 | **Tag**                                | **Node-RED Base Image**                    |
 |----------------------------------------|--------------------------------------------|
-| latest, 2.2.2,                         | nodered/node-red:2.2.2-14                  |
-| latest-14, 2.2.2-14                    |                                            |
+| latest, 3.0.0,                         | nodered/node-red:3.0.0-16                  |
+| latest-16, 3.0.0-16                    |                                            |
 |                                        |                                            |
 |                                        |                                            |
-| latest-minimal, 2.2.2-minimal,         | nodered/node-red:2.2.2-14-minimal          |
-| latest-14-minimal, 2.2.2-14-minimal    |                                            |
+| latest-minimal, 3.0.0-minimal,         | nodered/node-red:3.0.0-16-minimal          |
+| latest-16-minimal, 3.0.0-16-minimal    |                                            |
 
 
 | **Tag**                                | **Node-RED Base Image**                    |
 |----------------------------------------|--------------------------------------------|
-| latest-12, 2.2.2-12                    | nodered/node-red:2.2.2-12                  |
+| latest-14, 3.0.0-14                    | nodered/node-red:3.0.0-12                  |
 |                                        |                                            |
-| latest-12-minimal, 2.2.2-12-minimal    | nodered/node-red:2.2.2-12-minimal          |
+| latest-14-minimal, 3.0.0-14-minimal    | nodered/node-red:3.0.0-12-minimal          |
 
 | **Tag**                                | **Node-RED Base Image**                    |
 |----------------------------------------|--------------------------------------------|
-| latest-16, 2.2.2-16                    | nodered/node-red:2.2.2-16                  |
+| latest-18, 3.0.0-18                    | nodered/node-red:3.0.0-18                  |
 |                                        |                                            |
-| latest-16-minimal, 2.2.2-16-minimal    | nodered/node-red:2.2.2-16-minimal          |
-
+| latest-18-minimal, 3.0.0-18-minimal    | nodered/node-red:3.0.0-18-minimal          
 
 
 With the support of Docker manifest list, there is no need to explicitly add the tag for the architecture to use.
@@ -194,12 +192,14 @@ When a docker run command or docker service command or docker stack command is e
 
 Therefore all tags regarding Raspberry PI's are dropped.
 
-For example: suppose you are running on a Raspberry PI 3B, which has `arm32v7` as architecture. Then just run the following command to pull the image (tagged by `2.2.2-14`), and run the container.
+
+For example: suppose you are running on a Raspberry PI 3B, which has `arm32v7` as architecture. Then just run the following command to pull the image (tagged by `3.0.0-16`), and run the container.
+
 ```
 docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red:latest
 ```
 
-The same command can be used for running on an amd64 system, since docker discovers its running on a amd64 host and pulls the image with the matching tag (`2.2.2-13-amd64`).
+The same command can be used for running on an amd64 system, since docker discovers its running on a amd64 host and pulls the image with the matching tag (`3.0.0-16-amd64`).
 
 This gives the advantage that you don't need to know/specify which architecture you are running on and makes docker run commands and docker compose files more flexible and exchangeable across systems.
 
@@ -334,7 +334,7 @@ Docker build process, the dependencies are installed under `/usr/src/node-red`.
 The main sections to modify are
 
     "dependencies": {
-        "node-red": "^2.2.2",           <-- set the version of Node-RED here
+        "node-red": "^3.0.0",           <-- set the version of Node-RED here
         "node-red-dashboard": "*"        <-- add any extra npm packages here
     },
 
