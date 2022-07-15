@@ -185,8 +185,7 @@ The following table shows the provided Manifest Lists.
 |----------------------------------------|--------------------------------------------|
 | latest-18, 3.0.0-18                    | nodered/node-red:3.0.0-18                  |
 |                                        |                                            |
-| latest-18-minimal, 3.0.0-18-minimal    | nodered/node-red:3.0.0-18-minimal          |
-
+| latest-18-minimal, 3.0.0-18-minimal    | nodered/node-red:3.0.0-18-minimal          
 
 
 With the support of Docker manifest list, there is no need to explicitly add the tag for the architecture to use.
@@ -195,6 +194,7 @@ When a docker run command or docker service command or docker stack command is e
 Therefore all tags regarding Raspberry PI's are dropped.
 
 For example: suppose you are running on a Raspberry PI 3B, which has `arm32v7` as architecture. Then just run the following command to pull the image (tagged by `3.0.0-16`), and run the container.
+
 ```
 docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red:latest
 ```
