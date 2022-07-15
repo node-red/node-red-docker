@@ -159,6 +159,7 @@ The following table shows the variety of provided Node-RED images.
 |                            |   18   | arm64v8  |     no     |  no   | arm64v8/node:18-alpine     |
 |                            |   18   | s390x    |     no     |  no   | s390x/node:18-alpine       |
 |                            |   18   | i386     |     no     |  no   | i386/node:18-alpine        |
+
 - All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.
 
 ## Manifest Lists
@@ -191,7 +192,6 @@ With the support of Docker manifest list, there is no need to explicitly add the
 When a docker run command or docker service command or docker stack command is executed, docker checks which architecture is required and verifies if it is available in the docker repository. If it does, docker pulls the matching image for it.
 
 Therefore all tags regarding Raspberry PI's are dropped.
-
 
 For example: suppose you are running on a Raspberry PI 3B, which has `arm32v7` as architecture. Then just run the following command to pull the image (tagged by `3.0.0-16`), and run the container.
 
