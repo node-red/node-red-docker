@@ -39,6 +39,7 @@ RUN echo "PubkeyAcceptedKeyTypes +ssh-rsa" >> /etc/ssh/ssh_config
 # package.json contains Node-RED NPM module and node dependencies
 COPY package.json .
 COPY flows.json /data
+COPY scripts/entrypoint.sh .
 
 #### Stage BUILD #######################################################################################################
 FROM base AS build
@@ -95,4 +96,5 @@ EXPOSE 1880
 # Add a healthcheck (default every 30 secs)
 # HEALTHCHECK CMD curl http://localhost:1880/ || exit 1
 
-ENTRYPOINT ["npm", "start", "--cache", "/data/.npm", "--", "--userDir", "/data"]
+# ENTRYPOINT ["npm", "start", "--cache", "/data/.npm", "--", "--userDir", "/data"]
+ENTRYPOINT ["./entrypoint.sh"]
