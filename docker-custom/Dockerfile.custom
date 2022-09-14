@@ -80,6 +80,7 @@ RUN chown -R node-red:root /usr/src/node-red && \
     rm -r /tmp/*
 
 RUN npm config set cache /data/.npm --global 
+RUN npm config set python `which python3` --global
 
 USER node-red
 
