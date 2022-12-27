@@ -17,6 +17,7 @@ jobs:
       LATEST_NODE: 16
       DEFAULT_IMAGE: nodered/node-red
       DEV_IMAGE: nodered/node-red-dev
+      STABLE_VERSION: 3.0
     runs-on: ubuntu-latest
 
     strategy:
@@ -73,7 +74,7 @@ jobs:
             VERSION=${TRAVIS_TAG:1}
 
             if [[ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" && "${{ matrix.suffix }}" == "" ]]; then
-              TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:latest"
+              TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:${{ env.STABLE_VERSION }},$IMAGE:latest"
             elif [[ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" &&  "${{ matrix.suffix }}" == "-minimal" ]]; then
               TAGS="$TAGS,$IMAGE:$VERSION-minimal,$IMAGE:latest-minimal"
             fi
