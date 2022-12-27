@@ -80,6 +80,9 @@ RUN chown -R node-red:root /usr/src/node-red && \
     apt-get update && apt-get install -y build-essential python-dev python3 && \
     rm -r /tmp/*
 
+RUN npm config set cache /data/.npm --global
+RUN npm config set python `which python3` --global
+
 USER node-red
 
 # Env variables
