@@ -10,8 +10,8 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  # This workflow contains a 2 jobs called "alpine" and "debian"
+  alpine:
     env:
       # Setting the defaults up front
       LATEST_NODE: 16
@@ -28,7 +28,7 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Show Env
         run: env
       -
@@ -97,10 +97,15 @@ jobs:
 
           echo $TAGS
 
-          echo "::set-output name=tags::$TAGS"
-          echo "::set-output name=push::$PUSH"
-          echo "::set-output name=version::$(echo $GITHUB_REF | awk -F '/' '{ print $3}')"
-          echo "::set-output name=buildVersion::$VERSION"
+          echo "{tags}={$TAGS}" >> $GITHUB_OUTPUT
+          echo "{push}={$PUSH}" >> $GITHUB_OUTPUT
+          echo "{version}={$(echo $GITHUB_REF | awk -F '/' '{ print $3}')}" >> $GITHUB_OUTPUT
+          echo "{buildVersion}={$VERSION}" >> $GITHUB_OUTPUT
+
+          # echo "::set-output name=tags::$TAGS"
+          # echo "::set-output name=push::$PUSH"
+          # echo "::set-output name=version::$(echo $GITHUB_REF | awk -F '/' '{ print $3}')"
+          # echo "::set-output name=buildVersion::$VERSION"
       - 
         name: Login to DockerHub
         uses: docker/login-action@v1
@@ -127,6 +132,96 @@ jobs:
             
           tags: ${{ steps.nrVersion.outputs.tags }}
 
+  debian:
+    env:
+      # Setting the defaults up front
+      LATEST_NODE: 16
+      DEFAULT_IMAGE: nodered/node-red
+      DEV_IMAGE: nodered/node-red-dev
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Get Date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
+      - name: Docker Metadata
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          flavor: |
+            latest=false
+          images: |
+            ${{ env.DEFAULT_IMAGE }}
+          tags: |
+            type=ref,event=branch
+            type=semver,pattern={{version}}
+
+      - name: Get Node-RED Version
+        id: nrVersion
+        run: |
+          TAGS=""
+
+          echo Original tags ${{ steps.meta.outputs.tags }}
+
+          TRAVIS_TAG=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')
+          if [[ "$TRAVIS_TAG" =~ ^v[0-9\.-]*$ ]]; then
+            # release build
+            IMAGE=${{ env.DEFAULT_IMAGE }}
+            PUSH="true"
+            VERSION=${TRAVIS_TAG:1}
+            STABLE_VERSION=`echo ${VERSION} | sed -r 's/^([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)$/\1.\2/'`
+
+            TAGS="$IMAGE:latest-debian,$IMAGE:$VERSION-debian,$IMAGE:STABLE_VERSION-debian"
+
+          else
+            IMAGE=${{ env.DEV_IMAGE }}
+            if [[ "$TRAVIS_TAG" == *"dev"*  || "$TRAVIS_TAG" == *"beta"* ]]; then
+              # beta build
+              PUSH="true"
+            else
+              PUSH="false"
+            fi
+            VERSION=${TRAVIS_TAG}
+
+            TAGS="$IMAGE:$VERSION-debian"
+
+          fi
+
+          echo $TAGS
+          echo "{tags}={$TAGS}" >> $GITHUB_OUTPUT
+          echo "{push}={$PUSH}" >> $GITHUB_OUTPUT
+          echo "{version}={$(echo $GITHUB_REF | awk -F '/' '{ print $3}')}" >> $GITHUB_OUTPUT
+          echo "{buildVersion}={$VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Build and push
+        id: build-push
+        uses: docker/build-push-action@v2
+        continue-on-error: true
+        with:
+          context: .
+          platforms: linux/amd64, linux/arm64, linux/s390x, linux/arm/v7, linux/arm/v6
+          file: .docker/Dockerfile.debian
+          push: ${{ steps.nrVersion.outputs.push }}
+          build-args: |
+            NODE_VERSION=${{ env.LATEST_NODE }}
+            BUILD_DATE=${{ steps.date.outputs.date }}
+            BUILD_REF=${{ env.GITHUB.SHA }}
+            TAG_SUFFIX=-debian
+            NODE_RED_VERSION=${{ steps.nrVersion.outputs.version }}
+            BUILD_VERSION=${{ steps.nrVersion.outputs.buildVersion }}
+          tags: ${{ steps.nrVersion.outputs.tags }}
+
       # -
       #   name: Sign Image
       #   run: |
@@ -148,3 +243,5 @@ jobs:
       #         echo "Not signing $TAG"
       #       fi
       #     done
+
+  
