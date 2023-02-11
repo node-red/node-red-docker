@@ -29,7 +29,8 @@
         }
     ],
     "dependencies": {
-        "node-red": "3.0.2"
+        "node-red": "3.0.2",
+        "node-red-node-mongodb": "0.2.5"
     },
     "engines": {
         "node": ">=12"
