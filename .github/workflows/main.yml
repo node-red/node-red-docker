@@ -71,9 +71,10 @@ jobs:
             IMAGE=${{ env.DEFAULT_IMAGE }}
             PUSH="true"
             VERSION=${TRAVIS_TAG:1}
+            STABLE_VERSION=`echo ${VERSION} | sed -r 's/^([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)$/\1.\2/'`
 
             if [[ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" && "${{ matrix.suffix }}" == "" ]]; then
-              TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:latest"
+              TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:$STABLE_VERSION,$IMAGE:latest"
             elif [[ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" &&  "${{ matrix.suffix }}" == "-minimal" ]]; then
               TAGS="$TAGS,$IMAGE:$VERSION-minimal,$IMAGE:latest-minimal"
             fi
