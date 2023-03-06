@@ -102,6 +102,8 @@ jobs:
           echo "{version}={$(echo $GITHUB_REF | awk -F '/' '{ print $3}')}" >> $GITHUB_OUTPUT
           echo "{buildVersion}={$VERSION}" >> $GITHUB_OUTPUT
 
+          cat $GITHUB_OUTPUT
+
           # echo "::set-output name=tags::$TAGS"
           # echo "::set-output name=push::$PUSH"
           # echo "::set-output name=version::$(echo $GITHUB_REF | awk -F '/' '{ print $3}')"
@@ -203,6 +205,8 @@ jobs:
           echo "{push}={$PUSH}" >> $GITHUB_OUTPUT
           echo "{version}={$(echo $GITHUB_REF | awk -F '/' '{ print $3}')}" >> $GITHUB_OUTPUT
           echo "{buildVersion}={$VERSION}" >> $GITHUB_OUTPUT
+
+          cat $GITHUB_OUTPUT
 
       - name: Build and push
         id: build-push
