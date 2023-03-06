@@ -97,10 +97,12 @@ jobs:
 
           echo $TAGS
 
-          echo "{tags}={$TAGS}" >> $GITHUB_OUTPUT
-          echo "{push}={$PUSH}" >> $GITHUB_OUTPUT
-          echo "{version}={$(echo $GITHUB_REF | awk -F '/' '{ print $3}')}" >> $GITHUB_OUTPUT
-          echo "{buildVersion}={$VERSION}" >> $GITHUB_OUTPUT
+          echo "tags=$TAGS" >> $GITHUB_OUTPUT
+          echo "push=$PUSH" >> $GITHUB_OUTPUT
+          echo "version=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')" >> $GITHUB_OUTPUT
+          echo "buildVersion=$VERSION" >> $GITHUB_OUTPUT
+
+          cat $GITHUB_OUTPUT
 
           cat $GITHUB_OUTPUT
 
@@ -201,10 +203,12 @@ jobs:
           fi
 
           echo $TAGS
-          echo "{tags}={$TAGS}" >> $GITHUB_OUTPUT
-          echo "{push}={$PUSH}" >> $GITHUB_OUTPUT
-          echo "{version}={$(echo $GITHUB_REF | awk -F '/' '{ print $3}')}" >> $GITHUB_OUTPUT
-          echo "{buildVersion}={$VERSION}" >> $GITHUB_OUTPUT
+          echo "tags=$TAGS" >> $GITHUB_OUTPUT
+          echo "push=$PUSH" >> $GITHUB_OUTPUT
+          echo "version=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')" >> $GITHUB_OUTPUT
+          echo "buildVersion=$VERSION" >> $GITHUB_OUTPUT
+
+          cat $GITHUB_OUTPUT
 
           cat $GITHUB_OUTPUT
 
