@@ -69,7 +69,7 @@ jobs:
           TRAVIS_TAG=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')
           if [[ "$TRAVIS_TAG" =~ ^v[0-9\.-]*$ ]]; then
             IMAGE=${{ env.DEFAULT_IMAGE }}
-            PUSH="true"
+            PUSH=true
             VERSION=${TRAVIS_TAG:1}
             STABLE_VERSION=`echo ${VERSION} | sed -r 's/^([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)$/\1.\2/'`
 
@@ -84,9 +84,9 @@ jobs:
           else
             IMAGE=${{ env.DEV_IMAGE }}
             if [[ "$TRAVIS_TAG" == *"dev"*  || "$TRAVIS_TAG" == *"beta"* ]]; then
-              PUSH="true"
+              PUSH=true
             else
-              PUSH="false"
+              PUSH=false
             fi
             VERSION=${TRAVIS_TAG}
             TAGS=$(echo $TAGS | sed 's!${{ env.DEFAULT_IMAGE}}!${{ env.DEV_IMAGE }}!')
@@ -157,7 +157,7 @@ jobs:
         run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
       - name: Docker Metadata
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           flavor: |
             latest=false
@@ -178,7 +178,7 @@ jobs:
           if [[ "$TRAVIS_TAG" =~ ^v[0-9\.-]*$ ]]; then
             # release build
             IMAGE=${{ env.DEFAULT_IMAGE }}
-            PUSH="true"
+            PUSH=true
             VERSION=${TRAVIS_TAG:1}
             STABLE_VERSION=`echo ${VERSION} | sed -r 's/^([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)$/\1.\2/'`
 
@@ -188,9 +188,9 @@ jobs:
             IMAGE=${{ env.DEV_IMAGE }}
             if [[ "$TRAVIS_TAG" == *"dev"*  || "$TRAVIS_TAG" == *"beta"* ]]; then
               # beta build
-              PUSH="true"
+              PUSH=true
             else
-              PUSH="false"
+              PUSH=false
             fi
             VERSION=${TRAVIS_TAG}
 
