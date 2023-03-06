@@ -39,7 +39,7 @@ RUN echo "PubkeyAcceptedKeyTypes +ssh-rsa" >> /etc/ssh/ssh_config
 # package.json contains Node-RED NPM module and node dependencies
 COPY package.json .
 COPY flows.json /data
-COPY scripts/entrypoint.sh .
+COPY .docker/scripts/entrypoint.sh .
 
 #### Stage BUILD #######################################################################################################
 FROM base AS build
