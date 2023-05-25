@@ -72,10 +72,10 @@ jobs:
             fi
           done <<< "${{ steps.meta.outputs.tags }}"
 
-          echo "version = ${{ github.events.inputs.version}}"
+          echo "version = ${{ github.event.inputs.version }}"
 
-          if [ -z "${{ github.events.inputs.version }}"]; then
-            TRAVIS_TAG={{ github.events.inputs.version }}
+          if [[ ! -z "${{ github.events.input.version }}" ]]; then
+            TRAVIS_TAG=${{ github.event.inputs.version }}
           else
             TRAVIS_TAG=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')
           fi
