@@ -4,6 +4,12 @@ name: Docker Build
 
 # Controls when the action will run. 
 on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        type: string
+        description: "Version"
   release: 
     types: [published]
 
@@ -66,7 +72,24 @@ jobs:
             fi
           done <<< "${{ steps.meta.outputs.tags }}"
 
-          TRAVIS_TAG=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')
+          echo "Start Tags = $TAGS"
+          echo "GITHUB_REF = $GITHUB_REF"
+
+          echo "version = ${{ github.event.inputs.version }}"
+
+          if [[ ! -z "${{ github.event.inputs.version }}" ]]; then
+            TEMP=${{ github.event.inputs.version }}
+            TEMP=${TEMP:1}
+            TEMP2=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')
+            echo "$GITHUB_REF - $TEMP"
+            TAGS=$(echo $TAGS | sed "s/$TEMP2/$TEMP/")
+            TRAVIS_TAG=${{ github.event.inputs.version }}
+          else
+            TRAVIS_TAG=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')
+          fi
+
+          echo "TRAVIS_TAG = $TRAVIS_TAG"
+          
           if [[ "$TRAVIS_TAG" =~ ^v[0-9\.-]*$ ]]; then
             IMAGE=${{ env.DEFAULT_IMAGE }}
             PUSH="true"
