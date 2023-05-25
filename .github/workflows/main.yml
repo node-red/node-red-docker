@@ -79,8 +79,8 @@ jobs:
           if [[ ! -z "${{ github.event.inputs.version }}" ]]; then
             TEMP=${{ github.event.inputs.version }}
             TEMP=${TEMP:1}
-            echo "$GITHB_REF - $TEMP"
-            TAGS=`echo $TAGS | sed "s|$GITHUB_REF|$TEMP|"`
+            echo "$GITHUB_REF - $TEMP"
+            TAGS="${echo $TAGS | sed "s|$GITHUB_REF|$TEMP|"}"
             TRAVIS_TAG=${{ github.event.inputs.version }}
           else
             TRAVIS_TAG=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')
