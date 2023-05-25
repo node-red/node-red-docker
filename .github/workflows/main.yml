@@ -73,6 +73,7 @@ jobs:
           done <<< "${{ steps.meta.outputs.tags }}"
 
           echo "Start Tags = $TAGS"
+          echo "GITHUB_REF = $GITHUB_REF"
 
           echo "version = ${{ github.event.inputs.version }}"
 
