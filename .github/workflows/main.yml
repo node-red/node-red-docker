@@ -72,6 +72,8 @@ jobs:
             fi
           done <<< "${{ steps.meta.outputs.tags }}"
 
+          echo "Start Tags = $TAGS"
+
           echo "version = ${{ github.event.inputs.version }}"
 
           if [[ ! -z "${{ github.event.inputs.version }}" ]]; then
