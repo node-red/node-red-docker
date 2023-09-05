@@ -120,7 +120,6 @@ jobs:
           fi
 
           echo $TAGS
-
           echo "tags=$TAGS" >> $GITHUB_OUTPUT
           echo "push=$PUSH" >> $GITHUB_OUTPUT
           echo "version=$TRAVIS_TAG" >> $GITHUB_OUTPUT
