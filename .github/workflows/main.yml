@@ -90,7 +90,6 @@ jobs:
 
           echo "TRAVIS_TAG = $TRAVIS_TAG"
 
-          TRAVIS_TAG=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')
           if [[ "$TRAVIS_TAG" =~ ^v[0-9\.-]*$ ]]; then
             IMAGE=${{ env.DEFAULT_IMAGE }}
             PUSH=true
