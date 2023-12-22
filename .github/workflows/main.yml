@@ -126,20 +126,20 @@ jobs:
           echo "push=$PUSH" >> $GITHUB_OUTPUT
           echo "version=$TRAVIS_TAG" >> $GITHUB_OUTPUT
           echo "buildVersion=$VERSION" >> $GITHUB_OUTPUT
-      - 
-        name: Login to DockerHub
+
+      - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+
+      - name: Build and push
         id: build-push
         uses: docker/build-push-action@v2
         continue-on-error: true
         with:
           context: .
-          platforms: linux/amd64, linux/arm64, linux/s390x, linux/arm/v7, linux/arm/v6
+          platforms: linux/amd64, linux/arm64, linux/arm/v7, linux/arm/v6 # linux/s390x
           push: ${{ steps.nrVersion.outputs.push }}
           file: .docker/Dockerfile.alpine 
           build-args: |
@@ -152,24 +152,3 @@ jobs:
             
           tags: ${{ steps.nrVersion.outputs.tags }}
 
-      # -
-      #   name: Sign Image
-      #   run: |
-      #     echo "Digest ${{ steps.build-push.outputs.digest }}"
-      #     for TAG in $(echo "${{ steps.nrVersion.outputs.tags }}" | sed "s/,/ /g"); do
-      #       if [[ "$TAG" == "${{ env.DEFAULT_IMAGE }}:latest" ]]; then
-      #         export DOCKER_CONTENT_TRUST=1
-      #         SIGNER_KEY_NAME="8b08f4d8315a5d6443a4f59eaab60a49dacbc105c13d25f167cdb5cc9fa8f9ed.key"
-      #         PATH_KEYS=$HOME/.docker/trust/private
-      #         mkdir -p $PATH_KEYS
-      #         cp .docker/$SIGNER_KEY_NAME $PATH_KEYS
-      #         chmod 600 $PATH_KEYS/$SIGNER_KEY_NAME
-      #         export DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE=${{ secrets.DOCKER_SIGNING_PASSWORD }}
-      #         docker trust key load $PATH_KEYS/$SIGNER_KEY_NAME
-      #         # docker trust sign $TAG
-      #         # docker trust inspect --pretty $TAG
-      #         echo "Siging tag $TAG"
-      #       else
-      #         echo "Not signing $TAG"
-      #       fi
-      #     done
