@@ -20,14 +20,14 @@ jobs:
   alpine:
     env:
       # Setting the defaults up front
-      LATEST_NODE: 16
+      LATEST_NODE: 18
       DEFAULT_IMAGE: nodered/node-red
       DEV_IMAGE: nodered/node-red-dev
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node: [14, 16, 18]
+        node: [14, 16, 18, 20]
         suffix: ["", "-minimal"]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -159,7 +159,7 @@ jobs:
   debian:
     env:
       # Setting the defaults up front
-      LATEST_NODE: 16
+      LATEST_NODE: 18
       DEFAULT_IMAGE: nodered/node-red
       DEV_IMAGE: nodered/node-red-dev
     runs-on: ubuntu-latest
