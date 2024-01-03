@@ -20,7 +20,7 @@ jobs:
   alpine:
     env:
       # Setting the defaults up front
-      LATEST_NODE: 18
+      LATEST_NODE: 16
       DEFAULT_IMAGE: nodered/node-red
       DEV_IMAGE: nodered/node-red-dev
     runs-on: ubuntu-latest
@@ -159,7 +159,7 @@ jobs:
   debian:
     env:
       # Setting the defaults up front
-      LATEST_NODE: 18
+      LATEST_NODE: 16
       DEFAULT_IMAGE: nodered/node-red
       DEV_IMAGE: nodered/node-red-dev
     runs-on: ubuntu-latest
