@@ -6,7 +6,7 @@ var request;
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 var options = {
-    host : "localhost",
+    host : "127.0.0.1",
     port : settings.uiPort || 1880,
     timeout : 4000
 };
