@@ -1,5 +1,5 @@
 ARG ARCH=amd64
-ARG NODE_VERSION=16
+ARG NODE_VERSION=20
 ARG OS=buster-slim
 
 #### Stage BASE ########################################################################################################
@@ -7,6 +7,7 @@ FROM ${ARCH}/node:${NODE_VERSION}-${OS} AS base
 
 # Copy scripts
 COPY scripts/*.sh /tmp/
+COPY healthcheck.js /
 
 # Install tools, create Node-RED app and data dir, add user and set rights
 RUN set -ex && \
@@ -97,6 +98,6 @@ ENV NODE_RED_VERSION=$NODE_RED_VERSION \
 EXPOSE 1880
 
 # Add a healthcheck (default every 30 secs)
-# HEALTHCHECK CMD curl http://localhost:1880/ || exit 1
+HEALTHCHECK CMD node /healthcheck.js
 
 ENTRYPOINT ["./entrypoint.sh"]
