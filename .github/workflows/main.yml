@@ -40,7 +40,7 @@ jobs:
       -
         name: Docker Metadata
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v5
         with:
           flavor: |
             latest=false
@@ -132,14 +132,14 @@ jobs:
           # echo "::set-output name=buildVersion::$VERSION"
       - 
         name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push
         id: build-push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         continue-on-error: true
         with:
           context: .
@@ -181,7 +181,7 @@ jobs:
         run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
       - name: Docker Metadata
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           flavor: |
             latest=false
@@ -237,7 +237,7 @@ jobs:
 
       - name: Build and push
         id: build-push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: .
           platforms: linux/amd64, linux/arm64, linux/arm/v7
