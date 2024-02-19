@@ -132,7 +132,6 @@ The following table shows the variety of provided Node-RED images.
 |                            |   20   | arm32v6  |    3.x     |  yes  | arm32v6/node:20-alpine     |
 |                            |   20   | arm32v7  |    3.x     |  yes  | arm32v7/node:20-alpine     |
 |                            |   20   | arm64v8  |    3.x     |  yes  | arm64v8/node:20-alpine     |
-|                            |   20   | s390x    |    3.x     |  yes  | s390x/node:20-alpine       |
 |                            |   20   | i386     |    3.x     |  yes  | i386/node:20-alpine        |
 |                            |        |          |            |       |                            |
 | 4.0.0-20-minimal           |   20   | amd64    |     no     |  no   | amd64/node:20-alpine       |
