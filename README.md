@@ -118,14 +118,12 @@ The following table shows the variety of provided Node-RED images.
 |                            |   18   | arm32v6  |    3.x     |  yes  | arm32v6/node:18-alpine     |
 |                            |   18   | arm32v7  |    3.x     |  yes  | arm32v7/node:18-alpine     |
 |                            |   18   | arm64v8  |    3.x     |  yes  | arm64v8/node:18-alpine     |
-|                            |   18   | s390x    |    3.x     |  yes  | s390x/node:18-alpine       |
 |                            |   18   | i386     |    3.x     |  yes  | i386/node:18-alpine        |
 |                            |        |          |            |       |                            |
 | 4.0.0-18-minimal           |   18   | amd64    |     no     |  no   | amd64/node:18-alpine       |
 |                            |   18   | arm32v6  |     no     |  no   | arm32v6/node:18-alpine     |
 |                            |   18   | arm32v7  |     no     |  no   | arm32v7/node:18-alpine     |
 |                            |   18   | arm64v8  |     no     |  no   | arm64v8/node:18-alpine     |
-|                            |   18   | s390x    |     no     |  no   | s390x/node:18-alpine       |
 |                            |   18   | i386     |     no     |  no   | i386/node:18-alpine        |
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**             |
@@ -141,12 +139,13 @@ The following table shows the variety of provided Node-RED images.
 |                            |   20   | arm32v6  |     no     |  no   | arm32v6/node:20-alpine     |
 |                            |   20   | arm32v7  |     no     |  no   | arm32v7/node:20-alpine     |
 |                            |   20   | arm64v8  |     no     |  no   | arm64v8/node:20-alpine     |
-|                            |   20   | s390x    |     no     |  no   | s390x/node:20-alpine       |
 |                            |   20   | i386     |     no     |  no   | i386/node:20-alpine        |
 |                            |        |          |            |       |                            |
 | 4.0.0-debian               |   20   | amd64    |    3.x     |  yes  | amd64/node:20-buster-slim  |
 |                            |   20   | arm32v7  |    3.x     |  yes  | amd64/node:20-buster-slim  |
 |                            |   20   | arm64v8  |    3.x     |  yes  | amd64/node:20-buster-slim  |
+
+Coming when NodeJS v22 is released
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**             |
 |----------------------------|--------|----------|------------|-------|----------------------------|
@@ -154,14 +153,12 @@ The following table shows the variety of provided Node-RED images.
 |                            |   22   | arm32v6  |    3.x     |  yes  | arm32v6/node:22-alpine     |
 |                            |   22   | arm32v7  |    3.x     |  yes  | arm32v7/node:22-alpine     |
 |                            |   22   | arm64v8  |    3.x     |  yes  | arm64v8/node:22-alpine     |
-|                            |   22   | s390x    |    3.x     |  yes  | s390x/node:22-alpine       |
 |                            |   22   | i386     |    3.x     |  yes  | i386/node:22-alpine        |
 |                            |        |          |            |       |                            |
 | 4.0.0-22-minimal           |   22   | amd64    |     no     |  no   | amd64/node:22-alpine       |
 |                            |   22   | arm32v6  |     no     |  no   | arm32v6/node:22-alpine     |
 |                            |   22   | arm32v7  |     no     |  no   | arm32v7/node:22-alpine     |
 |                            |   22   | arm64v8  |     no     |  no   | arm64v8/node:22-alpine     |
-|                            |   22   | s390x    |     no     |  no   | s390x/node:22-alpine       |
 |                            |   22   | i386     |     no     |  no   | i386/node:22-alpine        |
 
 - All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.
@@ -186,6 +183,8 @@ The following table shows the provided Manifest Lists.
 | latest-18, 4.0.0-18                    | nodered/node-red:4.0.0-18                  |
 |                                        |                                            |
 | latest-18-minimal, 4.0.0-18-minimal    | nodered/node-red:4.0.0-18-minimal          |
+
+Coming when NodeJS v22 released
 
 | **Tag**                                | **Node-RED Base Image**                    |
 |----------------------------------------|--------------------------------------------|

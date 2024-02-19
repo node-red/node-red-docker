@@ -27,7 +27,7 @@ jobs:
 
     strategy:
       matrix:
-        node: [18, 20, 22]
+        node: [18, 20]
         suffix: ["", "-minimal"]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
