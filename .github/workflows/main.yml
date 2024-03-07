@@ -20,14 +20,14 @@ jobs:
   alpine:
     env:
       # Setting the defaults up front
-      LATEST_NODE: 16
+      LATEST_NODE: 20
       DEFAULT_IMAGE: nodered/node-red
       DEV_IMAGE: nodered/node-red-dev
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node: [14, 16, 18]
+        node: [18, 20]
         suffix: ["", "-minimal"]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -40,7 +40,7 @@ jobs:
       -
         name: Docker Metadata
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v5
         with:
           flavor: |
             latest=false
@@ -53,10 +53,10 @@ jobs:
 
       - 
         name: Setup QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v3
       - 
         name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v3
       - name: Get Date
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
@@ -132,14 +132,14 @@ jobs:
           # echo "::set-output name=buildVersion::$VERSION"
       - 
         name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push
         id: build-push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         continue-on-error: true
         with:
           context: .
@@ -159,7 +159,7 @@ jobs:
   debian:
     env:
       # Setting the defaults up front
-      LATEST_NODE: 16
+      LATEST_NODE: 20
       DEFAULT_IMAGE: nodered/node-red
       DEV_IMAGE: nodered/node-red-dev
     runs-on: ubuntu-latest
@@ -168,9 +168,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v3
       - name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v3
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -181,7 +181,7 @@ jobs:
         run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
       - name: Docker Metadata
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           flavor: |
             latest=false
@@ -237,7 +237,7 @@ jobs:
 
       - name: Build and push
         id: build-push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: .
           platforms: linux/amd64, linux/arm64, linux/arm/v7
@@ -251,27 +251,5 @@ jobs:
             NODE_RED_VERSION=${{ steps.nrVersion.outputs.version }}
             BUILD_VERSION=${{ steps.nrVersion.outputs.buildVersion }}
           tags: ${{ steps.nrVersion.outputs.tags }}
-
-      # -
-      #   name: Sign Image
-      #   run: |
-      #     echo "Digest ${{ steps.build-push.outputs.digest }}"
-      #     for TAG in $(echo "${{ steps.nrVersion.outputs.tags }}" | sed "s/,/ /g"); do
-      #       if [[ "$TAG" == "${{ env.DEFAULT_IMAGE }}:latest" ]]; then
-      #         export DOCKER_CONTENT_TRUST=1
-      #         SIGNER_KEY_NAME="8b08f4d8315a5d6443a4f59eaab60a49dacbc105c13d25f167cdb5cc9fa8f9ed.key"
-      #         PATH_KEYS=$HOME/.docker/trust/private
-      #         mkdir -p $PATH_KEYS
-      #         cp .docker/$SIGNER_KEY_NAME $PATH_KEYS
-      #         chmod 600 $PATH_KEYS/$SIGNER_KEY_NAME
-      #         export DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE=${{ secrets.DOCKER_SIGNING_PASSWORD }}
-      #         docker trust key load $PATH_KEYS/$SIGNER_KEY_NAME
-      #         # docker trust sign $TAG
-      #         # docker trust inspect --pretty $TAG
-      #         echo "Siging tag $TAG"
-      #       else
-      #         echo "Not signing $TAG"
-      #       fi
-      #     done
 
   
