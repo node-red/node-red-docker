@@ -1,6 +1,6 @@
 ARG ARCH=amd64
 ARG NODE_VERSION=20
-ARG OS=buster-slim
+ARG OS=bullseye-slim
 
 #### Stage BASE ########################################################################################################
 FROM ${ARCH}/node:${NODE_VERSION}-${OS} AS base
