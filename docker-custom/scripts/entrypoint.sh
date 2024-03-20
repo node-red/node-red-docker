@@ -7,7 +7,7 @@ function stop() {
 	wait $CHILD_PID
 }
 
-/usr/local/bin/node $NODE_OPTIONS node_modules/node-red/red.js --userDir /data $FLOWS "${@}" &
+/usr/local/bin/node $NODE_OPTIONS node_modules/3c-node-red/red.js --userDir /data $FLOWS "${@}" &
 
 CHILD_PID="$!"
 
