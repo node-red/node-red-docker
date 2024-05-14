@@ -27,7 +27,7 @@ jobs:
 
     strategy:
       matrix:
-        node: [18, 20]
+        node: [18, 20, 22]
         suffix: ["", "-minimal"]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -60,7 +60,7 @@ jobs:
       - name: Get Date
         id: date
         # run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
-        run : echo "data=$(date +'%Y-%m-%dT%H:%M:%SZ')"
+        run: echo "date=$(date +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
       - name: Get Node-RED Version
         id: nrVersion
         run: |
