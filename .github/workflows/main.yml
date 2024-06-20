@@ -179,7 +179,7 @@ jobs:
       - name: Get Date
         id: date
         # run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
-        run : echo "data=$(date +'%Y-%m-%dT%H:%M:%SZ')"
+        run : echo "date=$(date +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
       - name: Docker Metadata
         id: meta
         uses: docker/metadata-action@v5
