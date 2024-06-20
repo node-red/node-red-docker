@@ -20,21 +20,21 @@ jobs:
   alpine:
     env:
       # Setting the defaults up front
-      LATEST_NODE: 16
+      LATEST_NODE: 20
       DEFAULT_IMAGE: nodered/node-red
       DEV_IMAGE: nodered/node-red-dev
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node: [14, 16, 18]
+        node: [18, 20, 22]
         suffix: ["", "-minimal"]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.2
       - name: Show Env
         run: env
       -
@@ -59,7 +59,8 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - name: Get Date
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
+        # run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
+        run: echo "date=$(date +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
       - name: Get Node-RED Version
         id: nrVersion
         run: |
@@ -140,10 +141,9 @@ jobs:
         name: Build and push
         id: build-push
         uses: docker/build-push-action@v5
-        continue-on-error: true
         with:
           context: .
-          platforms: linux/amd64, linux/arm64, linux/arm/v7, linux/arm/v6
+          platforms: linux/amd64, linux/arm64
           push: ${{ steps.nrVersion.outputs.push }}
           file: .docker/Dockerfile.alpine 
           build-args: |
@@ -159,14 +159,14 @@ jobs:
   debian:
     env:
       # Setting the defaults up front
-      LATEST_NODE: 16
+      LATEST_NODE: 20
       DEFAULT_IMAGE: nodered/node-red
       DEV_IMAGE: nodered/node-red-dev
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.2
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v3
       - name: Setup Docker buildx
@@ -178,7 +178,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Get Date
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
+        # run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
+        run : echo "date=$(date +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
       - name: Docker Metadata
         id: meta
         uses: docker/metadata-action@v5
@@ -237,7 +238,7 @@ jobs:
 
       - name: Build and push
         id: build-push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: .
           platforms: linux/amd64, linux/arm64, linux/arm/v7
@@ -251,27 +252,5 @@ jobs:
             NODE_RED_VERSION=${{ steps.nrVersion.outputs.version }}
             BUILD_VERSION=${{ steps.nrVersion.outputs.buildVersion }}
           tags: ${{ steps.nrVersion.outputs.tags }}
-
-      # -
-      #   name: Sign Image
-      #   run: |
-      #     echo "Digest ${{ steps.build-push.outputs.digest }}"
-      #     for TAG in $(echo "${{ steps.nrVersion.outputs.tags }}" | sed "s/,/ /g"); do
-      #       if [[ "$TAG" == "${{ env.DEFAULT_IMAGE }}:latest" ]]; then
-      #         export DOCKER_CONTENT_TRUST=1
-      #         SIGNER_KEY_NAME="8b08f4d8315a5d6443a4f59eaab60a49dacbc105c13d25f167cdb5cc9fa8f9ed.key"
-      #         PATH_KEYS=$HOME/.docker/trust/private
-      #         mkdir -p $PATH_KEYS
-      #         cp .docker/$SIGNER_KEY_NAME $PATH_KEYS
-      #         chmod 600 $PATH_KEYS/$SIGNER_KEY_NAME
-      #         export DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE=${{ secrets.DOCKER_SIGNING_PASSWORD }}
-      #         docker trust key load $PATH_KEYS/$SIGNER_KEY_NAME
-      #         # docker trust sign $TAG
-      #         # docker trust inspect --pretty $TAG
-      #         echo "Siging tag $TAG"
-      #       else
-      #         echo "Not signing $TAG"
-      #       fi
-      #     done
 
   
