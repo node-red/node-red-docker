@@ -119,6 +119,12 @@ jobs:
             fi
           fi
 
+          if [[ "${{ matrix.node }}" == "18"]]; then
+            echo "platorms=linux/amd64,linux/arm/v7,linux/arm64" >> $GITHUB_OUTPUT
+          else
+            echo "platorms=linux/amd64,linux/arm64" >> $GITHUB_OUTPUT
+          fi
+
           echo $TAGS
           echo "tags=$TAGS" >> $GITHUB_OUTPUT
           echo "push=$PUSH" >> $GITHUB_OUTPUT
@@ -143,7 +149,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          platforms: linux/amd64, linux/arm64
+          platforms: ${{ steps.nrVersion.outputs.platforms }}
           push: ${{ steps.nrVersion.outputs.push }}
           file: .docker/Dockerfile.alpine 
           build-args: |
