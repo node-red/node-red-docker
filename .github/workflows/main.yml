@@ -120,9 +120,9 @@ jobs:
           fi
 
           if [[ "${{ matrix.node }}" == "18"]]; then
-            echo "platorms=linux/amd64,linux/arm/v7,linux/arm64" >> $GITHUB_OUTPUT
+            echo "platforms=linux/amd64,linux/arm/v7,linux/arm64" >> $GITHUB_OUTPUT
           else
-            echo "platorms=linux/amd64,linux/arm64" >> $GITHUB_OUTPUT
+            echo "platforms=linux/amd64,linux/arm64" >> $GITHUB_OUTPUT
           fi
 
           echo $TAGS
