@@ -26,6 +26,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      max-parallel: 2
       matrix:
         node: [18, 20, 22]
         suffix: ["", "-minimal"]
@@ -54,9 +55,33 @@ jobs:
       - 
         name: Setup QEMU
         uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+      -
+        name: Set up SSH key pi5
+        uses: MrSquaare/ssh-setup-action@2d028b70b5e397cf8314c6eaea229a6c3e34977a # v3.1.0
+        with:
+          host: ${{ secrets.SSH_REMOTE_HOST}}
+          private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          private-key-name: remote
+          port: 2022
+      -
+        name: Set up SSH key pi4
+        uses: MrSquaare/ssh-setup-action@2d028b70b5e397cf8314c6eaea229a6c3e34977a # v3.1.0
+        with:
+          host: ${{ secrets.SSH_REMOTE_HOST}}
+          private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          private-key-name: remote
+          port: 2023
       - 
         name: Setup Docker buildx
         uses: docker/setup-buildx-action@v3
+        with:
+          append: |
+            - endpoint: ssh://nr@${{ secrets.SSH_REMOTE_HOST }}:2023
+              platforms: linux/arm/v6,linux/arm/v7
+            - endpoint: ssh://nr@${{ secrets.SSH_REMOTE_HOST }}:2022
+              platforms: linux/arm64
       - name: Get Date
         id: date
         # run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
@@ -119,6 +144,19 @@ jobs:
             fi
           fi
 
+          # if [[ "${{ matrix.node }}" == "18"]]; then
+          #   echo "platforms=linux/amd64,linux/arm/v7,linux/arm64" >> $GITHUB_OUTPUT
+          # else
+          #   echo "platforms=linux/amd64,linux/arm64" >> $GITHUB_OUTPUT
+          # fi
+
+          # if [[ "${{ matrix.suffix }}" == "-minimal" ]]; then
+          #   echo "platforms=linux/amd64,linux/arm64" >> $GITHUB_OUTPUT
+          # else
+          #   echo "platforms=linux/amd64,linux/arm/v7,linux/arm64" >> $GITHUB_OUTPUT
+          # fi
+          echo "platforms=linux/amd64,linux/arm/v7,linux/arm64" >> $GITHUB_OUTPUT
+
           echo $TAGS
           echo "tags=$TAGS" >> $GITHUB_OUTPUT
           echo "push=$PUSH" >> $GITHUB_OUTPUT
@@ -143,7 +181,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          platforms: linux/amd64, linux/arm64
+          platforms: ${{ steps.nrVersion.outputs.platforms }}
           push: ${{ steps.nrVersion.outputs.push }}
           file: .docker/Dockerfile.alpine 
           build-args: |
