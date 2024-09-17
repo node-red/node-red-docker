@@ -209,7 +209,7 @@ jobs:
             VERSION=${TRAVIS_TAG:1}
             STABLE_VERSION=`echo ${VERSION} | sed -r 's/^([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)$/\1.\2/'`
 
-            TAGS="$IMAGE:latest-debian,$IMAGE:$VERSION-debian,$IMAGE:$STABLE_VERSION-debian"
+            TAGS="$IMAGE:$VERSION-debian,$IMAGE:$STABLE_VERSION-debian"
 
           else
             IMAGE=${{ env.DEV_IMAGE }}
