@@ -52,7 +52,7 @@ RUN apk add --no-cache --virtual buildtools build-base linux-headers udev python
     cp -R node_modules prod_node_modules
 
 #### Stage RELEASE #####################################################################################################
-FROM base AS RELEASE
+FROM base AS release
 ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG BUILD_REF

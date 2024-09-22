@@ -54,7 +54,7 @@ RUN apt-get update && apt-get install -y build-essential python && \
     cp -R node_modules prod_node_modules
 
 #### Stage RELEASE #####################################################################################################
-FROM base AS RELEASE
+FROM base AS release
 ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG BUILD_REF
