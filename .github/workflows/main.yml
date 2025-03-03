@@ -230,6 +230,7 @@ jobs:
             latest=false
           images: |
             ${{ env.DEFAULT_IMAGE }}
+            ${{ env.GH_IMAGE }}
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}
