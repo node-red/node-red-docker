@@ -268,6 +268,7 @@ jobs:
           if [[ "$TRAVIS_TAG" =~ ^v[0-9\.-]*$ ]]; then
             # release build
             IMAGE=${{ env.DEFAULT_IMAGE }}
+            GH_IMAGE=${{ env.GH_IMAGE }}
             PUSH=true
             VERSION=${TRAVIS_TAG:1}
             STABLE_VERSION=`echo ${VERSION} | sed -r 's/^([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)$/\1.\2/'`
