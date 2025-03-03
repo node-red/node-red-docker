@@ -24,6 +24,7 @@ jobs:
       DEFAULT_IMAGE: nodered/node-red
       GH_IMAGE: ghcr.io/node-red/node-red
       DEV_IMAGE: nodered/node-red-dev
+      GH_DEV_IMAGE: ghcr.io/node-red/node-red-dev
     runs-on: ubuntu-latest
 
     strategy:
@@ -134,6 +135,7 @@ jobs:
 
           else
             IMAGE=${{ env.DEV_IMAGE }}
+            GH_IMAGE=${{ env.GH_DEV_IMAGE}}
             if [[ "$TRAVIS_TAG" == *"dev"*  || "$TRAVIS_TAG" == *"beta"* ]]; then
               PUSH=true
             else
@@ -141,8 +143,9 @@ jobs:
             fi
             VERSION=${TRAVIS_TAG}
             TAGS=$(echo $TAGS | sed 's!${{ env.DEFAULT_IMAGE}}!${{ env.DEV_IMAGE }}!')
+            TAGS=$(echo $TAGS | sed 's!${{ env.GH_IMAGE}}!${{ env.GH_DEV_IMAGE }}!')
             if [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "" ]; then
-              TAGS="$TAGS,$IMAGE:$VERSION"
+              TAGS="$TAGS,$IMAGE:$VERSION,$GH_IMAGE:$VERSION"
             fi
           fi
 
@@ -268,10 +271,11 @@ jobs:
             VERSION=${TRAVIS_TAG:1}
             STABLE_VERSION=`echo ${VERSION} | sed -r 's/^([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)$/\1.\2/'`
 
-            TAGS="$IMAGE:latest-debian,$IMAGE:$VERSION-debian,$IMAGE:$STABLE_VERSION-debian"
+            TAGS="$IMAGE:latest-debian,$IMAGE:$VERSION-debian,$IMAGE:$STABLE_VERSION-debian,$GH_IMAGE:latest-debian,$GH_IMAGE:$VERSION-debian,$GH_IMAGE:$STABLE_VERSION-debian"
 
           else
             IMAGE=${{ env.DEV_IMAGE }}
+            GH_IMAGE=${{ env.GH_DEV_IMAGE}}
             if [[ "$TRAVIS_TAG" == *"dev"*  || "$TRAVIS_TAG" == *"beta"* ]]; then
               # beta build
               PUSH=true
@@ -280,7 +284,7 @@ jobs:
             fi
             VERSION=${TRAVIS_TAG}
 
-            TAGS="$IMAGE:$VERSION-debian"
+            TAGS="$IMAGE:$VERSION-debian,$GH_DEV_IMAGE:$VERSION"
 
           fi
 
