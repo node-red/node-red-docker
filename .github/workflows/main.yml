@@ -212,7 +212,9 @@ jobs:
       # Setting the defaults up front
       LATEST_NODE: 20
       DEFAULT_IMAGE: nodered/node-red
+      GH_IMAGE: ghcr.io/node-red/node-red
       DEV_IMAGE: nodered/node-red-dev
+      GH_DEV_IMAGE: ghcr.io/node-red/node-red-dev
     runs-on: ubuntu-latest
 
     steps:
