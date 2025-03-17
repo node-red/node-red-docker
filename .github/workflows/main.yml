@@ -111,7 +111,7 @@ jobs:
             TEMP=${TEMP:1}
             TEMP2=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')
             echo "$GITHUB_REF - $TEMP"
-            TAGS=$(echo $TAGS | sed "s/$TEMP2/$TEMP/")
+            TAGS=$(echo $TAGS | sed "s/$TEMP2/$TEMP/g")
             TRAVIS_TAG=${{ github.event.inputs.version }}
           else
             TRAVIS_TAG=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')
