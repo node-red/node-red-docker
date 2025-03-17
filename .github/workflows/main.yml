@@ -258,8 +258,15 @@ jobs:
         id: nrVersion
         run: |
           TAGS=""
+          while IFS= read -r TAG;do
+            if [ -z  "$TAGS" ]; then
+              TAGS=$TAG
+            else
+              TAGS="$TAGS,$TAG"
+            fi
+          done <<< "${{ steps.meta.outputs.tags }}"
 
-          echo Original tags ${{ steps.meta.outputs.tags }}
+          echo "Original tags $TAGS"
 
           if [[ ! -z "${{ github.event.inputs.version }}" ]]; then
             TRAVIS_TAG=${{ github.event.inputs.version }}
