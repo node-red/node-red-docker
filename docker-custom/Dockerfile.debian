@@ -20,7 +20,8 @@ RUN set -ex && \
         git \
         openssl \
         openssh-client \
-        ca-certificates && \
+        ca-certificates \
+        iputils-ping && \
     mkdir -p /usr/src/node-red /data && \
     deluser --remove-home node && \
     # adduser --home /usr/src/node-red --disabled-password --no-create-home node-red --uid 1000 && \
@@ -53,7 +54,7 @@ RUN apt-get update && apt-get install -y build-essential python && \
     cp -R node_modules prod_node_modules
 
 #### Stage RELEASE #####################################################################################################
-FROM base AS RELEASE
+FROM base AS release
 ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG BUILD_REF
@@ -71,6 +72,7 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.vcs-ref=${BUILD_REF} \
     org.label-schema.vcs-type="Git" \
     org.label-schema.vcs-url="https://github.com/node-red/node-red-docker" \
+    org.opencontainers.image.source="https://github.com/node-red/node-red-docker" \
     org.label-schema.arch=${ARCH} \
     authors="Dave Conway-Jones, Nick O'Leary, James Thomas, Raymond Mouthaan"
 

@@ -22,10 +22,13 @@ jobs:
       # Setting the defaults up front
       LATEST_NODE: 20
       DEFAULT_IMAGE: nodered/node-red
+      GH_IMAGE: ghcr.io/node-red/node-red
       DEV_IMAGE: nodered/node-red-dev
+      GH_DEV_IMAGE: ghcr.io/node-red/node-red-dev
     runs-on: ubuntu-latest
 
     strategy:
+      max-parallel: 2
       matrix:
         node: [18, 20, 22]
         suffix: ["", "-minimal"]
@@ -47,6 +50,7 @@ jobs:
             suffix=-${{matrix.node}}${{matrix.suffix}}
           images: |
             ${{ env.DEFAULT_IMAGE }}
+            ${{ env.GH_IMAGE }}
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}
@@ -54,9 +58,33 @@ jobs:
       - 
         name: Setup QEMU
         uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+      -
+        name: Set up SSH key pi5
+        uses: MrSquaare/ssh-setup-action@2d028b70b5e397cf8314c6eaea229a6c3e34977a # v3.1.0
+        with:
+          host: ${{ secrets.SSH_REMOTE_HOST}}
+          private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          private-key-name: remote
+          port: 2022
+      -
+        name: Set up SSH key pi4
+        uses: MrSquaare/ssh-setup-action@2d028b70b5e397cf8314c6eaea229a6c3e34977a # v3.1.0
+        with:
+          host: ${{ secrets.SSH_REMOTE_HOST}}
+          private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          private-key-name: remote
+          port: 2023
       - 
         name: Setup Docker buildx
         uses: docker/setup-buildx-action@v3
+        with:
+          append: |
+            - endpoint: ssh://nr@${{ secrets.SSH_REMOTE_HOST }}:2023
+              platforms: linux/arm/v6,linux/arm/v7
+            - endpoint: ssh://nr@${{ secrets.SSH_REMOTE_HOST }}:2022
+              platforms: linux/arm64
       - name: Get Date
         id: date
         # run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
@@ -83,7 +111,7 @@ jobs:
             TEMP=${TEMP:1}
             TEMP2=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')
             echo "$GITHUB_REF - $TEMP"
-            TAGS=$(echo $TAGS | sed "s/$TEMP2/$TEMP/")
+            TAGS=$(echo $TAGS | sed "s/$TEMP2/$TEMP/g")
             TRAVIS_TAG=${{ github.event.inputs.version }}
           else
             TRAVIS_TAG=$(echo $GITHUB_REF | awk -F '/' '{ print $3}')
@@ -93,20 +121,22 @@ jobs:
 
           if [[ "$TRAVIS_TAG" =~ ^v[0-9\.-]*$ ]]; then
             IMAGE=${{ env.DEFAULT_IMAGE }}
+            GH_IMAGE=${{ env.GH_IMAGE}}
             PUSH=true
             VERSION=${TRAVIS_TAG:1}
             STABLE_VERSION=`echo ${VERSION} | sed -r 's/^([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)$/\1.\2/'`
 
             if [[ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" && "${{ matrix.suffix }}" == "" ]]; then
-              TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:$STABLE_VERSION,$IMAGE:latest"
+              TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:$STABLE_VERSION,$IMAGE:latest,$GH_IMAGE:$VERSION,$GH_IMAGE:$STABLE_VERSION,$GH_IMAGE:latest"
             elif [[ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" &&  "${{ matrix.suffix }}" == "-minimal" ]]; then
-              TAGS="$TAGS,$IMAGE:$VERSION-minimal,$IMAGE:latest-minimal"
+              TAGS="$TAGS,$IMAGE:$VERSION-minimal,$IMAGE:latest-minimal,$GH_IMAGE:$VERSION-minimal,$GH_IMAGE:latest-minimal"
             fi
 
-            TAGS="$TAGS,$IMAGE:latest-${{ matrix.node }}${{ matrix.suffix }}"
+            TAGS="$TAGS,$IMAGE:latest-${{ matrix.node }}${{ matrix.suffix }},$GH_IMAGE:latest-${{ matrix.node }}${{ matrix.suffix }}"
 
           else
             IMAGE=${{ env.DEV_IMAGE }}
+            GH_IMAGE=${{ env.GH_DEV_IMAGE}}
             if [[ "$TRAVIS_TAG" == *"dev"*  || "$TRAVIS_TAG" == *"beta"* ]]; then
               PUSH=true
             else
@@ -114,10 +144,24 @@ jobs:
             fi
             VERSION=${TRAVIS_TAG}
             TAGS=$(echo $TAGS | sed 's!${{ env.DEFAULT_IMAGE}}!${{ env.DEV_IMAGE }}!')
+            TAGS=$(echo $TAGS | sed 's!${{ env.GH_IMAGE}}!${{ env.GH_DEV_IMAGE }}!')
             if [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "" ]; then
-              TAGS="$TAGS,$IMAGE:$VERSION"
+              TAGS="$TAGS,$IMAGE:$VERSION,$GH_IMAGE:$VERSION"
             fi
           fi
+
+          # if [[ "${{ matrix.node }}" == "18"]]; then
+          #   echo "platforms=linux/amd64,linux/arm/v7,linux/arm64" >> $GITHUB_OUTPUT
+          # else
+          #   echo "platforms=linux/amd64,linux/arm64" >> $GITHUB_OUTPUT
+          # fi
+
+          # if [[ "${{ matrix.suffix }}" == "-minimal" ]]; then
+          #   echo "platforms=linux/amd64,linux/arm64" >> $GITHUB_OUTPUT
+          # else
+          #   echo "platforms=linux/amd64,linux/arm/v7,linux/arm64" >> $GITHUB_OUTPUT
+          # fi
+          echo "platforms=linux/amd64,linux/arm/v7,linux/arm64" >> $GITHUB_OUTPUT
 
           echo $TAGS
           echo "tags=$TAGS" >> $GITHUB_OUTPUT
@@ -137,13 +181,20 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - 
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       -
         name: Build and push
         id: build-push
         uses: docker/build-push-action@v5
         with:
           context: .
-          platforms: linux/amd64, linux/arm64
+          platforms: ${{ steps.nrVersion.outputs.platforms }}
           push: ${{ steps.nrVersion.outputs.push }}
           file: .docker/Dockerfile.alpine 
           build-args: |
@@ -161,7 +212,9 @@ jobs:
       # Setting the defaults up front
       LATEST_NODE: 20
       DEFAULT_IMAGE: nodered/node-red
+      GH_IMAGE: ghcr.io/node-red/node-red
       DEV_IMAGE: nodered/node-red-dev
+      GH_DEV_IMAGE: ghcr.io/node-red/node-red-dev
     runs-on: ubuntu-latest
 
     steps:
@@ -169,6 +222,8 @@ jobs:
         uses: actions/checkout@v4.1.2
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v3
+        with:
+          image: tonistiigi/binfmt:qemu-v7.0.0-28
       - name: Setup Docker buildx
         uses: docker/setup-buildx-action@v3
       - name: Login to DockerHub
@@ -176,6 +231,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Get Date
         id: date
         # run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%SZ')"
@@ -188,6 +249,7 @@ jobs:
             latest=false
           images: |
             ${{ env.DEFAULT_IMAGE }}
+            ${{ env.GH_IMAGE }}
           tags: |
             type=ref,event=branch
             type=semver,pattern={{version}}
@@ -196,8 +258,15 @@ jobs:
         id: nrVersion
         run: |
           TAGS=""
+          while IFS= read -r TAG;do
+            if [ -z  "$TAGS" ]; then
+              TAGS=$TAG
+            else
+              TAGS="$TAGS,$TAG"
+            fi
+          done <<< "${{ steps.meta.outputs.tags }}"
 
-          echo Original tags ${{ steps.meta.outputs.tags }}
+          echo "Original tags $TAGS"
 
           if [[ ! -z "${{ github.event.inputs.version }}" ]]; then
             TRAVIS_TAG=${{ github.event.inputs.version }}
@@ -208,14 +277,16 @@ jobs:
           if [[ "$TRAVIS_TAG" =~ ^v[0-9\.-]*$ ]]; then
             # release build
             IMAGE=${{ env.DEFAULT_IMAGE }}
+            GH_IMAGE=${{ env.GH_IMAGE }}
             PUSH=true
             VERSION=${TRAVIS_TAG:1}
             STABLE_VERSION=`echo ${VERSION} | sed -r 's/^([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)$/\1.\2/'`
 
-            TAGS="$IMAGE:latest-debian,$IMAGE:$VERSION-debian,$IMAGE:$STABLE_VERSION-debian"
+            TAGS="$IMAGE:latest-debian,$IMAGE:$VERSION-debian,$IMAGE:$STABLE_VERSION-debian,$GH_IMAGE:latest-debian,$GH_IMAGE:$VERSION-debian,$GH_IMAGE:$STABLE_VERSION-debian"
 
           else
             IMAGE=${{ env.DEV_IMAGE }}
+            GH_IMAGE=${{ env.GH_DEV_IMAGE}}
             if [[ "$TRAVIS_TAG" == *"dev"*  || "$TRAVIS_TAG" == *"beta"* ]]; then
               # beta build
               PUSH=true
@@ -224,7 +295,7 @@ jobs:
             fi
             VERSION=${TRAVIS_TAG}
 
-            TAGS="$IMAGE:$VERSION-debian"
+            TAGS="$IMAGE:$VERSION-debian,$GH_DEV_IMAGE:$VERSION"
 
           fi
 
