@@ -295,7 +295,7 @@ jobs:
             fi
             VERSION=${TRAVIS_TAG}
 
-            TAGS="$IMAGE:$VERSION-debian,$GH_DEV_IMAGE:$VERSION"
+            TAGS="$IMAGE:$VERSION-debian,$GH_DEV_IMAGE:$VERSION-debian"
 
           fi
 
