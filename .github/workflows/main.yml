@@ -142,7 +142,7 @@ jobs:
             else
               PUSH=false
             fi
-            VERSION=${TRAVIS_TAG}
+            VERSION=${TRAVIS_TAG:1}
             TAGS=$(echo $TAGS | sed 's!${{ env.DEFAULT_IMAGE}}!${{ env.DEV_IMAGE }}!')
             TAGS=$(echo $TAGS | sed 's!${{ env.GH_IMAGE}}!${{ env.GH_DEV_IMAGE }}!')
             if [ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" ] && [ "${{ matrix.suffix}}" == "" ]; then
@@ -293,7 +293,7 @@ jobs:
             else
               PUSH=false
             fi
-            VERSION=${TRAVIS_TAG}
+            VERSION=${TRAVIS_TAG:1}
 
             TAGS="$IMAGE:$VERSION-debian,$GH_DEV_IMAGE:$VERSION-debian"
 
