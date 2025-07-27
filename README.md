@@ -12,6 +12,8 @@ Some basic familiarity with Docker and the [Docker Command Line](https://docs.do
 
 As of Node-RED 1.0 this project provides the build for the `nodered/node-red` container on [Docker Hub](https://hub.docker.com/r/nodered/node-red/).
 
+As of Node-RED 4.0.9 the containers are also available from the [GitHub Container Regisry](https://github.com/node-red/node-red-docker/pkgs/container/node-red) as `ghcr.io/node-red/node-red` with the same tag names as on Docker Hub.
+
 Previous 0.20.x versions are still available at https://hub.docker.com/r/nodered/node-red-docker.
 
 ## Quick Start
@@ -93,13 +95,12 @@ and stop it again when required:
 The Node-RED images come in different variations and are supported by manifest lists (auto-detect architecture).
 This makes it more easy to deploy in a multi architecture Docker environment. E.g. a Docker Swarm with mix of Raspberry Pi's and amd64 nodes.
 
-The tag naming convention is `<node-red-version>-<node-version>-<image-type>-<architecture>`, where:
+The tag naming convention is `<node-red-version>-<node-version>-<image-type>`, where:
 - `<node-red-version>` is the Node-RED version.
 - `<node-version>` is the Node JS version.
 - `<image-type>` is type of image and is optional, can be either _none_ or minimal.
     - _none_ : is the default and has Python 2 & Python 3 + devtools installed
     - minimal : has no Python installed and no devtools installed
-- `<architecture>` is the architecture of the Docker host system, can be either amd64, arm32v6, arm32v7, arm64, s390x or i386.
 
 The minimal versions (without python and build tools) are not able to install nodes that require any locally compiled native code.
 
