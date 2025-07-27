@@ -1,5 +1,5 @@
 ARG NODE_VERSION=20
-ARG OS=bullseye-slim
+ARG OS=bookworm-slim
 
 #### Stage BASE ########################################################################################################
 FROM node:${NODE_VERSION}-${OS} AS base
