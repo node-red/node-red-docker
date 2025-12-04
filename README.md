@@ -12,6 +12,8 @@ Some basic familiarity with Docker and the [Docker Command Line](https://docs.do
 
 As of Node-RED 1.0 this project provides the build for the `nodered/node-red` container on [Docker Hub](https://hub.docker.com/r/nodered/node-red/).
 
+As of Node-RED 4.0.9 the containers are also available from the [GitHub Container Regisry](https://github.com/node-red/node-red-docker/pkgs/container/node-red) as `ghcr.io/node-red/node-red` with the same tag names as on Docker Hub.
+
 Previous 0.20.x versions are still available at https://hub.docker.com/r/nodered/node-red-docker.
 
 ## Quick Start
@@ -26,7 +28,7 @@ Let's dissect that command:
         -p 1880:1880            - connect local port 1880 to the exposed internal port 1880
         -v node_red_data:/data  - mount the host node_red_data directory to the container /data directory so any changes made to flows are persisted
         --name mynodered        - give this machine a friendly local name
-        nodered/node-red        - the image to base it on - currently Node-RED v4.1.0-beta.2
+        nodered/node-red        - the image to base it on - currently Node-RED v4.1.2
 
 
 
@@ -35,7 +37,7 @@ Running that command should give a terminal window with a running instance of No
         Welcome to Node-RED
         ===================
 
-        10 Oct 12:57:10 - [info] Node-RED version: v4.1.0-beta.2
+        10 Oct 12:57:10 - [info] Node-RED version: v4.1.2
         10 Oct 12:57:10 - [info] Node.js  version: v18.19.0
         10 Oct 12:57:10 - [info] Linux 6.6.13-100.fc38.x86_64 x64 LE
         10 Oct 12:57:11 - [info] Loading palette nodes
@@ -93,13 +95,12 @@ and stop it again when required:
 The Node-RED images come in different variations and are supported by manifest lists (auto-detect architecture).
 This makes it more easy to deploy in a multi architecture Docker environment. E.g. a Docker Swarm with mix of Raspberry Pi's and amd64 nodes.
 
-The tag naming convention is `<node-red-version>-<node-version>-<image-type>-<architecture>`, where:
+The tag naming convention is `<node-red-version>-<node-version>-<image-type>`, where:
 - `<node-red-version>` is the Node-RED version.
 - `<node-version>` is the Node JS version.
 - `<image-type>` is type of image and is optional, can be either _none_ or minimal.
     - _none_ : is the default and has Python 2 & Python 3 + devtools installed
     - minimal : has no Python installed and no devtools installed
-- `<architecture>` is the architecture of the Docker host system, can be either amd64, arm32v6, arm32v7, arm64, s390x or i386.
 
 The minimal versions (without python and build tools) are not able to install nodes that require any locally compiled native code.
 
@@ -115,40 +116,40 @@ The following table shows the variety of provided Node-RED images.
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**             |
 |----------------------------|--------|----------|------------|-------|----------------------------|
-| 4.1.0-beta.2-18                   |   18   | amd64    |    3.x     |  yes  | amd64/node:18-alpine       |
+| 4.1.2-18                   |   18   | amd64    |    3.x     |  yes  | amd64/node:18-alpine       |
 |                            |   18   | arm32v7  |    3.x     |  yes  | arm32v7/node:18-alpine     |
 |                            |   18   | arm64v8  |    3.x     |  yes  | arm64v8/node:18-alpine     |
 |                            |   18   | i386     |    3.x     |  yes  | i386/node:18-alpine        |
 |                            |        |          |            |       |                            |
-| 4.1.0-beta.2-18-minimal           |   18   | amd64    |     no     |  no   | amd64/node:18-alpine       |
+| 4.1.2-18-minimal           |   18   | amd64    |     no     |  no   | amd64/node:18-alpine       |
 |                            |   18   | arm32v7  |     no     |  no   | arm32v7/node:18-alpine     |
 |                            |   18   | arm64v8  |     no     |  no   | arm64v8/node:18-alpine     |
 |                            |   18   | i386     |     no     |  no   | i386/node:18-alpine        |
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**             |
 |----------------------------|--------|----------|------------|-------|----------------------------|
-| 4.1.0-beta.2-20                   |   20   | amd64    |    3.x     |  yes  | amd64/node:20-alpine       |
+| 4.1.2-20                   |   20   | amd64    |    3.x     |  yes  | amd64/node:20-alpine       |
 |                            |   20   | arm32v7  |    3.x     |  yes  | arm32v7/node:20-alpine     |
 |                            |   20   | arm64v8  |    3.x     |  yes  | arm64v8/node:20-alpine     |
 |                            |   20   | i386     |    3.x     |  yes  | i386/node:20-alpine        |
 |                            |        |          |            |       |                            |
-| 4.1.0-beta.2-20-minimal           |   20   | amd64    |     no     |  no   | amd64/node:20-alpine       |
+| 4.1.2-20-minimal           |   20   | amd64    |     no     |  no   | amd64/node:20-alpine       |
 |                            |   20   | arm32v7  |     no     |  no   | arm32v7/node:20-alpine     |
 |                            |   20   | arm64v8  |     no     |  no   | arm64v8/node:20-alpine     |
 |                            |   20   | i386     |     no     |  no   | i386/node:20-alpine        |
 |                            |        |          |            |       |                            |
-| 4.1.0-beta.2-debian               |   20   | amd64    |    3.x     |  yes  | amd64/node:20-buster-slim  |
+| 4.1.2-debian               |   20   | amd64    |    3.x     |  yes  | amd64/node:20-buster-slim  |
 |                            |   20   | arm32v7  |    3.x     |  yes  | amd64/node:20-buster-slim  |
 |                            |   20   | arm64v8  |    3.x     |  yes  | amd64/node:20-buster-slim  |
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**             |
 |----------------------------|--------|----------|------------|-------|----------------------------|
-| 4.1.0-beta.2-22                   |   22   | amd64    |    3.x     |  yes  | amd64/node:22-alpine       |
+| 4.1.2-22                   |   22   | amd64    |    3.x     |  yes  | amd64/node:22-alpine       |
 |                            |   22   | arm32v7  |    3.x     |  yes  | arm32v7/node:22-alpine     |
 |                            |   22   | arm64v8  |    3.x     |  yes  | arm64v8/node:22-alpine     |
 |                            |   22   | i386     |    3.x     |  yes  | i386/node:22-alpine        |
 |                            |        |          |            |       |                            |
-| 4.1.0-beta.2-22-minimal           |   22   | amd64    |     no     |  no   | amd64/node:22-alpine       |
+| 4.1.2-22-minimal           |   22   | amd64    |     no     |  no   | amd64/node:22-alpine       |
 |                            |   22   | arm32v7  |     no     |  no   | arm32v7/node:22-alpine     |
 |                            |   22   | arm64v8  |     no     |  no   | arm64v8/node:22-alpine     |
 |                            |   22   | i386     |     no     |  no   | i386/node:22-alpine        |
@@ -160,28 +161,28 @@ The following table shows the provided Manifest Lists.
 
 | **Tag**                                | **Node-RED Base Image**                    |
 |----------------------------------------|--------------------------------------------|
-| latest, 4.1.0-beta.2,                         | nodered/node-red:4.1.0-beta.2-20                  |
-| latest-20, 4.1.0-beta.2-20                    |                                            |
+| latest, 4.1.2,                         | nodered/node-red:4.1.2-20                  |
+| latest-20, 4.1.2-20                    |                                            |
 |                                        |                                            |
 |                                        |                                            |
-| latest-minimal, 4.1.0-beta.2-minimal,         | nodered/node-red:4.1.0-beta.2-20-minimal          |
-| latest-20-minimal, 4.1.0-beta.2-20-minimal    |                                            |
+| latest-minimal, 4.1.2-minimal,         | nodered/node-red:4.1.2-20-minimal          |
+| latest-20-minimal, 4.1.2-20-minimal    |                                            |
 |                                        |                                            |
 | latest-debian                          | nodered/node-red:latest-debian             |
 
 
 | **Tag**                                | **Node-RED Base Image**                    |
 |----------------------------------------|--------------------------------------------|
-| latest-18, 4.1.0-beta.2-18                    | nodered/node-red:4.1.0-beta.2-18                  |
+| latest-18, 4.1.2-18                    | nodered/node-red:4.1.2-18                  |
 |                                        |                                            |
-| latest-18-minimal, 4.1.0-beta.2-18-minimal    | nodered/node-red:4.1.0-beta.2-18-minimal          |
+| latest-18-minimal, 4.1.2-18-minimal    | nodered/node-red:4.1.2-18-minimal          |
 
 
 | **Tag**                                | **Node-RED Base Image**                    |
 |----------------------------------------|--------------------------------------------|
-| latest-22, 4.1.0-beta.2-22                    | nodered/node-red:4.1.0-beta.2-22                  |
+| latest-22, 4.1.2-22                    | nodered/node-red:4.1.2-22                  |
 |                                        |                                            |
-| latest-22-minimal, 4.1.0-beta.2-22-minimal    | nodered/node-red:4.1.0-beta.2-22-minimal          
+| latest-22-minimal, 4.1.2-22-minimal    | nodered/node-red:4.1.2-22-minimal          
 
 
 With the support of Docker manifest list, there is no need to explicitly add the tag for the architecture to use.
@@ -189,7 +190,7 @@ When a docker run command or docker service command or docker stack command is e
 
 Therefore all tags regarding Raspberry PI's are dropped.
 
-For example: suppose you are running on a Raspberry PI 3B, which has `arm32v7` as architecture. Then just run the following command to pull the image (tagged by `4.1.0-beta.2-20`), and run the container.
+For example: suppose you are running on a Raspberry PI 3B, which has `arm32v7` as architecture. Then just run the following command to pull the image (tagged by `4.1.2-20`), and run the container.
 
 
 ```
@@ -329,7 +330,7 @@ Docker build process, the dependencies are installed under `/usr/src/node-red`.
 The main sections to modify are
 
     "dependencies": {
-        "node-red": "^4.1.0-beta.2",           <-- set the version of Node-RED here
+        "node-red": "^4.1.2",           <-- set the version of Node-RED here
         "node-red-dashboard": "*"        <-- add any extra npm packages here
     },
 

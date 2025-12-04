@@ -1,5 +1,5 @@
 ARG NODE_VERSION=20
-ARG OS=bullseye-slim
+ARG OS=bookworm-slim
 
 #### Stage BASE ########################################################################################################
 FROM node:${NODE_VERSION}-${OS} AS base
@@ -47,7 +47,7 @@ COPY .docker/scripts/entrypoint.sh .
 FROM base AS build
 
 # Install Build tools
-RUN apt-get update && apt-get install -y build-essential python && \
+RUN apt-get update && apt-get install -y build-essential python3 python-is-python3 && \
     npm install --unsafe-perm --no-update-notifier --no-fund --only=production && \
     npm uninstall node-red-node-gpio && \
     cp -R node_modules prod_node_modules
@@ -79,7 +79,7 @@ COPY --from=build /usr/src/node-red/prod_node_modules ./node_modules
 
 # Chown, install devtools & Clean up
 RUN chown -R node-red:root /usr/src/node-red && \
-    apt-get update && apt-get install -y build-essential python-dev python3 && \
+    apt-get update && apt-get install -y build-essential python3-dev python3 && \
     rm -r /tmp/*
 
 RUN npm config set cache /data/.npm --global
