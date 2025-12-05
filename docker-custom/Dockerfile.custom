@@ -1,5 +1,5 @@
 ARG ARCH=amd64
-ARG NODE_VERSION=20
+ARG NODE_VERSION=24
 ARG OS=alpine
 
 #### Stage BASE ########################################################################################################

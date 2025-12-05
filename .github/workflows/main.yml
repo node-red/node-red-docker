@@ -20,7 +20,7 @@ jobs:
   alpine:
     env:
       # Setting the defaults up front
-      LATEST_NODE: 20
+      LATEST_NODE: 24
       DEFAULT_IMAGE: nodered/node-red
       GH_IMAGE: ghcr.io/node-red/node-red
       DEV_IMAGE: nodered/node-red-dev
@@ -155,18 +155,7 @@ jobs:
             fi
           fi
 
-          # if [[ "${{ matrix.node }}" == "18"]]; then
-          #   echo "platforms=linux/amd64,linux/arm/v7,linux/arm64" >> $GITHUB_OUTPUT
-          # else
-          #   echo "platforms=linux/amd64,linux/arm64" >> $GITHUB_OUTPUT
-          # fi
-
-          # if [[ "${{ matrix.suffix }}" == "-minimal" ]]; then
-          #   echo "platforms=linux/amd64,linux/arm64" >> $GITHUB_OUTPUT
-          # else
-          #   echo "platforms=linux/amd64,linux/arm/v7,linux/arm64" >> $GITHUB_OUTPUT
-          # fi
-          echo "platforms=linux/amd64,linux/arm/v7,linux/arm64" >> $GITHUB_OUTPUT
+          echo "platforms=linux/amd64,linux/arm64" >> $GITHUB_OUTPUT
 
           echo $TAGS
           echo "tags=$TAGS" >> $GITHUB_OUTPUT
@@ -215,7 +204,7 @@ jobs:
   debian:
     env:
       # Setting the defaults up front
-      LATEST_NODE: 20
+      LATEST_NODE: 24
       DEFAULT_IMAGE: nodered/node-red
       GH_IMAGE: ghcr.io/node-red/node-red
       DEV_IMAGE: nodered/node-red-dev
@@ -321,7 +310,7 @@ jobs:
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
         with:
           context: .
-          platforms: linux/amd64, linux/arm64, linux/arm/v7
+          platforms: linux/amd64, linux/arm64
           file: .docker/Dockerfile.debian
           push: ${{ steps.nrVersion.outputs.push }}
           build-args: |
