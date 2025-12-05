@@ -121,10 +121,10 @@ The following table shows the variety of provided Node-RED images.
 |                            |   22   | arm64v8  |    3.x     |  yes  | arm64v8/node:24-alpine     |
 |                            |   22   | i386     |    3.x     |  yes  | i386/node:24-alpine        |
 |                            |        |          |            |       |                            |
-| 5.0.0-beta.0-24-minimal           |   22   | amd64    |     no     |  no   | amd64/node:24-alpine       |
-|                            |   22   | arm32v7  |     no     |  no   | arm32v7/node:24-alpine     |
-|                            |   22   | arm64v8  |     no     |  no   | arm64v8/node:24-alpine     |
-|                            |   22   | i386     |     no     |  no   | i386/node:24-alpine        |
+| 5.0.0-beta.0-24-minimal           |   24   | amd64    |     no     |  no   | amd64/node:24-alpine       |
+|                            |   24   | arm32v7  |     no     |  no   | arm32v7/node:24-alpine     |
+|                            |   24   | arm64v8  |     no     |  no   | arm64v8/node:24-alpine     |
+|                            |   24   | i386     |     no     |  no   | i386/node:24-alpine        |
 
 - All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.
 
