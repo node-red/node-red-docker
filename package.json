@@ -1,6 +1,6 @@
 {
     "name": "node-red-docker",
-    "version": "4.1.2",
+    "version": "5.0.0-beta.0",
     "description": "Low-code programming for event-driven applications",
     "homepage": "http://nodered.org",
     "license": "Apache-2.0",
@@ -29,7 +29,7 @@
         }
     ],
     "dependencies": {
-        "node-red": "4.1.2"
+        "node-red": "5.0.0-beta.0"
     },
     "engines": {
         "node": ">=18"
