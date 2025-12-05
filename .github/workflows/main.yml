@@ -20,7 +20,7 @@ jobs:
   alpine:
     env:
       # Setting the defaults up front
-      LATEST_NODE: 20
+      LATEST_NODE: 24
       DEFAULT_IMAGE: nodered/node-red
       GH_IMAGE: ghcr.io/node-red/node-red
       DEV_IMAGE: nodered/node-red-dev
@@ -204,7 +204,7 @@ jobs:
   debian:
     env:
       # Setting the defaults up front
-      LATEST_NODE: 20
+      LATEST_NODE: 24
       DEFAULT_IMAGE: nodered/node-red
       GH_IMAGE: ghcr.io/node-red/node-red
       DEV_IMAGE: nodered/node-red-dev
