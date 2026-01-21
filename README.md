@@ -28,7 +28,7 @@ Let's dissect that command:
         -p 1880:1880            - connect local port 1880 to the exposed internal port 1880
         -v node_red_data:/data  - mount the host node_red_data directory to the container /data directory so any changes made to flows are persisted
         --name mynodered        - give this machine a friendly local name
-        nodered/node-red        - the image to base it on - currently Node-RED v5.0.0-beta.1
+        nodered/node-red        - the image to base it on - currently Node-RED v5.0.0-beta.2
 
 
 
@@ -37,7 +37,7 @@ Running that command should give a terminal window with a running instance of No
         Welcome to Node-RED
         ===================
 
-        10 Oct 12:57:10 - [info] Node-RED version: v5.0.0-beta.1
+        10 Oct 12:57:10 - [info] Node-RED version: v5.0.0-beta.2
         10 Oct 12:57:10 - [info] Node.js  version: v24.11.1
         10 Oct 12:57:10 - [info] Linux 6.17.5-200.fc42.x86_64 x64 LE
         10 Oct 12:57:11 - [info] Loading palette nodes
@@ -116,12 +116,12 @@ The following table shows the variety of provided Node-RED images.
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**             |
 |----------------------------|--------|----------|------------|-------|----------------------------|
-| 5.0.0-beta.1-24                   |   24   | amd64    |    3.x     |  yes  | amd64/node:24-alpine       |
+| 5.0.0-beta.2-24                   |   24   | amd64    |    3.x     |  yes  | amd64/node:24-alpine       |
 |                            |   24   | arm32v7  |    3.x     |  yes  | arm32v7/node:24-alpine     |
 |                            |   24   | arm64v8  |    3.x     |  yes  | arm64v8/node:24-alpine     |
 |                            |   24   | i386     |    3.x     |  yes  | i386/node:24-alpine        |
 |                            |        |          |            |       |                            |
-| 5.0.0-beta.1-24-minimal           |   24   | amd64    |     no     |  no   | amd64/node:24-alpine       |
+| 5.0.0-beta.2-24-minimal           |   24   | amd64    |     no     |  no   | amd64/node:24-alpine       |
 |                            |   24   | arm32v7  |     no     |  no   | arm32v7/node:24-alpine     |
 |                            |   24   | arm64v8  |     no     |  no   | arm64v8/node:24-alpine     |
 |                            |   24   | i386     |     no     |  no   | i386/node:24-alpine        |
@@ -134,9 +134,9 @@ The following table shows the provided Manifest Lists.
 
 | **Tag**                                | **Node-RED Base Image**                    |
 |----------------------------------------|--------------------------------------------|
-| latest-22, 5.0.0-beta.1-24                    | nodered/node-red:5.0.0-beta.1-24                  |
+| latest-22, 5.0.0-beta.2-24                    | nodered/node-red:5.0.0-beta.2-24                  |
 |                                        |                                            |
-| latest-24-minimal, 5.0.0-beta.1-24-minimal    | nodered/node-red:5.0.0-beta.1-24-minimal          
+| latest-24-minimal, 5.0.0-beta.2-24-minimal    | nodered/node-red:5.0.0-beta.2-24-minimal          
 
 
 With the support of Docker manifest list, there is no need to explicitly add the tag for the architecture to use.
@@ -144,7 +144,7 @@ When a docker run command or docker service command or docker stack command is e
 
 Therefore all tags regarding Raspberry PI's are dropped.
 
-For example: suppose you are running on a Raspberry PI 3B, which has `arm32v7` as architecture. Then just run the following command to pull the image (tagged by `5.0.0-beta.1-24`), and run the container.
+For example: suppose you are running on a Raspberry PI 3B, which has `arm32v7` as architecture. Then just run the following command to pull the image (tagged by `5.0.0-beta.2-24`), and run the container.
 
 
 ```
@@ -284,7 +284,7 @@ Docker build process, the dependencies are installed under `/usr/src/node-red`.
 The main sections to modify are
 
     "dependencies": {
-        "node-red": "^5.0.0-beta.1",           <-- set the version of Node-RED here
+        "node-red": "^5.0.0-beta.2",           <-- set the version of Node-RED here
         "node-red-dashboard": "*"        <-- add any extra npm packages here
     },
 
