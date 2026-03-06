@@ -119,27 +119,23 @@ The following table shows the variety of provided Node-RED images.
 | 4.1.7-18                   |   18   | amd64    |    3.x     |  yes  | amd64/node:18-alpine       |
 |                            |   18   | arm32v7  |    3.x     |  yes  | arm32v7/node:18-alpine     |
 |                            |   18   | arm64v8  |    3.x     |  yes  | arm64v8/node:18-alpine     |
-|                            |   18   | i386     |    3.x     |  yes  | i386/node:18-alpine        |
 |                            |        |          |            |       |                            |
 | 4.1.7-18-minimal           |   18   | amd64    |     no     |  no   | amd64/node:18-alpine       |
 |                            |   18   | arm32v7  |     no     |  no   | arm32v7/node:18-alpine     |
 |                            |   18   | arm64v8  |     no     |  no   | arm64v8/node:18-alpine     |
-|                            |   18   | i386     |     no     |  no   | i386/node:18-alpine        |
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**             |
 |----------------------------|--------|----------|------------|-------|----------------------------|
 | 4.1.7-20                   |   20   | amd64    |    3.x     |  yes  | amd64/node:20-alpine       |
 |                            |   20   | arm32v7  |    3.x     |  yes  | arm32v7/node:20-alpine     |
 |                            |   20   | arm64v8  |    3.x     |  yes  | arm64v8/node:20-alpine     |
-|                            |   20   | i386     |    3.x     |  yes  | i386/node:20-alpine        |
 |                            |        |          |            |       |                            |
 | 4.1.7-20-minimal           |   20   | amd64    |     no     |  no   | amd64/node:20-alpine       |
 |                            |   20   | arm32v7  |     no     |  no   | arm32v7/node:20-alpine     |
 |                            |   20   | arm64v8  |     no     |  no   | arm64v8/node:20-alpine     |
-|                            |   20   | i386     |     no     |  no   | i386/node:20-alpine        |
 |                            |        |          |            |       |                            |
 | 4.1.7-debian               |   20   | amd64    |    3.x     |  yes  | amd64/node:20-buster-slim  |
-|                            |   20   | arm32v7  |    3.x     |  yes  | amd64/node:20-buster-slim  |
+|                            |   20   | arm32v7  |    3.x     |  yes  | arm32v7/node:20-buster-slim  |
 |                            |   20   | arm64v8  |    3.x     |  yes  | amd64/node:20-buster-slim  |
 
 | **Tag**                    |**Node**| **Arch** | **Python** |**Dev**| **Base Image**             |
@@ -147,12 +143,11 @@ The following table shows the variety of provided Node-RED images.
 | 4.1.7-22                   |   22   | amd64    |    3.x     |  yes  | amd64/node:22-alpine       |
 |                            |   22   | arm32v7  |    3.x     |  yes  | arm32v7/node:22-alpine     |
 |                            |   22   | arm64v8  |    3.x     |  yes  | arm64v8/node:22-alpine     |
-|                            |   22   | i386     |    3.x     |  yes  | i386/node:22-alpine        |
 |                            |        |          |            |       |                            |
 | 4.1.7-22-minimal           |   22   | amd64    |     no     |  no   | amd64/node:22-alpine       |
 |                            |   22   | arm32v7  |     no     |  no   | arm32v7/node:22-alpine     |
 |                            |   22   | arm64v8  |     no     |  no   | arm64v8/node:22-alpine     |
-|                            |   22   | i386     |     no     |  no   | i386/node:22-alpine        |
+
 
 - All images have bash, tzdata, nano, curl, git, openssl and openssh-client pre-installed to support Node-RED's Projects feature.
 
