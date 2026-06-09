@@ -31,8 +31,8 @@ The `docker-alpine.sh` and `docker-debian.sh` are helper scripts to build a cust
 
 Change the build arguments as needed:
 
-   - `--build-arg ARCH=amd64` : architecture your are building for (arm32v6, arm32v7, arm64v8, amd64)
-   - `--build-arg NODE_VERSION=20` : NodeJS version you like to use
+   - `--build-arg ARCH=amd64` : architecture your are building for (arm64v8, amd64)
+   - `--build-arg NODE_VERSION=24` : NodeJS version you like to use
    - `--build-arg NODE_RED_VERSION=${NODE_RED_VERSION}` : don't change this, ${NODE_RED_VERSION} gets populated from package.json
    - `--build-arg OS=alpine` : the linux distro to use (alpine)
    - `--build-arg BUILD_DATE="$(date +"%Y-%m-%dT%H:%M:%SZ")"` : don't change this
