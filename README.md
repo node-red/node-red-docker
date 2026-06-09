@@ -28,7 +28,7 @@ Let's dissect that command:
         -p 1880:1880            - connect local port 1880 to the exposed internal port 1880
         -v node_red_data:/data  - mount the host node_red_data directory to the container /data directory so any changes made to flows are persisted
         --name mynodered        - give this machine a friendly local name
-        nodered/node-red        - the image to base it on - currently Node-RED v5.0.0-beta.6
+        nodered/node-red        - the image to base it on - currently Node-RED v5.0.0
 
 
 
@@ -136,14 +136,13 @@ The following table shows the provided Manifest Lists.
 | latest, latest-24, 5.0.0-24            | nodered/node-red:5.0.0-24                  |
 | latest-24-minimal, 5.0.0-24-minimal    | nodered/node-red:5.0.0.6-24-minimal        |
 
-
 With the support of Docker manifest list, there is no need to explicitly add the tag for the architecture to use.
 When a docker run command or docker service command or docker stack command is executed, docker checks which architecture is required and verifies if it is available in the docker repository. If it does, docker pulls the matching image for it.
 
 Therefore all tags regarding Raspberry PI's are dropped.
 
-For example: suppose you are running on a Raspberry PI 3B, which has `arm32v7` as architecture. Then just run the following command to pull the image (tagged by `5.0.0-24`), and run the container.
 
+For example: suppose you are running on a Raspberry PI 4B, which has `arm64v8` as architecture. Then just run the following command to pull the image (tagged by `5.0.0-24`), and run the container.
 
 ```
 docker run -it -p 1880:1880 -v node_red_data:/data --name mynodered nodered/node-red:latest
