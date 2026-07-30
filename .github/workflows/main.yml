@@ -125,11 +125,12 @@ jobs:
             PUSH=true
             VERSION=${TRAVIS_TAG:1}
             STABLE_VERSION=`echo ${VERSION} | sed -r 's/^([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)$/\1.\2/'`
+            MAJOR_VERSION=`echo ${VERSION} | sed -r 's/^([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)$/\1/'`
 
             if [[ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" && "${{ matrix.suffix }}" == "" ]]; then
-              TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:$STABLE_VERSION,$IMAGE:latest,$GH_IMAGE:$VERSION,$GH_IMAGE:$STABLE_VERSION,$GH_IMAGE:latest"
+              TAGS="$TAGS,$IMAGE:$VERSION,$IMAGE:$STABLE_VERSION,$IMAGE:$MAJOR_VERSION,$IMAGE:latest,$GH_IMAGE:$VERSION,$GH_IMAGE:$STABLE_VERSION,$GH_IMAGE:$MAJOR_VERSION,$GH_IMAGE:latest"
             elif [[ "${{ matrix.node }}" == "${{ env.LATEST_NODE }}" &&  "${{ matrix.suffix }}" == "-minimal" ]]; then
-              TAGS="$TAGS,$IMAGE:$VERSION-minimal,$IMAGE:latest-minimal,$GH_IMAGE:$VERSION-minimal,$GH_IMAGE:latest-minimal"
+              TAGS="$TAGS,$IMAGE:$VERSION-minimal,$IMAGE:$MAJOR_VERSION-minimal,$IMAGE:latest-minimal,$GH_IMAGE:$VERSION-minimal,$GH_IMAGE:$MAJOR_VERSION-minimal,$GH_IMAGE:latest-minimal"
             fi
 
             TAGS="$TAGS,$IMAGE:latest-${{ matrix.node }}${{ matrix.suffix }},$GH_IMAGE:latest-${{ matrix.node }}${{ matrix.suffix }}"
@@ -275,8 +276,9 @@ jobs:
             PUSH=true
             VERSION=${TRAVIS_TAG:1}
             STABLE_VERSION=`echo ${VERSION} | sed -r 's/^([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)$/\1.\2/'`
+            MAJOR_VERSION=`echo ${VERSION} | sed -r 's/^([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)$/\1/'`
 
-            TAGS="$IMAGE:latest-debian,$IMAGE:$VERSION-debian,$IMAGE:$STABLE_VERSION-debian,$GH_IMAGE:latest-debian,$GH_IMAGE:$VERSION-debian,$GH_IMAGE:$STABLE_VERSION-debian"
+            TAGS="$IMAGE:latest-debian,$IMAGE:$VERSION-debian,$IMAGE:$STABLE_VERSION-debian,$IMAGE:$MAJOR_VERSION-debian,$GH_IMAGE:latest-debian,$GH_IMAGE:$VERSION-debian,$GH_IMAGE:$STABLE_VERSION-debian,$GH_IMAGE:$MAJOR_VERSION-debian"
 
           else
             IMAGE=${{ env.DEV_IMAGE }}
