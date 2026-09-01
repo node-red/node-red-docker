@@ -55,11 +55,11 @@ jobs:
             type=ref,event=branch
             type=semver,pattern={{version}}
 
-      - 
-        name: Setup QEMU
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: arm64
+      # - 
+      #   name: Setup QEMU
+      #   uses: docker/setup-qemu-action@v3
+      #   with:
+      #     platforms: arm64
       -
         name: Set up SSH key pi5
         uses: MrSquaare/ssh-setup-action@2d028b70b5e397cf8314c6eaea229a6c3e34977a # v3.1.0
