@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      max-parallel: 2
+      max-parallel: 1
       matrix:
         node: [18, 20, 22]
         suffix: ["", "-minimal"]
