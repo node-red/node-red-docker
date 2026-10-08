@@ -28,9 +28,9 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      max-parallel: 2
+      max-parallel: 1
       matrix:
-        node: [18, 20, 22]
+        node: [22, 20, 18]
         suffix: ["", "-minimal"]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -78,7 +78,7 @@ jobs:
           port: 2023
       - 
         name: Setup Docker buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4.4.1
         with:
           append: |
             - endpoint: ssh://nr@${{ secrets.SSH_REMOTE_HOST }}:2023
@@ -196,7 +196,7 @@ jobs:
       -
         name: Build and push
         id: build-push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7.4.0
         with:
           context: .
           platforms: ${{ steps.nrVersion.outputs.platforms }}
@@ -287,7 +287,7 @@ jobs:
             VERSION=${TRAVIS_TAG:1}
             STABLE_VERSION=`echo ${VERSION} | sed -r 's/^([[:digit:]]+)\.([[:digit:]]+)\.([[:digit:]]+)$/\1.\2/'`
 
-            TAGS="$IMAGE:latest-debian,$IMAGE:$VERSION-debian,$IMAGE:$STABLE_VERSION-debian,$GH_IMAGE:latest-debian,$GH_IMAGE:$VERSION-debian,$GH_IMAGE:$STABLE_VERSION-debian"
+            TAGS="$IMAGE:latest-debian,$IMAGE:$VERSION-debian,$IMAGE:$STABLE_VERSION-debian,$GH_IMAGE:$VERSION-debian,$GH_IMAGE:$STABLE_VERSION-debian"
 
           else
             IMAGE=${{ env.DEV_IMAGE }}
