@@ -1,7 +1,6 @@
 # Node-RED Docker
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/node-red/node-red-docker.svg)](https://greenkeeper.io/)
-[![Build Status](https://travis-ci.org/node-red/node-red-docker.svg?branch=master)](https://travis-ci.org/node-red/node-red-docker)
 [![DockerHub Pull](https://img.shields.io/docker/pulls/nodered/node-red.svg)](https://hub.docker.com/r/nodered/node-red/)
 [![DockerHub Stars](https://img.shields.io/docker/stars/nodered/node-red.svg?maxAge=2592000)](https://hub.docker.com/r/nodered/node-red/)
 
@@ -154,7 +153,7 @@ This gives the advantage that you don't need to know/specify which architecture 
 ## Raspberry PI - native GPIO support
 | v1.0 - BREAKING: Native GPIO support for Raspberry PI has been dropped |
 | --- |
-The replacement for native GPIO is [node-red-node-pi-gpiod](https://github.com/node-red/node-red-nodes/tree/master/hardware/pigpiod).
+The replacement for native GPIO is [node-red-node-pi-gpiod](https://github.com/node-red/node-red-nodes/tree/main/hardware/pigpiod).
 
 Disadvantages of the native GPIO support are:
 - Your Docker container needs to be deployed on the same Docker node/host on which you want to control the gpio.
@@ -169,7 +168,7 @@ Disadvantages of the native GPIO support are:
   3. Replace all native gpio nodes with `pi gpiod` nodes.
   4. Configure `pi gpiod` nodes to connect to `PiGPIOd daemon`. Often the host machine will have an IP 172.17.0.1 port 8888 - but not always. You can use `docker exec -it mynodered ip route show default | awk '/default/ {print $3}'` to check.
 
-For detailed install instruction please refer to the `node-red-node-pi-gpiod` [README](https://github.com/node-red/node-red-nodes/tree/master/hardware/pigpiod#node-red-node-pi-gpiod)
+For detailed install instruction please refer to the `node-red-node-pi-gpiod` [README](https://github.com/node-red/node-red-nodes/tree/main/hardware/pigpiod#node-red-node-pi-gpiod)
 
 **Note**: There is a contributed [gpiod project](https://github.com/corbosman/node-red-gpiod) that runs the gpiod in its own container rather than on the host if required.
 
