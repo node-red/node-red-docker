@@ -91,6 +91,15 @@ and stop it again when required:
 
 **Healthcheck**: to turn off the Healthcheck add `--no-healthcheck` to the run command.
 
+### Deploy with Easypanel
+
+[Easypanel](https://easypanel.io) is a self-hosted Docker deployment platform, and Node-RED has a one-click deployment template there:
+
+[![Deploy on Easypanel][easypanel-btn]][easypanel-deploy]
+
+[easypanel-btn]: https://easypanel.io/img/deploy-on-easypanel-40.svg
+[easypanel-deploy]: https://easypanel.io/templates/nodered
+
 ## Image Variations
 The Node-RED images come in different variations and are supported by manifest lists (auto-detect architecture).
 This makes it more easy to deploy in a multi architecture Docker environment. E.g. a Docker Swarm with mix of Raspberry Pi's and amd64 nodes.
